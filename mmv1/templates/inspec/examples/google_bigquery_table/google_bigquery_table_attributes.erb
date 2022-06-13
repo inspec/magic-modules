@@ -1,0 +1,3 @@
+gcp_project_id = input(:gcp_project_id, value: '<%= external_attribute(pwd, 'gcp_project_id') -%>', description: 'The GCP project identifier.')
+bigquery_table = input('bigquery_table', value: <%= JSON.pretty_generate(grab_attributes(pwd)['bigquery_table']) -%>, description: 'BigQuery table definition')
+dataset = input('dataset', value: <%= JSON.pretty_generate(grab_attributes(pwd)['dataset']) -%>, description: 'BigQuery dataset definition')

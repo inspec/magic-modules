@@ -1,0 +1,12 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% sql_operation = grab_attributes(pwd)['sql_operation'] -%>
+describe google_sql_operation(project: <%= gcp_project_id -%>, operation: <%= doc_generation ? "'#{sql_operation['name']}'" : "sql_operation['name']" -%>) do
+  it { should exist }
+  its('name') { should eq <%= doc_generation ? "'#{sql_operation['name']}'" : "sql_operation['name']" -%> }
+  its('status') { should eq <%= doc_generation ? "'#{sql_operation['status']}'" : "sql_operation['status']" -%> }
+  its('operation_type') { should eq <%= doc_generation ? "'#{sql_operation['operation_type']}'" : "sql_operation['operation_type']" -%> }
+end
+
+describe google_sql_operation(project: <%= gcp_project_id -%>, operation: 'nonexistant') do
+  it { should_not exist }
+end

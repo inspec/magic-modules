@@ -1,0 +1,12 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% sql_connect = grab_attributes(pwd)['sql_connect'] -%>
+describe google_sql_ssl_cert(project: <%= gcp_project_id -%>, instance: <%= doc_generation ? "'#{sql_connect['instance']}'" : "sql_connect['instance']" -%>, sha1_fingerprint:  <%= doc_generation ? "'#{sql_connect['sha1_fingerprint']}'" : "sql_connect['sha1_fingerprint']" -%>) do
+  it { should exist }
+  its('instance') { should eq <%= doc_generation ? "'#{sql_connect['instance']}'" : "sql_connect['instance']" -%> }
+  its('common_name') { should eq <%= doc_generation ? "'#{sql_connect['common_name']}'" : "sql_connect['common_name']" -%> }
+  its('sha1_fingerprint') { should eq <%= doc_generation ? "'#{sql_connect['sha1_fingerprint']}'" : "sql_connect['sha1_fingerprint']" -%> }
+end
+
+describe google_sql_ssl_cert(project: <%= gcp_project_id -%>, instance: 'nonexistent', sha1_fingerprint:  <%= doc_generation ? "'#{sql_connect['sha1_fingerprint']}'" : "sql_connect['sha1_fingerprint']" -%>) do
+  it { should_not exist }
+end

@@ -1,0 +1,2 @@
+gcp_project_id = input(:gcp_project_id, value: '<%= external_attribute(pwd, 'gcp_project_id') -%>', description: 'The GCP project identifier.')
+http_proxy = input('http_proxy', value: <%= JSON.pretty_generate(grab_attributes(pwd)['http_proxy']) -%>, description: 'Compute HTTP proxy definition')

@@ -1,0 +1,185 @@
+---
+steps:
+    # The GCB / GH integration doesn't satisfy our use case perfectly.
+    # It doesn't check out the repo itself - it only gives us the actual code.
+    # So we need to handle that access ourselves - which means deleting the code
+    # and cloning the repo to the present directory.  We need to use
+    # 'sh' to evaluate the '*' arguments, which otherwise would be
+    # passed literally to 'rm'.
+    - name: 'alpine'
+      args:
+          - sh
+          - -c
+          - rm -rf ./* ./.* || true
+    - name: 'gcr.io/cloud-builders/git'
+      id: clone
+      args:
+          - clone
+          - https://github.com/GoogleCloudPlatform/magic-modules
+          - .
+
+    - name: 'gcr.io/cloud-builders/git'
+      id: checkout
+      args:
+          - checkout
+          - $COMMIT_SHA
+
+    # TPG
+    - name: 'gcr.io/graphite-docker-images/downstream-waiter'
+      id: tpg-sync
+      secretEnv: ["GITHUB_TOKEN"]
+      waitFor: ["checkout"]
+      args:
+          - 'tpg-sync'
+          - $BRANCH_NAME
+          - $COMMIT_SHA
+
+    - name: 'gcr.io/graphite-docker-images/downstream-builder'
+      secretEnv: ["GITHUB_TOKEN"]
+      id: tpg-push
+      waitFor: ["tpg-sync"]
+      args:
+          - 'downstream'
+          - 'terraform'
+          - 'ga'
+          - $COMMIT_SHA
+
+    - name: 'gcr.io/cloud-builders/git'
+      waitFor: ["tpg-push"]
+      secretEnv: ["GITHUB_TOKEN"]
+      entrypoint: 'bash'
+      args:
+          - -c
+          - git push https://modular-magician:$$GITHUB_TOKEN@github.com/GoogleCloudPlatform/magic-modules $COMMIT_SHA:tpg-sync
+
+    # TPGB
+    - name: 'gcr.io/graphite-docker-images/downstream-waiter'
+      id: tpgb-sync
+      secretEnv: ["GITHUB_TOKEN"]
+      waitFor: ["checkout"]
+      args:
+          - 'tpgb-sync'
+          - $BRANCH_NAME
+          - $COMMIT_SHA
+
+    - name: 'gcr.io/graphite-docker-images/downstream-builder'
+      secretEnv: ["GITHUB_TOKEN"]
+      id: tpgb-push
+      waitFor: ["tpgb-sync"]
+      args:
+          - 'downstream'
+          - 'terraform'
+          - 'beta'
+          - $COMMIT_SHA
+
+    - name: 'gcr.io/cloud-builders/git'
+      waitFor: ["tpgb-push"]
+      secretEnv: ["GITHUB_TOKEN"]
+      entrypoint: 'bash'
+      args:
+          - -c
+          - git push https://modular-magician:$$GITHUB_TOKEN@github.com/GoogleCloudPlatform/magic-modules $COMMIT_SHA:tpgb-sync
+
+    # TF-VALIDATOR
+    - name: 'gcr.io/graphite-docker-images/downstream-waiter'
+      id: tf-validator-sync
+      secretEnv: ["GITHUB_TOKEN"]
+      waitFor: ["checkout"]
+      args:
+          - 'tf-validator-sync'
+          - $BRANCH_NAME
+          - $COMMIT_SHA
+
+    - name: 'gcr.io/graphite-docker-images/downstream-builder'
+      secretEnv: ["GITHUB_TOKEN"]
+      id: tf-validator-push
+      waitFor: ["tf-validator-sync", "tpg-push"]
+      args:
+          - 'downstream'
+          - 'terraform-validator'
+          - 'ga'
+          - $COMMIT_SHA
+
+    - name: 'gcr.io/cloud-builders/git'
+      waitFor: ["tf-validator-push"]
+      secretEnv: ["GITHUB_TOKEN"]
+      entrypoint: 'bash'
+      args:
+          - -c
+          - git push https://modular-magician:$$GITHUB_TOKEN@github.com/GoogleCloudPlatform/magic-modules $COMMIT_SHA:tf-validator-sync
+
+    # TF-OICS
+    - name: 'gcr.io/graphite-docker-images/downstream-waiter'
+      id: tf-oics-sync
+      secretEnv: ["GITHUB_TOKEN"]
+      waitFor: ["checkout"]
+      args:
+          - 'tf-oics-sync'
+          - $BRANCH_NAME
+          - $COMMIT_SHA
+
+    - name: 'gcr.io/graphite-docker-images/downstream-builder'
+      secretEnv: ["GITHUB_TOKEN"]
+      id: tf-oics-push
+      waitFor: ["tf-oics-sync"]
+      args:
+          - 'downstream'
+          - 'tf-oics'
+          - 'beta'
+          - $COMMIT_SHA
+
+    - name: 'gcr.io/cloud-builders/git'
+      waitFor: ["tf-oics-push"]
+      secretEnv: ["GITHUB_TOKEN"]
+      entrypoint: 'bash'
+      args:
+          - -c
+          - git push https://modular-magician:$$GITHUB_TOKEN@github.com/GoogleCloudPlatform/magic-modules $COMMIT_SHA:tf-oics-sync
+
+    # TF-CLOUD-DOCS
+    - name: 'gcr.io/graphite-docker-images/downstream-waiter'
+      id: tf-cloud-docs-sync
+      secretEnv: ["GITHUB_TOKEN"]
+      waitFor: ["checkout"]
+      args:
+          - 'tf-cloud-docs-sync'
+          - $BRANCH_NAME
+          - $COMMIT_SHA
+
+    - name: 'gcr.io/graphite-docker-images/downstream-builder'
+      secretEnv: ["GITHUB_TOKEN"]
+      id: tf-cloud-docs-push
+      waitFor: ["tf-cloud-docs-sync"]
+      args:
+          - 'downstream'
+          - 'tf-cloud-docs'
+          - 'beta'
+          - $COMMIT_SHA
+
+    - name: 'gcr.io/cloud-builders/git'
+      waitFor: ["tf-cloud-docs-push"]
+      secretEnv: ["GITHUB_TOKEN"]
+      entrypoint: 'bash'
+      args:
+          - -c
+          - git push https://modular-magician:$$GITHUB_TOKEN@github.com/GoogleCloudPlatform/magic-modules $COMMIT_SHA:tf-cloud-docs-sync
+
+    - name: 'gcr.io/graphite-docker-images/vcr-cassette-merger'
+      secretEnv: ["GITHUB_TOKEN", "GOOGLE_PROJECT"]
+      waitFor: ["tpg-push"]
+      args:
+          - $COMMIT_SHA
+
+# set extremely long 1 day timeout, in order to ensure that any jams / backlogs can be cleared.
+timeout: 86400s
+options:
+    machineType: 'N1_HIGHCPU_8'
+
+# This is the ciphertext of the token, encrypted using the above KMS key.
+secrets:
+    - kmsKeyName: projects/graphite-docker-images/locations/global/keyRings/token-keyring/cryptoKeys/github-token
+      secretEnv:
+          GITHUB_TOKEN: CiQADkR4Nt6nHLI52Kc1W55OwpLdc4vjBfVR0SGQNzm6VSVj9lUSUQBfF82vVhn43A1jNYOv8ScoWgrZONwNrUabHfGjkvl+IZxcii0JlOVUawbscs4OJga0eitNNlagAOruLs6C926X20ZZPqWtH97ui6CKNvxgkQ==
+    - kmsKeyName: projects/graphite-docker-images/locations/global/keyRings/environment-keyring/cryptoKeys/ci-project-key
+      secretEnv:
+          GOOGLE_PROJECT: CiQAis6xrDDU4Wcxn5s8Y790IMxTUEe2d3SaYEXUGScHfaLjOw8SPwDOc1nLe6Yz0zzA0mcYTsXaeGSFYu7uQ5+QCtTProJWRv2ITrNwCS3AF/kvMCrHvltx7O1CZnJveutlVpZH3w==
