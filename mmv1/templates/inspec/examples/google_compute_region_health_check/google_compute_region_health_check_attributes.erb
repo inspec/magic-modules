@@ -1,0 +1,5 @@
+gcp_project_id = input(:gcp_project_id, value: '<%= external_attribute(pwd, 'gcp_project_id') -%>', description: 'The GCP project identifier.')
+region_health_check = input(:region_health_check, value: <%= JSON.pretty_generate(grab_attributes(pwd)['region_health_check']) -%>, description: 'The GCP project region health check')
+
+gcp_compute_health_check_name = region_health_check["name"]
+gcp_compute_health_check_region_name = region_health_check["region"]
