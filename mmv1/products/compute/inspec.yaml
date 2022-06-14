@@ -135,7 +135,7 @@ overrides: !ruby/object:Overrides::ResourceOverrides
     singular_extra_examples: third_party/inspec/documentation/google_compute_project_info.md
     additional_functions: third_party/inspec/custom_functions/google_compute_project_info.erb
   Region: !ruby/object:Overrides::Inspec::ResourceOverride
-    additional_functions: third_party/inspec/custom_functions/google_compute_region.erb
+    additional_functions: third_party/inspec/custom_functions/google_compute_region_health_check.erb
     properties:
       id: !ruby/object:Overrides::Inspec::PropertyOverride
         override_name: "region_id"

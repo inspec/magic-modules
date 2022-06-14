@@ -508,3 +508,10 @@ sql_operation:
   operation_type: CREATE
 public_delegated_prefix:
   name: test
+
+region_health_check:
+  name: inspec-gcp-region-health-check
+  region: us-central1
+  timeout_sec: 10
+  check_interval_sec: 10
+  tcp_health_check_port: 80
