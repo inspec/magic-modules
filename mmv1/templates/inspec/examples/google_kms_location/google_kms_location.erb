@@ -1,0 +1,9 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% gcp_location = "#{external_attribute(pwd, 'gcp_location', doc_generation)}" -%>
+describe google_kms_location(project: <%= gcp_project_id -%>, location: <%= gcp_location -%>) do
+  it { should exist }
+end
+
+describe google_kms_location(project: <%= gcp_project_id -%>, location: 'nonexistent') do
+  it { should_not exist }
+end

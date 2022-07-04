@@ -188,7 +188,6 @@ objects:
         url_param_only: true
       - !ruby/object:Api::Type::String
         name: 'importJobId'
-        required: true
         description: |
           It must be unique within a KeyRing and match the regular expression [a-zA-Z0-9_-]{1,63}
         required: true
@@ -315,3 +314,40 @@ objects:
         'Encrypting and decrypting data with a symmetric key':
           'https://cloud.google.com/kms/docs/encrypt-decrypt'
       api: 'https://cloud.google.com/kms/docs/reference/rest/v1/projects.locations.keyRings.cryptoKeys/encrypt'
+  - !ruby/object:Api::Resource
+    name: 'Location'
+    base_url: projects/{{project}}/locations
+    has_self_link: true
+    input: true
+    description: |
+      Information about a KMS location
+    parameters:
+      - !ruby/object:Api::Type::String
+        name: 'location'
+        description: |
+          Resource name for the location.
+        required: true
+    properties:
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Resource name for the location, which may vary between implementations.
+          For example: projects/example-project/locations/us-east1
+        required: true
+      - !ruby/object:Api::Type::String
+        name: 'locationId'
+        description: |
+          The canonical id for this location. For example: "us-east1".
+        required: true
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          The friendly name for this location, typically a nearby city name. For example, "Tokyo".
+        required: true
+      - !ruby/object:Api::Type::String
+        name: 'labels'
+        description: |
+          map (key: string, value: string)
+          Cross-service attributes for the location. For example
+          {"cloud.googleapis.com/region": "us-east1"}
+        exclude: true

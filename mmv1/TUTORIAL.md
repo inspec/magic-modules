@@ -91,6 +91,7 @@ instead of SSH. You will probably not have to do this in your typical developmen
 Run the compiler:
 ```bash
 ruby compiler.rb -p products/pubsub -e ansible -o build/ansible
+ruby compiler.rb -e inspec -p products/kms -t Location -o build/inspe
 ```
 
 This command tells us to run the compiler for the pubsub API, and generate Ansible into the
