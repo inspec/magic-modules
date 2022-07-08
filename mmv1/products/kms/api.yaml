@@ -351,3 +351,119 @@ objects:
           Cross-service attributes for the location. For example
           {"cloud.googleapis.com/region": "us-east1"}
         exclude: true
+  - !ruby/object:Api::Resource
+    name: 'EkmConnection'
+    base_url: projects/{{project}}/locations/{{location}}/ekmConnections
+    has_self_link: true
+    input: true
+    description: |
+      Information about a KMS location
+    parameters:
+      - !ruby/object:Api::Type::String
+        name: 'location'
+        description: |
+          Resource name for the location.
+        required: true
+    properties:
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Resource name for the location, which may vary between implementations.
+          For example: projects/example-project/locations/us-east1
+        required: true
+      - !ruby/object:Api::Type::Time
+        name: 'createTime'
+        description: |
+          string (Timestamp format)
+          Output only. The time at which the EkmConnection was created.
+          A timestamp in RFC3339 UTC "Zulu" format, with nanosecond resolution and up to nine fractional digits.
+          Examples: "2014-10-02T15:01:23Z" and "2014-10-02T15:01:23.045123456Z".
+      - !ruby/object:Api::Type::NestedObject
+        name: 'serviceResolvers'
+        description: |
+          object (ServiceResolver)
+          A list of ServiceResolvers where the EKM can be reached.
+          There should be one ServiceResolver per EKM replica. Currently, only a single ServiceResolver is supported.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'serviceDirectoryService'
+            description: |
+              Required. The resource name of the Service Directory service pointing to an EKM replica, in the format
+              projects/*/locations/*/namespaces/*/services/*.
+            required: true
+          - !ruby/object:Api::Type::String
+            name: 'endpointFilter'
+            description: |
+              Optional. The filter applied to the endpoints of the resolved service. If no filter is specified, all endpoints
+              will be considered. An endpoint will be chosen arbitrarily from the filtered list for each request.
+              For endpoint filter syntax and examples,
+              see https://cloud.google.com/service-directory/docs/reference/rpc/google.cloud.servicedirectory.v1#resolveservicerequest.
+            input: true
+          - !ruby/object:Api::Type::String
+            name: 'hostname'
+            description: |
+              Required. The hostname of the EKM replica used at TLS and HTTP layers.
+            input: true
+          - !ruby/object:Api::Type::NestedObject
+            name: 'serverCertificates'
+            description: |
+              A Certificate represents an X.509 certificate used to authenticate HTTPS connections to EKM replicas.
+            properties:
+              - !ruby/object:Api::Type::String
+                name: 'rawDer'
+                description: |
+                  Required. The raw certificate bytes in DER format.
+                  A base64-encoded string.
+                required: true
+              - !ruby/object:Api::Type::Boolean
+                name: 'parsed'
+                description: |
+                  Output only. True if the certificate was parsed successfully.
+                required: true
+              - !ruby/object:Api::Type::String
+                name: 'issuer'
+                description: |
+                  Output only. The issuer distinguished name in RFC 2253 format. Only present if parsed is true.
+                required: true
+              - !ruby/object:Api::Type::String
+                name: 'subject'
+                description: |
+                  Output only. The subject distinguished name in RFC 2253 format. Only present if parsed is true.
+                required: true
+              - !ruby/object:Api::Type::Array
+                item_type: Api::Type::String
+                name: 'subjectAlternativeDnsNames'
+                description: |
+                  Output only. The subject Alternative DNS names. Only present if parsed is true.
+                required: true
+              - !ruby/object:Api::Type::Time
+                name: 'notBeforeTime'
+                description: |
+                  string (Timestamp format)
+                  Output only. The certificate is not valid before this time. Only present if parsed is true.
+                  A timestamp in RFC3339 UTC "Zulu" format, with nanosecond resolution and up to nine fractional digits.
+                  Examples: "2014-10-02T15:01:23Z" and "2014-10-02T15:01:23.045123456Z".
+              - !ruby/object:Api::Type::Time
+                name: 'notAfterTime'
+                description: |
+                  string (Timestamp format)
+                  Output only. The certificate is not valid after this time. Only present if parsed is true.
+                  A timestamp in RFC3339 UTC "Zulu" format, with nanosecond resolution and up to nine fractional digits.
+                  Examples: "2014-10-02T15:01:23Z" and "2014-10-02T15:01:23.045123456Z".
+              - !ruby/object:Api::Type::String
+                name: 'serialNumber'
+                description: |
+                  Output only. The certificate serial number as a hex string. Only present if parsed is true.
+                required: true
+              - !ruby/object:Api::Type::String
+                name: 'sha256Fingerprint'
+                description: |
+                  Output only. The SHA-256 certificate fingerprint as a hex string. Only present if parsed is true.
+                required: true
+      - !ruby/object:Api::Type::String
+        name: 'labels'
+        description: |
+          map (key: string, value: string)
+          Cross-service attributes for the location. For example
+          {"cloud.googleapis.com/region": "us-east1"}
+        exclude: true
