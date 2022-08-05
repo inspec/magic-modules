@@ -1,0 +1,9 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% gcp_location = "#{external_attribute(pwd, 'gcp_location', doc_generation)}" -%>
+<% gcp_kms_key_ring_policy_name = "#{external_attribute(pwd, 'gcp_kms_key_ring_policy_name', doc_generation)}" -%>
+<% gcp_kms_crypto_key_name_policy = "#{external_attribute(pwd, 'gcp_kms_crypto_key_name_policy', doc_generation)}" -%>
+<% gcp_kms_crypto_key = "#{external_attribute(pwd, 'gcp_kms_crypto_key', doc_generation)}" -%>
+describe google_kms_crypto_key_versions(project: <%= gcp_project_id -%>, location: <%= gcp_location -%>, key_ring: <%= gcp_kms_key_ring_policy_name -%>, crypto_key: <%= gcp_kms_crypto_key -%>) do
+  its('count') { should be >= 1 }
+  its('crypto_key_names') { should include <%= gcp_kms_crypto_key_name_policy -%> }
+end
