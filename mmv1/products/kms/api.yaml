@@ -353,9 +353,9 @@ objects:
         exclude: true
   - !ruby/object:Api::Resource
     name: 'CryptoKeyVersion'
-    base_url: '{{key_ring}}/cryptoKeys/{{crypto_key}}/cryptoKeyVersions'
-    create_url: '{{key_ring}}/cryptoKeys/{{crypto_key}}/cryptoKeyVersions?cryptoKeyVersionId={{name}}'
-    self_link: '{{key_ring}}/cryptoKeys/{{crypto_key}}/cryptoKeyVersions/{{name}}'
+    base_url: 'projects/{{project}}/locations/{{location}}/keyRings/{{key_ring}}/cryptoKeys/{{crypto_key}}/cryptoKeyVersions'
+    create_url: 'projects/{{project}}/locations/{{location}}/keyRings/{{key_ring}}/cryptoKeys/{{crypto_key}}/cryptoKeyVersions?cryptoKeyVersionId={{name}}'
+    self_link: 'projects/{{project}}/locations/{{location}}/keyRings/{{key_ring}}/cryptoKeys/{{crypto_key}}/cryptoKeyVersions/{{name}}'
     update_verb: :PATCH
     update_mask: true
     description: |
