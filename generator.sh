@@ -1,0 +1,1 @@
+compiler.rb -e inspec -p products/kms -t Location -o build/inspec

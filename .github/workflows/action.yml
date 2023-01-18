@@ -1,0 +1,32 @@
+name: Generate files and raise PR
+
+on: [push]
+
+jobs:
+  generate-files:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Execute code
+        run: |
+          # Run the code that generates the files
+          ruby code.rb
+      - name: Create new branch
+        uses: actions/create-branch@v1
+        with:
+          repository: OWNER/DESTINATION-REPO
+          branch: feature-branch
+      - name: Upload files
+        uses: actions/upload-artifact@v1
+        with:
+          name: files
+          path: path/to/generated/files
+      - name: Raise pull request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: feature-branch
+          title: "Move files to new directory"
+          message: "This pull request moves files to a new directory"
+          labels: "enhancement"
