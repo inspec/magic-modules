@@ -1,9 +1,4 @@
 endpoint := "resume" // Default to enabled
-logSuccessMsg := "Job state has been set to ENABLED"
-if paused, pausedOk := d.GetOk("paused"); pausedOk && paused.(bool) {
-	endpoint = "pause"
-	logSuccessMsg = "Job state has been set to PAUSED"
-}
 
 linkTmpl := fmt.Sprintf("{{CloudSchedulerBasePath}}projects/{{project}}/locations/{{region}}/jobs/{{name}}:%s", endpoint)
 url, err = replaceVars(d, config, linkTmpl)
