@@ -71,15 +71,14 @@ objects:
           The value of this field must be a time zone name from the tz database.
         required: false
         default_value: 'Etc/UTC'
-      - !ruby/object:Api::Type::String
+      - !ruby/object:Api::Type::Enum
         name: state
+        default_value: :ENABLED
         description: |
-          State of the job.
-        output: true
-      - !ruby/object:Api::Type::Boolean
-        name: paused
-        description: |
-          Sets the job to a paused state. Jobs default to being enabled when this property is not set.
+          State of the job. 
+        values:
+          - :ENABLED
+          - :PAUSED
       - !ruby/object:Api::Type::String
         name: attemptDeadline
         description: |
