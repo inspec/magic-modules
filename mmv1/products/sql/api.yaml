@@ -399,6 +399,56 @@ objects:
             name: 'userLabels'
             description: |
               User-provided labels, represented as a dictionary where each label is a single key value pair.
+          - !ruby/object:Api::Type::Enum
+            name: 'activationPolicy'
+            description: |
+              Specifies when the instance is activated.
+            required: true
+            values:
+              - :SQL_ACTIVATION_POLICY_UNSPECIFIED
+              - :ALWAYS
+              - :NEVER
+          - !ruby/object:Api::Type::String
+            name: 'dataDiskSizeGb'
+            output: true
+            description: |
+              The size of data disk, in GB. The data disk size minimum is 10GB.
+          - !ruby/object:Api::Type::Enum
+            name: 'dataDiskType'
+            description: |
+              Specifies when the instance is activated.
+            required: true
+            values:
+              - :SQL_ACTIVATION_POLICY_UNSPECIFIED
+              - :ALWAYS
+              - :NEVER
+          - name: 'pricingPlan'
+            description: |
+              The pricing plan for this instance.
+            required: true
+            values:
+              - :SQL_PRICING_PLAN_UNSPECIFIED
+              - :PACKAGE
+              - :PER_USE
+          - name: 'replicationType'
+            description: |
+              The pricing plan for this instance.
+            required: true
+            values:
+              - :SQL_REPLICATION_TYPE_UNSPECIFIED
+              - :SYNCHRONOUS
+              - :ASYNCHRONOUS
+          - !ruby/object:Api::Type::Boolean
+            name: 'storageAutoResize'
+            description: |
+              Configuration to increase storage size automatically. The default value is true.
+            output: true
+          - !ruby/object:Api::Type::String
+            name: 'storageAutoResizeLimit'
+            description: |
+              The maximum size to which storage capacity can be automatically increased.
+              The default value is 0, which specifies that there is no limit.
+
       - !ruby/object:Api::Type::String
         name: 'gceZone'
         output: true
