@@ -59,7 +59,7 @@ that directory.
 To get started right away, use the bootstrap script with:
 
 ```bash
-./tools/bootstrap
+./scripts/bootstrap
 ```
 
 ---
@@ -90,7 +90,7 @@ bundle install
 Now, you can verify you're ready with:
 
 ```bash
-./tools/doctor
+./scripts/doctor
 ```
 
 ### Generating the Terraform Providers

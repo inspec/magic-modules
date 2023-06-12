@@ -15,9 +15,9 @@
 overrides: !ruby/object:Overrides::ResourceOverrides
   Instance: !ruby/object:Overrides::Inspec::ResourceOverride
     name: DatabaseInstance
-    self_link: projects/{{project}}/instances/{{database}}
-    product_url: https://www.googleapis.com/sql/v1beta4/
-    additional_functions: third_party/inspec/custom_functions/google_sql_database.erb
+    self_link: projects/{{project}}/instances/{{instance}}
+    product_url: https://sqladmin.googleapis.com/v1/
+    additional_functions: third_party/inspec/custom_functions/google_sql_database_instance.erb
     singular_extra_examples: third_party/inspec/documentation/google_sql_database_instance.md
     plural_extra_examples: third_party/inspec/documentation/google_sql_database_instances.md
     properties:
@@ -32,9 +32,9 @@ overrides: !ruby/object:Overrides::ResourceOverrides
       gceZone: !ruby/object:Overrides::Inspec::PropertyOverride
         override_name: instance_zone
   User: !ruby/object:Overrides::Inspec::ResourceOverride
-    base_url: projects/{{project}}/instances/{{database}}/users
-    self_link: projects/{{project}}/instances/{{database}}/users
-    product_url: https://www.googleapis.com/sql/v1beta4/
+    base_url: projects/{{project}}/instances/{{instance}}/users
+    self_link: projects/{{project}}/instances/{{instance}}/users
+    product_url: https://www.googleapis.com/sql/v1/
     plural_extra_examples: third_party/inspec/documentation/google_sql_users.md
     properties:
       instance: !ruby/object:Overrides::Inspec::PropertyOverride
