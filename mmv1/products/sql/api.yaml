@@ -17,7 +17,7 @@ display_name: Cloud SQL
 versions:
   - !ruby/object:Api::Product::Version
     name: ga
-    base_url: https://sqladmin.googleapis.com/sql/v1beta4/
+    base_url: https://sqladmin.googleapis.com/sql/v1/
 scopes:
   - https://www.googleapis.com/auth/sqlservice.admin
 apis_required:
@@ -68,6 +68,10 @@ objects:
           - :FIRST_GEN
           - :SECOND_GEN
           - :EXTERNAL
+      - !ruby/object:Api::Type::String
+        name: 'kind'
+        description: |
+          This is always sql#instancesList.
       - !ruby/object:Api::Type::String
         name: 'connectionName'
         description: |
@@ -287,6 +291,10 @@ objects:
         name: 'settings'
         description: 'The user settings.'
         properties:
+          - !ruby/object:Api::Type::String
+            name: 'kind'
+            description: |
+              This is always sql#settings.
           - !ruby/object:Api::Type::Array
             name: 'databaseFlags'
             description: The database flags passed to the instance at startup
@@ -399,6 +407,57 @@ objects:
             name: 'userLabels'
             description: |
               User-provided labels, represented as a dictionary where each label is a single key value pair.
+          - !ruby/object:Api::Type::Enum
+            name: 'activationPolicy'
+            description: |
+              Specifies when the instance is activated.
+            required: true
+            values:
+              - :SQL_ACTIVATION_POLICY_UNSPECIFIED
+              - :ALWAYS
+              - :NEVER
+          - !ruby/object:Api::Type::String
+            name: 'dataDiskSizeGb'
+            output: true
+            description: |
+              The size of data disk, in GB. The data disk size minimum is 10GB.
+          - !ruby/object:Api::Type::Enum
+            name: 'dataDiskType'
+            description: |
+              Specifies when the instance is activated.
+            required: true
+            values:
+              - :SQL_ACTIVATION_POLICY_UNSPECIFIED
+              - :ALWAYS
+              - :NEVER
+          - !ruby/object:Api::Type::Enum
+            name: 'pricingPlan'
+            description: |
+              The pricing plan for this instance.
+            required: true
+            values:
+              - :SQL_PRICING_PLAN_UNSPECIFIED
+              - :PACKAGE
+              - :PER_USE
+          - !ruby/object:Api::Type::Enum
+            name: 'replicationType'
+            description: |
+              The pricing plan for this instance.
+            required: true
+            values:
+              - :SQL_REPLICATION_TYPE_UNSPECIFIED
+              - :SYNCHRONOUS
+              - :ASYNCHRONOUS
+          - !ruby/object:Api::Type::Boolean
+            name: 'storageAutoResize'
+            description: |
+              Configuration to increase storage size automatically. The default value is true.
+            output: true
+          - !ruby/object:Api::Type::String
+            name: 'storageAutoResizeLimit'
+            description: |
+              The maximum size to which storage capacity can be automatically increased.
+              The default value is 0, which specifies that there is no limit.
       - !ruby/object:Api::Type::String
         name: 'gceZone'
         output: true
