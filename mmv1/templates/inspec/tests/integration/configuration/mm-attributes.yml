@@ -515,3 +515,6 @@ region_health_check:
   timeout_sec: 10
   check_interval_sec: 10
   tcp_health_check_port: 80
+
+dlp:
+  name: inspec-gcp-dlp

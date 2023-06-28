@@ -1292,4 +1292,792 @@ objects:
                               name: 'radix'
                               description: |
                                 The native way to select the alphabet. Must be in the range \[2, 95\].
+  - !ruby/object:Api::Resource
+    name: 'DlpJob'
+    create_url:  "{{parent}}/dlpJobs"
+    self_link: "{{parent}}/dlpJobs/{{name}}"
+    base_url:  "{{parent}}/dlpJobs"
+    update_verb: :PATCH
+    update_mask: true
+    description: |
+      Allows creation of templates to de-identify content.
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+          'https://cloud.google.com/dlp/docs/concepts-templates'
+      api: 'https://cloud.google.com/dlp/docs/reference/rest/v2/projects.dlpJobs'
+    parameters:
+      - !ruby/object:Api::Type::String
+        name: 'parent'
+        description: |
+          The parent of the template in any of the following formats:
+
+          * `projects/{{project}}`
+          * `projects/{{project}}/locations/{{location}}`
+          * `organizations/{{organization_id}}`
+          * `organizations/{{organization_id}}/locations/{{location}}`
+        required: true
+        input: true
+        url_param_only: true
+    properties:
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          The resource name of the template. Set by the server.
+        output: true
+      - !ruby/object:Api::Type::Enum
+        name: 'type'
+        description: |
+          An enum to represent the various types of DLP jobs.
+        values:
+          - :DLP_JOB_TYPE_UNSPECIFIED
+          - :INSPECT_JOB
+          - :RISK_ANALYSIS_JOB
+      - !ruby/object:Api::Type::Enum
+        name: 'state'
+        description: |
+          Possible states of a job. New items may be added.
+        values:
+          - :JOB_STATE_UNSPECIFIED
+          - :PENDING
+          - :RUNNING
+          - :DONE
+          - :CANCELED
+          - :FAILED
+          - :ACTIVE
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Time when the job started.
+          A timestamp in RFC3339 UTC "Zulu" format, with nanosecond resolution and up to nine fractional digits.
+          Examples: "2014-10-02T15:01:23Z" and "2014-10-02T15:01:23.045123456Z".
+        output: true
+      - !ruby/object:Api::Type::String
+        name: 'startTime'
+        description: |
+          Time when the job was created.
+          A timestamp in RFC3339 UTC "Zulu" format, with nanosecond resolution and up to nine fractional digits. 
+          Examples: "2014-10-02T15:01:23Z" and "2014-10-02T15:01:23.045123456Z".
+        output: true
+      - !ruby/object:Api::Type::String
+        name: 'endTime'
+        description: |
+          Time when the job started.
+          A timestamp in RFC3339 UTC "Zulu" format, with nanosecond resolution and up to nine fractional digits.
+          Examples: "2014-10-02T15:01:23Z" and "2014-10-02T15:01:23.045123456Z".
+        output: true
+      - !ruby/object:Api::Type::String
+        name: 'jobTriggerName'
+        description: If created by a job trigger, the resource name of the trigger that instantiated the job.
+        output: true
+      - !ruby/object:Api::Type::Array
+        name: 'errors'
+        required: true
+        description: |
+          Details information about an error encountered during job execution or the results of an unsuccessful activation of the JobTrigger.
+        item_type: !ruby/object:Api::Type::NestedObject
+          properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'details'
+              required: true
+              description: Specifies free-text based transformations to be applied to the dataset.
+              properties:
+                - !ruby/object:Api::Type::NestedObject
+                  name: 'status'
+                  description: |
+                    The Status type defines a logical error model that is suitable for different programming environments,
+                    including REST APIs and RPC APIs. It is used by gRPC. Each Status message contains three pieces of data:
+                    error code, error message, and error details.
+                  properties:
+                    - !ruby/object:Api::Type::Integer
+                      name: 'code'
+                      required: true
+                      description: |
+                        The status code, which should be an enum value of google.rpc.Code.
+                    - !ruby/object:Api::Type::String
+                      name: 'message'
+                      required: true
+                      description: |
+                        A developer-facing error message, which should be in English. 
+                        Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                    - !ruby/object:Api::Type::Array
+                      name: 'details'
+                      required: true
+                      description: |
+                        A list of messages that carry the error details. There is a common set of message types for APIs to use.
+                        An object containing fields of an arbitrary type. An additional field "@type" contains a URI identifying the type. 
+                        Example: { "id": 1234, "@type": "types.example.com/standard/id" }.
+                      item_type: !ruby/object:Api::Type::NestedObject
+                        properties:
+                          - !ruby/object:Api::Type::String
+                            name: '@type'
+                            required: true
+                            description: |
+                              type of field
+                          - !ruby/object:Api::Type::String
+                            name: 'field1'
+                            required: true
+                            description: |
+                              name of field
+      - !ruby/object:Api::Type::Array
+        name: 'actionDetails'
+        required: true
+        description: |
+          Details information about an error encountered during job execution or the results of an unsuccessful activation of the JobTrigger.
+        item_type: !ruby/object:Api::Type::NestedObject
+          properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'deidentifyDetails'
+              required: true
+              description: Specifies free-text based transformations to be applied to the dataset.
+              properties:
+                - !ruby/object:Api::Type::NestedObject
+                  name: 'deidentifyStats'
+                  required: true
+                  description: Specifies free-text based transformations to be applied to the dataset.
+                  properties:
+                    - !ruby/object:Api::Type::String
+                      name: 'transformedBytes'
+                      required: true
+                      description: |
+                        Total size in bytes that were transformed in some way.
+                    - !ruby/object:Api::Type::String
+                      name: 'transformationCount'
+                      required: true
+                      description: |
+                        Number of successfully applied transformations.
+                    - !ruby/object:Api::Type::String
+                      name: 'transformationErrorCount'
+                      required: true
+                      description: |
+                        Number of errors encountered while trying to apply transformations.
+                - !ruby/object:Api::Type::NestedObject
+                  name: 'requestedOptions'
+                  description: |
+                    The Status type defines a logical error model that is suitable for different programming environments,
+                    including REST APIs and RPC APIs. It is used by gRPC. Each Status message contains three pieces of data:
+                    error code, error message, and error details.
+                  properties:
+                    - !ruby/object:Api::Type::NestedObject
+                      name: 'snapshotDeidentifyTemplate'
+                      description: |
+                        Snapshot of the state of the DeidentifyTemplate from the Deidentify action at the time this job was run.
+                      properties:
+                        - !ruby/object:Api::Type::String
+                          name: 'name'
+                          required: true
+                          description: |
+                            The status code, which should be an enum value of google.rpc.Code.
+                        - !ruby/object:Api::Type::String
+                          name: 'displayName'
+                          required: true
+                          description: |
+                            A developer-facing error message, which should be in English. 
+                            Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                        - !ruby/object:Api::Type::String
+                          name: 'description'
+                          required: true
+                          description: |
+                            A developer-facing error message, which should be in English. 
+                            Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                        - !ruby/object:Api::Type::String
+                          name: 'createTime'
+                          required: true
+                          description: |
+                            A developer-facing error message, which should be in English. 
+                            Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                        - !ruby/object:Api::Type::String
+                          name: 'updateTime'
+                          required: true
+                          description: |
+                            A developer-facing error message, which should be in English. 
+                            Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'deidentifyConfig'
+                          description: |
+                            The Status type defines a logical error model that is suitable for different programming environments,
+                            including REST APIs and RPC APIs. It is used by gRPC. Each Status message contains three pieces of data:
+                            error code, error message, and error details.
+                          properties:
+                            - !ruby/object:Api::Type::String
+                              name: 'transformationErrorHandling'
+                              required: true
+                              description: |
+                                The status code, which should be an enum value of google.rpc.Code.
+                    - !ruby/object:Api::Type::NestedObject
+                      name: 'snapshotStructuredDeidentifyTemplate'
+                      description: |
+                        Snapshot of the state of the structured DeidentifyTemplate from the Deidentify action at the time this job was run.
+                      properties:
+                        - !ruby/object:Api::Type::String
+                          name: 'name'
+                          required: true
+                          description: |
+                            The status code, which should be an enum value of google.rpc.Code.
+                        - !ruby/object:Api::Type::String
+                          name: 'displayName'
+                          required: true
+                          description: |
+                            A developer-facing error message, which should be in English. 
+                            Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                        - !ruby/object:Api::Type::String
+                          name: 'description'
+                          required: true
+                          description: |
+                            A developer-facing error message, which should be in English. 
+                            Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                        - !ruby/object:Api::Type::String
+                          name: 'createTime'
+                          required: true
+                          description: |
+                            A developer-facing error message, which should be in English. 
+                            Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                        - !ruby/object:Api::Type::String
+                          name: 'updateTime'
+                          required: true
+                          description: |
+                            A developer-facing error message, which should be in English. 
+                            Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'deidentifyConfig'
+                          description: |
+                            The Status type defines a logical error model that is suitable for different programming environments,
+                            including REST APIs and RPC APIs. It is used by gRPC. Each Status message contains three pieces of data:
+                            error code, error message, and error details.
+                          properties:
+                            - !ruby/object:Api::Type::String
+                              name: 'transformationErrorHandling'
+                              required: true
+                              description: |
+                                The status code, which should be an enum value of google.rpc.Code.
+                    - !ruby/object:Api::Type::NestedObject
+                      name: 'snapshotImageRedactTemplate'
+                      description: |
+                        Snapshot of the state of the image transformation DeidentifyTemplate from the Deidentify action at the time this job was run.
+                      properties:
+                        - !ruby/object:Api::Type::String
+                          name: 'name'
+                          required: true
+                          description: |
+                            The status code, which should be an enum value of google.rpc.Code.
+                        - !ruby/object:Api::Type::String
+                          name: 'displayName'
+                          required: true
+                          description: |
+                            A developer-facing error message, which should be in English. 
+                            Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                        - !ruby/object:Api::Type::String
+                          name: 'description'
+                          required: true
+                          description: |
+                            A developer-facing error message, which should be in English. 
+                            Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                        - !ruby/object:Api::Type::String
+                          name: 'createTime'
+                          required: true
+                          description: |
+                            A developer-facing error message, which should be in English. 
+                            Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                        - !ruby/object:Api::Type::String
+                          name: 'updateTime'
+                          required: true
+                          description: |
+                            A developer-facing error message, which should be in English. 
+                            Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'deidentifyConfig'
+                          description: |
+                            The Status type defines a logical error model that is suitable for different programming environments,
+                            including REST APIs and RPC APIs. It is used by gRPC. Each Status message contains three pieces of data:
+                            error code, error message, and error details.
+                          properties:
+                            - !ruby/object:Api::Type::String
+                              name: 'transformationErrorHandling'
+                              required: true
+                              description: |
+                                The status code, which should be an enum value of google.rpc.Code.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'deidentifyStats'
+              required: true
+              description: Specifies free-text based transformations to be applied to the dataset.
+              properties:
+                - !ruby/object:Api::Type::NestedObject
+                  name: 'requestedOptions'
+                  description: |
+                    The Status type defines a logical error model that is suitable for different programming environments,
+                    including REST APIs and RPC APIs. It is used by gRPC. Each Status message contains three pieces of data:
+                    error code, error message, and error details.
+                  properties:
+                    - !ruby/object:Api::Type::Integer
+                      name: 'code'
+                      required: true
+                      description: |
+                        The status code, which should be an enum value of google.rpc.Code.
+                    - !ruby/object:Api::Type::String
+                      name: 'message'
+                      required: true
+                      description: |
+                        A developer-facing error message, which should be in English. 
+                        Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                    - !ruby/object:Api::Type::Array
+                      name: 'details'
+                      required: true
+                      description: |
+                        A list of messages that carry the error details. There is a common set of message types for APIs to use.
+                        An object containing fields of an arbitrary type. An additional field "@type" contains a URI identifying the type. 
+                        Example: { "id": 1234, "@type": "types.example.com/standard/id" }.
+                      item_type: !ruby/object:Api::Type::NestedObject
+                        properties:
+                          - !ruby/object:Api::Type::String
+                            name: '@type'
+                            required: true
+                            description: |
+                              type of field
+                          - !ruby/object:Api::Type::String
+                            name: 'field1'
+                            required: true
+                            description: |
+                              name of field
+
+
+      - !ruby/object:Api::Type::Array
+        name: 'riskDetails'
+        required: true
+        description: |
+          Details information about an error encountered during job execution or the results of an unsuccessful activation of the JobTrigger.
+        item_type: !ruby/object:Api::Type::NestedObject
+          properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'deidentifyDetails'
+              required: true
+              description: Specifies free-text based transformations to be applied to the dataset.
+              properties:
+                - !ruby/object:Api::Type::NestedObject
+                  name: 'deidentifyStats'
+                  required: true
+                  description: Specifies free-text based transformations to be applied to the dataset.
+                  properties:
+                    - !ruby/object:Api::Type::String
+                      name: 'transformedBytes'
+                      required: true
+                      description: |
+                        Total size in bytes that were transformed in some way.
+                    - !ruby/object:Api::Type::String
+                      name: 'transformationCount'
+                      required: true
+                      description: |
+                        Number of successfully applied transformations.
+                    - !ruby/object:Api::Type::String
+                      name: 'transformationErrorCount'
+                      required: true
+                      description: |
+                        Number of errors encountered while trying to apply transformations.
+                - !ruby/object:Api::Type::NestedObject
+                  name: 'requestedOptions'
+                  description: |
+                    The Status type defines a logical error model that is suitable for different programming environments,
+                    including REST APIs and RPC APIs. It is used by gRPC. Each Status message contains three pieces of data:
+                    error code, error message, and error details.
+                  properties:
+                    - !ruby/object:Api::Type::NestedObject
+                      name: 'snapshotDeidentifyTemplate'
+                      description: |
+                        Snapshot of the state of the DeidentifyTemplate from the Deidentify action at the time this job was run.
+                      properties:
+                        - !ruby/object:Api::Type::String
+                          name: 'name'
+                          required: true
+                          description: |
+                            The status code, which should be an enum value of google.rpc.Code.
+                        - !ruby/object:Api::Type::String
+                          name: 'displayName'
+                          required: true
+                          description: |
+                            A developer-facing error message, which should be in English. 
+                            Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                        - !ruby/object:Api::Type::String
+                          name: 'description'
+                          required: true
+                          description: |
+                            A developer-facing error message, which should be in English. 
+                            Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                        - !ruby/object:Api::Type::String
+                          name: 'createTime'
+                          required: true
+                          description: |
+                            A developer-facing error message, which should be in English. 
+                            Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                        - !ruby/object:Api::Type::String
+                          name: 'updateTime'
+                          required: true
+                          description: |
+                            A developer-facing error message, which should be in English. 
+                            Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'deidentifyConfig'
+                          description: |
+                            The Status type defines a logical error model that is suitable for different programming environments,
+                            including REST APIs and RPC APIs. It is used by gRPC. Each Status message contains three pieces of data:
+                            error code, error message, and error details.
+                          properties:
+                            - !ruby/object:Api::Type::String
+                              name: 'transformationErrorHandling'
+                              required: true
+                              description: |
+                                The status code, which should be an enum value of google.rpc.Code.
+                    - !ruby/object:Api::Type::NestedObject
+                      name: 'snapshotStructuredDeidentifyTemplate'
+                      description: |
+                        Snapshot of the state of the structured DeidentifyTemplate from the Deidentify action at the time this job was run.
+                      properties:
+                        - !ruby/object:Api::Type::String
+                          name: 'name'
+                          required: true
+                          description: |
+                            The status code, which should be an enum value of google.rpc.Code.
+                        - !ruby/object:Api::Type::String
+                          name: 'displayName'
+                          required: true
+                          description: |
+                            A developer-facing error message, which should be in English. 
+                            Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                        - !ruby/object:Api::Type::String
+                          name: 'description'
+                          required: true
+                          description: |
+                            A developer-facing error message, which should be in English. 
+                            Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                        - !ruby/object:Api::Type::String
+                          name: 'createTime'
+                          required: true
+                          description: |
+                            A developer-facing error message, which should be in English. 
+                            Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                        - !ruby/object:Api::Type::String
+                          name: 'updateTime'
+                          required: true
+                          description: |
+                            A developer-facing error message, which should be in English. 
+                            Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'deidentifyConfig'
+                          description: |
+                            The Status type defines a logical error model that is suitable for different programming environments,
+                            including REST APIs and RPC APIs. It is used by gRPC. Each Status message contains three pieces of data:
+                            error code, error message, and error details.
+                          properties:
+                            - !ruby/object:Api::Type::String
+                              name: 'transformationErrorHandling'
+                              required: true
+                              description: |
+                                The status code, which should be an enum value of google.rpc.Code.
+                    - !ruby/object:Api::Type::NestedObject
+                      name: 'snapshotImageRedactTemplate'
+                      description: |
+                        Snapshot of the state of the image transformation DeidentifyTemplate from the Deidentify action at the time this job was run.
+                      properties:
+                        - !ruby/object:Api::Type::String
+                          name: 'name'
+                          required: true
+                          description: |
+                            The status code, which should be an enum value of google.rpc.Code.
+                        - !ruby/object:Api::Type::String
+                          name: 'displayName'
+                          required: true
+                          description: |
+                            A developer-facing error message, which should be in English. 
+                            Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                        - !ruby/object:Api::Type::String
+                          name: 'description'
+                          required: true
+                          description: |
+                            A developer-facing error message, which should be in English. 
+                            Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                        - !ruby/object:Api::Type::String
+                          name: 'createTime'
+                          required: true
+                          description: |
+                            A developer-facing error message, which should be in English. 
+                            Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                        - !ruby/object:Api::Type::String
+                          name: 'updateTime'
+                          required: true
+                          description: |
+                            A developer-facing error message, which should be in English. 
+                            Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'deidentifyConfig'
+                          description: |
+                            The Status type defines a logical error model that is suitable for different programming environments,
+                            including REST APIs and RPC APIs. It is used by gRPC. Each Status message contains three pieces of data:
+                            error code, error message, and error details.
+                          properties:
+                            - !ruby/object:Api::Type::String
+                              name: 'transformationErrorHandling'
+                              required: true
+                              description: |
+                                The status code, which should be an enum value of google.rpc.Code.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'deidentifyStats'
+              required: true
+              description: Specifies free-text based transformations to be applied to the dataset.
+              properties:
+                - !ruby/object:Api::Type::NestedObject
+                  name: 'requestedOptions'
+                  description: |
+                    The Status type defines a logical error model that is suitable for different programming environments,
+                    including REST APIs and RPC APIs. It is used by gRPC. Each Status message contains three pieces of data:
+                    error code, error message, and error details.
+                  properties:
+                    - !ruby/object:Api::Type::Integer
+                      name: 'code'
+                      required: true
+                      description: |
+                        The status code, which should be an enum value of google.rpc.Code.
+                    - !ruby/object:Api::Type::String
+                      name: 'message'
+                      required: true
+                      description: |
+                        A developer-facing error message, which should be in English. 
+                        Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                    - !ruby/object:Api::Type::Array
+                      name: 'details'
+                      required: true
+                      description: |
+                        A list of messages that carry the error details. There is a common set of message types for APIs to use.
+                        An object containing fields of an arbitrary type. An additional field "@type" contains a URI identifying the type. 
+                        Example: { "id": 1234, "@type": "types.example.com/standard/id" }.
+                      item_type: !ruby/object:Api::Type::NestedObject
+                        properties:
+                          - !ruby/object:Api::Type::String
+                            name: '@type'
+                            required: true
+                            description: |
+                              type of field
+                          - !ruby/object:Api::Type::String
+                            name: 'field1'
+                            required: true
+                            description: |
+                              name of field
+
+
+      - !ruby/object:Api::Type::Array
+        name: 'inspectDetails'
+        required: true
+        description: |
+          Details information about an error encountered during job execution or the results of an unsuccessful activation of the JobTrigger.
+        item_type: !ruby/object:Api::Type::NestedObject
+          properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'deidentifyDetails'
+              required: true
+              description: Specifies free-text based transformations to be applied to the dataset.
+              properties:
+                - !ruby/object:Api::Type::NestedObject
+                  name: 'deidentifyStats'
+                  required: true
+                  description: Specifies free-text based transformations to be applied to the dataset.
+                  properties:
+                    - !ruby/object:Api::Type::String
+                      name: 'transformedBytes'
+                      required: true
+                      description: |
+                        Total size in bytes that were transformed in some way.
+                    - !ruby/object:Api::Type::String
+                      name: 'transformationCount'
+                      required: true
+                      description: |
+                        Number of successfully applied transformations.
+                    - !ruby/object:Api::Type::String
+                      name: 'transformationErrorCount'
+                      required: true
+                      description: |
+                        Number of errors encountered while trying to apply transformations.
+                - !ruby/object:Api::Type::NestedObject
+                  name: 'requestedOptions'
+                  description: |
+                    The Status type defines a logical error model that is suitable for different programming environments,
+                    including REST APIs and RPC APIs. It is used by gRPC. Each Status message contains three pieces of data:
+                    error code, error message, and error details.
+                  properties:
+                    - !ruby/object:Api::Type::NestedObject
+                      name: 'snapshotDeidentifyTemplate'
+                      description: |
+                        Snapshot of the state of the DeidentifyTemplate from the Deidentify action at the time this job was run.
+                      properties:
+                        - !ruby/object:Api::Type::String
+                          name: 'name'
+                          required: true
+                          description: |
+                            The status code, which should be an enum value of google.rpc.Code.
+                        - !ruby/object:Api::Type::String
+                          name: 'displayName'
+                          required: true
+                          description: |
+                            A developer-facing error message, which should be in English. 
+                            Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                        - !ruby/object:Api::Type::String
+                          name: 'description'
+                          required: true
+                          description: |
+                            A developer-facing error message, which should be in English. 
+                            Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                        - !ruby/object:Api::Type::String
+                          name: 'createTime'
+                          required: true
+                          description: |
+                            A developer-facing error message, which should be in English. 
+                            Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                        - !ruby/object:Api::Type::String
+                          name: 'updateTime'
+                          required: true
+                          description: |
+                            A developer-facing error message, which should be in English. 
+                            Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'deidentifyConfig'
+                          description: |
+                            The Status type defines a logical error model that is suitable for different programming environments,
+                            including REST APIs and RPC APIs. It is used by gRPC. Each Status message contains three pieces of data:
+                            error code, error message, and error details.
+                          properties:
+                            - !ruby/object:Api::Type::String
+                              name: 'transformationErrorHandling'
+                              required: true
+                              description: |
+                                The status code, which should be an enum value of google.rpc.Code.
+                    - !ruby/object:Api::Type::NestedObject
+                      name: 'snapshotStructuredDeidentifyTemplate'
+                      description: |
+                        Snapshot of the state of the structured DeidentifyTemplate from the Deidentify action at the time this job was run.
+                      properties:
+                        - !ruby/object:Api::Type::String
+                          name: 'name'
+                          required: true
+                          description: |
+                            The status code, which should be an enum value of google.rpc.Code.
+                        - !ruby/object:Api::Type::String
+                          name: 'displayName'
+                          required: true
+                          description: |
+                            A developer-facing error message, which should be in English. 
+                            Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                        - !ruby/object:Api::Type::String
+                          name: 'description'
+                          required: true
+                          description: |
+                            A developer-facing error message, which should be in English. 
+                            Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                        - !ruby/object:Api::Type::String
+                          name: 'createTime'
+                          required: true
+                          description: |
+                            A developer-facing error message, which should be in English. 
+                            Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                        - !ruby/object:Api::Type::String
+                          name: 'updateTime'
+                          required: true
+                          description: |
+                            A developer-facing error message, which should be in English. 
+                            Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'deidentifyConfig'
+                          description: |
+                            The Status type defines a logical error model that is suitable for different programming environments,
+                            including REST APIs and RPC APIs. It is used by gRPC. Each Status message contains three pieces of data:
+                            error code, error message, and error details.
+                          properties:
+                            - !ruby/object:Api::Type::String
+                              name: 'transformationErrorHandling'
+                              required: true
+                              description: |
+                                The status code, which should be an enum value of google.rpc.Code.
+                    - !ruby/object:Api::Type::NestedObject
+                      name: 'snapshotImageRedactTemplate'
+                      description: |
+                        Snapshot of the state of the image transformation DeidentifyTemplate from the Deidentify action at the time this job was run.
+                      properties:
+                        - !ruby/object:Api::Type::String
+                          name: 'name'
+                          required: true
+                          description: |
+                            The status code, which should be an enum value of google.rpc.Code.
+                        - !ruby/object:Api::Type::String
+                          name: 'displayName'
+                          required: true
+                          description: |
+                            A developer-facing error message, which should be in English. 
+                            Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                        - !ruby/object:Api::Type::String
+                          name: 'description'
+                          required: true
+                          description: |
+                            A developer-facing error message, which should be in English. 
+                            Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                        - !ruby/object:Api::Type::String
+                          name: 'createTime'
+                          required: true
+                          description: |
+                            A developer-facing error message, which should be in English. 
+                            Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                        - !ruby/object:Api::Type::String
+                          name: 'updateTime'
+                          required: true
+                          description: |
+                            A developer-facing error message, which should be in English. 
+                            Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'deidentifyConfig'
+                          description: |
+                            The Status type defines a logical error model that is suitable for different programming environments,
+                            including REST APIs and RPC APIs. It is used by gRPC. Each Status message contains three pieces of data:
+                            error code, error message, and error details.
+                          properties:
+                            - !ruby/object:Api::Type::String
+                              name: 'transformationErrorHandling'
+                              required: true
+                              description: |
+                                The status code, which should be an enum value of google.rpc.Code.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'deidentifyStats'
+              required: true
+              description: Specifies free-text based transformations to be applied to the dataset.
+              properties:
+                - !ruby/object:Api::Type::NestedObject
+                  name: 'requestedOptions'
+                  description: |
+                    The Status type defines a logical error model that is suitable for different programming environments,
+                    including REST APIs and RPC APIs. It is used by gRPC. Each Status message contains three pieces of data:
+                    error code, error message, and error details.
+                  properties:
+                    - !ruby/object:Api::Type::Integer
+                      name: 'code'
+                      required: true
+                      description: |
+                        The status code, which should be an enum value of google.rpc.Code.
+                    - !ruby/object:Api::Type::String
+                      name: 'message'
+                      required: true
+                      description: |
+                        A developer-facing error message, which should be in English. 
+                        Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                    - !ruby/object:Api::Type::Array
+                      name: 'details'
+                      required: true
+                      description: |
+                        A list of messages that carry the error details. There is a common set of message types for APIs to use.
+                        An object containing fields of an arbitrary type. An additional field "@type" contains a URI identifying the type. 
+                        Example: { "id": 1234, "@type": "types.example.com/standard/id" }.
+                      item_type: !ruby/object:Api::Type::NestedObject
+                        properties:
+                          - !ruby/object:Api::Type::String
+                            name: '@type'
+                            required: true
+                            description: |
+                              type of field
+                          - !ruby/object:Api::Type::String
+                            name: 'field1'
+                            required: true
+                            description: |
+                              name of field
 
