@@ -1,9 +1,11 @@
 <% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
-<% dlp = grab_attributes(pwd)['dlp'] -%>
-describe google_data_loss_prevention_dlp_job(project: <%= gcp_project_id -%>, name: <%= doc_generation ? "'#{dlp['name']}'" : "dlp['name']" -%>) do
+<% gcp_dlp_name = grab_attributes(pwd)['dlp']['name'] -%>
+<% gcp_dlp_location = grab_attributes(pwd)['dlp']['location'] -%>
+
+describe google_data_loss_prevention_dlp_job(project: <%= gcp_project_id -%>, location: <%= gcp_dlp_location -%>, name: <%= gcp_dlp_name -%>) do
   it { should exist }
 end
 
-describe google_data_loss_prevention_dlp_job(project: <%= gcp_project_id -%>, name: 'nonexistent') do
+describe google_data_loss_prevention_dlp_job(project: <%= gcp_project_id -%>, location: <%= gcp_dlp_location -%>, name: 'nonexistent') do
   it { should_not exist }
 end

@@ -517,4 +517,5 @@ region_health_check:
   tcp_health_check_port: 80
 
 dlp:
-  name: inspec-gcp-dlp
+  name: "inspec-gcp-dlp"
+  location: "us-east-2"

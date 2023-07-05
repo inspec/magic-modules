@@ -1294,9 +1294,9 @@ objects:
                                 The native way to select the alphabet. Must be in the range \[2, 95\].
   - !ruby/object:Api::Resource
     name: 'DlpJob'
-    create_url:  "{{parent}}/dlpJobs"
-    self_link: "{{parent}}/dlpJobs/{{name}}"
-    base_url:  "{{parent}}/dlpJobs"
+    create_url: "projects/{{project}}/locations/{{location}}/dlpJobs"
+    self_link: "projects/{{project}}/locations/{{location}}/dlpJobs/{{name}}"
+    base_url:  "projects/{{project}}/locations/{{location}}/dlpJobs"
     update_verb: :PATCH
     update_mask: true
     description: |
@@ -1405,12 +1405,12 @@ objects:
                       required: true
                       description: |
                         A list of messages that carry the error details. There is a common set of message types for APIs to use.
-                        An object containing fields of an arbitrary type. An additional field "@type" contains a URI identifying the type. 
-                        Example: { "id": 1234, "@type": "types.example.com/standard/id" }.
+                        An object containing fields of an arbitrary type. An additional field "type" contains a URI identifying the type. 
+                        Example: { "id": 1234, "type": "types.example.com/standard/id" }.
                       item_type: !ruby/object:Api::Type::NestedObject
                         properties:
                           - !ruby/object:Api::Type::String
-                            name: '@type'
+                            name: 'type'
                             required: true
                             description: |
                               type of field
@@ -1624,12 +1624,12 @@ objects:
                       required: true
                       description: |
                         A list of messages that carry the error details. There is a common set of message types for APIs to use.
-                        An object containing fields of an arbitrary type. An additional field "@type" contains a URI identifying the type. 
-                        Example: { "id": 1234, "@type": "types.example.com/standard/id" }.
+                        An object containing fields of an arbitrary type. An additional field "type" contains a URI identifying the type. 
+                        Example: { "id": 1234, "type": "types.example.com/standard/id" }.
                       item_type: !ruby/object:Api::Type::NestedObject
                         properties:
                           - !ruby/object:Api::Type::String
-                            name: '@type'
+                            name: 'type'
                             required: true
                             description: |
                               type of field
@@ -1845,12 +1845,12 @@ objects:
                       required: true
                       description: |
                         A list of messages that carry the error details. There is a common set of message types for APIs to use.
-                        An object containing fields of an arbitrary type. An additional field "@type" contains a URI identifying the type. 
-                        Example: { "id": 1234, "@type": "types.example.com/standard/id" }.
+                        An object containing fields of an arbitrary type. An additional field "type" contains a URI identifying the type. 
+                        Example: { "id": 1234, "type": "types.example.com/standard/id" }.
                       item_type: !ruby/object:Api::Type::NestedObject
                         properties:
                           - !ruby/object:Api::Type::String
-                            name: '@type'
+                            name: 'type'
                             required: true
                             description: |
                               type of field
@@ -2066,12 +2066,12 @@ objects:
                       required: true
                       description: |
                         A list of messages that carry the error details. There is a common set of message types for APIs to use.
-                        An object containing fields of an arbitrary type. An additional field "@type" contains a URI identifying the type. 
-                        Example: { "id": 1234, "@type": "types.example.com/standard/id" }.
+                        An object containing fields of an arbitrary type. An additional field "type" contains a URI identifying the type. 
+                        Example: { "id": 1234, "type": "types.example.com/standard/id" }.
                       item_type: !ruby/object:Api::Type::NestedObject
                         properties:
                           - !ruby/object:Api::Type::String
-                            name: '@type'
+                            name: 'type'
                             required: true
                             description: |
                               type of field
