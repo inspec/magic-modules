@@ -1,11 +1,14 @@
 <% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
-<% gcp_dlp_name = grab_attributes(pwd)['dlp']['name'] -%>
-<% gcp_dlp_location = grab_attributes(pwd)['dlp']['location'] -%>
+<% dlp = grab_attributes(pwd)['dlp'] -%>
 
-describe google_data_loss_prevention_dlp_job(project: <%= gcp_project_id -%>, location: <%= gcp_dlp_location -%>, name: <%= gcp_dlp_name -%>) do
+describe google_data_loss_prevention_dlp_job(project: <%= gcp_project_id -%>, location: <%= doc_generation ? "'#{dlp['location']}'" : "dlp['location']" -%>, name: <%= doc_generation ? "'#{dlp['name']}'" : "dlp['name']" -%>) do
   it { should exist }
+  its('name') { should cmp <%= doc_generation ? "'#{dlp['name']}'" : "dlp['name']" -%> }
+  its('type') { should cmp <%= doc_generation ? "'#{dlp['type']}'" : "dlp['type']" -%> }
+  its('state') { should cmp <%= doc_generation ? "'#{dlp['state']}'" : "dlp['state']" -%> }
+  its('inspectDetails.requestedOptions.snapshotInspectTemplate') { should cmp <%= doc_generation ? "'#{dlp['inspectDetails']['requestedOptions']['snapshotInspectTemplate']}'" : "dlp['inspectDetails']['requestedOptions']['snapshotInspectTemplate']" -%> }
 end
 
-describe google_data_loss_prevention_dlp_job(project: <%= gcp_project_id -%>, location: <%= gcp_dlp_location -%>, name: 'nonexistent') do
+describe google_data_loss_prevention_dlp_job(project: <%= gcp_project_id -%>, location: <%= dlp['location'] -%>, name: 'nonexistent') do
   it { should_not exist }
 end

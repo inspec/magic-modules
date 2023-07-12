@@ -517,5 +517,18 @@ region_health_check:
   tcp_health_check_port: 80
 
 dlp:
-  name: "inspec-gcp-dlp"
+  name: "i-inspec-gcp-dlp"
   location: "us-east-2"
+  type: "INSPECT_JOB"
+  state: "ACTIVE"
+  inspectDetails:
+    requestedOptions:
+      snapshotInspectTemplate: ""
+      jobConfig:
+        storageConfig:
+          hybridOptions:
+            description: "test"
+            tableOptions: ""
+
+
+
