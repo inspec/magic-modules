@@ -515,3 +515,20 @@ region_health_check:
   timeout_sec: 10
   check_interval_sec: 10
   tcp_health_check_port: 80
+
+dlp:
+  name: "i-inspec-gcp-dlp"
+  location: "us-east-2"
+  type: "INSPECT_JOB"
+  state: "ACTIVE"
+  inspectDetails:
+    requestedOptions:
+      snapshotInspectTemplate: ""
+      jobConfig:
+        storageConfig:
+          hybridOptions:
+            description: "test"
+            tableOptions: ""
+
+
+
