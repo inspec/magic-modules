@@ -1294,9 +1294,10 @@ objects:
                                 The native way to select the alphabet. Must be in the range \[2, 95\].
   - !ruby/object:Api::Resource
     name: 'DlpJob'
-    create_url: "projects/{{project}}/locations/{{location}}/dlpJobs"
-    self_link: "projects/{{project}}/locations/{{location}}/dlpJobs/{{name}}"
-    base_url:  "projects/{{project}}/locations/{{location}}/dlpJobs"
+    create_url: "{{parent}}/dlpJobs"
+    self_link: "{{parent}}/dlpJobs/{{name}}"
+    base_url: "{{parent}}/dlpJobs"
+    collection_url_key: 'jobs'
     update_verb: :PATCH
     update_mask: true
     description: |
