@@ -39,7 +39,7 @@ objects:
         name: 'parent'
         description: |
           The parent of the trigger, either in the format `projects/{{project}}`
-          or `projects/{{project}}/locations/{{location}}`
+          or  `projects/{{project}}/locations/{{location}}`
         required: true
         input: true
         url_param_only: true
