@@ -47,7 +47,7 @@ objects:
       - !ruby/object:Api::Type::String
         name: 'name'
         description: |
-          The resource name of the job trigger. Set by the server.
+          The resource name of the job trigger.Set by the server.
         output: true
       - !ruby/object:Api::Type::String
         name: 'description'
