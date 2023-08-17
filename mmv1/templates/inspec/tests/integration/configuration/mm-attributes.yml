@@ -529,6 +529,8 @@ dlp:
           hybridOptions:
             description: "test"
             tableOptions: ""
+  description: "Description"
+  display_name: "Displayname"
 
 
 
