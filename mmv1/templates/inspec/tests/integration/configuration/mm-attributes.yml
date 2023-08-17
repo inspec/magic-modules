@@ -531,6 +531,10 @@ dlp:
             tableOptions: ""
   description: "Description"
   display_name: "Displayname"
-
+  job_attribute_name: "job_attribute-1"
+  job_trigger_status: "HEALTHY"
+  job_trigger_name: "name1"
+  job_trigger_display_name: "dp"
+  job_trigger_description: "description"
 
 
