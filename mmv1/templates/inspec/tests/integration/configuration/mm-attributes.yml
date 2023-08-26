@@ -538,3 +538,6 @@ dlp:
   job_trigger_description: "description"
 
 
+
+region_security_policy:
+  securitypolicy : "value_securitypolicy"
