@@ -1,0 +1,35 @@
+name: Generate files and raise PR
+
+on: [push]
+
+jobs:
+  generate-files:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Execute code
+        run: |
+          # Run the code that generates the files
+          chmod +x generator.sh && ./generator.sh
+      - name: Create new branch
+        uses: peterjgrainger/action-create-branch@v2.2.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          branch: 'release-notes'
+          sha: '${{ github.event.pull_request.head.sha }}'
+          repository: inspec/inspec-gcp
+      - name: Upload files
+        uses: actions/upload-artifact@v1
+        with:
+          name: files
+          path: mmv1/build/inspec
+      - name: Raise pull request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: feature-branch
+          title: "Move files to new directory"
+          message: "This pull request moves files to a new directory"
+          labels: "enhancement"
