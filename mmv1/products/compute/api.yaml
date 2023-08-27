@@ -25606,3 +25606,96 @@ objects:
        description: |
         URL of the region where the regional security policy resides. This field is not applicable to global security policies. 
      
+
+    
+  - !ruby/object:Api::Resource
+    name: 'PublicAdvertisedPrefix'
+    kind: 'compute#publicadvertisedprefixes'
+    base_url: 'projects/{{project}}/global/publicAdvertisedPrefixes/{{publicAdvertisedPrefix}}'
+    collection_url_key: 'items'
+    input: true
+    has_self_link: true
+    description: |
+      An instance is a virtual machine (VM) hosted on Google's infrastructure.
+    properties:
+     - !ruby/object:Api::Type::String
+       name: 'kind'
+       description: |
+        Type of the resource. Always compute#publicAdvertisedPrefix for public advertised prefixes. 
+     - !ruby/object:Api::Type::String
+       name: 'id'
+       description: |
+        string (uint64 format) The unique identifier for the resource type. The server generates this identifier. 
+     - !ruby/object:Api::Type::String
+       name: 'creationTimestamp'
+       description: |
+        Creation timestamp in RFC3339 text format. 
+     - !ruby/object:Api::Type::String
+       name: 'name'
+       description: |
+        Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash. 
+     - !ruby/object:Api::Type::String
+       name: 'description'
+       description: |
+        An optional description of this resource. Provide this property when you create the resource. 
+     - !ruby/object:Api::Type::String
+       name: 'selfLink'
+       description: |
+        Server-defined URL for the resource. 
+     - !ruby/object:Api::Type::String
+       name: 'ipCidrRange'
+       description: |
+        The address range, in CIDR format, represented by this public advertised prefix. 
+     - !ruby/object:Api::Type::String
+       name: 'dnsVerificationIp'
+       description: |
+        The address to be used for reverse DNS verification. 
+     - !ruby/object:Api::Type::String
+       name: 'sharedSecret'
+       description: |
+        The shared secret to be used for reverse DNS verification. 
+     - !ruby/object:Api::Type::Enum
+       name: 'status'
+       description: |
+        The status of the public advertised prefix. Possible values include:  INITIAL: RPKI validation is complete. PTR_CONFIGURED: User has configured the PTR. VALIDATED: Reverse DNS lookup is successful. REVERSE_DNS_LOOKUP_FAILED: Reverse DNS lookup failed. PREFIX_CONFIGURATION_IN_PROGRESS: The prefix is being  configured. PREFIX_CONFIGURATION_COMPLETE: The prefix is fully configured. PREFIX_REMOVAL_IN_PROGRESS: The prefix is being removed. 
+       values:
+       - :INITIAL
+       - :PTR_CONFIGURED
+       - :VALIDATED
+       - :REVERSE_DNS_LOOKUP_FAILED
+       - :PREFIX_CONFIGURATION_IN_PROGRESS
+       - :PREFIX_CONFIGURATION_COMPLETE
+       - :PREFIX_REMOVAL_IN_PROGRESS
+     
+       default_value: :INITIAL
+     - !ruby/object:Api::Type::Array
+       name: 'publicDelegatedPrefixs'
+       description: |
+        object The list of public delegated prefixes that exist for this public advertised prefix. 
+       item_type: !ruby/object:Api::Type::NestedObject
+         properties:
+           - !ruby/object:Api::Type::String
+             name: 'name'
+             description: |
+                    The name of the public delegated prefix 
+           - !ruby/object:Api::Type::String
+             name: 'region'
+             description: |
+                    The region of the public delegated prefix if it is regional. If absent, the prefix is global. 
+           - !ruby/object:Api::Type::String
+             name: 'project'
+             description: |
+                    The project number of the public delegated prefix 
+           - !ruby/object:Api::Type::String
+             name: 'status'
+             description: |
+                    The status of the public delegated prefix. Possible values are:  INITIALIZING: The public delegated prefix is being initialized and  addresses cannot be created yet.  ANNOUNCED: The public delegated prefix is active. 
+           - !ruby/object:Api::Type::String
+             name: 'ipRange'
+             description: |
+                    The IP address range of the public delegated prefix 
+     - !ruby/object:Api::Type::String
+       name: 'fingerprint'
+       description: |
+        string (bytes format) Fingerprint of this resource. A hash of the contents stored in this object. This field is used in optimistic locking. This field will be ignored when inserting a new PublicAdvertisedPrefix. An up-to-date fingerprint must be provided in order to update the PublicAdvertisedPrefix, otherwise the request will fail with error 412 conditionNotMet. To see the latest fingerprint, make a get() request to retrieve a PublicAdvertisedPrefix. A base64-encoded string. 
+     
