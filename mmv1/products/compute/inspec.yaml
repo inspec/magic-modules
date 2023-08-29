@@ -67,8 +67,6 @@ overrides: !ruby/object:Overrides::ResourceOverrides
         exclude: false
       status: !ruby/object:Overrides::Inspec::PropertyOverride
         exclude: false
-  ImageFamilyView: !ruby/object:Overrides::Inspec::ResourceOverride
-    singular_only: true
   Instance: !ruby/object:Overrides::Inspec::ResourceOverride
     additional_functions: third_party/inspec/custom_functions/google_compute_instance.erb
     singular_extra_examples: third_party/inspec/documentation/google_compute_instance.md
