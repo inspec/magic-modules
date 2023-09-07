@@ -1,5 +1,5 @@
 <% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
-<% public_delegated_prefix = grab_attributes(pwd)['public_delegated_prefix'] -%>
-describe google_compute_public_delegated_prefix(project: <%= gcp_project_id -%>, region: 'us-east1-b', name: <%= doc_generation ? "'#{public_delegated_prefix['name']}'" : "public_delegated_prefix['name']" -%>) do
-  it { should exist }
-end
+   <% public_delegated_prefix = grab_attributes(pwd)['public_delegated_prefix'] -%>
+   describe google_compute_public_delegated_prefix(project: <%= gcp_project_id -%>, region: <%= doc_generation ? "' #{public_delegated_prefix['region']}'":"public_delegated_prefix['region']" -%>, publicDelegatedPrefix: <%= doc_generation ? "' #{public_delegated_prefix['publicDelegatedPrefix']}'":"public_delegated_prefix['publicDelegatedPrefix']" -%>) do
+     it { should exist }
+   end
