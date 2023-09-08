@@ -115,7 +115,7 @@ overrides: !ruby/object:Overrides::ResourceOverrides
   GlobalNetworkEndpoint: !ruby/object:Overrides::Inspec::ResourceOverride
     exclude: true
   GlobalNetworkEndpointGroup: !ruby/object:Overrides::Inspec::ResourceOverride
-    exclude: true
+    exclude: false
   NetworkPeeringRoutesConfig: !ruby/object:Overrides::Inspec::ResourceOverride
     exclude: true
   NodeGroup: !ruby/object:Overrides::Inspec::ResourceOverride
