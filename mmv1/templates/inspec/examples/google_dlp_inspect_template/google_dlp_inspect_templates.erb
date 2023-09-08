@@ -2,7 +2,7 @@
 <% dlp = grab_attributes(pwd)['dlp'] -%>
 
 
-describe google_data_loss_prevention_inspect_templates(parent: "projects/#{<%= gcp_project_id -%>}/locations/#{<%= doc_generation ? "'#{dlp['location']}'" : "dlp['location']" -%>}") do
+describe google_dlp_inspect_templates(parent: "projects/#{<%= gcp_project_id -%>}/locations/#{<%= doc_generation ? "'#{dlp['location']}'" : "dlp['location']" -%>}") do
 it { should exist }
 its('names') { should include <%= doc_generation ? "'#{dlp['name']}'" : "dlp['name']" -%> }
 its('types') { should include <%= doc_generation ? "'#{dlp['type']}'" : "dlp['type']" -%> }
