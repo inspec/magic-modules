@@ -3,3 +3,6 @@
    describe google_vertex_ai_batch_prediction_job(name: <%= doc_generation ? "' #{batch_prediction_job['name']}'":"batch_prediction_job['name']" -%>, region: <%= doc_generation ? "' #{batch_prediction_job['region']}'":"batch_prediction_job['region']" -%>) do
      it { should exist }
    end
+   describe google_vertex_ai_batch_prediction_job(name: "does_not_exit", region: <%= doc_generation ? "' #{batch_prediction_job['region']}'":"batch_prediction_job['region']" -%>) do
+     it { should exist }
+   end
