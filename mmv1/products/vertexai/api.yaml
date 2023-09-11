@@ -1301,6 +1301,7 @@ objects:
           The service account that the DeployedModel's container runs as. If not specified, a system generated one will be used, which has minimal permissions and the custom container, if used, may not have enough permission to access other Google Cloud resources. Users deploying the Model must have the `iam.serviceAccounts.actAs` permission on this service account.
   
 
+
     
   - !ruby/object:Api::Resource
     name: BatchPredictionJob
@@ -1344,24 +1345,24 @@ objects:
         description: |
           Configuration defining how to transform batch prediction input instances to the instances that the Model accepts.
         properties:
-        - !ruby/object:Api::Type::Array
-          name: 'includedFields'
-          description: |
-            Fields that will be included in the prediction instance that is sent to the Model. If instance_type is `array`, the order of field names in included_fields also determines the order of the values in the array. When included_fields is populated, excluded_fields must be empty. The input must be JSONL with objects at each line, CSV, BigQuery or TfRecord.
-          item_type: Api::Type::String
-        - !ruby/object:Api::Type::String
-          name: 'instanceType'
-          description: |
-            The format of the instance that the Model accepts. Vertex AI will convert compatible batch prediction input instance formats to the specified format. Supported values are: * `object`: Each input is converted to JSON object format. * For `bigquery`, each row is converted to an object. * For `jsonl`, each line of the JSONL input must be an object. * Does not apply to `csv`, `file-list`, `tf-record`, or `tf-record-gzip`. * `array`: Each input is converted to JSON array format. * For `bigquery`, each row is converted to an array. The order of columns is determined by the BigQuery column order, unless included_fields is populated. included_fields must be populated for specifying field orders. * For `jsonl`, if each line of the JSONL input is an object, included_fields must be populated for specifying field orders. * Does not apply to `csv`, `file-list`, `tf-record`, or `tf-record-gzip`. If not specified, Vertex AI converts the batch prediction input as follows: * For `bigquery` and `csv`, the behavior is the same as `array`. The order of columns is the same as defined in the file or table, unless included_fields is populated. * For `jsonl`, the prediction instance format is determined by each line of the input. * For `tf-record`/`tf-record-gzip`, each record will be converted to an object in the format of `{"b64": }`, where `` is the Base64-encoded string of the content of the record. * For `file-list`, each file in the list will be converted to an object in the format of `{"b64": }`, where `` is the Base64-encoded string of the content of the file.
-        - !ruby/object:Api::Type::Array
-          name: 'excludedFields'
-          description: |
-            Fields that will be excluded in the prediction instance that is sent to the Model. Excluded will be attached to the batch prediction output if key_field is not specified. When excluded_fields is populated, included_fields must be empty. The input must be JSONL with objects at each line, CSV, BigQuery or TfRecord.
-          item_type: Api::Type::String
-        - !ruby/object:Api::Type::String
-          name: 'keyField'
-          description: |
-            The name of the field that is considered as a key. The values identified by the key field is not included in the transformed instances that is sent to the Model. This is similar to specifying this name of the field in excluded_fields. In addition, the batch prediction output will not include the instances. Instead the output will only include the value of the key field, in a field named `key` in the output: * For `jsonl` output format, the output will have a `key` field instead of the `instance` field. * For `csv`/`bigquery` output format, the output will have have a `key` column instead of the instance feature columns. The input must be JSONL with objects at each line, CSV, BigQuery or TfRecord.
+            - !ruby/object:Api::Type::Array
+              name: 'includedFields'
+              description: |
+                      Fields that will be included in the prediction instance that is sent to the Model. If instance_type is `array`, the order of field names in included_fields also determines the order of the values in the array. When included_fields is populated, excluded_fields must be empty. The input must be JSONL with objects at each line, CSV, BigQuery or TfRecord.
+              item_type: Api::Type::String
+            - !ruby/object:Api::Type::String
+              name: 'instanceType'
+              description: |
+                      The format of the instance that the Model accepts. Vertex AI will convert compatible batch prediction input instance formats to the specified format. Supported values are: * `object`: Each input is converted to JSON object format. * For `bigquery`, each row is converted to an object. * For `jsonl`, each line of the JSONL input must be an object. * Does not apply to `csv`, `file-list`, `tf-record`, or `tf-record-gzip`. * `array`: Each input is converted to JSON array format. * For `bigquery`, each row is converted to an array. The order of columns is determined by the BigQuery column order, unless included_fields is populated. included_fields must be populated for specifying field orders. * For `jsonl`, if each line of the JSONL input is an object, included_fields must be populated for specifying field orders. * Does not apply to `csv`, `file-list`, `tf-record`, or `tf-record-gzip`. If not specified, Vertex AI converts the batch prediction input as follows: * For `bigquery` and `csv`, the behavior is the same as `array`. The order of columns is the same as defined in the file or table, unless included_fields is populated. * For `jsonl`, the prediction instance format is determined by each line of the input. * For `tf-record`/`tf-record-gzip`, each record will be converted to an object in the format of `{"b64": }`, where `` is the Base64-encoded string of the content of the record. * For `file-list`, each file in the list will be converted to an object in the format of `{"b64": }`, where `` is the Base64-encoded string of the content of the file.
+            - !ruby/object:Api::Type::Array
+              name: 'excludedFields'
+              description: |
+                      Fields that will be excluded in the prediction instance that is sent to the Model. Excluded will be attached to the batch prediction output if key_field is not specified. When excluded_fields is populated, included_fields must be empty. The input must be JSONL with objects at each line, CSV, BigQuery or TfRecord.
+              item_type: Api::Type::String
+            - !ruby/object:Api::Type::String
+              name: 'keyField'
+              description: |
+                      The name of the field that is considered as a key. The values identified by the key field is not included in the transformed instances that is sent to the Model. This is similar to specifying this name of the field in excluded_fields. In addition, the batch prediction output will not include the instances. Instead the output will only include the value of the key field, in a field named `key` in the output: * For `jsonl` output format, the output will have a `key` field instead of the `instance` field. * For `csv`/`bigquery` output format, the output will have have a `key` column instead of the instance feature columns. The input must be JSONL with objects at each line, CSV, BigQuery or TfRecord.
       - !ruby/object:Api::Type::String
         name: 'modelVersionId'
         description: |
@@ -1371,61 +1372,61 @@ objects:
         description: |
           A description of resources that are used for performing batch operations, are dedicated to a Model, and need manual configuration.
         properties:
-        - !ruby/object:Api::Type::Integer
-          name: 'startingReplicaCount'
-          description: |
-            Immutable. The number of machine replicas used at the start of the batch operation. If not set, Vertex AI decides starting number, not greater than max_replica_count
-        - !ruby/object:Api::Type::Integer
-          name: 'maxReplicaCount'
-          description: |
-            Immutable. The maximum number of machine replicas the batch operation may be scaled to. The default value is 10.
-        - !ruby/object:Api::Type::NestedObject
-          name: 'machineSpec'
-          description: |
-            Specification of a single machine.
-          properties:
-          - !ruby/object:Api::Type::Enum
-            name: 'acceleratorType'
-            description: |
-              Immutable. The type of accelerator(s) that may be attached to the machine as per accelerator_count.
-            values:
-              - :ACCELERATOR_TYPE_UNSPECIFIED
-              - :NVIDIA_TESLA_K80
-              - :NVIDIA_TESLA_P100
-              - :NVIDIA_TESLA_V100
-              - :NVIDIA_TESLA_P4
-              - :NVIDIA_TESLA_T4
-              - :NVIDIA_TESLA_A100
-              - :NVIDIA_A100_80GB
-              - :NVIDIA_L4
-              - :TPU_V2
-              - :TPU_V3
-              - :TPU_V4_POD
-          - !ruby/object:Api::Type::String
-            name: 'machineType'
-            description: |
-              Immutable. The type of the machine. See the [list of machine types supported for prediction](https://cloud.google.com/vertex-ai/docs/predictions/configure-compute#machine-types) See the [list of machine types supported for custom training](https://cloud.google.com/vertex-ai/docs/training/configure-compute#machine-types). For DeployedModel this field is optional, and the default value is `n1-standard-2`. For BatchPredictionJob or as part of WorkerPoolSpec this field is required.
-          - !ruby/object:Api::Type::Integer
-            name: 'acceleratorCount'
-            description: |
-              The number of accelerators to attach to the machine.
+            - !ruby/object:Api::Type::Integer
+              name: 'startingReplicaCount'
+              description: |
+                      Immutable. The number of machine replicas used at the start of the batch operation. If not set, Vertex AI decides starting number, not greater than max_replica_count
+            - !ruby/object:Api::Type::Integer
+              name: 'maxReplicaCount'
+              description: |
+                      Immutable. The maximum number of machine replicas the batch operation may be scaled to. The default value is 10.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'machineSpec'
+              description: |
+                      Specification of a single machine.
+              properties:
+                  - !ruby/object:Api::Type::Enum
+                    name: 'acceleratorType'
+                    description: |
+                                  Immutable. The type of accelerator(s) that may be attached to the machine as per accelerator_count.
+                    values:
+                      - :ACCELERATOR_TYPE_UNSPECIFIED
+                      - :NVIDIA_TESLA_K80
+                      - :NVIDIA_TESLA_P100
+                      - :NVIDIA_TESLA_V100
+                      - :NVIDIA_TESLA_P4
+                      - :NVIDIA_TESLA_T4
+                      - :NVIDIA_TESLA_A100
+                      - :NVIDIA_A100_80GB
+                      - :NVIDIA_L4
+                      - :TPU_V2
+                      - :TPU_V3
+                      - :TPU_V4_POD
+                  - !ruby/object:Api::Type::String
+                    name: 'machineType'
+                    description: |
+                                  Immutable. The type of the machine. See the [list of machine types supported for prediction](https://cloud.google.com/vertex-ai/docs/predictions/configure-compute#machine-types) See the [list of machine types supported for custom training](https://cloud.google.com/vertex-ai/docs/training/configure-compute#machine-types). For DeployedModel this field is optional, and the default value is `n1-standard-2`. For BatchPredictionJob or as part of WorkerPoolSpec this field is required.
+                  - !ruby/object:Api::Type::Integer
+                    name: 'acceleratorCount'
+                    description: |
+                                  The number of accelerators to attach to the machine.
       - !ruby/object:Api::Type::NestedObject
         name: 'outputInfo'
         description: |
           Further describes this job's output. Supplements output_config.
         properties:
-        - !ruby/object:Api::Type::String
-          name: 'bigqueryOutputDataset'
-          description: |
-            Output only. The path of the BigQuery dataset created, in `bq://projectId.bqDatasetId` format, into which the prediction output is written.
-        - !ruby/object:Api::Type::String
-          name: 'gcsOutputDirectory'
-          description: |
-            Output only. The full path of the Cloud Storage directory created, into which the prediction output is written.
-        - !ruby/object:Api::Type::String
-          name: 'bigqueryOutputTable'
-          description: |
-            Output only. The name of the BigQuery table created, in `predictions_` format, into which the prediction output is written. Can be used by UI to generate the BigQuery output path, for example.
+            - !ruby/object:Api::Type::String
+              name: 'bigqueryOutputDataset'
+              description: |
+                      Output only. The path of the BigQuery dataset created, in `bq://projectId.bqDatasetId` format, into which the prediction output is written.
+            - !ruby/object:Api::Type::String
+              name: 'gcsOutputDirectory'
+              description: |
+                      Output only. The full path of the Cloud Storage directory created, into which the prediction output is written.
+            - !ruby/object:Api::Type::String
+              name: 'bigqueryOutputTable'
+              description: |
+                      Output only. The name of the BigQuery table created, in `predictions_` format, into which the prediction output is written. Can be used by UI to generate the BigQuery output path, for example.
       - !ruby/object:Api::Type::Boolean
         name: 'disableContainerLogging'
         description: |
@@ -1435,216 +1436,216 @@ objects:
         description: |
           Specification of Model explanation.
         properties:
-        - !ruby/object:Api::Type::NestedObject
-          name: 'parameters'
-          description: |
-            Parameters to configure explaining for Model's predictions.
-          properties:
-          - !ruby/object:Api::Type::Array
-            name: 'outputIndices'
-            description: |
-              If populated, only returns attributions that have output_index contained in output_indices. It must be an ndarray of integers, with the same shape of the output it's explaining. If not populated, returns attributions for top_k indices of outputs. If neither top_k nor output_indices is populated, returns the argmax index of the outputs. Only applicable to Models that predict multiple outputs (e,g, multi-class Models that predict multiple classes).
-            item_type: Api::Type::String
-          - !ruby/object:Api::Type::NestedObject
-            name: 'examples'
-            description: |
-              Example-based explainability that returns the nearest neighbors from the provided dataset.
-            properties:
             - !ruby/object:Api::Type::NestedObject
-              name: 'presets'
+              name: 'parameters'
               description: |
-                Preset configuration for example-based explanations
+                      Parameters to configure explaining for Model's predictions.
               properties:
-              - !ruby/object:Api::Type::Enum
-                name: 'modality'
-                description: |
-                  The modality of the uploaded model, which automatically configures the distance measurement and feature normalization for the underlying example index and queries. If your model does not precisely fit one of these types, it is okay to choose the closest type.
-                values:
-                  - :MODALITY_UNSPECIFIED
-                  - :IMAGE
-                  - :TEXT
-                  - :TABULAR
-              - !ruby/object:Api::Type::Enum
-                name: 'query'
-                description: |
-                  Preset option controlling parameters for speed-precision trade-off when querying for examples. If omitted, defaults to `PRECISE`.
-                values:
-                  - :PRECISE
-                  - :FAST
-            - !ruby/object:Api::Type::Integer
-              name: 'neighborCount'
-              description: |
-                The number of neighbors to return when querying for examples.
-            - !ruby/object:Api::Type::NestedObject
-              name: 'exampleGcsSource'
-              description: |
-                The Cloud Storage input instances.
-              properties:
-              - !ruby/object:Api::Type::NestedObject
-                name: 'gcsSource'
-                description: |
-                  The Google Cloud Storage location for the input content.
-                properties:
-                - !ruby/object:Api::Type::Array
-                  name: 'uris'
-                  description: |
-                    Required. Google Cloud Storage URI(-s) to the input file(s). May contain wildcards. For more information on wildcards, see https://cloud.google.com/storage/docs/gsutil/addlhelp/WildcardNames.
-                  item_type: Api::Type::String
-              - !ruby/object:Api::Type::Enum
-                name: 'dataFormat'
-                description: |
-                  The format in which instances are given, if not specified, assume it's JSONL format. Currently only JSONL format is supported.
-                values:
-                  - :DATA_FORMAT_UNSPECIFIED
-                  - :JSONL
-            - !ruby/object:Api::Type::String
-              name: 'nearestNeighborSearchConfig'
-              description: |
-                The full configuration for the generated index, the semantics are the same as metadata and should match [NearestNeighborSearchConfig](https://cloud.google.com/vertex-ai/docs/explainable-ai/configuring-explanations-example-based#nearest-neighbor-search-config).
-          - !ruby/object:Api::Type::NestedObject
-            name: 'xraiAttribution'
-            description: |
-              An explanation method that redistributes Integrated Gradients attributions to segmented regions, taking advantage of the model's fully differentiable structure. Refer to this paper for more details: https://arxiv.org/abs/1906.02825 Supported only by image Models.
-            properties:
-            - !ruby/object:Api::Type::NestedObject
-              name: 'smoothGradConfig'
-              description: |
-                Config for SmoothGrad approximation of gradients. When enabled, the gradients are approximated by averaging the gradients from noisy samples in the vicinity of the inputs. Adding noise can help improve the computed gradients. Refer to this paper for more details: https://arxiv.org/pdf/1706.03825.pdf
-              properties:
-              - !ruby/object:Api::Type::NestedObject
-                name: 'featureNoiseSigma'
-                description: |
-                  Noise sigma by features. Noise sigma represents the standard deviation of the gaussian kernel that will be used to add noise to interpolated inputs prior to computing gradients.
-                properties:
-                - !ruby/object:Api::Type::Array
-                  name: 'noiseSigma'
-                  description: |
-                    Noise sigma per feature. No noise is added to features that are not set.
-                  item_type: !ruby/object:Api::Type::NestedObject
+                  - !ruby/object:Api::Type::Array
+                    name: 'outputIndices'
+                    description: |
+                                  If populated, only returns attributions that have output_index contained in output_indices. It must be an ndarray of integers, with the same shape of the output it's explaining. If not populated, returns attributions for top_k indices of outputs. If neither top_k nor output_indices is populated, returns the argmax index of the outputs. Only applicable to Models that predict multiple outputs (e,g, multi-class Models that predict multiple classes).
+                    item_type: Api::Type::String
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'examples'
+                    description: |
+                                  Example-based explainability that returns the nearest neighbors from the provided dataset.
                     properties:
-                  - !ruby/object:Api::Type::String
-                    name: 'name'
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'presets'
+                          description: |
+                                              Preset configuration for example-based explanations
+                          properties:
+                              - !ruby/object:Api::Type::Enum
+                                name: 'modality'
+                                description: |
+                                                          The modality of the uploaded model, which automatically configures the distance measurement and feature normalization for the underlying example index and queries. If your model does not precisely fit one of these types, it is okay to choose the closest type.
+                                values:
+                                  - :MODALITY_UNSPECIFIED
+                                  - :IMAGE
+                                  - :TEXT
+                                  - :TABULAR
+                              - !ruby/object:Api::Type::Enum
+                                name: 'query'
+                                description: |
+                                                          Preset option controlling parameters for speed-precision trade-off when querying for examples. If omitted, defaults to `PRECISE`.
+                                values:
+                                  - :PRECISE
+                                  - :FAST
+                        - !ruby/object:Api::Type::Integer
+                          name: 'neighborCount'
+                          description: |
+                                              The number of neighbors to return when querying for examples.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'exampleGcsSource'
+                          description: |
+                                              The Cloud Storage input instances.
+                          properties:
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'gcsSource'
+                                description: |
+                                                          The Google Cloud Storage location for the input content.
+                                properties:
+                                    - !ruby/object:Api::Type::Array
+                                      name: 'uris'
+                                      description: |
+                                                                      Required. Google Cloud Storage URI(-s) to the input file(s). May contain wildcards. For more information on wildcards, see https://cloud.google.com/storage/docs/gsutil/addlhelp/WildcardNames.
+                                      item_type: Api::Type::String
+                              - !ruby/object:Api::Type::Enum
+                                name: 'dataFormat'
+                                description: |
+                                                          The format in which instances are given, if not specified, assume it's JSONL format. Currently only JSONL format is supported.
+                                values:
+                                  - :DATA_FORMAT_UNSPECIFIED
+                                  - :JSONL
+                        - !ruby/object:Api::Type::String
+                          name: 'nearestNeighborSearchConfig'
+                          description: |
+                                              The full configuration for the generated index, the semantics are the same as metadata and should match [NearestNeighborSearchConfig](https://cloud.google.com/vertex-ai/docs/explainable-ai/configuring-explanations-example-based#nearest-neighbor-search-config).
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'xraiAttribution'
                     description: |
-                      The name of the input feature for which noise sigma is provided. The features are defined in explanation metadata inputs.
-                  - !ruby/object:Api::Type::Integer
-                    name: 'sigma'
-                    description: |
-                      This represents the standard deviation of the Gaussian kernel that will be used to add noise to the feature prior to computing gradients. Similar to noise_sigma but represents the noise added to the current feature. Defaults to 0.1.
-              - !ruby/object:Api::Type::Integer
-                name: 'noiseSigma'
-                description: |
-                  This is a single float value and will be used to add noise to all the features. Use this field when all features are normalized to have the same distribution: scale to range [0, 1], [-1, 1] or z-scoring, where features are normalized to have 0-mean and 1-variance. Learn more about [normalization](https://developers.google.com/machine-learning/data-prep/transform/normalization). For best results the recommended value is about 10% - 20% of the standard deviation of the input feature. Refer to section 3.2 of the SmoothGrad paper: https://arxiv.org/pdf/1706.03825.pdf. Defaults to 0.1. If the distribution is different per feature, set feature_noise_sigma instead for each feature.
-              - !ruby/object:Api::Type::Integer
-                name: 'noisySampleCount'
-                description: |
-                  The number of gradient samples to use for approximation. The higher this number, the more accurate the gradient is, but the runtime complexity increases by this factor as well. Valid range of its value is [1, 50]. Defaults to 3.
-            - !ruby/object:Api::Type::Integer
-              name: 'stepCount'
-              description: |
-                Required. The number of steps for approximating the path integral. A good value to start is 50 and gradually increase until the sum to diff property is met within the desired error range. Valid range of its value is [1, 100], inclusively.
-            - !ruby/object:Api::Type::NestedObject
-              name: 'blurBaselineConfig'
-              description: |
-                Config for blur baseline. When enabled, a linear path from the maximally blurred image to the input image is created. Using a blurred baseline instead of zero (black image) is motivated by the BlurIG approach explained here: https://arxiv.org/abs/2004.03383
-              properties:
-              - !ruby/object:Api::Type::Integer
-                name: 'maxBlurSigma'
-                description: |
-                  The standard deviation of the blur kernel for the blurred baseline. The same blurring parameter is used for both the height and the width dimension. If not set, the method defaults to the zero (i.e. black for images) baseline.
-          - !ruby/object:Api::Type::Integer
-            name: 'topK'
-            description: |
-              If populated, returns attributions for top K indices of outputs (defaults to 1). Only applies to Models that predicts more than one outputs (e,g, multi-class Models). When set to -1, returns explanations for all outputs.
-          - !ruby/object:Api::Type::NestedObject
-            name: 'integratedGradientsAttribution'
-            description: |
-              An attribution method that computes the Aumann-Shapley value taking advantage of the model's fully differentiable structure. Refer to this paper for more details: https://arxiv.org/abs/1703.01365
-            properties:
-            - !ruby/object:Api::Type::Integer
-              name: 'stepCount'
-              description: |
-                Required. The number of steps for approximating the path integral. A good value to start is 50 and gradually increase until the sum to diff property is within the desired error range. Valid range of its value is [1, 100], inclusively.
-            - !ruby/object:Api::Type::NestedObject
-              name: 'smoothGradConfig'
-              description: |
-                Config for SmoothGrad approximation of gradients. When enabled, the gradients are approximated by averaging the gradients from noisy samples in the vicinity of the inputs. Adding noise can help improve the computed gradients. Refer to this paper for more details: https://arxiv.org/pdf/1706.03825.pdf
-              properties:
-              - !ruby/object:Api::Type::NestedObject
-                name: 'featureNoiseSigma'
-                description: |
-                  Noise sigma by features. Noise sigma represents the standard deviation of the gaussian kernel that will be used to add noise to interpolated inputs prior to computing gradients.
-                properties:
-                - !ruby/object:Api::Type::Array
-                  name: 'noiseSigma'
-                  description: |
-                    Noise sigma per feature. No noise is added to features that are not set.
-                  item_type: !ruby/object:Api::Type::NestedObject
+                                  An explanation method that redistributes Integrated Gradients attributions to segmented regions, taking advantage of the model's fully differentiable structure. Refer to this paper for more details: https://arxiv.org/abs/1906.02825 Supported only by image Models.
                     properties:
-                  - !ruby/object:Api::Type::String
-                    name: 'name'
-                    description: |
-                      The name of the input feature for which noise sigma is provided. The features are defined in explanation metadata inputs.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'smoothGradConfig'
+                          description: |
+                                              Config for SmoothGrad approximation of gradients. When enabled, the gradients are approximated by averaging the gradients from noisy samples in the vicinity of the inputs. Adding noise can help improve the computed gradients. Refer to this paper for more details: https://arxiv.org/pdf/1706.03825.pdf
+                          properties:
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'featureNoiseSigma'
+                                description: |
+                                                          Noise sigma by features. Noise sigma represents the standard deviation of the gaussian kernel that will be used to add noise to interpolated inputs prior to computing gradients.
+                                properties:
+                                    - !ruby/object:Api::Type::Array
+                                      name: 'noiseSigma'
+                                      description: |
+                                                                      Noise sigma per feature. No noise is added to features that are not set.
+                                      item_type: !ruby/object:Api::Type::NestedObject
+                                        properties:
+                                          - !ruby/object:Api::Type::String
+                                            name: 'name'
+                                            description: |
+                                                                                  The name of the input feature for which noise sigma is provided. The features are defined in explanation metadata inputs.
+                                          - !ruby/object:Api::Type::Integer
+                                            name: 'sigma'
+                                            description: |
+                                                                                  This represents the standard deviation of the Gaussian kernel that will be used to add noise to the feature prior to computing gradients. Similar to noise_sigma but represents the noise added to the current feature. Defaults to 0.1.
+                              - !ruby/object:Api::Type::Integer
+                                name: 'noiseSigma'
+                                description: |
+                                                          This is a single float value and will be used to add noise to all the features. Use this field when all features are normalized to have the same distribution: scale to range [0, 1], [-1, 1] or z-scoring, where features are normalized to have 0-mean and 1-variance. Learn more about [normalization](https://developers.google.com/machine-learning/data-prep/transform/normalization). For best results the recommended value is about 10% - 20% of the standard deviation of the input feature. Refer to section 3.2 of the SmoothGrad paper: https://arxiv.org/pdf/1706.03825.pdf. Defaults to 0.1. If the distribution is different per feature, set feature_noise_sigma instead for each feature.
+                              - !ruby/object:Api::Type::Integer
+                                name: 'noisySampleCount'
+                                description: |
+                                                          The number of gradient samples to use for approximation. The higher this number, the more accurate the gradient is, but the runtime complexity increases by this factor as well. Valid range of its value is [1, 50]. Defaults to 3.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'stepCount'
+                          description: |
+                                              Required. The number of steps for approximating the path integral. A good value to start is 50 and gradually increase until the sum to diff property is met within the desired error range. Valid range of its value is [1, 100], inclusively.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'blurBaselineConfig'
+                          description: |
+                                              Config for blur baseline. When enabled, a linear path from the maximally blurred image to the input image is created. Using a blurred baseline instead of zero (black image) is motivated by the BlurIG approach explained here: https://arxiv.org/abs/2004.03383
+                          properties:
+                              - !ruby/object:Api::Type::Integer
+                                name: 'maxBlurSigma'
+                                description: |
+                                                          The standard deviation of the blur kernel for the blurred baseline. The same blurring parameter is used for both the height and the width dimension. If not set, the method defaults to the zero (i.e. black for images) baseline.
                   - !ruby/object:Api::Type::Integer
-                    name: 'sigma'
+                    name: 'topK'
                     description: |
-                      This represents the standard deviation of the Gaussian kernel that will be used to add noise to the feature prior to computing gradients. Similar to noise_sigma but represents the noise added to the current feature. Defaults to 0.1.
-              - !ruby/object:Api::Type::Integer
-                name: 'noiseSigma'
-                description: |
-                  This is a single float value and will be used to add noise to all the features. Use this field when all features are normalized to have the same distribution: scale to range [0, 1], [-1, 1] or z-scoring, where features are normalized to have 0-mean and 1-variance. Learn more about [normalization](https://developers.google.com/machine-learning/data-prep/transform/normalization). For best results the recommended value is about 10% - 20% of the standard deviation of the input feature. Refer to section 3.2 of the SmoothGrad paper: https://arxiv.org/pdf/1706.03825.pdf. Defaults to 0.1. If the distribution is different per feature, set feature_noise_sigma instead for each feature.
-              - !ruby/object:Api::Type::Integer
-                name: 'noisySampleCount'
-                description: |
-                  The number of gradient samples to use for approximation. The higher this number, the more accurate the gradient is, but the runtime complexity increases by this factor as well. Valid range of its value is [1, 50]. Defaults to 3.
+                                  If populated, returns attributions for top K indices of outputs (defaults to 1). Only applies to Models that predicts more than one outputs (e,g, multi-class Models). When set to -1, returns explanations for all outputs.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'integratedGradientsAttribution'
+                    description: |
+                                  An attribution method that computes the Aumann-Shapley value taking advantage of the model's fully differentiable structure. Refer to this paper for more details: https://arxiv.org/abs/1703.01365
+                    properties:
+                        - !ruby/object:Api::Type::Integer
+                          name: 'stepCount'
+                          description: |
+                                              Required. The number of steps for approximating the path integral. A good value to start is 50 and gradually increase until the sum to diff property is within the desired error range. Valid range of its value is [1, 100], inclusively.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'smoothGradConfig'
+                          description: |
+                                              Config for SmoothGrad approximation of gradients. When enabled, the gradients are approximated by averaging the gradients from noisy samples in the vicinity of the inputs. Adding noise can help improve the computed gradients. Refer to this paper for more details: https://arxiv.org/pdf/1706.03825.pdf
+                          properties:
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'featureNoiseSigma'
+                                description: |
+                                                          Noise sigma by features. Noise sigma represents the standard deviation of the gaussian kernel that will be used to add noise to interpolated inputs prior to computing gradients.
+                                properties:
+                                    - !ruby/object:Api::Type::Array
+                                      name: 'noiseSigma'
+                                      description: |
+                                                                      Noise sigma per feature. No noise is added to features that are not set.
+                                      item_type: !ruby/object:Api::Type::NestedObject
+                                        properties:
+                                          - !ruby/object:Api::Type::String
+                                            name: 'name'
+                                            description: |
+                                                                                  The name of the input feature for which noise sigma is provided. The features are defined in explanation metadata inputs.
+                                          - !ruby/object:Api::Type::Integer
+                                            name: 'sigma'
+                                            description: |
+                                                                                  This represents the standard deviation of the Gaussian kernel that will be used to add noise to the feature prior to computing gradients. Similar to noise_sigma but represents the noise added to the current feature. Defaults to 0.1.
+                              - !ruby/object:Api::Type::Integer
+                                name: 'noiseSigma'
+                                description: |
+                                                          This is a single float value and will be used to add noise to all the features. Use this field when all features are normalized to have the same distribution: scale to range [0, 1], [-1, 1] or z-scoring, where features are normalized to have 0-mean and 1-variance. Learn more about [normalization](https://developers.google.com/machine-learning/data-prep/transform/normalization). For best results the recommended value is about 10% - 20% of the standard deviation of the input feature. Refer to section 3.2 of the SmoothGrad paper: https://arxiv.org/pdf/1706.03825.pdf. Defaults to 0.1. If the distribution is different per feature, set feature_noise_sigma instead for each feature.
+                              - !ruby/object:Api::Type::Integer
+                                name: 'noisySampleCount'
+                                description: |
+                                                          The number of gradient samples to use for approximation. The higher this number, the more accurate the gradient is, but the runtime complexity increases by this factor as well. Valid range of its value is [1, 50]. Defaults to 3.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'blurBaselineConfig'
+                          description: |
+                                              Config for blur baseline. When enabled, a linear path from the maximally blurred image to the input image is created. Using a blurred baseline instead of zero (black image) is motivated by the BlurIG approach explained here: https://arxiv.org/abs/2004.03383
+                          properties:
+                              - !ruby/object:Api::Type::Integer
+                                name: 'maxBlurSigma'
+                                description: |
+                                                          The standard deviation of the blur kernel for the blurred baseline. The same blurring parameter is used for both the height and the width dimension. If not set, the method defaults to the zero (i.e. black for images) baseline.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'sampledShapleyAttribution'
+                    description: |
+                                  An attribution method that approximates Shapley values for features that contribute to the label being predicted. A sampling strategy is used to approximate the value rather than considering all subsets of features.
+                    properties:
+                        - !ruby/object:Api::Type::Integer
+                          name: 'pathCount'
+                          description: |
+                                              Required. The number of feature permutations to consider when approximating the Shapley values. Valid range of its value is [1, 50], inclusively.
             - !ruby/object:Api::Type::NestedObject
-              name: 'blurBaselineConfig'
+              name: 'metadata'
               description: |
-                Config for blur baseline. When enabled, a linear path from the maximally blurred image to the input image is created. Using a blurred baseline instead of zero (black image) is motivated by the BlurIG approach explained here: https://arxiv.org/abs/2004.03383
+                      Metadata describing the Model's input and output for explanation.
               properties:
-              - !ruby/object:Api::Type::Integer
-                name: 'maxBlurSigma'
-                description: |
-                  The standard deviation of the blur kernel for the blurred baseline. The same blurring parameter is used for both the height and the width dimension. If not set, the method defaults to the zero (i.e. black for images) baseline.
-          - !ruby/object:Api::Type::NestedObject
-            name: 'sampledShapleyAttribution'
-            description: |
-              An attribution method that approximates Shapley values for features that contribute to the label being predicted. A sampling strategy is used to approximate the value rather than considering all subsets of features.
-            properties:
-            - !ruby/object:Api::Type::Integer
-              name: 'pathCount'
-              description: |
-                Required. The number of feature permutations to consider when approximating the Shapley values. Valid range of its value is [1, 50], inclusively.
-        - !ruby/object:Api::Type::NestedObject
-          name: 'metadata'
-          description: |
-            Metadata describing the Model's input and output for explanation.
-          properties:
-          - !ruby/object:Api::Type::String
-            name: 'featureAttributionsSchemaUri'
-            description: |
-              Points to a YAML file stored on Google Cloud Storage describing the format of the feature attributions. The schema is defined as an OpenAPI 3.0.2 [Schema Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.2.md#schemaObject). AutoML tabular Models always have this field populated by Vertex AI. Note: The URI given on output may be different, including the URI scheme, than the one given on input. The output URI will point to a location where the user only has a read access.
-          - !ruby/object:Api::Type::String
-            name: 'latentSpaceSource'
-            description: |
-              Name of the source to generate embeddings for example based explanations.
-          - !ruby/object:Api::Type::NestedObject
-            name: 'outputs'
-            description: |
-              Required. Map from output names to output metadata. For Vertex AI-provided Tensorflow images, keys can be any user defined string that consists of any UTF-8 characters. For custom images, keys are the name of the output field in the prediction to be explained. Currently only one key is allowed.
-            properties:
-                      - !ruby/object:Api::Type::String
-                        name: 'additionalProperties'
-                        description: |
-                        Metadata of the prediction output to be explained.
-          - !ruby/object:Api::Type::NestedObject
-            name: 'inputs'
-            description: |
-              Required. Map from feature names to feature input metadata. Keys are the name of the features. Values are the specification of the feature. An empty InputMetadata is valid. It describes a text feature which has the name specified as the key in ExplanationMetadata.inputs. The baseline of the empty feature is chosen by Vertex AI. For Vertex AI-provided Tensorflow images, the key can be any friendly name of the feature. Once specified, featureAttributions are keyed by this key (if not grouped with another feature). For custom images, the key must match with the key in instance.
-            properties:
-                      - !ruby/object:Api::Type::String
-                        name: 'additionalProperties'
-                        description: |
-                        Metadata of the input of a feature. Fields other than InputMetadata.input_baselines are applicable only for Models that are using Vertex AI-provided images for Tensorflow.
+                  - !ruby/object:Api::Type::String
+                    name: 'featureAttributionsSchemaUri'
+                    description: |
+                                  Points to a YAML file stored on Google Cloud Storage describing the format of the feature attributions. The schema is defined as an OpenAPI 3.0.2 [Schema Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.2.md#schemaObject). AutoML tabular Models always have this field populated by Vertex AI. Note: The URI given on output may be different, including the URI scheme, than the one given on input. The output URI will point to a location where the user only has a read access.
+                  - !ruby/object:Api::Type::String
+                    name: 'latentSpaceSource'
+                    description: |
+                                  Name of the source to generate embeddings for example based explanations.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'outputs'
+                    description: |
+                                  Required. Map from output names to output metadata. For Vertex AI-provided Tensorflow images, keys can be any user defined string that consists of any UTF-8 characters. For custom images, keys are the name of the output field in the prediction to be explained. Currently only one key is allowed.
+                    properties:
+                                      - !ruby/object:Api::Type::String
+                                        name: 'additionalProperties'
+                                        description: |
+                                        Metadata of the prediction output to be explained.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'inputs'
+                    description: |
+                                  Required. Map from feature names to feature input metadata. Keys are the name of the features. Values are the specification of the feature. An empty InputMetadata is valid. It describes a text feature which has the name specified as the key in ExplanationMetadata.inputs. The baseline of the empty feature is chosen by Vertex AI. For Vertex AI-provided Tensorflow images, the key can be any friendly name of the feature. Once specified, featureAttributions are keyed by this key (if not grouped with another feature). For custom images, the key must match with the key in instance.
+                    properties:
+                                      - !ruby/object:Api::Type::String
+                                        name: 'additionalProperties'
+                                        description: |
+                                        Metadata of the input of a feature. Fields other than InputMetadata.input_baselines are applicable only for Models that are using Vertex AI-provided images for Tensorflow.
       - !ruby/object:Api::Type::String
         name: 'endTime'
         description: |
@@ -1658,154 +1659,154 @@ objects:
         description: |
           Statistics information about resource consumption.
         properties:
-        - !ruby/object:Api::Type::Integer
-          name: 'replicaHours'
-          description: |
-            Output only. The number of replica hours used. Note that many replicas may run in parallel, and additionally any given work may be queued for some time. Therefore this value is not strictly related to wall time.
+            - !ruby/object:Api::Type::Integer
+              name: 'replicaHours'
+              description: |
+                      Output only. The number of replica hours used. Note that many replicas may run in parallel, and additionally any given work may be queued for some time. Therefore this value is not strictly related to wall time.
       - !ruby/object:Api::Type::NestedObject
         name: 'error'
         description: |
           The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).
         properties:
-        - !ruby/object:Api::Type::Array
-          name: 'details'
-          description: |
-            A list of messages that carry the error details. There is a common set of message types for APIs to use.
-          item_type: Api::Type::String
-        - !ruby/object:Api::Type::Integer
-          name: 'code'
-          description: |
-            The status code, which should be an enum value of google.rpc.Code.
-        - !ruby/object:Api::Type::String
-          name: 'message'
-          description: |
-            A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+            - !ruby/object:Api::Type::Array
+              name: 'details'
+              description: |
+                      A list of messages that carry the error details. There is a common set of message types for APIs to use.
+              item_type: Api::Type::String
+            - !ruby/object:Api::Type::Integer
+              name: 'code'
+              description: |
+                      The status code, which should be an enum value of google.rpc.Code.
+            - !ruby/object:Api::Type::String
+              name: 'message'
+              description: |
+                      A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
       - !ruby/object:Api::Type::NestedObject
         name: 'inputConfig'
         description: |
           Configures the input to BatchPredictionJob. See Model.supported_input_storage_formats for Model's supported input formats, and how instances should be expressed via any of them.
         properties:
-        - !ruby/object:Api::Type::String
-          name: 'instancesFormat'
-          description: |
-            Required. The format in which instances are given, must be one of the Model's supported_input_storage_formats.
-        - !ruby/object:Api::Type::NestedObject
-          name: 'bigquerySource'
-          description: |
-            The BigQuery location for the input content.
-          properties:
-          - !ruby/object:Api::Type::String
-            name: 'inputUri'
-            description: |
-              Required. BigQuery URI to a table, up to 2000 characters long. Accepted forms: * BigQuery path. For example: `bq://projectId.bqDatasetId.bqTableId`.
-        - !ruby/object:Api::Type::NestedObject
-          name: 'gcsSource'
-          description: |
-            The Google Cloud Storage location for the input content.
-          properties:
-          - !ruby/object:Api::Type::Array
-            name: 'uris'
-            description: |
-              Required. Google Cloud Storage URI(-s) to the input file(s). May contain wildcards. For more information on wildcards, see https://cloud.google.com/storage/docs/gsutil/addlhelp/WildcardNames.
-            item_type: Api::Type::String
+            - !ruby/object:Api::Type::String
+              name: 'instancesFormat'
+              description: |
+                      Required. The format in which instances are given, must be one of the Model's supported_input_storage_formats.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'bigquerySource'
+              description: |
+                      The BigQuery location for the input content.
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'inputUri'
+                    description: |
+                                  Required. BigQuery URI to a table, up to 2000 characters long. Accepted forms: * BigQuery path. For example: `bq://projectId.bqDatasetId.bqTableId`.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'gcsSource'
+              description: |
+                      The Google Cloud Storage location for the input content.
+              properties:
+                  - !ruby/object:Api::Type::Array
+                    name: 'uris'
+                    description: |
+                                  Required. Google Cloud Storage URI(-s) to the input file(s). May contain wildcards. For more information on wildcards, see https://cloud.google.com/storage/docs/gsutil/addlhelp/WildcardNames.
+                    item_type: Api::Type::String
       - !ruby/object:Api::Type::NestedObject
         name: 'unmanagedContainerModel'
         description: |
           Contains model information necessary to perform batch prediction without requiring a full model import.
         properties:
-        - !ruby/object:Api::Type::String
-          name: 'artifactUri'
-          description: |
-            The path to the directory containing the Model artifact and any of its supporting files.
-        - !ruby/object:Api::Type::NestedObject
-          name: 'predictSchemata'
-          description: |
-            Contains the schemata used in Model's predictions and explanations via PredictionService.Predict, PredictionService.Explain and BatchPredictionJob.
-          properties:
-          - !ruby/object:Api::Type::String
-            name: 'instanceSchemaUri'
-            description: |
-              Immutable. Points to a YAML file stored on Google Cloud Storage describing the format of a single instance, which are used in PredictRequest.instances, ExplainRequest.instances and BatchPredictionJob.input_config. The schema is defined as an OpenAPI 3.0.2 [Schema Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.2.md#schemaObject). AutoML Models always have this field populated by Vertex AI. Note: The URI given on output will be immutable and probably different, including the URI scheme, than the one given on input. The output URI will point to a location where the user only has a read access.
-          - !ruby/object:Api::Type::String
-            name: 'parametersSchemaUri'
-            description: |
-              Immutable. Points to a YAML file stored on Google Cloud Storage describing the parameters of prediction and explanation via PredictRequest.parameters, ExplainRequest.parameters and BatchPredictionJob.model_parameters. The schema is defined as an OpenAPI 3.0.2 [Schema Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.2.md#schemaObject). AutoML Models always have this field populated by Vertex AI, if no parameters are supported, then it is set to an empty string. Note: The URI given on output will be immutable and probably different, including the URI scheme, than the one given on input. The output URI will point to a location where the user only has a read access.
-          - !ruby/object:Api::Type::String
-            name: 'predictionSchemaUri'
-            description: |
-              Immutable. Points to a YAML file stored on Google Cloud Storage describing the format of a single prediction produced by this Model, which are returned via PredictResponse.predictions, ExplainResponse.explanations, and BatchPredictionJob.output_config. The schema is defined as an OpenAPI 3.0.2 [Schema Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.2.md#schemaObject). AutoML Models always have this field populated by Vertex AI. Note: The URI given on output will be immutable and probably different, including the URI scheme, than the one given on input. The output URI will point to a location where the user only has a read access.
-        - !ruby/object:Api::Type::NestedObject
-          name: 'containerSpec'
-          description: |
-            Specification of a container for serving predictions. Some fields in this message correspond to fields in the [Kubernetes Container v1 core specification](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.23/#container-v1-core).
-          properties:
-          - !ruby/object:Api::Type::String
-            name: 'predictRoute'
-            description: |
-              Immutable. HTTP path on the container to send prediction requests to. Vertex AI forwards requests sent using projects.locations.endpoints.predict to this path on the container's IP address and port. Vertex AI then returns the container's response in the API response. For example, if you set this field to `/foo`, then when Vertex AI receives a prediction request, it forwards the request body in a POST request to the `/foo` path on the port of your container specified by the first value of this `ModelContainerSpec`'s ports field. If you don't specify this field, it defaults to the following value when you deploy this Model to an Endpoint: /v1/endpoints/ENDPOINT/deployedModels/DEPLOYED_MODEL:predict The placeholders in this value are replaced as follows: * ENDPOINT: The last segment (following `endpoints/`)of the Endpoint.name][] field of the Endpoint where this Model has been deployed. (Vertex AI makes this value available to your container code as the [`AIP_ENDPOINT_ID` environment variable](https://cloud.google.com/vertex-ai/docs/predictions/custom-container-requirements#aip-variables).) * DEPLOYED_MODEL: DeployedModel.id of the `DeployedModel`. (Vertex AI makes this value available to your container code as the [`AIP_DEPLOYED_MODEL_ID` environment variable](https://cloud.google.com/vertex-ai/docs/predictions/custom-container-requirements#aip-variables).)
-          - !ruby/object:Api::Type::String
-            name: 'imageUri'
-            description: |
-              Required. Immutable. URI of the Docker image to be used as the custom container for serving predictions. This URI must identify an image in Artifact Registry or Container Registry. Learn more about the [container publishing requirements](https://cloud.google.com/vertex-ai/docs/predictions/custom-container-requirements#publishing), including permissions requirements for the Vertex AI Service Agent. The container image is ingested upon ModelService.UploadModel, stored internally, and this original path is afterwards not used. To learn about the requirements for the Docker image itself, see [Custom container requirements](https://cloud.google.com/vertex-ai/docs/predictions/custom-container-requirements#). You can use the URI to one of Vertex AI's [pre-built container images for prediction](https://cloud.google.com/vertex-ai/docs/predictions/pre-built-containers) in this field.
-          - !ruby/object:Api::Type::Array
-            name: 'env'
-            description: |
-              Immutable. List of environment variables to set in the container. After the container starts running, code running in the container can read these environment variables. Additionally, the command and args fields can reference these variables. Later entries in this list can also reference earlier entries. For example, the following example sets the variable `VAR_2` to have the value `foo bar`: ```json [ { "name": "VAR_1", "value": "foo" }, { "name": "VAR_2", "value": "$(VAR_1) bar" } ] ``` If you switch the order of the variables in the example, then the expansion does not occur. This field corresponds to the `env` field of the Kubernetes Containers [v1 core API](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.23/#container-v1-core).
-            item_type: !ruby/object:Api::Type::NestedObject
-              properties:
             - !ruby/object:Api::Type::String
-              name: 'name'
+              name: 'artifactUri'
               description: |
-                Required. Name of the environment variable. Must be a valid C identifier.
-            - !ruby/object:Api::Type::String
-              name: 'value'
+                      The path to the directory containing the Model artifact and any of its supporting files.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'predictSchemata'
               description: |
-                Required. Variables that reference a $(VAR_NAME) are expanded using the previous defined environment variables in the container and any service environment variables. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not.
-          - !ruby/object:Api::Type::Array
-            name: 'args'
-            description: |
-              Immutable. Specifies arguments for the command that runs when the container starts. This overrides the container's [`CMD`](https://docs.docker.com/engine/reference/builder/#cmd). Specify this field as an array of executable and arguments, similar to a Docker `CMD`'s "default parameters" form. If you don't specify this field but do specify the command field, then the command from the `command` field runs without any additional arguments. See the [Kubernetes documentation about how the `command` and `args` fields interact with a container's `ENTRYPOINT` and `CMD`](https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#notes). If you don't specify this field and don't specify the `command` field, then the container's [`ENTRYPOINT`](https://docs.docker.com/engine/reference/builder/#cmd) and `CMD` determine what runs based on their default behavior. See the Docker documentation about [how `CMD` and `ENTRYPOINT` interact](https://docs.docker.com/engine/reference/builder/#understand-how-cmd-and-entrypoint-interact). In this field, you can reference [environment variables set by Vertex AI](https://cloud.google.com/vertex-ai/docs/predictions/custom-container-requirements#aip-variables) and environment variables set in the env field. You cannot reference environment variables set in the Docker image. In order for environment variables to be expanded, reference them by using the following syntax: $( VARIABLE_NAME) Note that this differs from Bash variable expansion, which does not use parentheses. If a variable cannot be resolved, the reference in the input string is used unchanged. To avoid variable expansion, you can escape this syntax with `$$`; for example: $$(VARIABLE_NAME) This field corresponds to the `args` field of the Kubernetes Containers [v1 core API](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.23/#container-v1-core).
-            item_type: Api::Type::String
-          - !ruby/object:Api::Type::Array
-            name: 'command'
-            description: |
-              Immutable. Specifies the command that runs when the container starts. This overrides the container's [ENTRYPOINT](https://docs.docker.com/engine/reference/builder/#entrypoint). Specify this field as an array of executable and arguments, similar to a Docker `ENTRYPOINT`'s "exec" form, not its "shell" form. If you do not specify this field, then the container's `ENTRYPOINT` runs, in conjunction with the args field or the container's [`CMD`](https://docs.docker.com/engine/reference/builder/#cmd), if either exists. If this field is not specified and the container does not have an `ENTRYPOINT`, then refer to the Docker documentation about [how `CMD` and `ENTRYPOINT` interact](https://docs.docker.com/engine/reference/builder/#understand-how-cmd-and-entrypoint-interact). If you specify this field, then you can also specify the `args` field to provide additional arguments for this command. However, if you specify this field, then the container's `CMD` is ignored. See the [Kubernetes documentation about how the `command` and `args` fields interact with a container's `ENTRYPOINT` and `CMD`](https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#notes). In this field, you can reference [environment variables set by Vertex AI](https://cloud.google.com/vertex-ai/docs/predictions/custom-container-requirements#aip-variables) and environment variables set in the env field. You cannot reference environment variables set in the Docker image. In order for environment variables to be expanded, reference them by using the following syntax: $( VARIABLE_NAME) Note that this differs from Bash variable expansion, which does not use parentheses. If a variable cannot be resolved, the reference in the input string is used unchanged. To avoid variable expansion, you can escape this syntax with `$$`; for example: $$(VARIABLE_NAME) This field corresponds to the `command` field of the Kubernetes Containers [v1 core API](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.23/#container-v1-core).
-            item_type: Api::Type::String
-          - !ruby/object:Api::Type::Array
-            name: 'ports'
-            description: |
-              Immutable. List of ports to expose from the container. Vertex AI sends any prediction requests that it receives to the first port on this list. Vertex AI also sends [liveness and health checks](https://cloud.google.com/vertex-ai/docs/predictions/custom-container-requirements#liveness) to this port. If you do not specify this field, it defaults to following value: ```json [ { "containerPort": 8080 } ] ``` Vertex AI does not use ports other than the first one listed. This field corresponds to the `ports` field of the Kubernetes Containers [v1 core API](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.23/#container-v1-core).
-            item_type: !ruby/object:Api::Type::NestedObject
+                      Contains the schemata used in Model's predictions and explanations via PredictionService.Predict, PredictionService.Explain and BatchPredictionJob.
               properties:
-            - !ruby/object:Api::Type::Integer
-              name: 'containerPort'
+                  - !ruby/object:Api::Type::String
+                    name: 'instanceSchemaUri'
+                    description: |
+                                  Immutable. Points to a YAML file stored on Google Cloud Storage describing the format of a single instance, which are used in PredictRequest.instances, ExplainRequest.instances and BatchPredictionJob.input_config. The schema is defined as an OpenAPI 3.0.2 [Schema Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.2.md#schemaObject). AutoML Models always have this field populated by Vertex AI. Note: The URI given on output will be immutable and probably different, including the URI scheme, than the one given on input. The output URI will point to a location where the user only has a read access.
+                  - !ruby/object:Api::Type::String
+                    name: 'parametersSchemaUri'
+                    description: |
+                                  Immutable. Points to a YAML file stored on Google Cloud Storage describing the parameters of prediction and explanation via PredictRequest.parameters, ExplainRequest.parameters and BatchPredictionJob.model_parameters. The schema is defined as an OpenAPI 3.0.2 [Schema Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.2.md#schemaObject). AutoML Models always have this field populated by Vertex AI, if no parameters are supported, then it is set to an empty string. Note: The URI given on output will be immutable and probably different, including the URI scheme, than the one given on input. The output URI will point to a location where the user only has a read access.
+                  - !ruby/object:Api::Type::String
+                    name: 'predictionSchemaUri'
+                    description: |
+                                  Immutable. Points to a YAML file stored on Google Cloud Storage describing the format of a single prediction produced by this Model, which are returned via PredictResponse.predictions, ExplainResponse.explanations, and BatchPredictionJob.output_config. The schema is defined as an OpenAPI 3.0.2 [Schema Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.2.md#schemaObject). AutoML Models always have this field populated by Vertex AI. Note: The URI given on output will be immutable and probably different, including the URI scheme, than the one given on input. The output URI will point to a location where the user only has a read access.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'containerSpec'
               description: |
-                The number of the port to expose on the pod's IP address. Must be a valid port number, between 1 and 65535 inclusive.
-          - !ruby/object:Api::Type::String
-            name: 'healthRoute'
-            description: |
-              Immutable. HTTP path on the container to send health checks to. Vertex AI intermittently sends GET requests to this path on the container's IP address and port to check that the container is healthy. Read more about [health checks](https://cloud.google.com/vertex-ai/docs/predictions/custom-container-requirements#health). For example, if you set this field to `/bar`, then Vertex AI intermittently sends a GET request to the `/bar` path on the port of your container specified by the first value of this `ModelContainerSpec`'s ports field. If you don't specify this field, it defaults to the following value when you deploy this Model to an Endpoint: /v1/endpoints/ENDPOINT/deployedModels/ DEPLOYED_MODEL:predict The placeholders in this value are replaced as follows: * ENDPOINT: The last segment (following `endpoints/`)of the Endpoint.name][] field of the Endpoint where this Model has been deployed. (Vertex AI makes this value available to your container code as the [`AIP_ENDPOINT_ID` environment variable](https://cloud.google.com/vertex-ai/docs/predictions/custom-container-requirements#aip-variables).) * DEPLOYED_MODEL: DeployedModel.id of the `DeployedModel`. (Vertex AI makes this value available to your container code as the [`AIP_DEPLOYED_MODEL_ID` environment variable](https://cloud.google.com/vertex-ai/docs/predictions/custom-container-requirements#aip-variables).)
+                      Specification of a container for serving predictions. Some fields in this message correspond to fields in the [Kubernetes Container v1 core specification](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.23/#container-v1-core).
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'predictRoute'
+                    description: |
+                                  Immutable. HTTP path on the container to send prediction requests to. Vertex AI forwards requests sent using projects.locations.endpoints.predict to this path on the container's IP address and port. Vertex AI then returns the container's response in the API response. For example, if you set this field to `/foo`, then when Vertex AI receives a prediction request, it forwards the request body in a POST request to the `/foo` path on the port of your container specified by the first value of this `ModelContainerSpec`'s ports field. If you don't specify this field, it defaults to the following value when you deploy this Model to an Endpoint: /v1/endpoints/ENDPOINT/deployedModels/DEPLOYED_MODEL:predict The placeholders in this value are replaced as follows: * ENDPOINT: The last segment (following `endpoints/`)of the Endpoint.name][] field of the Endpoint where this Model has been deployed. (Vertex AI makes this value available to your container code as the [`AIP_ENDPOINT_ID` environment variable](https://cloud.google.com/vertex-ai/docs/predictions/custom-container-requirements#aip-variables).) * DEPLOYED_MODEL: DeployedModel.id of the `DeployedModel`. (Vertex AI makes this value available to your container code as the [`AIP_DEPLOYED_MODEL_ID` environment variable](https://cloud.google.com/vertex-ai/docs/predictions/custom-container-requirements#aip-variables).)
+                  - !ruby/object:Api::Type::String
+                    name: 'imageUri'
+                    description: |
+                                  Required. Immutable. URI of the Docker image to be used as the custom container for serving predictions. This URI must identify an image in Artifact Registry or Container Registry. Learn more about the [container publishing requirements](https://cloud.google.com/vertex-ai/docs/predictions/custom-container-requirements#publishing), including permissions requirements for the Vertex AI Service Agent. The container image is ingested upon ModelService.UploadModel, stored internally, and this original path is afterwards not used. To learn about the requirements for the Docker image itself, see [Custom container requirements](https://cloud.google.com/vertex-ai/docs/predictions/custom-container-requirements#). You can use the URI to one of Vertex AI's [pre-built container images for prediction](https://cloud.google.com/vertex-ai/docs/predictions/pre-built-containers) in this field.
+                  - !ruby/object:Api::Type::Array
+                    name: 'env'
+                    description: |
+                                  Immutable. List of environment variables to set in the container. After the container starts running, code running in the container can read these environment variables. Additionally, the command and args fields can reference these variables. Later entries in this list can also reference earlier entries. For example, the following example sets the variable `VAR_2` to have the value `foo bar`: ```json [ { "name": "VAR_1", "value": "foo" }, { "name": "VAR_2", "value": "$(VAR_1) bar" } ] ``` If you switch the order of the variables in the example, then the expansion does not occur. This field corresponds to the `env` field of the Kubernetes Containers [v1 core API](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.23/#container-v1-core).
+                    item_type: !ruby/object:Api::Type::NestedObject
+                      properties:
+                        - !ruby/object:Api::Type::String
+                          name: 'name'
+                          description: |
+                                              Required. Name of the environment variable. Must be a valid C identifier.
+                        - !ruby/object:Api::Type::String
+                          name: 'value'
+                          description: |
+                                              Required. Variables that reference a $(VAR_NAME) are expanded using the previous defined environment variables in the container and any service environment variables. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not.
+                  - !ruby/object:Api::Type::Array
+                    name: 'args'
+                    description: |
+                                  Immutable. Specifies arguments for the command that runs when the container starts. This overrides the container's [`CMD`](https://docs.docker.com/engine/reference/builder/#cmd). Specify this field as an array of executable and arguments, similar to a Docker `CMD`'s "default parameters" form. If you don't specify this field but do specify the command field, then the command from the `command` field runs without any additional arguments. See the [Kubernetes documentation about how the `command` and `args` fields interact with a container's `ENTRYPOINT` and `CMD`](https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#notes). If you don't specify this field and don't specify the `command` field, then the container's [`ENTRYPOINT`](https://docs.docker.com/engine/reference/builder/#cmd) and `CMD` determine what runs based on their default behavior. See the Docker documentation about [how `CMD` and `ENTRYPOINT` interact](https://docs.docker.com/engine/reference/builder/#understand-how-cmd-and-entrypoint-interact). In this field, you can reference [environment variables set by Vertex AI](https://cloud.google.com/vertex-ai/docs/predictions/custom-container-requirements#aip-variables) and environment variables set in the env field. You cannot reference environment variables set in the Docker image. In order for environment variables to be expanded, reference them by using the following syntax: $( VARIABLE_NAME) Note that this differs from Bash variable expansion, which does not use parentheses. If a variable cannot be resolved, the reference in the input string is used unchanged. To avoid variable expansion, you can escape this syntax with `$$`; for example: $$(VARIABLE_NAME) This field corresponds to the `args` field of the Kubernetes Containers [v1 core API](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.23/#container-v1-core).
+                    item_type: Api::Type::String
+                  - !ruby/object:Api::Type::Array
+                    name: 'command'
+                    description: |
+                                  Immutable. Specifies the command that runs when the container starts. This overrides the container's [ENTRYPOINT](https://docs.docker.com/engine/reference/builder/#entrypoint). Specify this field as an array of executable and arguments, similar to a Docker `ENTRYPOINT`'s "exec" form, not its "shell" form. If you do not specify this field, then the container's `ENTRYPOINT` runs, in conjunction with the args field or the container's [`CMD`](https://docs.docker.com/engine/reference/builder/#cmd), if either exists. If this field is not specified and the container does not have an `ENTRYPOINT`, then refer to the Docker documentation about [how `CMD` and `ENTRYPOINT` interact](https://docs.docker.com/engine/reference/builder/#understand-how-cmd-and-entrypoint-interact). If you specify this field, then you can also specify the `args` field to provide additional arguments for this command. However, if you specify this field, then the container's `CMD` is ignored. See the [Kubernetes documentation about how the `command` and `args` fields interact with a container's `ENTRYPOINT` and `CMD`](https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#notes). In this field, you can reference [environment variables set by Vertex AI](https://cloud.google.com/vertex-ai/docs/predictions/custom-container-requirements#aip-variables) and environment variables set in the env field. You cannot reference environment variables set in the Docker image. In order for environment variables to be expanded, reference them by using the following syntax: $( VARIABLE_NAME) Note that this differs from Bash variable expansion, which does not use parentheses. If a variable cannot be resolved, the reference in the input string is used unchanged. To avoid variable expansion, you can escape this syntax with `$$`; for example: $$(VARIABLE_NAME) This field corresponds to the `command` field of the Kubernetes Containers [v1 core API](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.23/#container-v1-core).
+                    item_type: Api::Type::String
+                  - !ruby/object:Api::Type::Array
+                    name: 'ports'
+                    description: |
+                                  Immutable. List of ports to expose from the container. Vertex AI sends any prediction requests that it receives to the first port on this list. Vertex AI also sends [liveness and health checks](https://cloud.google.com/vertex-ai/docs/predictions/custom-container-requirements#liveness) to this port. If you do not specify this field, it defaults to following value: ```json [ { "containerPort": 8080 } ] ``` Vertex AI does not use ports other than the first one listed. This field corresponds to the `ports` field of the Kubernetes Containers [v1 core API](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.23/#container-v1-core).
+                    item_type: !ruby/object:Api::Type::NestedObject
+                      properties:
+                        - !ruby/object:Api::Type::Integer
+                          name: 'containerPort'
+                          description: |
+                                              The number of the port to expose on the pod's IP address. Must be a valid port number, between 1 and 65535 inclusive.
+                  - !ruby/object:Api::Type::String
+                    name: 'healthRoute'
+                    description: |
+                                  Immutable. HTTP path on the container to send health checks to. Vertex AI intermittently sends GET requests to this path on the container's IP address and port to check that the container is healthy. Read more about [health checks](https://cloud.google.com/vertex-ai/docs/predictions/custom-container-requirements#health). For example, if you set this field to `/bar`, then Vertex AI intermittently sends a GET request to the `/bar` path on the port of your container specified by the first value of this `ModelContainerSpec`'s ports field. If you don't specify this field, it defaults to the following value when you deploy this Model to an Endpoint: /v1/endpoints/ENDPOINT/deployedModels/ DEPLOYED_MODEL:predict The placeholders in this value are replaced as follows: * ENDPOINT: The last segment (following `endpoints/`)of the Endpoint.name][] field of the Endpoint where this Model has been deployed. (Vertex AI makes this value available to your container code as the [`AIP_ENDPOINT_ID` environment variable](https://cloud.google.com/vertex-ai/docs/predictions/custom-container-requirements#aip-variables).) * DEPLOYED_MODEL: DeployedModel.id of the `DeployedModel`. (Vertex AI makes this value available to your container code as the [`AIP_DEPLOYED_MODEL_ID` environment variable](https://cloud.google.com/vertex-ai/docs/predictions/custom-container-requirements#aip-variables).)
       - !ruby/object:Api::Type::NestedObject
         name: 'completionStats'
         description: |
           Success and error statistics of processing multiple entities (for example, DataItems or structured data rows) in batch.
         properties:
-        - !ruby/object:Api::Type::String
-          name: 'successfulForecastPointCount'
-          description: |
-            Output only. The number of the successful forecast points that are generated by the forecasting model. This is ONLY used by the forecasting batch prediction.
-        - !ruby/object:Api::Type::String
-          name: 'incompleteCount'
-          description: |
-            Output only. In cases when enough errors are encountered a job, pipeline, or operation may be failed as a whole. Below is the number of entities for which the processing had not been finished (either in successful or failed state). Set to -1 if the number is unknown (for example, the operation failed before the total entity number could be collected).
-        - !ruby/object:Api::Type::String
-          name: 'failedCount'
-          description: |
-            Output only. The number of entities for which any error was encountered.
-        - !ruby/object:Api::Type::String
-          name: 'successfulCount'
-          description: |
-            Output only. The number of entities that had been processed successfully.
+            - !ruby/object:Api::Type::String
+              name: 'successfulForecastPointCount'
+              description: |
+                      Output only. The number of the successful forecast points that are generated by the forecasting model. This is ONLY used by the forecasting batch prediction.
+            - !ruby/object:Api::Type::String
+              name: 'incompleteCount'
+              description: |
+                      Output only. In cases when enough errors are encountered a job, pipeline, or operation may be failed as a whole. Below is the number of entities for which the processing had not been finished (either in successful or failed state). Set to -1 if the number is unknown (for example, the operation failed before the total entity number could be collected).
+            - !ruby/object:Api::Type::String
+              name: 'failedCount'
+              description: |
+                      Output only. The number of entities for which any error was encountered.
+            - !ruby/object:Api::Type::String
+              name: 'successfulCount'
+              description: |
+                      Output only. The number of entities that had been processed successfully.
       - !ruby/object:Api::Type::String
         name: 'startTime'
         description: |
@@ -1815,10 +1816,10 @@ objects:
         description: |
           Manual batch tuning parameters.
         properties:
-        - !ruby/object:Api::Type::Integer
-          name: 'batchSize'
-          description: |
-            Immutable. The number of the records (e.g. instances) of the operation given in each batch to a machine replica. Machine type, and size of a single record should be considered when setting this parameter, higher value speeds up the batch operation's execution, but too high value will result in a whole batch not fitting in a machine's memory, and the whole operation will fail. The default value is 64.
+            - !ruby/object:Api::Type::Integer
+              name: 'batchSize'
+              description: |
+                      Immutable. The number of the records (e.g. instances) of the operation given in each batch to a machine replica. Machine type, and size of a single record should be considered when setting this parameter, higher value speeds up the batch operation's execution, but too high value will result in a whole batch not fitting in a machine's memory, and the whole operation will fail. The default value is 64.
       - !ruby/object:Api::Type::String
         name: 'updateTime'
         description: |
@@ -1858,29 +1859,29 @@ objects:
         description: |
           Represents a customer-managed encryption key spec that can be applied to a top-level resource.
         properties:
-        - !ruby/object:Api::Type::String
-          name: 'kmsKeyName'
-          description: |
-            Required. The Cloud KMS resource identifier of the customer managed encryption key used to protect a resource. Has the form: `projects/my-project/locations/my-region/keyRings/my-kr/cryptoKeys/my-key`. The key needs to be in the same region as where the compute resource is created.
+            - !ruby/object:Api::Type::String
+              name: 'kmsKeyName'
+              description: |
+                      Required. The Cloud KMS resource identifier of the customer managed encryption key used to protect a resource. Has the form: `projects/my-project/locations/my-region/keyRings/my-kr/cryptoKeys/my-key`. The key needs to be in the same region as where the compute resource is created.
       - !ruby/object:Api::Type::Array
         name: 'partialFailures'
         description: |
           Output only. Partial failures encountered. For example, single files that can't be read. This field never exceeds 20 entries. Status details fields contain standard Google Cloud error details.
         item_type: !ruby/object:Api::Type::NestedObject
           properties:
-        - !ruby/object:Api::Type::Array
-          name: 'details'
-          description: |
-            A list of messages that carry the error details. There is a common set of message types for APIs to use.
-          item_type: Api::Type::String
-        - !ruby/object:Api::Type::Integer
-          name: 'code'
-          description: |
-            The status code, which should be an enum value of google.rpc.Code.
-        - !ruby/object:Api::Type::String
-          name: 'message'
-          description: |
-            A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+            - !ruby/object:Api::Type::Array
+              name: 'details'
+              description: |
+                      A list of messages that carry the error details. There is a common set of message types for APIs to use.
+              item_type: Api::Type::String
+            - !ruby/object:Api::Type::Integer
+              name: 'code'
+              description: |
+                      The status code, which should be an enum value of google.rpc.Code.
+            - !ruby/object:Api::Type::String
+              name: 'message'
+              description: |
+                      A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
       - !ruby/object:Api::Type::String
         name: 'model'
         description: |
@@ -1890,28 +1891,28 @@ objects:
         description: |
           Configures the output of BatchPredictionJob. See Model.supported_output_storage_formats for supported output formats, and how predictions are expressed via any of them.
         properties:
-        - !ruby/object:Api::Type::NestedObject
-          name: 'gcsDestination'
-          description: |
-            The Google Cloud Storage location where the output is to be written to.
-          properties:
-          - !ruby/object:Api::Type::String
-            name: 'outputUriPrefix'
-            description: |
-              Required. Google Cloud Storage URI to output directory. If the uri doesn't end with '/', a '/' will be automatically appended. The directory is created if it doesn't exist.
-        - !ruby/object:Api::Type::String
-          name: 'predictionsFormat'
-          description: |
-            Required. The format in which Vertex AI gives the predictions, must be one of the Model's supported_output_storage_formats.
-        - !ruby/object:Api::Type::NestedObject
-          name: 'bigqueryDestination'
-          description: |
-            The BigQuery location for the output content.
-          properties:
-          - !ruby/object:Api::Type::String
-            name: 'outputUri'
-            description: |
-              Required. BigQuery URI to a project or table, up to 2000 characters long. When only the project is specified, the Dataset and Table is created. When the full table reference is specified, the Dataset must exist and table must not exist. Accepted forms: * BigQuery path. For example: `bq://projectId` or `bq://projectId.bqDatasetId` or `bq://projectId.bqDatasetId.bqTableId`.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'gcsDestination'
+              description: |
+                      The Google Cloud Storage location where the output is to be written to.
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'outputUriPrefix'
+                    description: |
+                                  Required. Google Cloud Storage URI to output directory. If the uri doesn't end with '/', a '/' will be automatically appended. The directory is created if it doesn't exist.
+            - !ruby/object:Api::Type::String
+              name: 'predictionsFormat'
+              description: |
+                      Required. The format in which Vertex AI gives the predictions, must be one of the Model's supported_output_storage_formats.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'bigqueryDestination'
+              description: |
+                      The BigQuery location for the output content.
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'outputUri'
+                    description: |
+                                  Required. BigQuery URI to a project or table, up to 2000 characters long. When only the project is specified, the Dataset and Table is created. When the full table reference is specified, the Dataset must exist and table must not exist. Accepted forms: * BigQuery path. For example: `bq://projectId` or `bq://projectId.bqDatasetId` or `bq://projectId.bqDatasetId.bqTableId`.
       - !ruby/object:Api::Type::String
         name: 'displayName'
         description: |
