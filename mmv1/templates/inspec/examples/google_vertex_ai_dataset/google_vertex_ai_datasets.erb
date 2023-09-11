@@ -1,5 +1,5 @@
 <% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
   <% dataset = grab_attributes(pwd)['dataset'] -%>
-  describe google_vertex_ai_dataset(parent: <%= doc_generation ? "' #{dataset['parent']}'":"dataset['parent']" -%>) do
+  describe google_vertex_ai_dataset(parent: <%= doc_generation ? "' #{dataset['parent']}'":"dataset['parent']" -%>, region: <%= doc_generation ? "' #{dataset['region']}'":"dataset['region']" -%>) do
     it { should exist }
   end
