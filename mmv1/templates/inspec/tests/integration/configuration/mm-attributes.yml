@@ -550,3 +550,14 @@ dlp:
 
 region_security_policy:
   securitypolicy : "value_securitypolicy"
+
+data_labeling_job:
+  name : "value_name"
+  region : "value_region"
+  parent : "value_parent"
+  create_time : "value_createtime"
+  inputs_schema_uri : "value_inputsschemauri"
+  instruction_uri : "value_instructionuri"
+  update_time : "value_updatetime"
+  display_name : "value_displayname"
+  state : "value_state"
