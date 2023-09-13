@@ -1,0 +1,8 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+   <% data_labeling_job = grab_attributes(pwd)['data_labeling_job'] -%>
+   describe google_vertex_ai_data_labeling_job(name: "projects/#{gcp_project_id}/locations/#{data_labeling_job['region']}/dataLabelingJobs/#{data_labeling_job['name']}", region: <%= doc_generation ? "' #{data_labeling_job['region']}'":"data_labeling_job['region']" -%>) do
+     it { should exist }
+   end
+   describe google_vertex_ai_data_labeling_job(name: "does_not_exit", region: <%= doc_generation ? "' #{data_labeling_job['region']}'":"data_labeling_job['region']" -%>) do
+     it { should_not exist }
+   end
