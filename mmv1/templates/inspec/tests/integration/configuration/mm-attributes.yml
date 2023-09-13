@@ -553,5 +553,6 @@ region_security_policy:
 
 custom_job:
   name : "value_name"
+  job_id: "job_id"
   region : "value_region"
   parent : "value_parent"
