@@ -1,0 +1,15 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% annotation = grab_attributes(pwd)['annotation'] -%>
+describe google_vertex_ai_annotation(0: <%= doc_generation ? "' #{annotation['0']}'":"annotation['0']" -%>, 1: <%= doc_generation ? "' #{annotation['1']}'":"annotation['1']" -%>, 2: <%= doc_generation ? "' #{annotation['2']}'":"annotation['2']" -%>, 3: <%= doc_generation ? "' #{annotation['3']}'":"annotation['3']" -%>, 4: <%= doc_generation ? "' #{annotation['4']}'":"annotation['4']" -%>, 5: <%= doc_generation ? "' #{annotation['5']}'":"annotation['5']" -%>, 6: <%= doc_generation ? "' #{annotation['6']}'":"annotation['6']" -%>) do
+	it { should exist }
+	its('payload_schema_uri') { should cmp <%= doc_generation ? "'#{annotation['payload_schema_uri']}'" : "annotation['payload_schema_uri']" -%> }
+	its('create_time') { should cmp <%= doc_generation ? "'#{annotation['create_time']}'" : "annotation['create_time']" -%> }
+	its('etag') { should cmp <%= doc_generation ? "'#{annotation['etag']}'" : "annotation['etag']" -%> }
+	its('update_time') { should cmp <%= doc_generation ? "'#{annotation['update_time']}'" : "annotation['update_time']" -%> }
+	its('name') { should cmp <%= doc_generation ? "'#{annotation['name']}'" : "annotation['name']" -%> }
+
+end
+
+describe google_vertex_ai_annotation(0: <%= doc_generation ? "' #{annotation['0']}'":"annotation['0']" -%>, 1: <%= doc_generation ? "' #{annotation['1']}'":"annotation['1']" -%>, 2: <%= doc_generation ? "' #{annotation['2']}'":"annotation['2']" -%>, 3: <%= doc_generation ? "' #{annotation['3']}'":"annotation['3']" -%>, 4: <%= doc_generation ? "' #{annotation['4']}'":"annotation['4']" -%>, 5: <%= doc_generation ? "' #{annotation['5']}'":"annotation['5']" -%>, 6: <%= doc_generation ? "' #{annotation['6']}'":"annotation['6']" -%>) do
+	it { should_not exist }
+end
