@@ -2083,3 +2083,62 @@ objects:
                   description: |
                     
   
+
+    
+  - !ruby/object:Api::Resource
+    name: SpecialistPool
+    base_url: '{{parent}}/specialistPools'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        SpecialistPool represents customers' own workforce to work on their data labeling jobs. It includes a group of specialist managers and workers. Managers are responsible for managing the workers in this pool as well as customers' data labeling jobs associated with this pool. Customers create specialist pool as well as start data labeling jobs on Cloud, managers and workers handle the jobs using CrowdCompute console.
+    properties:
+  
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          Required. The user-defined name of the SpecialistPool. The name can be up to 128 characters long and can consist of any UTF-8 characters. This field should be unique on project-level.
+      - !ruby/object:Api::Type::Array
+        name: 'specialistManagerEmails'
+        description: |
+          The email addresses of the managers in the SpecialistPool.
+        item_type: Api::Type::String
+      - !ruby/object:Api::Type::Integer
+        name: 'specialistManagersCount'
+        description: |
+          Output only. The number of managers in this SpecialistPool.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Required. The resource name of the SpecialistPool.
+      - !ruby/object:Api::Type::Array
+        name: 'specialistWorkerEmails'
+        description: |
+          The email addresses of workers in the SpecialistPool.
+        item_type: Api::Type::String
+      - !ruby/object:Api::Type::Array
+        name: 'pendingDataLabelingJobs'
+        description: |
+          Output only. The resource name of the pending data labeling jobs.
+        item_type: Api::Type::String
+  
