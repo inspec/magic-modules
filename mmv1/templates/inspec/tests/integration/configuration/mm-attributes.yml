@@ -556,3 +556,12 @@ training_pipeline:
   job_id: "job_id"
   region : "value_region"
   parent : "value_parent"
+
+study:
+  name : "value_name"
+  region : "value_region"
+  parent : "value_parent"
+  display_name : "value_displayname"
+  state : "value_state"
+  create_time : "value_createtime"
+  inactive_reason : "value_inactivereason"
