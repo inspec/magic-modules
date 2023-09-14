@@ -550,3 +550,9 @@ dlp:
 
 region_security_policy:
   securitypolicy : "value_securitypolicy"
+
+training_pipeline:
+  name : "value_name"
+  job_id: "job_id"
+  region : "value_region"
+  parent : "value_parent"
