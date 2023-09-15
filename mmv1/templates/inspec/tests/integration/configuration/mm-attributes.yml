@@ -546,12 +546,6 @@ dlp:
     location: "europe-west2"
     type: "Infotype"
 
-
-
-region_security_policy:
-  securitypolicy : "value_securitypolicy"
-
-
 training_pipeline:
   name : "value_name"
   job_id: "job_id"
@@ -571,3 +565,4 @@ batch_prediction_job:
   model : "value_model"
   display_name : "value_displayname"
   service_account : "value_serviceaccount"
+
