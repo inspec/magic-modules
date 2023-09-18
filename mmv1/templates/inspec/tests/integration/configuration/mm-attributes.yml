@@ -598,3 +598,11 @@ endpoint:
   display_name : "value_displayname"
   etag : "value_etag"
   create_time : "value_createtime"
+
+datasets_annotation_spec:
+  name : "value_name"
+  region : "value_region"
+  display_name : "value_displayname"
+  etag : "value_etag"
+  create_time : "value_createtime"
+  update_time : "value_updatetime"
