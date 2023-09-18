@@ -1,0 +1,5 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+  <% datasets_annotation_spec = grab_attributes(pwd)['datasets_annotation_spec'] -%>
+  describe google_vertex_ai_datasets_annotation_specs(0: <%= doc_generation ? "' #{datasets_annotation_spec['0']}'":"datasets_annotation_spec['0']" -%>, 1: <%= doc_generation ? "' #{datasets_annotation_spec['1']}'":"datasets_annotation_spec['1']" -%>, 2: <%= doc_generation ? "' #{datasets_annotation_spec['2']}'":"datasets_annotation_spec['2']" -%>, 3: <%= doc_generation ? "' #{datasets_annotation_spec['3']}'":"datasets_annotation_spec['3']" -%>, 4: <%= doc_generation ? "' #{datasets_annotation_spec['4']}'":"datasets_annotation_spec['4']" -%>, 5: <%= doc_generation ? "' #{datasets_annotation_spec['5']}'":"datasets_annotation_spec['5']" -%>, 6: <%= doc_generation ? "' #{datasets_annotation_spec['6']}'":"datasets_annotation_spec['6']" -%>) do
+    it { should exist }
+  end
