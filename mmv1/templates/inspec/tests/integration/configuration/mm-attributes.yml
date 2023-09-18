@@ -598,3 +598,9 @@ endpoint:
   display_name : "value_displayname"
   etag : "value_etag"
   create_time : "value_createtime"
+
+nas_jobs_nas_trial_detail:
+  name : "value_name"
+  region : "value_region"
+  parent : "value_parent"
+  parameters : "value_parameters"
