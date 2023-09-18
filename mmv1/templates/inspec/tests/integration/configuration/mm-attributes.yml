@@ -598,3 +598,14 @@ endpoint:
   display_name : "value_displayname"
   etag : "value_etag"
   create_time : "value_createtime"
+
+datasets_saved_query:
+  parent : "value_parent"
+  region : "value_region"
+  update_time : "value_updatetime"
+  problem_type : "value_problemtype"
+  name : "value_name"
+  create_time : "value_createtime"
+  etag : "value_etag"
+  display_name : "value_displayname"
+  annotation_filter : "value_annotationfilter"

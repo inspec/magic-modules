@@ -3689,3 +3689,145 @@ objects:
         description: |
           Output only. The resource name of the Endpoint.
   
+
+    
+  - !ruby/object:Api::Resource
+    name: DatasetsSavedQuery
+    base_url: '{{parent}}/savedQueries'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        A SavedQuery is a view of the dataset. It references a subset of annotations by problem type and filters.
+    properties:
+  
+      - !ruby/object:Api::Type::Integer
+        name: 'annotationSpecCount'
+        description: |
+          Output only. Number of AnnotationSpecs in the context of the SavedQuery.
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. Timestamp when SavedQuery was last updated.
+      - !ruby/object:Api::Type::Boolean
+        name: 'supportAutomlTraining'
+        description: |
+          Output only. If the Annotations belonging to the SavedQuery can be used for AutoML training.
+      - !ruby/object:Api::Type::String
+        name: 'metadata'
+        description: |
+          Some additional information about the SavedQuery.
+      - !ruby/object:Api::Type::String
+        name: 'problemType'
+        description: |
+          Required. Problem type of the SavedQuery. Allowed values: * IMAGE_CLASSIFICATION_SINGLE_LABEL * IMAGE_CLASSIFICATION_MULTI_LABEL * IMAGE_BOUNDING_POLY * IMAGE_BOUNDING_BOX * TEXT_CLASSIFICATION_SINGLE_LABEL * TEXT_CLASSIFICATION_MULTI_LABEL * TEXT_EXTRACTION * TEXT_SENTIMENT * VIDEO_CLASSIFICATION * VIDEO_OBJECT_TRACKING
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. Resource name of the SavedQuery.
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this SavedQuery was created.
+      - !ruby/object:Api::Type::String
+        name: 'etag'
+        description: |
+          Used to perform a consistent read-modify-write update. If not set, a blind "overwrite" update happens.
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          Required. The user-defined name of the SavedQuery. The name can be up to 128 characters long and can consist of any UTF-8 characters.
+      - !ruby/object:Api::Type::String
+        name: 'annotationFilter'
+        description: |
+          Output only. Filters on the Annotations in the dataset.
+  
+
+    
+  - !ruby/object:Api::Resource
+    name: DatasetsSavedQuery
+    base_url: '{{parent}}/savedQueries'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        A SavedQuery is a view of the dataset. It references a subset of annotations by problem type and filters.
+    properties:
+  
+      - !ruby/object:Api::Type::Integer
+        name: 'annotationSpecCount'
+        description: |
+          Output only. Number of AnnotationSpecs in the context of the SavedQuery.
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. Timestamp when SavedQuery was last updated.
+      - !ruby/object:Api::Type::Boolean
+        name: 'supportAutomlTraining'
+        description: |
+          Output only. If the Annotations belonging to the SavedQuery can be used for AutoML training.
+      - !ruby/object:Api::Type::String
+        name: 'metadata'
+        description: |
+          Some additional information about the SavedQuery.
+      - !ruby/object:Api::Type::String
+        name: 'problemType'
+        description: |
+          Required. Problem type of the SavedQuery. Allowed values: * IMAGE_CLASSIFICATION_SINGLE_LABEL * IMAGE_CLASSIFICATION_MULTI_LABEL * IMAGE_BOUNDING_POLY * IMAGE_BOUNDING_BOX * TEXT_CLASSIFICATION_SINGLE_LABEL * TEXT_CLASSIFICATION_MULTI_LABEL * TEXT_EXTRACTION * TEXT_SENTIMENT * VIDEO_CLASSIFICATION * VIDEO_OBJECT_TRACKING
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. Resource name of the SavedQuery.
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this SavedQuery was created.
+      - !ruby/object:Api::Type::String
+        name: 'etag'
+        description: |
+          Used to perform a consistent read-modify-write update. If not set, a blind "overwrite" update happens.
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          Required. The user-defined name of the SavedQuery. The name can be up to 128 characters long and can consist of any UTF-8 characters.
+      - !ruby/object:Api::Type::String
+        name: 'annotationFilter'
+        description: |
+          Output only. Filters on the Annotations in the dataset.
+  
