@@ -598,3 +598,13 @@ endpoint:
   display_name : "value_displayname"
   etag : "value_etag"
   create_time : "value_createtime"
+
+endpoints_operation:
+  name : "value_name"
+  region : "value_region"
+  n : "value_n"
+  o : "value_o"
+  _ : "value_ "
+  d : "value_d"
+  a : "value_a"
+  t : "value_t"
