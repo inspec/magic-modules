@@ -598,3 +598,15 @@ endpoint:
   display_name : "value_displayname"
   etag : "value_etag"
   create_time : "value_createtime"
+
+studies_trial:
+  name : "value_name"
+  region : "value_region"
+  parent : "value_parent"
+  start_time : "value_starttime"
+  end_time : "value_endtime"
+  infeasible_reason : "value_infeasiblereason"
+  client_id : "value_clientid"
+  custom_job : "value_customjob"
+  state : "value_state"
+  id : "value_id"
