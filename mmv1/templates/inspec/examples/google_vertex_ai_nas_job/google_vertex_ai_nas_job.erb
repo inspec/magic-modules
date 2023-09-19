@@ -1,0 +1,17 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% nas_job = grab_attributes(pwd)['nas_job'] -%>
+describe google_vertex_ai_nas_job(name: "projects/#{gcp_project_id}/locations/#{nas_job['region']}/nasJobs/#{nas_job['name']}", region: <%= doc_generation ? "' #{nas_job['region']}'":"nas_job['region']" -%>) do
+	it { should exist }
+	its('name') { should cmp <%= doc_generation ? "'#{nas_job['name']}'" : "nas_job['name']" -%> }
+	its('end_time') { should cmp <%= doc_generation ? "'#{nas_job['end_time']}'" : "nas_job['end_time']" -%> }
+	its('state') { should cmp <%= doc_generation ? "'#{nas_job['state']}'" : "nas_job['state']" -%> }
+	its('create_time') { should cmp <%= doc_generation ? "'#{nas_job['create_time']}'" : "nas_job['create_time']" -%> }
+	its('display_name') { should cmp <%= doc_generation ? "'#{nas_job['display_name']}'" : "nas_job['display_name']" -%> }
+	its('start_time') { should cmp <%= doc_generation ? "'#{nas_job['start_time']}'" : "nas_job['start_time']" -%> }
+	its('update_time') { should cmp <%= doc_generation ? "'#{nas_job['update_time']}'" : "nas_job['update_time']" -%> }
+
+end
+
+describe google_vertex_ai_nas_job(name: "does_not_exit", region: <%= doc_generation ? "' #{nas_job['region']}'":"nas_job['region']" -%>) do
+	it { should_not exist }
+end
