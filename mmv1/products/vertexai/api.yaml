@@ -3689,3 +3689,833 @@ objects:
         description: |
           Output only. The resource name of the Endpoint.
   
+
+    
+  - !ruby/object:Api::Resource
+    name: ModelDeploymentMonitoringJob
+    base_url: '{{parent}}/modelDeploymentMonitoringJobs'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Represents a job that runs periodically to monitor the deployed models in an endpoint. It will analyze the logged training & prediction data to detect any abnormal behaviors.
+    properties:
+  
+      - !ruby/object:Api::Type::Array
+        name: 'modelDeploymentMonitoringObjectiveConfigs'
+        description: |
+          Required. The config for monitoring objectives. This is a per DeployedModel config. Each DeployedModel needs to be configured separately.
+        item_type: !ruby/object:Api::Type::NestedObject
+          properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'objectiveConfig'
+              description: |
+                The objective configuration for model monitoring, including the information needed to detect anomalies for one particular model.
+              properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'explanationConfig'
+                    description: |
+                      The config for integrating with Vertex Explainable AI. Only applicable if the Model has explanation_spec populated.
+                    properties:
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'explanationBaseline'
+                          description: |
+                            Output from BatchPredictionJob for Model Monitoring baseline dataset, which can be used to generate baseline attribution scores.
+                          properties:
+                              - !ruby/object:Api::Type::Enum
+                                name: 'predictionFormat'
+                                description: |
+                                  The storage format of the predictions generated BatchPrediction job.
+                                values:
+                                  - :PREDICTION_FORMAT_UNSPECIFIED
+                                  - :JSONL
+                                  - :BIGQUERY
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'gcs'
+                                description: |
+                                  The Google Cloud Storage location where the output is to be written to.
+                                properties:
+                                    - !ruby/object:Api::Type::String
+                                      name: 'outputUriPrefix'
+                                      description: |
+                                        Required. Google Cloud Storage URI to output directory. If the uri doesn't end with '/', a '/' will be automatically appended. The directory is created if it doesn't exist.
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'bigquery'
+                                description: |
+                                  The BigQuery location for the output content.
+                                properties:
+                                    - !ruby/object:Api::Type::String
+                                      name: 'outputUri'
+                                      description: |
+                                        Required. BigQuery URI to a project or table, up to 2000 characters long. When only the project is specified, the Dataset and Table is created. When the full table reference is specified, the Dataset must exist and table must not exist. Accepted forms: * BigQuery path. For example: `bq://projectId` or `bq://projectId.bqDatasetId` or `bq://projectId.bqDatasetId.bqTableId`.
+                        - !ruby/object:Api::Type::Boolean
+                          name: 'enableFeatureAttributes'
+                          description: |
+                            If want to analyze the Vertex Explainable AI feature attribute scores or not. If set to true, Vertex AI will log the feature attributions from explain response and do the skew/drift detection for them.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'trainingDataset'
+                    description: |
+                      Training Dataset information.
+                    properties:
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'loggingSamplingStrategy'
+                          description: |
+                            Sampling Strategy for logging, can be for both training and prediction dataset.
+                          properties:
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'randomSampleConfig'
+                                description: |
+                                  Requests are randomly selected.
+                                properties:
+                                    - !ruby/object:Api::Type::Integer
+                                      name: 'sampleRate'
+                                      description: |
+                                        Sample rate (0, 1]
+                        - !ruby/object:Api::Type::String
+                          name: 'dataset'
+                          description: |
+                            The resource name of the Dataset used to train this Model.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'gcsSource'
+                          description: |
+                            The Google Cloud Storage location for the input content.
+                          properties:
+                              - !ruby/object:Api::Type::Array
+                                name: 'uris'
+                                description: |
+                                  Required. Google Cloud Storage URI(-s) to the input file(s). May contain wildcards. For more information on wildcards, see https://cloud.google.com/storage/docs/gsutil/addlhelp/WildcardNames.
+                                item_type: Api::Type::String
+                        - !ruby/object:Api::Type::String
+                          name: 'targetField'
+                          description: |
+                            The target field name the model is to predict. This field will be excluded when doing Predict and (or) Explain for the training data.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'bigquerySource'
+                          description: |
+                            The BigQuery location for the input content.
+                          properties:
+                              - !ruby/object:Api::Type::String
+                                name: 'inputUri'
+                                description: |
+                                  Required. BigQuery URI to a table, up to 2000 characters long. Accepted forms: * BigQuery path. For example: `bq://projectId.bqDatasetId.bqTableId`.
+                        - !ruby/object:Api::Type::String
+                          name: 'dataFormat'
+                          description: |
+                            Data format of the dataset, only applicable if the input is from Google Cloud Storage. The possible formats are: "tf-record" The source file is a TFRecord file. "csv" The source file is a CSV file. "jsonl" The source file is a JSONL file.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'trainingPredictionSkewDetectionConfig'
+                    description: |
+                      The config for Training & Prediction data skew detection. It specifies the training dataset sources and the skew detection parameters.
+                    properties:
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'skewThresholds'
+                          description: |
+                            Key is the feature name and value is the threshold. If a feature needs to be monitored for skew, a value threshold must be configured for that feature. The threshold here is against feature distribution distance between the training and prediction feature.
+                          properties:
+                            - !ruby/object:Api::Type::String
+                              name: 'additionalProperties'
+                              description: |
+                                The config for feature monitoring threshold.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'defaultSkewThreshold'
+                          description: |
+                            The config for feature monitoring threshold.
+                          properties:
+                              - !ruby/object:Api::Type::Integer
+                                name: 'value'
+                                description: |
+                                  Specify a threshold value that can trigger the alert. If this threshold config is for feature distribution distance: 1. For categorical feature, the distribution distance is calculated by L-inifinity norm. 2. For numerical feature, the distribution distance is calculated by Jensen–Shannon divergence. Each feature must have a non-zero threshold if they need to be monitored. Otherwise no alert will be triggered for that feature.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'attributionScoreSkewThresholds'
+                          description: |
+                            Key is the feature name and value is the threshold. The threshold here is against attribution score distance between the training and prediction feature.
+                          properties:
+                            - !ruby/object:Api::Type::String
+                              name: 'additionalProperties'
+                              description: |
+                                The config for feature monitoring threshold.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'predictionDriftDetectionConfig'
+                    description: |
+                      The config for Prediction data drift detection.
+                    properties:
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'attributionScoreDriftThresholds'
+                          description: |
+                            Key is the feature name and value is the threshold. The threshold here is against attribution score distance between different time windows.
+                          properties:
+                            - !ruby/object:Api::Type::String
+                              name: 'additionalProperties'
+                              description: |
+                                The config for feature monitoring threshold.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'driftThresholds'
+                          description: |
+                            Key is the feature name and value is the threshold. If a feature needs to be monitored for drift, a value threshold must be configured for that feature. The threshold here is against feature distribution distance between different time windws.
+                          properties:
+                            - !ruby/object:Api::Type::String
+                              name: 'additionalProperties'
+                              description: |
+                                The config for feature monitoring threshold.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'defaultDriftThreshold'
+                          description: |
+                            The config for feature monitoring threshold.
+                          properties:
+                              - !ruby/object:Api::Type::Integer
+                                name: 'value'
+                                description: |
+                                  Specify a threshold value that can trigger the alert. If this threshold config is for feature distribution distance: 1. For categorical feature, the distribution distance is calculated by L-inifinity norm. 2. For numerical feature, the distribution distance is calculated by Jensen–Shannon divergence. Each feature must have a non-zero threshold if they need to be monitored. Otherwise no alert will be triggered for that feature.
+            - !ruby/object:Api::Type::String
+              name: 'deployedModelId'
+              description: |
+                The DeployedModel ID of the objective config.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          The labels with user-defined metadata to organize your ModelDeploymentMonitoringJob. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+              
+      - !ruby/object:Api::Type::Enum
+        name: 'state'
+        description: |
+          Output only. The detailed state of the monitoring job. When the job is still creating, the state will be 'PENDING'. Once the job is successfully created, the state will be 'RUNNING'. Pause the job, the state will be 'PAUSED'. Resume the job, the state will return to 'RUNNING'.
+        values:
+          - :JOB_STATE_UNSPECIFIED
+          - :JOB_STATE_QUEUED
+          - :JOB_STATE_PENDING
+          - :JOB_STATE_RUNNING
+          - :JOB_STATE_SUCCEEDED
+          - :JOB_STATE_FAILED
+          - :JOB_STATE_CANCELLING
+          - :JOB_STATE_CANCELLED
+          - :JOB_STATE_PAUSED
+          - :JOB_STATE_EXPIRED
+          - :JOB_STATE_UPDATING
+          - :JOB_STATE_PARTIALLY_SUCCEEDED
+      - !ruby/object:Api::Type::String
+        name: 'analysisInstanceSchemaUri'
+        description: |
+          YAML schema file uri describing the format of a single instance that you want Tensorflow Data Validation (TFDV) to analyze. If this field is empty, all the feature data types are inferred from predict_instance_schema_uri, meaning that TFDV will use the data in the exact format(data type) as prediction request/response. If there are any data type differences between predict instance and TFDV instance, this field can be used to override the schema. For models trained with Vertex AI, this field must be set as all the fields in predict instance formatted as string.
+      - !ruby/object:Api::Type::Boolean
+        name: 'enableMonitoringPipelineLogs'
+        description: |
+          If true, the scheduled monitoring pipeline logs are sent to Google Cloud Logging, including pipeline status and anomalies detected. Please note the logs incur cost, which are subject to [Cloud Logging pricing](https://cloud.google.com/logging#pricing).
+      - !ruby/object:Api::Type::String
+        name: 'endpoint'
+        description: |
+          Required. Endpoint resource name. Format: `projects/{project}/locations/{location}/endpoints/{endpoint}`
+      - !ruby/object:Api::Type::NestedObject
+        name: 'loggingSamplingStrategy'
+        description: |
+          Sampling Strategy for logging, can be for both training and prediction dataset.
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'randomSampleConfig'
+              description: |
+                Requests are randomly selected.
+              properties:
+                  - !ruby/object:Api::Type::Integer
+                    name: 'sampleRate'
+                    description: |
+                      Sample rate (0, 1]
+      - !ruby/object:Api::Type::Array
+        name: 'bigqueryTables'
+        description: |
+          Output only. The created bigquery tables for the job under customer project. Customer could do their own query & analysis. There could be 4 log tables in maximum: 1. Training data logging predict request/response 2. Serving data logging predict request/response
+        item_type: !ruby/object:Api::Type::NestedObject
+          properties:
+            - !ruby/object:Api::Type::Enum
+              name: 'logSource'
+              description: |
+                The source of log.
+              values:
+                - :LOG_SOURCE_UNSPECIFIED
+                - :TRAINING
+                - :SERVING
+            - !ruby/object:Api::Type::String
+              name: 'bigqueryTablePath'
+              description: |
+                The created BigQuery table to store logs. Customer could do their own query & analysis. Format: `bq://.model_deployment_monitoring_._`
+            - !ruby/object:Api::Type::Enum
+              name: 'logType'
+              description: |
+                The type of log.
+              values:
+                - :LOG_TYPE_UNSPECIFIED
+                - :PREDICT
+                - :EXPLAIN
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          Required. The user-defined name of the ModelDeploymentMonitoringJob. The name can be up to 128 characters long and can consist of any UTF-8 characters. Display name of a ModelDeploymentMonitoringJob.
+      - !ruby/object:Api::Type::Enum
+        name: 'scheduleState'
+        description: |
+          Output only. Schedule state when the monitoring job is in Running state.
+        values:
+          - :MONITORING_SCHEDULE_STATE_UNSPECIFIED
+          - :PENDING
+          - :OFFLINE
+          - :RUNNING
+      - !ruby/object:Api::Type::NestedObject
+        name: 'error'
+        description: |
+          The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).
+        properties:
+            - !ruby/object:Api::Type::Array
+              name: 'details'
+              description: |
+                A list of messages that carry the error details. There is a common set of message types for APIs to use.
+              item_type: Api::Type::String
+            - !ruby/object:Api::Type::Integer
+              name: 'code'
+              description: |
+                The status code, which should be an enum value of google.rpc.Code.
+            - !ruby/object:Api::Type::String
+              name: 'message'
+              description: |
+                A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'modelMonitoringAlertConfig'
+        description: |
+          
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'emailAlertConfig'
+              description: |
+                The config for email alert.
+              properties:
+                  - !ruby/object:Api::Type::Array
+                    name: 'userEmails'
+                    description: |
+                      The email addresses to send the alert.
+                    item_type: Api::Type::String
+            - !ruby/object:Api::Type::Boolean
+              name: 'enableLogging'
+              description: |
+                Dump the anomalies to Cloud Logging. The anomalies will be put to json payload encoded from proto google.cloud.aiplatform.logging.ModelMonitoringAnomaliesLogEntry. This can be further sinked to Pub/Sub or any other services supported by Cloud Logging.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'latestMonitoringPipelineMetadata'
+        description: |
+          All metadata of most recent monitoring pipelines.
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'status'
+              description: |
+                The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).
+              properties:
+                  - !ruby/object:Api::Type::Array
+                    name: 'details'
+                    description: |
+                      A list of messages that carry the error details. There is a common set of message types for APIs to use.
+                    item_type: Api::Type::String
+                  - !ruby/object:Api::Type::Integer
+                    name: 'code'
+                    description: |
+                      The status code, which should be an enum value of google.rpc.Code.
+                  - !ruby/object:Api::Type::String
+                    name: 'message'
+                    description: |
+                      A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+            - !ruby/object:Api::Type::String
+              name: 'runTime'
+              description: |
+                The time that most recent monitoring pipelines that is related to this run.
+      - !ruby/object:Api::Type::String
+        name: 'samplePredictInstance'
+        description: |
+          Sample Predict instance, same format as PredictRequest.instances, this can be set as a replacement of ModelDeploymentMonitoringJob.predict_instance_schema_uri. If not set, we will generate predict schema from collected predict requests.
+      - !ruby/object:Api::Type::String
+        name: 'predictInstanceSchemaUri'
+        description: |
+          YAML schema file uri describing the format of a single instance, which are given to format this Endpoint's prediction (and explanation). If not set, we will generate predict schema from collected predict requests.
+      - !ruby/object:Api::Type::String
+        name: 'nextScheduleTime'
+        description: |
+          Output only. Timestamp when this monitoring pipeline will be scheduled to run for the next round.
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this ModelDeploymentMonitoringJob was created.
+      - !ruby/object:Api::Type::String
+        name: 'logTtl'
+        description: |
+          The TTL of BigQuery tables in user projects which stores logs. A day is the basic unit of the TTL and we take the ceil of TTL/86400(a day). e.g. { second: 3600} indicates ttl = 1 day.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'statsAnomaliesBaseDirectory'
+        description: |
+          The Google Cloud Storage location where the output is to be written to.
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'outputUriPrefix'
+              description: |
+                Required. Google Cloud Storage URI to output directory. If the uri doesn't end with '/', a '/' will be automatically appended. The directory is created if it doesn't exist.
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. Timestamp when this ModelDeploymentMonitoringJob was updated most recently.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'modelDeploymentMonitoringScheduleConfig'
+        description: |
+          The config for scheduling monitoring job.
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'monitorWindow'
+              description: |
+                The time window of the prediction data being included in each prediction dataset. This window specifies how long the data should be collected from historical model results for each run. If not set, ModelDeploymentMonitoringScheduleConfig.monitor_interval will be used. e.g. If currently the cutoff time is 2022-01-08 14:30:00 and the monitor_window is set to be 3600, then data from 2022-01-08 13:30:00 to 2022-01-08 14:30:00 will be retrieved and aggregated to calculate the monitoring statistics.
+            - !ruby/object:Api::Type::String
+              name: 'monitorInterval'
+              description: |
+                Required. The model monitoring job scheduling interval. It will be rounded up to next full hour. This defines how often the monitoring jobs are triggered.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'encryptionSpec'
+        description: |
+          Represents a customer-managed encryption key spec that can be applied to a top-level resource.
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'kmsKeyName'
+              description: |
+                Required. The Cloud KMS resource identifier of the customer managed encryption key used to protect a resource. Has the form: `projects/my-project/locations/my-region/keyRings/my-kr/cryptoKeys/my-key`. The key needs to be in the same region as where the compute resource is created.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. Resource name of a ModelDeploymentMonitoringJob.
+  
+
+    
+  - !ruby/object:Api::Resource
+    name: ModelDeploymentMonitoringJob
+    base_url: '{{parent}}/modelDeploymentMonitoringJobs'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Represents a job that runs periodically to monitor the deployed models in an endpoint. It will analyze the logged training & prediction data to detect any abnormal behaviors.
+    properties:
+  
+      - !ruby/object:Api::Type::Array
+        name: 'modelDeploymentMonitoringObjectiveConfigs'
+        description: |
+          Required. The config for monitoring objectives. This is a per DeployedModel config. Each DeployedModel needs to be configured separately.
+        item_type: !ruby/object:Api::Type::NestedObject
+          properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'objectiveConfig'
+              description: |
+                The objective configuration for model monitoring, including the information needed to detect anomalies for one particular model.
+              properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'explanationConfig'
+                    description: |
+                      The config for integrating with Vertex Explainable AI. Only applicable if the Model has explanation_spec populated.
+                    properties:
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'explanationBaseline'
+                          description: |
+                            Output from BatchPredictionJob for Model Monitoring baseline dataset, which can be used to generate baseline attribution scores.
+                          properties:
+                              - !ruby/object:Api::Type::Enum
+                                name: 'predictionFormat'
+                                description: |
+                                  The storage format of the predictions generated BatchPrediction job.
+                                values:
+                                  - :PREDICTION_FORMAT_UNSPECIFIED
+                                  - :JSONL
+                                  - :BIGQUERY
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'gcs'
+                                description: |
+                                  The Google Cloud Storage location where the output is to be written to.
+                                properties:
+                                    - !ruby/object:Api::Type::String
+                                      name: 'outputUriPrefix'
+                                      description: |
+                                        Required. Google Cloud Storage URI to output directory. If the uri doesn't end with '/', a '/' will be automatically appended. The directory is created if it doesn't exist.
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'bigquery'
+                                description: |
+                                  The BigQuery location for the output content.
+                                properties:
+                                    - !ruby/object:Api::Type::String
+                                      name: 'outputUri'
+                                      description: |
+                                        Required. BigQuery URI to a project or table, up to 2000 characters long. When only the project is specified, the Dataset and Table is created. When the full table reference is specified, the Dataset must exist and table must not exist. Accepted forms: * BigQuery path. For example: `bq://projectId` or `bq://projectId.bqDatasetId` or `bq://projectId.bqDatasetId.bqTableId`.
+                        - !ruby/object:Api::Type::Boolean
+                          name: 'enableFeatureAttributes'
+                          description: |
+                            If want to analyze the Vertex Explainable AI feature attribute scores or not. If set to true, Vertex AI will log the feature attributions from explain response and do the skew/drift detection for them.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'trainingDataset'
+                    description: |
+                      Training Dataset information.
+                    properties:
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'loggingSamplingStrategy'
+                          description: |
+                            Sampling Strategy for logging, can be for both training and prediction dataset.
+                          properties:
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'randomSampleConfig'
+                                description: |
+                                  Requests are randomly selected.
+                                properties:
+                                    - !ruby/object:Api::Type::Integer
+                                      name: 'sampleRate'
+                                      description: |
+                                        Sample rate (0, 1]
+                        - !ruby/object:Api::Type::String
+                          name: 'dataset'
+                          description: |
+                            The resource name of the Dataset used to train this Model.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'gcsSource'
+                          description: |
+                            The Google Cloud Storage location for the input content.
+                          properties:
+                              - !ruby/object:Api::Type::Array
+                                name: 'uris'
+                                description: |
+                                  Required. Google Cloud Storage URI(-s) to the input file(s). May contain wildcards. For more information on wildcards, see https://cloud.google.com/storage/docs/gsutil/addlhelp/WildcardNames.
+                                item_type: Api::Type::String
+                        - !ruby/object:Api::Type::String
+                          name: 'targetField'
+                          description: |
+                            The target field name the model is to predict. This field will be excluded when doing Predict and (or) Explain for the training data.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'bigquerySource'
+                          description: |
+                            The BigQuery location for the input content.
+                          properties:
+                              - !ruby/object:Api::Type::String
+                                name: 'inputUri'
+                                description: |
+                                  Required. BigQuery URI to a table, up to 2000 characters long. Accepted forms: * BigQuery path. For example: `bq://projectId.bqDatasetId.bqTableId`.
+                        - !ruby/object:Api::Type::String
+                          name: 'dataFormat'
+                          description: |
+                            Data format of the dataset, only applicable if the input is from Google Cloud Storage. The possible formats are: "tf-record" The source file is a TFRecord file. "csv" The source file is a CSV file. "jsonl" The source file is a JSONL file.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'trainingPredictionSkewDetectionConfig'
+                    description: |
+                      The config for Training & Prediction data skew detection. It specifies the training dataset sources and the skew detection parameters.
+                    properties:
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'skewThresholds'
+                          description: |
+                            Key is the feature name and value is the threshold. If a feature needs to be monitored for skew, a value threshold must be configured for that feature. The threshold here is against feature distribution distance between the training and prediction feature.
+                          properties:
+                            - !ruby/object:Api::Type::String
+                              name: 'additionalProperties'
+                              description: |
+                                The config for feature monitoring threshold.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'defaultSkewThreshold'
+                          description: |
+                            The config for feature monitoring threshold.
+                          properties:
+                              - !ruby/object:Api::Type::Integer
+                                name: 'value'
+                                description: |
+                                  Specify a threshold value that can trigger the alert. If this threshold config is for feature distribution distance: 1. For categorical feature, the distribution distance is calculated by L-inifinity norm. 2. For numerical feature, the distribution distance is calculated by Jensen–Shannon divergence. Each feature must have a non-zero threshold if they need to be monitored. Otherwise no alert will be triggered for that feature.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'attributionScoreSkewThresholds'
+                          description: |
+                            Key is the feature name and value is the threshold. The threshold here is against attribution score distance between the training and prediction feature.
+                          properties:
+                            - !ruby/object:Api::Type::String
+                              name: 'additionalProperties'
+                              description: |
+                                The config for feature monitoring threshold.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'predictionDriftDetectionConfig'
+                    description: |
+                      The config for Prediction data drift detection.
+                    properties:
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'attributionScoreDriftThresholds'
+                          description: |
+                            Key is the feature name and value is the threshold. The threshold here is against attribution score distance between different time windows.
+                          properties:
+                            - !ruby/object:Api::Type::String
+                              name: 'additionalProperties'
+                              description: |
+                                The config for feature monitoring threshold.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'driftThresholds'
+                          description: |
+                            Key is the feature name and value is the threshold. If a feature needs to be monitored for drift, a value threshold must be configured for that feature. The threshold here is against feature distribution distance between different time windws.
+                          properties:
+                            - !ruby/object:Api::Type::String
+                              name: 'additionalProperties'
+                              description: |
+                                The config for feature monitoring threshold.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'defaultDriftThreshold'
+                          description: |
+                            The config for feature monitoring threshold.
+                          properties:
+                              - !ruby/object:Api::Type::Integer
+                                name: 'value'
+                                description: |
+                                  Specify a threshold value that can trigger the alert. If this threshold config is for feature distribution distance: 1. For categorical feature, the distribution distance is calculated by L-inifinity norm. 2. For numerical feature, the distribution distance is calculated by Jensen–Shannon divergence. Each feature must have a non-zero threshold if they need to be monitored. Otherwise no alert will be triggered for that feature.
+            - !ruby/object:Api::Type::String
+              name: 'deployedModelId'
+              description: |
+                The DeployedModel ID of the objective config.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          The labels with user-defined metadata to organize your ModelDeploymentMonitoringJob. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+              
+      - !ruby/object:Api::Type::Enum
+        name: 'state'
+        description: |
+          Output only. The detailed state of the monitoring job. When the job is still creating, the state will be 'PENDING'. Once the job is successfully created, the state will be 'RUNNING'. Pause the job, the state will be 'PAUSED'. Resume the job, the state will return to 'RUNNING'.
+        values:
+          - :JOB_STATE_UNSPECIFIED
+          - :JOB_STATE_QUEUED
+          - :JOB_STATE_PENDING
+          - :JOB_STATE_RUNNING
+          - :JOB_STATE_SUCCEEDED
+          - :JOB_STATE_FAILED
+          - :JOB_STATE_CANCELLING
+          - :JOB_STATE_CANCELLED
+          - :JOB_STATE_PAUSED
+          - :JOB_STATE_EXPIRED
+          - :JOB_STATE_UPDATING
+          - :JOB_STATE_PARTIALLY_SUCCEEDED
+      - !ruby/object:Api::Type::String
+        name: 'analysisInstanceSchemaUri'
+        description: |
+          YAML schema file uri describing the format of a single instance that you want Tensorflow Data Validation (TFDV) to analyze. If this field is empty, all the feature data types are inferred from predict_instance_schema_uri, meaning that TFDV will use the data in the exact format(data type) as prediction request/response. If there are any data type differences between predict instance and TFDV instance, this field can be used to override the schema. For models trained with Vertex AI, this field must be set as all the fields in predict instance formatted as string.
+      - !ruby/object:Api::Type::Boolean
+        name: 'enableMonitoringPipelineLogs'
+        description: |
+          If true, the scheduled monitoring pipeline logs are sent to Google Cloud Logging, including pipeline status and anomalies detected. Please note the logs incur cost, which are subject to [Cloud Logging pricing](https://cloud.google.com/logging#pricing).
+      - !ruby/object:Api::Type::String
+        name: 'endpoint'
+        description: |
+          Required. Endpoint resource name. Format: `projects/{project}/locations/{location}/endpoints/{endpoint}`
+      - !ruby/object:Api::Type::NestedObject
+        name: 'loggingSamplingStrategy'
+        description: |
+          Sampling Strategy for logging, can be for both training and prediction dataset.
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'randomSampleConfig'
+              description: |
+                Requests are randomly selected.
+              properties:
+                  - !ruby/object:Api::Type::Integer
+                    name: 'sampleRate'
+                    description: |
+                      Sample rate (0, 1]
+      - !ruby/object:Api::Type::Array
+        name: 'bigqueryTables'
+        description: |
+          Output only. The created bigquery tables for the job under customer project. Customer could do their own query & analysis. There could be 4 log tables in maximum: 1. Training data logging predict request/response 2. Serving data logging predict request/response
+        item_type: !ruby/object:Api::Type::NestedObject
+          properties:
+            - !ruby/object:Api::Type::Enum
+              name: 'logSource'
+              description: |
+                The source of log.
+              values:
+                - :LOG_SOURCE_UNSPECIFIED
+                - :TRAINING
+                - :SERVING
+            - !ruby/object:Api::Type::String
+              name: 'bigqueryTablePath'
+              description: |
+                The created BigQuery table to store logs. Customer could do their own query & analysis. Format: `bq://.model_deployment_monitoring_._`
+            - !ruby/object:Api::Type::Enum
+              name: 'logType'
+              description: |
+                The type of log.
+              values:
+                - :LOG_TYPE_UNSPECIFIED
+                - :PREDICT
+                - :EXPLAIN
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          Required. The user-defined name of the ModelDeploymentMonitoringJob. The name can be up to 128 characters long and can consist of any UTF-8 characters. Display name of a ModelDeploymentMonitoringJob.
+      - !ruby/object:Api::Type::Enum
+        name: 'scheduleState'
+        description: |
+          Output only. Schedule state when the monitoring job is in Running state.
+        values:
+          - :MONITORING_SCHEDULE_STATE_UNSPECIFIED
+          - :PENDING
+          - :OFFLINE
+          - :RUNNING
+      - !ruby/object:Api::Type::NestedObject
+        name: 'error'
+        description: |
+          The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).
+        properties:
+            - !ruby/object:Api::Type::Array
+              name: 'details'
+              description: |
+                A list of messages that carry the error details. There is a common set of message types for APIs to use.
+              item_type: Api::Type::String
+            - !ruby/object:Api::Type::Integer
+              name: 'code'
+              description: |
+                The status code, which should be an enum value of google.rpc.Code.
+            - !ruby/object:Api::Type::String
+              name: 'message'
+              description: |
+                A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'modelMonitoringAlertConfig'
+        description: |
+          
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'emailAlertConfig'
+              description: |
+                The config for email alert.
+              properties:
+                  - !ruby/object:Api::Type::Array
+                    name: 'userEmails'
+                    description: |
+                      The email addresses to send the alert.
+                    item_type: Api::Type::String
+            - !ruby/object:Api::Type::Boolean
+              name: 'enableLogging'
+              description: |
+                Dump the anomalies to Cloud Logging. The anomalies will be put to json payload encoded from proto google.cloud.aiplatform.logging.ModelMonitoringAnomaliesLogEntry. This can be further sinked to Pub/Sub or any other services supported by Cloud Logging.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'latestMonitoringPipelineMetadata'
+        description: |
+          All metadata of most recent monitoring pipelines.
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'status'
+              description: |
+                The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).
+              properties:
+                  - !ruby/object:Api::Type::Array
+                    name: 'details'
+                    description: |
+                      A list of messages that carry the error details. There is a common set of message types for APIs to use.
+                    item_type: Api::Type::String
+                  - !ruby/object:Api::Type::Integer
+                    name: 'code'
+                    description: |
+                      The status code, which should be an enum value of google.rpc.Code.
+                  - !ruby/object:Api::Type::String
+                    name: 'message'
+                    description: |
+                      A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+            - !ruby/object:Api::Type::String
+              name: 'runTime'
+              description: |
+                The time that most recent monitoring pipelines that is related to this run.
+      - !ruby/object:Api::Type::String
+        name: 'samplePredictInstance'
+        description: |
+          Sample Predict instance, same format as PredictRequest.instances, this can be set as a replacement of ModelDeploymentMonitoringJob.predict_instance_schema_uri. If not set, we will generate predict schema from collected predict requests.
+      - !ruby/object:Api::Type::String
+        name: 'predictInstanceSchemaUri'
+        description: |
+          YAML schema file uri describing the format of a single instance, which are given to format this Endpoint's prediction (and explanation). If not set, we will generate predict schema from collected predict requests.
+      - !ruby/object:Api::Type::String
+        name: 'nextScheduleTime'
+        description: |
+          Output only. Timestamp when this monitoring pipeline will be scheduled to run for the next round.
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this ModelDeploymentMonitoringJob was created.
+      - !ruby/object:Api::Type::String
+        name: 'logTtl'
+        description: |
+          The TTL of BigQuery tables in user projects which stores logs. A day is the basic unit of the TTL and we take the ceil of TTL/86400(a day). e.g. { second: 3600} indicates ttl = 1 day.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'statsAnomaliesBaseDirectory'
+        description: |
+          The Google Cloud Storage location where the output is to be written to.
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'outputUriPrefix'
+              description: |
+                Required. Google Cloud Storage URI to output directory. If the uri doesn't end with '/', a '/' will be automatically appended. The directory is created if it doesn't exist.
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. Timestamp when this ModelDeploymentMonitoringJob was updated most recently.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'modelDeploymentMonitoringScheduleConfig'
+        description: |
+          The config for scheduling monitoring job.
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'monitorWindow'
+              description: |
+                The time window of the prediction data being included in each prediction dataset. This window specifies how long the data should be collected from historical model results for each run. If not set, ModelDeploymentMonitoringScheduleConfig.monitor_interval will be used. e.g. If currently the cutoff time is 2022-01-08 14:30:00 and the monitor_window is set to be 3600, then data from 2022-01-08 13:30:00 to 2022-01-08 14:30:00 will be retrieved and aggregated to calculate the monitoring statistics.
+            - !ruby/object:Api::Type::String
+              name: 'monitorInterval'
+              description: |
+                Required. The model monitoring job scheduling interval. It will be rounded up to next full hour. This defines how often the monitoring jobs are triggered.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'encryptionSpec'
+        description: |
+          Represents a customer-managed encryption key spec that can be applied to a top-level resource.
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'kmsKeyName'
+              description: |
+                Required. The Cloud KMS resource identifier of the customer managed encryption key used to protect a resource. Has the form: `projects/my-project/locations/my-region/keyRings/my-kr/cryptoKeys/my-key`. The key needs to be in the same region as where the compute resource is created.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. Resource name of a ModelDeploymentMonitoringJob.
+  

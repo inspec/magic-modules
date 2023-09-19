@@ -598,3 +598,18 @@ endpoint:
   display_name : "value_displayname"
   etag : "value_etag"
   create_time : "value_createtime"
+
+model_deployment_monitoring_job:
+  name : "value_name"
+  region : "value_region"
+  parent : "value_parent"
+  state : "value_state"
+  analysis_instance_schema_uri : "value_analysisinstanceschemauri"
+  endpoint : "value_endpoint"
+  display_name : "value_displayname"
+  schedule_state : "value_schedulestate"
+  predict_instance_schema_uri : "value_predictinstanceschemauri"
+  next_schedule_time : "value_nextscheduletime"
+  create_time : "value_createtime"
+  log_ttl : "value_logttl"
+  update_time : "value_updatetime"
