@@ -598,3 +598,17 @@ endpoint:
   display_name : "value_displayname"
   etag : "value_etag"
   create_time : "value_createtime"
+
+metadata_stores_artifact:
+  name : "value_name"
+  region : "value_region"
+  parent : "value_parent"
+  schema_version : "value_schemaversion"
+  display_name : "value_displayname"
+  etag : "value_etag"
+  update_time : "value_updatetime"
+  state : "value_state"
+  uri : "value_uri"
+  create_time : "value_createtime"
+  schema_title : "value_schematitle"
+  description : "value_description"
