@@ -598,3 +598,20 @@ endpoint:
   display_name : "value_displayname"
   etag : "value_etag"
   create_time : "value_createtime"
+
+featurestores_entity_type:
+  name : "value_name"
+  region : "value_region"
+  parent : "value_parent"
+  description : "value_description"
+  create_time : "value_createtime"
+  etag : "value_etag"
+  update_time : "value_updatetime"
+featurestores_entity_type:
+  name : "value_name"
+  region : "value_region"
+  parent : "value_parent"
+  description : "value_description"
+  create_time : "value_createtime"
+  etag : "value_etag"
+  update_time : "value_updatetime"
