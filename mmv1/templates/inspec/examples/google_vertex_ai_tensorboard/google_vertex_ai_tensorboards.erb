@@ -1,0 +1,5 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+  <% tensorboard = grab_attributes(pwd)['tensorboard'] -%>
+  describe google_vertex_ai_tensorboards(parent: "projects/#{gcp_project_id}/locations/#{tensorboard['region']}", region: <%= doc_generation ? "' #{tensorboard['region']}'":"tensorboard['region']" -%>) do
+    it { should exist }
+  end
