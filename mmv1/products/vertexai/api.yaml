@@ -3689,3 +3689,671 @@ objects:
         description: |
           Output only. The resource name of the Endpoint.
   
+
+    
+  - !ruby/object:Api::Resource
+    name: ModelsEvaluation
+    base_url: '{{parent}}/evaluations'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        A collection of metrics calculated by comparing Model's predictions on all of the test data against annotations from the test data.
+    properties:
+  
+      - !ruby/object:Api::Type::String
+        name: 'dataItemSchemaUri'
+        description: |
+          Points to a YAML file stored on Google Cloud Storage describing EvaluatedDataItemView.data_item_payload and EvaluatedAnnotation.data_item_payload. The schema is defined as an OpenAPI 3.0.2 [Schema Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.2.md#schemaObject). This field is not populated if there are neither EvaluatedDataItemViews nor EvaluatedAnnotations under this ModelEvaluation.
+      - !ruby/object:Api::Type::String
+        name: 'metadata'
+        description: |
+          The metadata of the ModelEvaluation. For the ModelEvaluation uploaded from Managed Pipeline, metadata contains a structured value with keys of "pipeline_job_id", "evaluation_dataset_type", "evaluation_dataset_path".
+      - !ruby/object:Api::Type::String
+        name: 'metricsSchemaUri'
+        description: |
+          Points to a YAML file stored on Google Cloud Storage describing the metrics of this ModelEvaluation. The schema is defined as an OpenAPI 3.0.2 [Schema Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.2.md#schemaObject).
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this ModelEvaluation was created.
+      - !ruby/object:Api::Type::String
+        name: 'annotationSchemaUri'
+        description: |
+          Points to a YAML file stored on Google Cloud Storage describing EvaluatedDataItemView.predictions, EvaluatedDataItemView.ground_truths, EvaluatedAnnotation.predictions, and EvaluatedAnnotation.ground_truths. The schema is defined as an OpenAPI 3.0.2 [Schema Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.2.md#schemaObject). This field is not populated if there are neither EvaluatedDataItemViews nor EvaluatedAnnotations under this ModelEvaluation.
+      - !ruby/object:Api::Type::String
+        name: 'metrics'
+        description: |
+          Evaluation metrics of the Model. The schema of the metrics is stored in metrics_schema_uri
+      - !ruby/object:Api::Type::Array
+        name: 'explanationSpecs'
+        description: |
+          Describes the values of ExplanationSpec that are used for explaining the predicted values on the evaluated data.
+        item_type: !ruby/object:Api::Type::NestedObject
+          properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'explanationSpec'
+              description: |
+                Specification of Model explanation.
+              properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'parameters'
+                    description: |
+                      Parameters to configure explaining for Model's predictions.
+                    properties:
+                        - !ruby/object:Api::Type::Array
+                          name: 'outputIndices'
+                          description: |
+                            If populated, only returns attributions that have output_index contained in output_indices. It must be an ndarray of integers, with the same shape of the output it's explaining. If not populated, returns attributions for top_k indices of outputs. If neither top_k nor output_indices is populated, returns the argmax index of the outputs. Only applicable to Models that predict multiple outputs (e,g, multi-class Models that predict multiple classes).
+                          item_type: Api::Type::String
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'examples'
+                          description: |
+                            Example-based explainability that returns the nearest neighbors from the provided dataset.
+                          properties:
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'presets'
+                                description: |
+                                  Preset configuration for example-based explanations
+                                properties:
+                                    - !ruby/object:Api::Type::Enum
+                                      name: 'modality'
+                                      description: |
+                                        The modality of the uploaded model, which automatically configures the distance measurement and feature normalization for the underlying example index and queries. If your model does not precisely fit one of these types, it is okay to choose the closest type.
+                                      values:
+                                        - :MODALITY_UNSPECIFIED
+                                        - :IMAGE
+                                        - :TEXT
+                                        - :TABULAR
+                                    - !ruby/object:Api::Type::Enum
+                                      name: 'query'
+                                      description: |
+                                        Preset option controlling parameters for speed-precision trade-off when querying for examples. If omitted, defaults to `PRECISE`.
+                                      values:
+                                        - :PRECISE
+                                        - :FAST
+                              - !ruby/object:Api::Type::Integer
+                                name: 'neighborCount'
+                                description: |
+                                  The number of neighbors to return when querying for examples.
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'exampleGcsSource'
+                                description: |
+                                  The Cloud Storage input instances.
+                                properties:
+                                    - !ruby/object:Api::Type::NestedObject
+                                      name: 'gcsSource'
+                                      description: |
+                                        The Google Cloud Storage location for the input content.
+                                      properties:
+                                          - !ruby/object:Api::Type::Array
+                                            name: 'uris'
+                                            description: |
+                                              Required. Google Cloud Storage URI(-s) to the input file(s). May contain wildcards. For more information on wildcards, see https://cloud.google.com/storage/docs/gsutil/addlhelp/WildcardNames.
+                                            item_type: Api::Type::String
+                                    - !ruby/object:Api::Type::Enum
+                                      name: 'dataFormat'
+                                      description: |
+                                        The format in which instances are given, if not specified, assume it's JSONL format. Currently only JSONL format is supported.
+                                      values:
+                                        - :DATA_FORMAT_UNSPECIFIED
+                                        - :JSONL
+                              - !ruby/object:Api::Type::String
+                                name: 'nearestNeighborSearchConfig'
+                                description: |
+                                  The full configuration for the generated index, the semantics are the same as metadata and should match [NearestNeighborSearchConfig](https://cloud.google.com/vertex-ai/docs/explainable-ai/configuring-explanations-example-based#nearest-neighbor-search-config).
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'xraiAttribution'
+                          description: |
+                            An explanation method that redistributes Integrated Gradients attributions to segmented regions, taking advantage of the model's fully differentiable structure. Refer to this paper for more details: https://arxiv.org/abs/1906.02825 Supported only by image Models.
+                          properties:
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'smoothGradConfig'
+                                description: |
+                                  Config for SmoothGrad approximation of gradients. When enabled, the gradients are approximated by averaging the gradients from noisy samples in the vicinity of the inputs. Adding noise can help improve the computed gradients. Refer to this paper for more details: https://arxiv.org/pdf/1706.03825.pdf
+                                properties:
+                                    - !ruby/object:Api::Type::NestedObject
+                                      name: 'featureNoiseSigma'
+                                      description: |
+                                        Noise sigma by features. Noise sigma represents the standard deviation of the gaussian kernel that will be used to add noise to interpolated inputs prior to computing gradients.
+                                      properties:
+                                          - !ruby/object:Api::Type::Array
+                                            name: 'noiseSigma'
+                                            description: |
+                                              Noise sigma per feature. No noise is added to features that are not set.
+                                            item_type: !ruby/object:Api::Type::NestedObject
+                                              properties:
+                                                - !ruby/object:Api::Type::String
+                                                  name: 'name'
+                                                  description: |
+                                                    The name of the input feature for which noise sigma is provided. The features are defined in explanation metadata inputs.
+                                                - !ruby/object:Api::Type::Integer
+                                                  name: 'sigma'
+                                                  description: |
+                                                    This represents the standard deviation of the Gaussian kernel that will be used to add noise to the feature prior to computing gradients. Similar to noise_sigma but represents the noise added to the current feature. Defaults to 0.1.
+                                    - !ruby/object:Api::Type::Integer
+                                      name: 'noiseSigma'
+                                      description: |
+                                        This is a single float value and will be used to add noise to all the features. Use this field when all features are normalized to have the same distribution: scale to range [0, 1], [-1, 1] or z-scoring, where features are normalized to have 0-mean and 1-variance. Learn more about [normalization](https://developers.google.com/machine-learning/data-prep/transform/normalization). For best results the recommended value is about 10% - 20% of the standard deviation of the input feature. Refer to section 3.2 of the SmoothGrad paper: https://arxiv.org/pdf/1706.03825.pdf. Defaults to 0.1. If the distribution is different per feature, set feature_noise_sigma instead for each feature.
+                                    - !ruby/object:Api::Type::Integer
+                                      name: 'noisySampleCount'
+                                      description: |
+                                        The number of gradient samples to use for approximation. The higher this number, the more accurate the gradient is, but the runtime complexity increases by this factor as well. Valid range of its value is [1, 50]. Defaults to 3.
+                              - !ruby/object:Api::Type::Integer
+                                name: 'stepCount'
+                                description: |
+                                  Required. The number of steps for approximating the path integral. A good value to start is 50 and gradually increase until the sum to diff property is met within the desired error range. Valid range of its value is [1, 100], inclusively.
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'blurBaselineConfig'
+                                description: |
+                                  Config for blur baseline. When enabled, a linear path from the maximally blurred image to the input image is created. Using a blurred baseline instead of zero (black image) is motivated by the BlurIG approach explained here: https://arxiv.org/abs/2004.03383
+                                properties:
+                                    - !ruby/object:Api::Type::Integer
+                                      name: 'maxBlurSigma'
+                                      description: |
+                                        The standard deviation of the blur kernel for the blurred baseline. The same blurring parameter is used for both the height and the width dimension. If not set, the method defaults to the zero (i.e. black for images) baseline.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'topK'
+                          description: |
+                            If populated, returns attributions for top K indices of outputs (defaults to 1). Only applies to Models that predicts more than one outputs (e,g, multi-class Models). When set to -1, returns explanations for all outputs.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'integratedGradientsAttribution'
+                          description: |
+                            An attribution method that computes the Aumann-Shapley value taking advantage of the model's fully differentiable structure. Refer to this paper for more details: https://arxiv.org/abs/1703.01365
+                          properties:
+                              - !ruby/object:Api::Type::Integer
+                                name: 'stepCount'
+                                description: |
+                                  Required. The number of steps for approximating the path integral. A good value to start is 50 and gradually increase until the sum to diff property is within the desired error range. Valid range of its value is [1, 100], inclusively.
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'smoothGradConfig'
+                                description: |
+                                  Config for SmoothGrad approximation of gradients. When enabled, the gradients are approximated by averaging the gradients from noisy samples in the vicinity of the inputs. Adding noise can help improve the computed gradients. Refer to this paper for more details: https://arxiv.org/pdf/1706.03825.pdf
+                                properties:
+                                    - !ruby/object:Api::Type::NestedObject
+                                      name: 'featureNoiseSigma'
+                                      description: |
+                                        Noise sigma by features. Noise sigma represents the standard deviation of the gaussian kernel that will be used to add noise to interpolated inputs prior to computing gradients.
+                                      properties:
+                                          - !ruby/object:Api::Type::Array
+                                            name: 'noiseSigma'
+                                            description: |
+                                              Noise sigma per feature. No noise is added to features that are not set.
+                                            item_type: !ruby/object:Api::Type::NestedObject
+                                              properties:
+                                                - !ruby/object:Api::Type::String
+                                                  name: 'name'
+                                                  description: |
+                                                    The name of the input feature for which noise sigma is provided. The features are defined in explanation metadata inputs.
+                                                - !ruby/object:Api::Type::Integer
+                                                  name: 'sigma'
+                                                  description: |
+                                                    This represents the standard deviation of the Gaussian kernel that will be used to add noise to the feature prior to computing gradients. Similar to noise_sigma but represents the noise added to the current feature. Defaults to 0.1.
+                                    - !ruby/object:Api::Type::Integer
+                                      name: 'noiseSigma'
+                                      description: |
+                                        This is a single float value and will be used to add noise to all the features. Use this field when all features are normalized to have the same distribution: scale to range [0, 1], [-1, 1] or z-scoring, where features are normalized to have 0-mean and 1-variance. Learn more about [normalization](https://developers.google.com/machine-learning/data-prep/transform/normalization). For best results the recommended value is about 10% - 20% of the standard deviation of the input feature. Refer to section 3.2 of the SmoothGrad paper: https://arxiv.org/pdf/1706.03825.pdf. Defaults to 0.1. If the distribution is different per feature, set feature_noise_sigma instead for each feature.
+                                    - !ruby/object:Api::Type::Integer
+                                      name: 'noisySampleCount'
+                                      description: |
+                                        The number of gradient samples to use for approximation. The higher this number, the more accurate the gradient is, but the runtime complexity increases by this factor as well. Valid range of its value is [1, 50]. Defaults to 3.
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'blurBaselineConfig'
+                                description: |
+                                  Config for blur baseline. When enabled, a linear path from the maximally blurred image to the input image is created. Using a blurred baseline instead of zero (black image) is motivated by the BlurIG approach explained here: https://arxiv.org/abs/2004.03383
+                                properties:
+                                    - !ruby/object:Api::Type::Integer
+                                      name: 'maxBlurSigma'
+                                      description: |
+                                        The standard deviation of the blur kernel for the blurred baseline. The same blurring parameter is used for both the height and the width dimension. If not set, the method defaults to the zero (i.e. black for images) baseline.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'sampledShapleyAttribution'
+                          description: |
+                            An attribution method that approximates Shapley values for features that contribute to the label being predicted. A sampling strategy is used to approximate the value rather than considering all subsets of features.
+                          properties:
+                              - !ruby/object:Api::Type::Integer
+                                name: 'pathCount'
+                                description: |
+                                  Required. The number of feature permutations to consider when approximating the Shapley values. Valid range of its value is [1, 50], inclusively.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'metadata'
+                    description: |
+                      Metadata describing the Model's input and output for explanation.
+                    properties:
+                        - !ruby/object:Api::Type::String
+                          name: 'featureAttributionsSchemaUri'
+                          description: |
+                            Points to a YAML file stored on Google Cloud Storage describing the format of the feature attributions. The schema is defined as an OpenAPI 3.0.2 [Schema Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.2.md#schemaObject). AutoML tabular Models always have this field populated by Vertex AI. Note: The URI given on output may be different, including the URI scheme, than the one given on input. The output URI will point to a location where the user only has a read access.
+                        - !ruby/object:Api::Type::String
+                          name: 'latentSpaceSource'
+                          description: |
+                            Name of the source to generate embeddings for example based explanations.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'outputs'
+                          description: |
+                            Required. Map from output names to output metadata. For Vertex AI-provided Tensorflow images, keys can be any user defined string that consists of any UTF-8 characters. For custom images, keys are the name of the output field in the prediction to be explained. Currently only one key is allowed.
+                          properties:
+                            - !ruby/object:Api::Type::String
+                              name: 'additionalProperties'
+                              description: |
+                                Metadata of the prediction output to be explained.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'inputs'
+                          description: |
+                            Required. Map from feature names to feature input metadata. Keys are the name of the features. Values are the specification of the feature. An empty InputMetadata is valid. It describes a text feature which has the name specified as the key in ExplanationMetadata.inputs. The baseline of the empty feature is chosen by Vertex AI. For Vertex AI-provided Tensorflow images, the key can be any friendly name of the feature. Once specified, featureAttributions are keyed by this key (if not grouped with another feature). For custom images, the key must match with the key in instance.
+                          properties:
+                            - !ruby/object:Api::Type::String
+                              name: 'additionalProperties'
+                              description: |
+                                Metadata of the input of a feature. Fields other than InputMetadata.input_baselines are applicable only for Models that are using Vertex AI-provided images for Tensorflow.
+            - !ruby/object:Api::Type::String
+              name: 'explanationType'
+              description: |
+                Explanation type. For AutoML Image Classification models, possible values are: * `image-integrated-gradients` * `image-xrai`
+      - !ruby/object:Api::Type::Array
+        name: 'sliceDimensions'
+        description: |
+          All possible dimensions of ModelEvaluationSlices. The dimensions can be used as the filter of the ModelService.ListModelEvaluationSlices request, in the form of `slice.dimension = `.
+        item_type: Api::Type::String
+      - !ruby/object:Api::Type::NestedObject
+        name: 'modelExplanation'
+        description: |
+          Aggregated explanation metrics for a Model over a set of instances.
+        properties:
+            - !ruby/object:Api::Type::Array
+              name: 'meanAttributions'
+              description: |
+                Output only. Aggregated attributions explaining the Model's prediction outputs over the set of instances. The attributions are grouped by outputs. For Models that predict only one output, such as regression Models that predict only one score, there is only one attibution that explains the predicted output. For Models that predict multiple outputs, such as multiclass Models that predict multiple classes, each element explains one specific item. Attribution.output_index can be used to identify which output this attribution is explaining. The baselineOutputValue, instanceOutputValue and featureAttributions fields are averaged over the test data. NOTE: Currently AutoML tabular classification Models produce only one attribution, which averages attributions over all the classes it predicts. Attribution.approximation_error is not populated.
+              item_type: !ruby/object:Api::Type::NestedObject
+                properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'outputDisplayName'
+                    description: |
+                      Output only. The display name of the output identified by output_index. For example, the predicted class name by a multi-classification Model. This field is only populated iff the Model predicts display names as a separate field along with the explained output. The predicted display name must has the same shape of the explained output, and can be located using output_index.
+                  - !ruby/object:Api::Type::Integer
+                    name: 'baselineOutputValue'
+                    description: |
+                      Output only. Model predicted output if the input instance is constructed from the baselines of all the features defined in ExplanationMetadata.inputs. The field name of the output is determined by the key in ExplanationMetadata.outputs. If the Model's predicted output has multiple dimensions (rank > 1), this is the value in the output located by output_index. If there are multiple baselines, their output values are averaged.
+                  - !ruby/object:Api::Type::String
+                    name: 'outputName'
+                    description: |
+                      Output only. Name of the explain output. Specified as the key in ExplanationMetadata.outputs.
+                  - !ruby/object:Api::Type::String
+                    name: 'featureAttributions'
+                    description: |
+                      Output only. Attributions of each explained feature. Features are extracted from the prediction instances according to explanation metadata for inputs. The value is a struct, whose keys are the name of the feature. The values are how much the feature in the instance contributed to the predicted result. The format of the value is determined by the feature's input format: * If the feature is a scalar value, the attribution value is a floating number. * If the feature is an array of scalar values, the attribution value is an array. * If the feature is a struct, the attribution value is a struct. The keys in the attribution value struct are the same as the keys in the feature struct. The formats of the values in the attribution struct are determined by the formats of the values in the feature struct. The ExplanationMetadata.feature_attributions_schema_uri field, pointed to by the ExplanationSpec field of the Endpoint.deployed_models object, points to the schema file that describes the features and their attribution values (if it is populated).
+                  - !ruby/object:Api::Type::Array
+                    name: 'outputIndex'
+                    description: |
+                      Output only. The index that locates the explained prediction output. If the prediction output is a scalar value, output_index is not populated. If the prediction output has multiple dimensions, the length of the output_index list is the same as the number of dimensions of the output. The i-th element in output_index is the element index of the i-th dimension of the output vector. Indices start from 0.
+                    item_type: Api::Type::String
+                  - !ruby/object:Api::Type::Integer
+                    name: 'instanceOutputValue'
+                    description: |
+                      Output only. Model predicted output on the corresponding explanation instance. The field name of the output is determined by the key in ExplanationMetadata.outputs. If the Model predicted output has multiple dimensions, this is the value in the output located by output_index.
+                  - !ruby/object:Api::Type::Integer
+                    name: 'approximationError'
+                    description: |
+                      Output only. Error of feature_attributions caused by approximation used in the explanation method. Lower value means more precise attributions. * For Sampled Shapley attribution, increasing path_count might reduce the error. * For Integrated Gradients attribution, increasing step_count might reduce the error. * For XRAI attribution, increasing step_count might reduce the error. See [this introduction](/vertex-ai/docs/explainable-ai/overview) for more information.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. The resource name of the ModelEvaluation.
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          The display name of the ModelEvaluation.
+  
+
+    
+  - !ruby/object:Api::Resource
+    name: ModelsEvaluation
+    base_url: '{{parent}}/evaluations'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        A collection of metrics calculated by comparing Model's predictions on all of the test data against annotations from the test data.
+    properties:
+  
+      - !ruby/object:Api::Type::String
+        name: 'dataItemSchemaUri'
+        description: |
+          Points to a YAML file stored on Google Cloud Storage describing EvaluatedDataItemView.data_item_payload and EvaluatedAnnotation.data_item_payload. The schema is defined as an OpenAPI 3.0.2 [Schema Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.2.md#schemaObject). This field is not populated if there are neither EvaluatedDataItemViews nor EvaluatedAnnotations under this ModelEvaluation.
+      - !ruby/object:Api::Type::String
+        name: 'metadata'
+        description: |
+          The metadata of the ModelEvaluation. For the ModelEvaluation uploaded from Managed Pipeline, metadata contains a structured value with keys of "pipeline_job_id", "evaluation_dataset_type", "evaluation_dataset_path".
+      - !ruby/object:Api::Type::String
+        name: 'metricsSchemaUri'
+        description: |
+          Points to a YAML file stored on Google Cloud Storage describing the metrics of this ModelEvaluation. The schema is defined as an OpenAPI 3.0.2 [Schema Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.2.md#schemaObject).
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this ModelEvaluation was created.
+      - !ruby/object:Api::Type::String
+        name: 'annotationSchemaUri'
+        description: |
+          Points to a YAML file stored on Google Cloud Storage describing EvaluatedDataItemView.predictions, EvaluatedDataItemView.ground_truths, EvaluatedAnnotation.predictions, and EvaluatedAnnotation.ground_truths. The schema is defined as an OpenAPI 3.0.2 [Schema Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.2.md#schemaObject). This field is not populated if there are neither EvaluatedDataItemViews nor EvaluatedAnnotations under this ModelEvaluation.
+      - !ruby/object:Api::Type::String
+        name: 'metrics'
+        description: |
+          Evaluation metrics of the Model. The schema of the metrics is stored in metrics_schema_uri
+      - !ruby/object:Api::Type::Array
+        name: 'explanationSpecs'
+        description: |
+          Describes the values of ExplanationSpec that are used for explaining the predicted values on the evaluated data.
+        item_type: !ruby/object:Api::Type::NestedObject
+          properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'explanationSpec'
+              description: |
+                Specification of Model explanation.
+              properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'parameters'
+                    description: |
+                      Parameters to configure explaining for Model's predictions.
+                    properties:
+                        - !ruby/object:Api::Type::Array
+                          name: 'outputIndices'
+                          description: |
+                            If populated, only returns attributions that have output_index contained in output_indices. It must be an ndarray of integers, with the same shape of the output it's explaining. If not populated, returns attributions for top_k indices of outputs. If neither top_k nor output_indices is populated, returns the argmax index of the outputs. Only applicable to Models that predict multiple outputs (e,g, multi-class Models that predict multiple classes).
+                          item_type: Api::Type::String
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'examples'
+                          description: |
+                            Example-based explainability that returns the nearest neighbors from the provided dataset.
+                          properties:
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'presets'
+                                description: |
+                                  Preset configuration for example-based explanations
+                                properties:
+                                    - !ruby/object:Api::Type::Enum
+                                      name: 'modality'
+                                      description: |
+                                        The modality of the uploaded model, which automatically configures the distance measurement and feature normalization for the underlying example index and queries. If your model does not precisely fit one of these types, it is okay to choose the closest type.
+                                      values:
+                                        - :MODALITY_UNSPECIFIED
+                                        - :IMAGE
+                                        - :TEXT
+                                        - :TABULAR
+                                    - !ruby/object:Api::Type::Enum
+                                      name: 'query'
+                                      description: |
+                                        Preset option controlling parameters for speed-precision trade-off when querying for examples. If omitted, defaults to `PRECISE`.
+                                      values:
+                                        - :PRECISE
+                                        - :FAST
+                              - !ruby/object:Api::Type::Integer
+                                name: 'neighborCount'
+                                description: |
+                                  The number of neighbors to return when querying for examples.
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'exampleGcsSource'
+                                description: |
+                                  The Cloud Storage input instances.
+                                properties:
+                                    - !ruby/object:Api::Type::NestedObject
+                                      name: 'gcsSource'
+                                      description: |
+                                        The Google Cloud Storage location for the input content.
+                                      properties:
+                                          - !ruby/object:Api::Type::Array
+                                            name: 'uris'
+                                            description: |
+                                              Required. Google Cloud Storage URI(-s) to the input file(s). May contain wildcards. For more information on wildcards, see https://cloud.google.com/storage/docs/gsutil/addlhelp/WildcardNames.
+                                            item_type: Api::Type::String
+                                    - !ruby/object:Api::Type::Enum
+                                      name: 'dataFormat'
+                                      description: |
+                                        The format in which instances are given, if not specified, assume it's JSONL format. Currently only JSONL format is supported.
+                                      values:
+                                        - :DATA_FORMAT_UNSPECIFIED
+                                        - :JSONL
+                              - !ruby/object:Api::Type::String
+                                name: 'nearestNeighborSearchConfig'
+                                description: |
+                                  The full configuration for the generated index, the semantics are the same as metadata and should match [NearestNeighborSearchConfig](https://cloud.google.com/vertex-ai/docs/explainable-ai/configuring-explanations-example-based#nearest-neighbor-search-config).
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'xraiAttribution'
+                          description: |
+                            An explanation method that redistributes Integrated Gradients attributions to segmented regions, taking advantage of the model's fully differentiable structure. Refer to this paper for more details: https://arxiv.org/abs/1906.02825 Supported only by image Models.
+                          properties:
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'smoothGradConfig'
+                                description: |
+                                  Config for SmoothGrad approximation of gradients. When enabled, the gradients are approximated by averaging the gradients from noisy samples in the vicinity of the inputs. Adding noise can help improve the computed gradients. Refer to this paper for more details: https://arxiv.org/pdf/1706.03825.pdf
+                                properties:
+                                    - !ruby/object:Api::Type::NestedObject
+                                      name: 'featureNoiseSigma'
+                                      description: |
+                                        Noise sigma by features. Noise sigma represents the standard deviation of the gaussian kernel that will be used to add noise to interpolated inputs prior to computing gradients.
+                                      properties:
+                                          - !ruby/object:Api::Type::Array
+                                            name: 'noiseSigma'
+                                            description: |
+                                              Noise sigma per feature. No noise is added to features that are not set.
+                                            item_type: !ruby/object:Api::Type::NestedObject
+                                              properties:
+                                                - !ruby/object:Api::Type::String
+                                                  name: 'name'
+                                                  description: |
+                                                    The name of the input feature for which noise sigma is provided. The features are defined in explanation metadata inputs.
+                                                - !ruby/object:Api::Type::Integer
+                                                  name: 'sigma'
+                                                  description: |
+                                                    This represents the standard deviation of the Gaussian kernel that will be used to add noise to the feature prior to computing gradients. Similar to noise_sigma but represents the noise added to the current feature. Defaults to 0.1.
+                                    - !ruby/object:Api::Type::Integer
+                                      name: 'noiseSigma'
+                                      description: |
+                                        This is a single float value and will be used to add noise to all the features. Use this field when all features are normalized to have the same distribution: scale to range [0, 1], [-1, 1] or z-scoring, where features are normalized to have 0-mean and 1-variance. Learn more about [normalization](https://developers.google.com/machine-learning/data-prep/transform/normalization). For best results the recommended value is about 10% - 20% of the standard deviation of the input feature. Refer to section 3.2 of the SmoothGrad paper: https://arxiv.org/pdf/1706.03825.pdf. Defaults to 0.1. If the distribution is different per feature, set feature_noise_sigma instead for each feature.
+                                    - !ruby/object:Api::Type::Integer
+                                      name: 'noisySampleCount'
+                                      description: |
+                                        The number of gradient samples to use for approximation. The higher this number, the more accurate the gradient is, but the runtime complexity increases by this factor as well. Valid range of its value is [1, 50]. Defaults to 3.
+                              - !ruby/object:Api::Type::Integer
+                                name: 'stepCount'
+                                description: |
+                                  Required. The number of steps for approximating the path integral. A good value to start is 50 and gradually increase until the sum to diff property is met within the desired error range. Valid range of its value is [1, 100], inclusively.
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'blurBaselineConfig'
+                                description: |
+                                  Config for blur baseline. When enabled, a linear path from the maximally blurred image to the input image is created. Using a blurred baseline instead of zero (black image) is motivated by the BlurIG approach explained here: https://arxiv.org/abs/2004.03383
+                                properties:
+                                    - !ruby/object:Api::Type::Integer
+                                      name: 'maxBlurSigma'
+                                      description: |
+                                        The standard deviation of the blur kernel for the blurred baseline. The same blurring parameter is used for both the height and the width dimension. If not set, the method defaults to the zero (i.e. black for images) baseline.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'topK'
+                          description: |
+                            If populated, returns attributions for top K indices of outputs (defaults to 1). Only applies to Models that predicts more than one outputs (e,g, multi-class Models). When set to -1, returns explanations for all outputs.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'integratedGradientsAttribution'
+                          description: |
+                            An attribution method that computes the Aumann-Shapley value taking advantage of the model's fully differentiable structure. Refer to this paper for more details: https://arxiv.org/abs/1703.01365
+                          properties:
+                              - !ruby/object:Api::Type::Integer
+                                name: 'stepCount'
+                                description: |
+                                  Required. The number of steps for approximating the path integral. A good value to start is 50 and gradually increase until the sum to diff property is within the desired error range. Valid range of its value is [1, 100], inclusively.
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'smoothGradConfig'
+                                description: |
+                                  Config for SmoothGrad approximation of gradients. When enabled, the gradients are approximated by averaging the gradients from noisy samples in the vicinity of the inputs. Adding noise can help improve the computed gradients. Refer to this paper for more details: https://arxiv.org/pdf/1706.03825.pdf
+                                properties:
+                                    - !ruby/object:Api::Type::NestedObject
+                                      name: 'featureNoiseSigma'
+                                      description: |
+                                        Noise sigma by features. Noise sigma represents the standard deviation of the gaussian kernel that will be used to add noise to interpolated inputs prior to computing gradients.
+                                      properties:
+                                          - !ruby/object:Api::Type::Array
+                                            name: 'noiseSigma'
+                                            description: |
+                                              Noise sigma per feature. No noise is added to features that are not set.
+                                            item_type: !ruby/object:Api::Type::NestedObject
+                                              properties:
+                                                - !ruby/object:Api::Type::String
+                                                  name: 'name'
+                                                  description: |
+                                                    The name of the input feature for which noise sigma is provided. The features are defined in explanation metadata inputs.
+                                                - !ruby/object:Api::Type::Integer
+                                                  name: 'sigma'
+                                                  description: |
+                                                    This represents the standard deviation of the Gaussian kernel that will be used to add noise to the feature prior to computing gradients. Similar to noise_sigma but represents the noise added to the current feature. Defaults to 0.1.
+                                    - !ruby/object:Api::Type::Integer
+                                      name: 'noiseSigma'
+                                      description: |
+                                        This is a single float value and will be used to add noise to all the features. Use this field when all features are normalized to have the same distribution: scale to range [0, 1], [-1, 1] or z-scoring, where features are normalized to have 0-mean and 1-variance. Learn more about [normalization](https://developers.google.com/machine-learning/data-prep/transform/normalization). For best results the recommended value is about 10% - 20% of the standard deviation of the input feature. Refer to section 3.2 of the SmoothGrad paper: https://arxiv.org/pdf/1706.03825.pdf. Defaults to 0.1. If the distribution is different per feature, set feature_noise_sigma instead for each feature.
+                                    - !ruby/object:Api::Type::Integer
+                                      name: 'noisySampleCount'
+                                      description: |
+                                        The number of gradient samples to use for approximation. The higher this number, the more accurate the gradient is, but the runtime complexity increases by this factor as well. Valid range of its value is [1, 50]. Defaults to 3.
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'blurBaselineConfig'
+                                description: |
+                                  Config for blur baseline. When enabled, a linear path from the maximally blurred image to the input image is created. Using a blurred baseline instead of zero (black image) is motivated by the BlurIG approach explained here: https://arxiv.org/abs/2004.03383
+                                properties:
+                                    - !ruby/object:Api::Type::Integer
+                                      name: 'maxBlurSigma'
+                                      description: |
+                                        The standard deviation of the blur kernel for the blurred baseline. The same blurring parameter is used for both the height and the width dimension. If not set, the method defaults to the zero (i.e. black for images) baseline.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'sampledShapleyAttribution'
+                          description: |
+                            An attribution method that approximates Shapley values for features that contribute to the label being predicted. A sampling strategy is used to approximate the value rather than considering all subsets of features.
+                          properties:
+                              - !ruby/object:Api::Type::Integer
+                                name: 'pathCount'
+                                description: |
+                                  Required. The number of feature permutations to consider when approximating the Shapley values. Valid range of its value is [1, 50], inclusively.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'metadata'
+                    description: |
+                      Metadata describing the Model's input and output for explanation.
+                    properties:
+                        - !ruby/object:Api::Type::String
+                          name: 'featureAttributionsSchemaUri'
+                          description: |
+                            Points to a YAML file stored on Google Cloud Storage describing the format of the feature attributions. The schema is defined as an OpenAPI 3.0.2 [Schema Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.2.md#schemaObject). AutoML tabular Models always have this field populated by Vertex AI. Note: The URI given on output may be different, including the URI scheme, than the one given on input. The output URI will point to a location where the user only has a read access.
+                        - !ruby/object:Api::Type::String
+                          name: 'latentSpaceSource'
+                          description: |
+                            Name of the source to generate embeddings for example based explanations.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'outputs'
+                          description: |
+                            Required. Map from output names to output metadata. For Vertex AI-provided Tensorflow images, keys can be any user defined string that consists of any UTF-8 characters. For custom images, keys are the name of the output field in the prediction to be explained. Currently only one key is allowed.
+                          properties:
+                            - !ruby/object:Api::Type::String
+                              name: 'additionalProperties'
+                              description: |
+                                Metadata of the prediction output to be explained.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'inputs'
+                          description: |
+                            Required. Map from feature names to feature input metadata. Keys are the name of the features. Values are the specification of the feature. An empty InputMetadata is valid. It describes a text feature which has the name specified as the key in ExplanationMetadata.inputs. The baseline of the empty feature is chosen by Vertex AI. For Vertex AI-provided Tensorflow images, the key can be any friendly name of the feature. Once specified, featureAttributions are keyed by this key (if not grouped with another feature). For custom images, the key must match with the key in instance.
+                          properties:
+                            - !ruby/object:Api::Type::String
+                              name: 'additionalProperties'
+                              description: |
+                                Metadata of the input of a feature. Fields other than InputMetadata.input_baselines are applicable only for Models that are using Vertex AI-provided images for Tensorflow.
+            - !ruby/object:Api::Type::String
+              name: 'explanationType'
+              description: |
+                Explanation type. For AutoML Image Classification models, possible values are: * `image-integrated-gradients` * `image-xrai`
+      - !ruby/object:Api::Type::Array
+        name: 'sliceDimensions'
+        description: |
+          All possible dimensions of ModelEvaluationSlices. The dimensions can be used as the filter of the ModelService.ListModelEvaluationSlices request, in the form of `slice.dimension = `.
+        item_type: Api::Type::String
+      - !ruby/object:Api::Type::NestedObject
+        name: 'modelExplanation'
+        description: |
+          Aggregated explanation metrics for a Model over a set of instances.
+        properties:
+            - !ruby/object:Api::Type::Array
+              name: 'meanAttributions'
+              description: |
+                Output only. Aggregated attributions explaining the Model's prediction outputs over the set of instances. The attributions are grouped by outputs. For Models that predict only one output, such as regression Models that predict only one score, there is only one attibution that explains the predicted output. For Models that predict multiple outputs, such as multiclass Models that predict multiple classes, each element explains one specific item. Attribution.output_index can be used to identify which output this attribution is explaining. The baselineOutputValue, instanceOutputValue and featureAttributions fields are averaged over the test data. NOTE: Currently AutoML tabular classification Models produce only one attribution, which averages attributions over all the classes it predicts. Attribution.approximation_error is not populated.
+              item_type: !ruby/object:Api::Type::NestedObject
+                properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'outputDisplayName'
+                    description: |
+                      Output only. The display name of the output identified by output_index. For example, the predicted class name by a multi-classification Model. This field is only populated iff the Model predicts display names as a separate field along with the explained output. The predicted display name must has the same shape of the explained output, and can be located using output_index.
+                  - !ruby/object:Api::Type::Integer
+                    name: 'baselineOutputValue'
+                    description: |
+                      Output only. Model predicted output if the input instance is constructed from the baselines of all the features defined in ExplanationMetadata.inputs. The field name of the output is determined by the key in ExplanationMetadata.outputs. If the Model's predicted output has multiple dimensions (rank > 1), this is the value in the output located by output_index. If there are multiple baselines, their output values are averaged.
+                  - !ruby/object:Api::Type::String
+                    name: 'outputName'
+                    description: |
+                      Output only. Name of the explain output. Specified as the key in ExplanationMetadata.outputs.
+                  - !ruby/object:Api::Type::String
+                    name: 'featureAttributions'
+                    description: |
+                      Output only. Attributions of each explained feature. Features are extracted from the prediction instances according to explanation metadata for inputs. The value is a struct, whose keys are the name of the feature. The values are how much the feature in the instance contributed to the predicted result. The format of the value is determined by the feature's input format: * If the feature is a scalar value, the attribution value is a floating number. * If the feature is an array of scalar values, the attribution value is an array. * If the feature is a struct, the attribution value is a struct. The keys in the attribution value struct are the same as the keys in the feature struct. The formats of the values in the attribution struct are determined by the formats of the values in the feature struct. The ExplanationMetadata.feature_attributions_schema_uri field, pointed to by the ExplanationSpec field of the Endpoint.deployed_models object, points to the schema file that describes the features and their attribution values (if it is populated).
+                  - !ruby/object:Api::Type::Array
+                    name: 'outputIndex'
+                    description: |
+                      Output only. The index that locates the explained prediction output. If the prediction output is a scalar value, output_index is not populated. If the prediction output has multiple dimensions, the length of the output_index list is the same as the number of dimensions of the output. The i-th element in output_index is the element index of the i-th dimension of the output vector. Indices start from 0.
+                    item_type: Api::Type::String
+                  - !ruby/object:Api::Type::Integer
+                    name: 'instanceOutputValue'
+                    description: |
+                      Output only. Model predicted output on the corresponding explanation instance. The field name of the output is determined by the key in ExplanationMetadata.outputs. If the Model predicted output has multiple dimensions, this is the value in the output located by output_index.
+                  - !ruby/object:Api::Type::Integer
+                    name: 'approximationError'
+                    description: |
+                      Output only. Error of feature_attributions caused by approximation used in the explanation method. Lower value means more precise attributions. * For Sampled Shapley attribution, increasing path_count might reduce the error. * For Integrated Gradients attribution, increasing step_count might reduce the error. * For XRAI attribution, increasing step_count might reduce the error. See [this introduction](/vertex-ai/docs/explainable-ai/overview) for more information.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. The resource name of the ModelEvaluation.
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          The display name of the ModelEvaluation.
+  
