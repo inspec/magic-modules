@@ -598,3 +598,14 @@ endpoint:
   display_name : "value_displayname"
   etag : "value_etag"
   create_time : "value_createtime"
+
+tensorboards_experiment:
+  name : "value_name"
+  region : "value_region"
+  parent : "value_parent"
+  description : "value_description"
+  source : "value_source"
+  display_name : "value_displayname"
+  create_time : "value_createtime"
+  update_time : "value_updatetime"
+  etag : "value_etag"
