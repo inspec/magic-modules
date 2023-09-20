@@ -1,0 +1,13 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% model_evaluation_slice = grab_attributes(pwd)['model_evaluation_slice'] -%>
+describe google_vertex_ai_model_evaluation_slice(name: "projects/#{gcp_project_id}/locations/#{model_evaluation_slice['region']}/models/#{model_evaluation_slice['model']}/evaluations/#{model_evaluation_slice['evaluation']}/slices/#{model_evaluation_slice['slice']}", region: <%= doc_generation ? "' #{model_evaluation_slice['region']}'":"model_evaluation_slice['region']" -%>) do
+	it { should exist }
+	its('create_time') { should cmp <%= doc_generation ? "'#{model_evaluation_slice['create_time']}'" : "model_evaluation_slice['create_time']" -%> }
+	its('name') { should cmp <%= doc_generation ? "'#{model_evaluation_slice['name']}'" : "model_evaluation_slice['name']" -%> }
+	its('metrics_schema_uri') { should cmp <%= doc_generation ? "'#{model_evaluation_slice['metrics_schema_uri']}'" : "model_evaluation_slice['metrics_schema_uri']" -%> }
+
+end
+
+describe google_vertex_ai_model_evaluation_slice(name: "does_not_exit", region: <%= doc_generation ? "' #{model_evaluation_slice['region']}'":"model_evaluation_slice['region']" -%>) do
+	it { should_not exist }
+end

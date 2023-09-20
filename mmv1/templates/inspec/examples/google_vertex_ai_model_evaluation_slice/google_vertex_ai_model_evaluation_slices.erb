@@ -1,0 +1,5 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+  <% model_evaluation_slice = grab_attributes(pwd)['model_evaluation_slice'] -%>
+  describe google_vertex_ai_model_evaluation_slices(parent: "projects/#{gcp_project_id}/locations/#{model_evaluation_slice['region']}/models/#{model_evaluation_slice['model']}/evaluations/#{model_evaluation_slice['evaluation']}", region: <%= doc_generation ? "' #{model_evaluation_slice['region']}'":"model_evaluation_slice['region']" -%>) do
+    it { should exist }
+  end

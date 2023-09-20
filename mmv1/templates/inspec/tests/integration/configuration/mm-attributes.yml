@@ -613,3 +613,21 @@ model:
   display_name : "value_displayname"
   version_create_time : "value_versioncreatetime"
   version_description : "value_versiondescription"
+model_evaluation_slice:
+  name : "value_name"
+  region : "value_region"
+  parent : "value_parent"
+  create_time : "value_createtime"
+  metrics_schema_uri : "value_metricsschemauri"
+model_evaluation_slice:
+  name : "value_name"
+  region : "value_region"
+  parent : "value_parent"
+  create_time : "value_createtime"
+  metrics_schema_uri : "value_metricsschemauri"
+modelevaluationslice:
+  name : "value_name"
+  region : "value_region"
+  parent : "value_parent"
+  create_time : "value_createtime"
+  metrics_schema_uri : "value_metricsschemauri"
