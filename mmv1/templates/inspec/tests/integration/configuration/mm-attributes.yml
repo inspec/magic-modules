@@ -600,8 +600,9 @@ endpoint:
   create_time : "value_createtime"
 
 datasets_annotation_spec:
-  name : "value_name"
-  region : "value_region"
+  name : "inspec-annotation-test"
+  region : "us-central1"
+  dataset: "e2e-text-dataset-unique"
   display_name : "value_displayname"
   etag : "value_etag"
   create_time : "value_createtime"
