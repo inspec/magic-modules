@@ -546,6 +546,15 @@ dlp:
     location: "europe-west2"
     type: "Infotype"
 
+featurestore:
+  name : "value_name"
+  region : "value_region"
+  parent : "value_parent"
+  state : "value_state"
+  create_time : "value_createtime"
+  etag : "value_etag"
+  update_time : "value_updatetime"
+
 training_pipeline:
   name : "value_name"
   job_id: "job_id"
