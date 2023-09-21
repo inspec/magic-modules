@@ -622,3 +622,8 @@ model:
   display_name : "value_displayname"
   version_create_time : "value_versioncreatetime"
   version_description : "value_versiondescription"
+
+dataset_data_item_annotation:
+  name : "value_name"
+  region : "value_region"
+  parent : "value_parent"
