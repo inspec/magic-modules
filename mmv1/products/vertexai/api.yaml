@@ -6041,3 +6041,118 @@ objects:
                     description: |
                       Optional. The cpu utilization that the Autoscaler should be trying to achieve. This number is on a scale from 0 (no utilization) to 100 (total utilization), and is limited between 10 and 80. When a cluster's CPU utilization exceeds the target that you have set, Bigtable immediately adds nodes to the cluster. When CPU utilization is substantially lower than the target, Bigtable removes nodes. If not set or set to 0, default to 50.
   
+
+    
+  - !ruby/object:Api::Resource
+    name: HyperparameterTuningJob
+    base_url: '{{parent}}/hyperparameterTuningJobs'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Represents a HyperparameterTuningJob. A HyperparameterTuningJob has a Study specification and multiple CustomJobs with identical CustomJob specification.
+    properties:
+  
+      - !ruby/object:Api::Type::String
+        name: 'studySpec'
+        description: |
+          Required. Study configuration of the HyperparameterTuningJob.
+      - !ruby/object:Api::Type::Array
+        name: 'trials'
+        description: |
+          Output only. Trials of the HyperparameterTuningJob.
+        item_type: Api::Type::String
+      - !ruby/object:Api::Type::Enum
+        name: 'state'
+        description: |
+          Output only. The detailed state of the job.
+        values:
+          - :JOB_STATE_UNSPECIFIED
+          - :JOB_STATE_QUEUED
+          - :JOB_STATE_PENDING
+          - :JOB_STATE_RUNNING
+          - :JOB_STATE_SUCCEEDED
+          - :JOB_STATE_FAILED
+          - :JOB_STATE_CANCELLING
+          - :JOB_STATE_CANCELLED
+          - :JOB_STATE_PAUSED
+          - :JOB_STATE_EXPIRED
+          - :JOB_STATE_UPDATING
+          - :JOB_STATE_PARTIALLY_SUCCEEDED
+      - !ruby/object:Api::Type::Integer
+        name: 'maxFailedTrialCount'
+        description: |
+          The number of failed Trials that need to be seen before failing the HyperparameterTuningJob. If set to 0, Vertex AI decides how many Trials must fail before the whole job fails.
+      - !ruby/object:Api::Type::String
+        name: 'encryptionSpec'
+        description: |
+          Customer-managed encryption key options for a HyperparameterTuningJob. If this is set, then all resources created by the HyperparameterTuningJob will be encrypted with the provided encryption key.
+      - !ruby/object:Api::Type::String
+        name: 'error'
+        description: |
+          Output only. Only populated when job's state is JOB_STATE_FAILED or JOB_STATE_CANCELLED.
+      - !ruby/object:Api::Type::String
+        name: 'endTime'
+        description: |
+          Output only. Time when the HyperparameterTuningJob entered any of the following states: `JOB_STATE_SUCCEEDED`, `JOB_STATE_FAILED`, `JOB_STATE_CANCELLED`.
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. Time when the HyperparameterTuningJob was most recently updated.
+      - !ruby/object:Api::Type::String
+        name: 'startTime'
+        description: |
+          Output only. Time when the HyperparameterTuningJob for the first time entered the `JOB_STATE_RUNNING` state.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          The labels with user-defined metadata to organize HyperparameterTuningJobs. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+              
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Time when the HyperparameterTuningJob was created.
+      - !ruby/object:Api::Type::Integer
+        name: 'parallelTrialCount'
+        description: |
+          Required. The desired number of Trials to run in parallel.
+      - !ruby/object:Api::Type::String
+        name: 'trialJobSpec'
+        description: |
+          Required. The spec of a trial job. The same spec applies to the CustomJobs created in all the trials.
+      - !ruby/object:Api::Type::Integer
+        name: 'maxTrialCount'
+        description: |
+          Required. The desired total number of Trials.
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          Required. The display name of the HyperparameterTuningJob. The name can be up to 128 characters long and can consist of any UTF-8 characters.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. Resource name of the HyperparameterTuningJob.
+  

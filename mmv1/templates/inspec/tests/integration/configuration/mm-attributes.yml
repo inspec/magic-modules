@@ -643,3 +643,14 @@ featurestores_entity_type:
   create_time : "value_createtime"
   etag : "value_etag"
   update_time : "value_updatetime"
+
+hyperparameter_tuning_job:
+  name : "value_name"
+  region : "value_region"
+  parent : "value_parent"
+  state : "value_state"
+  end_time : "value_endtime"
+  update_time : "value_updatetime"
+  start_time : "value_starttime"
+  create_time : "value_createtime"
+  display_name : "value_displayname"
