@@ -643,3 +643,7 @@ featurestores_entity_type:
   create_time : "value_createtime"
   etag : "value_etag"
   update_time : "value_updatetime"
+
+operation:
+  name : "value_name"
+  region : "value_region"

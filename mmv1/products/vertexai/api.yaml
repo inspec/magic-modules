@@ -6041,3 +6041,79 @@ objects:
                     description: |
                       Optional. The cpu utilization that the Autoscaler should be trying to achieve. This number is on a scale from 0 (no utilization) to 100 (total utilization), and is limited between 10 and 80. When a cluster's CPU utilization exceeds the target that you have set, Bigtable immediately adds nodes to the cluster. When CPU utilization is substantially lower than the target, Bigtable removes nodes. If not set or set to 0, default to 50.
   
+
+    
+  - !ruby/object:Api::Resource
+    name: Operation
+    base_url: '{{name}}/operations'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        This resource represents a long-running operation that is the result of a network API call.
+    properties:
+  
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          The server-assigned name, which is only unique within the same service that originally returns it. If you use the default HTTP mapping, the `name` should be a resource name ending with `operations/{unique_id}`.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'response'
+        description: |
+          The normal, successful response of the operation. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+              Properties of the object. Contains field @type with type URL.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'metadata'
+        description: |
+          Service-specific metadata associated with the operation. It typically contains progress information and common metadata such as create time. Some services might not provide such metadata. Any method that returns a long-running operation should document the metadata type, if any.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+              Properties of the object. Contains field @type with type URL.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'error'
+        description: |
+          The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).
+        properties:
+            - !ruby/object:Api::Type::Array
+              name: 'details'
+              description: |
+                A list of messages that carry the error details. There is a common set of message types for APIs to use.
+              item_type: Api::Type::String
+            - !ruby/object:Api::Type::Integer
+              name: 'code'
+              description: |
+                The status code, which should be an enum value of google.rpc.Code.
+            - !ruby/object:Api::Type::String
+              name: 'message'
+              description: |
+                A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+      - !ruby/object:Api::Type::Boolean
+        name: 'done'
+        description: |
+          If the value is `false`, it means the operation is still in progress. If `true`, the operation is completed, and either `error` or `response` is available.
+  
