@@ -634,3 +634,12 @@ index_endpoint:
   public_endpoint_domain_name : "value_publicendpointdomainname"
   etag : "value_etag"
   description : "value_description"
+
+featurestores_entity_type:
+  name : "value_name"
+  region : "value_region"
+  parent : "value_parent"
+  description : "value_description"
+  create_time : "value_createtime"
+  etag : "value_etag"
+  update_time : "value_updatetime"
