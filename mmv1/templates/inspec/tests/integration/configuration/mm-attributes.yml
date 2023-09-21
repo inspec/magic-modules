@@ -622,3 +622,15 @@ model:
   display_name : "value_displayname"
   version_create_time : "value_versioncreatetime"
   version_description : "value_versiondescription"
+
+index_endpoint:
+  name : "value_name"
+  region : "value_region"
+  parent : "value_parent"
+  display_name : "value_displayname"
+  create_time : "value_createtime"
+  network : "value_network"
+  update_time : "value_updatetime"
+  public_endpoint_domain_name : "value_publicendpointdomainname"
+  etag : "value_etag"
+  description : "value_description"
