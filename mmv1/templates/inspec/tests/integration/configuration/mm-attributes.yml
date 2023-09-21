@@ -598,3 +598,14 @@ endpoint:
   display_name : "value_displayname"
   etag : "value_etag"
   create_time : "value_createtime"
+
+hyperparameter_tuning_job:
+  name : "value_name"
+  region : "value_region"
+  parent : "value_parent"
+  state : "value_state"
+  end_time : "value_endtime"
+  update_time : "value_updatetime"
+  start_time : "value_starttime"
+  create_time : "value_createtime"
+  display_name : "value_displayname"
