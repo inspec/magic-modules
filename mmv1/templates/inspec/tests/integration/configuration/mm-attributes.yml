@@ -643,3 +643,8 @@ featurestores_entity_type:
   create_time : "value_createtime"
   etag : "value_etag"
   update_time : "value_updatetime"
+
+tensorboard_experiment_run:
+  name : "value_name"
+  region : "value_region"
+  parent : "value_parent"
