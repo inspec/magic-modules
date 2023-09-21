@@ -1,0 +1,15 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% featurestore = grab_attributes(pwd)['featurestore'] -%>
+describe google_vertex_ai_featurestore(name: "projects/#{gcp_project_id}/locations/#{featurestore['region']}/featurestores/#{featurestore['name']}", region: <%= doc_generation ? "' #{featurestore['region']}'":"featurestore['region']" -%>) do
+	it { should exist }
+	its('state') { should cmp <%= doc_generation ? "'#{featurestore['state']}'" : "featurestore['state']" -%> }
+	its('create_time') { should cmp <%= doc_generation ? "'#{featurestore['create_time']}'" : "featurestore['create_time']" -%> }
+	its('etag') { should cmp <%= doc_generation ? "'#{featurestore['etag']}'" : "featurestore['etag']" -%> }
+	its('update_time') { should cmp <%= doc_generation ? "'#{featurestore['update_time']}'" : "featurestore['update_time']" -%> }
+	its('name') { should cmp <%= doc_generation ? "'#{featurestore['name']}'" : "featurestore['name']" -%> }
+
+end
+
+describe google_vertex_ai_featurestore(name: "does_not_exit", region: <%= doc_generation ? "' #{featurestore['region']}'":"featurestore['region']" -%>) do
+	it { should_not exist }
+end
