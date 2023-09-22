@@ -6339,3 +6339,173 @@ objects:
                     description: |
                       Optional. The cpu utilization that the Autoscaler should be trying to achieve. This number is on a scale from 0 (no utilization) to 100 (total utilization), and is limited between 10 and 80. When a cluster's CPU utilization exceeds the target that you have set, Bigtable immediately adds nodes to the cluster. When CPU utilization is substantially lower than the target, Bigtable removes nodes. If not set or set to 0, default to 50.
   
+
+    
+  - !ruby/object:Api::Resource
+    name: FeaturestoreEntityTypeFeature
+    base_url: '{{parent}}/features'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Feature Metadata information that describes an attribute of an entity type. For example, apple is an entity type, and color is a feature that describes apple.
+    properties:
+  
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          Description of the Feature.
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this EntityType was created.
+      - !ruby/object:Api::Type::Array
+        name: 'monitoringStatsAnomalies'
+        description: |
+          Output only. The list of historical stats and anomalies with specified objectives.
+        item_type: Api::Type::String
+      - !ruby/object:Api::Type::String
+        name: 'etag'
+        description: |
+          Used to perform a consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          Optional. The labels with user-defined metadata to organize your Features. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information on and examples of labels. No more than 64 user labels can be associated with one Feature (System labels are excluded)." System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+              
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Immutable. Name of the Feature. Format: `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}/features/{feature}` The last part feature is assigned by the client. The feature can be up to 64 characters long and can consist only of ASCII Latin letters A-Z and a-z, underscore(_), and ASCII digits 0-9 starting with a letter. The value will be unique given an entity type.
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. Timestamp when this EntityType was most recently updated.
+      - !ruby/object:Api::Type::Boolean
+        name: 'disableMonitoring'
+        description: |
+          Optional. If not set, use the monitoring_config defined for the EntityType this Feature belongs to. Only Features with type (Feature.ValueType) BOOL, STRING, DOUBLE or INT64 can enable monitoring. If set to true, all types of data monitoring are disabled despite the config on EntityType.
+      - !ruby/object:Api::Type::Enum
+        name: 'valueType'
+        description: |
+          Required. Immutable. Type of Feature value.
+        values:
+          - :VALUE_TYPE_UNSPECIFIED
+          - :BOOL
+          - :BOOL_ARRAY
+          - :DOUBLE
+          - :DOUBLE_ARRAY
+          - :INT64
+          - :INT64_ARRAY
+          - :STRING
+          - :STRING_ARRAY
+          - :BYTES
+  
+
+    
+  - !ruby/object:Api::Resource
+    name: FeaturestoreEntityTypeFeature
+    base_url: '{{parent}}/features'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Feature Metadata information that describes an attribute of an entity type. For example, apple is an entity type, and color is a feature that describes apple.
+    properties:
+  
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          Description of the Feature.
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this EntityType was created.
+      - !ruby/object:Api::Type::Array
+        name: 'monitoringStatsAnomalies'
+        description: |
+          Output only. The list of historical stats and anomalies with specified objectives.
+        item_type: Api::Type::String
+      - !ruby/object:Api::Type::String
+        name: 'etag'
+        description: |
+          Used to perform a consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          Optional. The labels with user-defined metadata to organize your Features. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information on and examples of labels. No more than 64 user labels can be associated with one Feature (System labels are excluded)." System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+              
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Immutable. Name of the Feature. Format: `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}/features/{feature}` The last part feature is assigned by the client. The feature can be up to 64 characters long and can consist only of ASCII Latin letters A-Z and a-z, underscore(_), and ASCII digits 0-9 starting with a letter. The value will be unique given an entity type.
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. Timestamp when this EntityType was most recently updated.
+      - !ruby/object:Api::Type::Boolean
+        name: 'disableMonitoring'
+        description: |
+          Optional. If not set, use the monitoring_config defined for the EntityType this Feature belongs to. Only Features with type (Feature.ValueType) BOOL, STRING, DOUBLE or INT64 can enable monitoring. If set to true, all types of data monitoring are disabled despite the config on EntityType.
+      - !ruby/object:Api::Type::Enum
+        name: 'valueType'
+        description: |
+          Required. Immutable. Type of Feature value.
+        values:
+          - :VALUE_TYPE_UNSPECIFIED
+          - :BOOL
+          - :BOOL_ARRAY
+          - :DOUBLE
+          - :DOUBLE_ARRAY
+          - :INT64
+          - :INT64_ARRAY
+          - :STRING
+          - :STRING_ARRAY
+          - :BYTES
+  

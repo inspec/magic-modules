@@ -656,3 +656,13 @@ studies_trial:
   custom_job : "value_customjob"
   state : "value_state"
   id : "value_id"
+
+featurestore_entity_type_feature:
+  parent : "value_parent"
+  region : "value_region"
+  description : "value_description"
+  create_time : "value_createtime"
+  etag : "value_etag"
+  name : "value_name"
+  update_time : "value_updatetime"
+  value_type : "value_valuetype"
