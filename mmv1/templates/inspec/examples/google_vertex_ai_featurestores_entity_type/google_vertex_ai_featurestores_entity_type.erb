@@ -1,0 +1,15 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% featurestores_entity_type = grab_attributes(pwd)['featurestores_entity_type'] -%>
+describe google_vertex_ai_featurestores_entity_type(name: "projects/#{gcp_project_id}/locations/#{featurestores_entity_type['region']}/featurestores/#{featurestores_entity_type['featurestore']}/entityTypes/#{featurestores_entity_type['name']}", region: <%= doc_generation ? "' #{featurestores_entity_type['region']}'":"featurestores_entity_type['region']" -%>) do
+	it { should exist }
+	its('description') { should cmp <%= doc_generation ? "'#{featurestores_entity_type['description']}'" : "featurestores_entity_type['description']" -%> }
+	its('name') { should cmp <%= doc_generation ? "'#{featurestores_entity_type['name']}'" : "featurestores_entity_type['name']" -%> }
+	its('create_time') { should cmp <%= doc_generation ? "'#{featurestores_entity_type['create_time']}'" : "featurestores_entity_type['create_time']" -%> }
+	its('etag') { should cmp <%= doc_generation ? "'#{featurestores_entity_type['etag']}'" : "featurestores_entity_type['etag']" -%> }
+	its('update_time') { should cmp <%= doc_generation ? "'#{featurestores_entity_type['update_time']}'" : "featurestores_entity_type['update_time']" -%> }
+
+end
+
+describe google_vertex_ai_featurestores_entity_type(name: "does_not_exit", region: <%= doc_generation ? "' #{featurestores_entity_type['region']}'":"featurestores_entity_type['region']" -%>) do
+	it { should_not exist }
+end
