@@ -656,3 +656,14 @@ studies_trial:
   custom_job : "value_customjob"
   state : "value_state"
   id : "value_id"
+
+hyperparameter_tuning_job:
+  name : "9200900561803673600"
+  region : "us-central1"
+  parent : "projects/165434197229/locations/us-central1/hyperparameterTuningJobs/"
+  state : "JOB_STATE_RUNNING"
+  end_time : "value_endtime"
+  update_time : "value_updatetime"
+  start_time : "value_starttime"
+  create_time : "value_createtime"
+  display_name : "inspec-hyper-test-hyperparameter-tuning-job"

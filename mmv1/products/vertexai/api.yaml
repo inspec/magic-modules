@@ -3692,8 +3692,8 @@ objects:
 
     
   - !ruby/object:Api::Resource
-    name: StudiesTrial
-    base_url: '{{parent}}/trials'
+    name: HyperparameterTuningJob
+    base_url: '{{parent}}/hyperparameterTuningJobs'
     self_link: '{{name}}'
     references: !ruby/object:Api::Resource::ReferenceLinks
       guides:
@@ -3717,129 +3717,95 @@ objects:
         path: 'error'
         message: 'message'
     description: |-
-        A message representing a Trial. A Trial contains a unique set of Parameters that has been or will be evaluated, along with the objective metrics got by running the Trial.
+        Represents a HyperparameterTuningJob. A HyperparameterTuningJob has a Study specification and multiple CustomJobs with identical CustomJob specification.
     properties:
   
+      - !ruby/object:Api::Type::String
+        name: 'studySpec'
+        description: |
+          Required. Study configuration of the HyperparameterTuningJob.
       - !ruby/object:Api::Type::Array
-        name: 'measurements'
+        name: 'trials'
         description: |
-          Output only. A list of measurements that are strictly lexicographically ordered by their induced tuples (steps, elapsed_duration). These are used for early stopping computations.
-        item_type: !ruby/object:Api::Type::NestedObject
-          properties:
-            - !ruby/object:Api::Type::Array
-              name: 'metrics'
-              description: |
-                Output only. A list of metrics got by evaluating the objective functions using suggested Parameter values.
-              item_type: !ruby/object:Api::Type::NestedObject
-                properties:
-                  - !ruby/object:Api::Type::String
-                    name: 'metricId'
-                    description: |
-                      Output only. The ID of the Metric. The Metric should be defined in StudySpec's Metrics.
-                  - !ruby/object:Api::Type::Integer
-                    name: 'value'
-                    description: |
-                      Output only. The value for this metric.
-            - !ruby/object:Api::Type::String
-              name: 'elapsedDuration'
-              description: |
-                Output only. Time that the Trial has been running at the point of this Measurement.
-            - !ruby/object:Api::Type::String
-              name: 'stepCount'
-              description: |
-                Output only. The number of steps the machine learning model has been trained for. Must be non-negative.
-      - !ruby/object:Api::Type::String
-        name: 'startTime'
-        description: |
-          Output only. Time when the Trial was started.
-      - !ruby/object:Api::Type::String
-        name: 'endTime'
-        description: |
-          Output only. Time when the Trial's status changed to `SUCCEEDED` or `INFEASIBLE`.
-      - !ruby/object:Api::Type::Array
-        name: 'parameters'
-        description: |
-          Output only. The parameters of the Trial.
-        item_type: !ruby/object:Api::Type::NestedObject
-          properties:
-            - !ruby/object:Api::Type::String
-              name: 'value'
-              description: |
-                Output only. The value of the parameter. `number_value` will be set if a parameter defined in StudySpec is in type 'INTEGER', 'DOUBLE' or 'DISCRETE'. `string_value` will be set if a parameter defined in StudySpec is in type 'CATEGORICAL'.
-            - !ruby/object:Api::Type::String
-              name: 'parameterId'
-              description: |
-                Output only. The ID of the parameter. The parameter should be defined in StudySpec's Parameters.
-      - !ruby/object:Api::Type::String
-        name: 'name'
-        description: |
-          Output only. Resource name of the Trial assigned by the service.
-      - !ruby/object:Api::Type::String
-        name: 'infeasibleReason'
-        description: |
-          Output only. A human readable string describing why the Trial is infeasible. This is set only if Trial state is `INFEASIBLE`.
-      - !ruby/object:Api::Type::NestedObject
-        name: 'finalMeasurement'
-        description: |
-          A message representing a Measurement of a Trial. A Measurement contains the Metrics got by executing a Trial using suggested hyperparameter values.
-        properties:
-            - !ruby/object:Api::Type::Array
-              name: 'metrics'
-              description: |
-                Output only. A list of metrics got by evaluating the objective functions using suggested Parameter values.
-              item_type: !ruby/object:Api::Type::NestedObject
-                properties:
-                  - !ruby/object:Api::Type::String
-                    name: 'metricId'
-                    description: |
-                      Output only. The ID of the Metric. The Metric should be defined in StudySpec's Metrics.
-                  - !ruby/object:Api::Type::Integer
-                    name: 'value'
-                    description: |
-                      Output only. The value for this metric.
-            - !ruby/object:Api::Type::String
-              name: 'elapsedDuration'
-              description: |
-                Output only. Time that the Trial has been running at the point of this Measurement.
-            - !ruby/object:Api::Type::String
-              name: 'stepCount'
-              description: |
-                Output only. The number of steps the machine learning model has been trained for. Must be non-negative.
-      - !ruby/object:Api::Type::String
-        name: 'clientId'
-        description: |
-          Output only. The identifier of the client that originally requested this Trial. Each client is identified by a unique client_id. When a client asks for a suggestion, Vertex AI Vizier will assign it a Trial. The client should evaluate the Trial, complete it, and report back to Vertex AI Vizier. If suggestion is asked again by same client_id before the Trial is completed, the same Trial will be returned. Multiple clients with different client_ids can ask for suggestions simultaneously, each of them will get their own Trial.
-      - !ruby/object:Api::Type::String
-        name: 'customJob'
-        description: |
-          Output only. The CustomJob name linked to the Trial. It's set for a HyperparameterTuningJob's Trial.
+          Output only. Trials of the HyperparameterTuningJob.
+        item_type: Api::Type::String
       - !ruby/object:Api::Type::Enum
         name: 'state'
         description: |
-          Output only. The detailed state of the Trial.
+          Output only. The detailed state of the job.
         values:
-          - :STATE_UNSPECIFIED
-          - :REQUESTED
-          - :ACTIVE
-          - :STOPPING
-          - :SUCCEEDED
-          - :INFEASIBLE
-      - !ruby/object:Api::Type::NestedObject
-        name: 'webAccessUris'
+          - :JOB_STATE_UNSPECIFIED
+          - :JOB_STATE_QUEUED
+          - :JOB_STATE_PENDING
+          - :JOB_STATE_RUNNING
+          - :JOB_STATE_SUCCEEDED
+          - :JOB_STATE_FAILED
+          - :JOB_STATE_CANCELLING
+          - :JOB_STATE_CANCELLED
+          - :JOB_STATE_PAUSED
+          - :JOB_STATE_EXPIRED
+          - :JOB_STATE_UPDATING
+          - :JOB_STATE_PARTIALLY_SUCCEEDED
+      - !ruby/object:Api::Type::Integer
+        name: 'maxFailedTrialCount'
         description: |
-          Output only. URIs for accessing [interactive shells](https://cloud.google.com/vertex-ai/docs/training/monitor-debug-interactive-shell) (one URI for each training node). Only available if this trial is part of a HyperparameterTuningJob and the job's trial_job_spec.enable_web_access field is `true`. The keys are names of each node used for the trial; for example, `workerpool0-0` for the primary node, `workerpool1-0` for the first node in the second worker pool, and `workerpool1-1` for the second node in the second worker pool. The values are the URIs for each node's interactive shell.
+          The number of failed Trials that need to be seen before failing the HyperparameterTuningJob. If set to 0, Vertex AI decides how many Trials must fail before the whole job fails.
+      - !ruby/object:Api::Type::String
+        name: 'encryptionSpec'
+        description: |
+          Customer-managed encryption key options for a HyperparameterTuningJob. If this is set, then all resources created by the HyperparameterTuningJob will be encrypted with the provided encryption key.
+      - !ruby/object:Api::Type::String
+        name: 'error'
+        description: |
+          Output only. Only populated when job's state is JOB_STATE_FAILED or JOB_STATE_CANCELLED.
+      - !ruby/object:Api::Type::String
+        name: 'endTime'
+        description: |
+          Output only. Time when the HyperparameterTuningJob entered any of the following states: `JOB_STATE_SUCCEEDED`, `JOB_STATE_FAILED`, `JOB_STATE_CANCELLED`.
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. Time when the HyperparameterTuningJob was most recently updated.
+      - !ruby/object:Api::Type::String
+        name: 'startTime'
+        description: |
+          Output only. Time when the HyperparameterTuningJob for the first time entered the `JOB_STATE_RUNNING` state.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          The labels with user-defined metadata to organize HyperparameterTuningJobs. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
         properties:
           - !ruby/object:Api::Type::String
             name: 'additionalProperties'
             description: |
               
       - !ruby/object:Api::Type::String
-        name: 'id'
+        name: 'createTime'
         description: |
-          Output only. The identifier of the Trial assigned by the service.
+          Output only. Time when the HyperparameterTuningJob was created.
+      - !ruby/object:Api::Type::Integer
+        name: 'parallelTrialCount'
+        description: |
+          Required. The desired number of Trials to run in parallel.
+      - !ruby/object:Api::Type::String
+        name: 'trialJobSpec'
+        description: |
+          Required. The spec of a trial job. The same spec applies to the CustomJobs created in all the trials.
+      - !ruby/object:Api::Type::Integer
+        name: 'maxTrialCount'
+        description: |
+          Required. The desired total number of Trials.
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          Required. The display name of the HyperparameterTuningJob. The name can be up to 128 characters long and can consist of any UTF-8 characters.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. Resource name of the HyperparameterTuningJob.
   
 
-    
+
   - !ruby/object:Api::Resource
     name: StudiesTrial
     base_url: '{{parent}}/trials'
@@ -3868,7 +3834,7 @@ objects:
     description: |-
         A message representing a Trial. A Trial contains a unique set of Parameters that has been or will be evaluated, along with the objective metrics got by running the Trial.
     properties:
-  
+
       - !ruby/object:Api::Type::Array
         name: 'measurements'
         description: |
@@ -3981,7 +3947,156 @@ objects:
           - !ruby/object:Api::Type::String
             name: 'additionalProperties'
             description: |
-              
+
+      - !ruby/object:Api::Type::String
+        name: 'id'
+        description: |
+          Output only. The identifier of the Trial assigned by the service.
+  
+
+
+  - !ruby/object:Api::Resource
+    name: StudiesTrial
+    base_url: '{{parent}}/trials'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        A message representing a Trial. A Trial contains a unique set of Parameters that has been or will be evaluated, along with the objective metrics got by running the Trial.
+    properties:
+
+      - !ruby/object:Api::Type::Array
+        name: 'measurements'
+        description: |
+          Output only. A list of measurements that are strictly lexicographically ordered by their induced tuples (steps, elapsed_duration). These are used for early stopping computations.
+        item_type: !ruby/object:Api::Type::NestedObject
+          properties:
+            - !ruby/object:Api::Type::Array
+              name: 'metrics'
+              description: |
+                Output only. A list of metrics got by evaluating the objective functions using suggested Parameter values.
+              item_type: !ruby/object:Api::Type::NestedObject
+                properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'metricId'
+                    description: |
+                      Output only. The ID of the Metric. The Metric should be defined in StudySpec's Metrics.
+                  - !ruby/object:Api::Type::Integer
+                    name: 'value'
+                    description: |
+                      Output only. The value for this metric.
+            - !ruby/object:Api::Type::String
+              name: 'elapsedDuration'
+              description: |
+                Output only. Time that the Trial has been running at the point of this Measurement.
+            - !ruby/object:Api::Type::String
+              name: 'stepCount'
+              description: |
+                Output only. The number of steps the machine learning model has been trained for. Must be non-negative.
+      - !ruby/object:Api::Type::String
+        name: 'startTime'
+        description: |
+          Output only. Time when the Trial was started.
+      - !ruby/object:Api::Type::String
+        name: 'endTime'
+        description: |
+          Output only. Time when the Trial's status changed to `SUCCEEDED` or `INFEASIBLE`.
+      - !ruby/object:Api::Type::Array
+        name: 'parameters'
+        description: |
+          Output only. The parameters of the Trial.
+        item_type: !ruby/object:Api::Type::NestedObject
+          properties:
+            - !ruby/object:Api::Type::String
+              name: 'value'
+              description: |
+                Output only. The value of the parameter. `number_value` will be set if a parameter defined in StudySpec is in type 'INTEGER', 'DOUBLE' or 'DISCRETE'. `string_value` will be set if a parameter defined in StudySpec is in type 'CATEGORICAL'.
+            - !ruby/object:Api::Type::String
+              name: 'parameterId'
+              description: |
+                Output only. The ID of the parameter. The parameter should be defined in StudySpec's Parameters.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. Resource name of the Trial assigned by the service.
+      - !ruby/object:Api::Type::String
+        name: 'infeasibleReason'
+        description: |
+          Output only. A human readable string describing why the Trial is infeasible. This is set only if Trial state is `INFEASIBLE`.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'finalMeasurement'
+        description: |
+          A message representing a Measurement of a Trial. A Measurement contains the Metrics got by executing a Trial using suggested hyperparameter values.
+        properties:
+            - !ruby/object:Api::Type::Array
+              name: 'metrics'
+              description: |
+                Output only. A list of metrics got by evaluating the objective functions using suggested Parameter values.
+              item_type: !ruby/object:Api::Type::NestedObject
+                properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'metricId'
+                    description: |
+                      Output only. The ID of the Metric. The Metric should be defined in StudySpec's Metrics.
+                  - !ruby/object:Api::Type::Integer
+                    name: 'value'
+                    description: |
+                      Output only. The value for this metric.
+            - !ruby/object:Api::Type::String
+              name: 'elapsedDuration'
+              description: |
+                Output only. Time that the Trial has been running at the point of this Measurement.
+            - !ruby/object:Api::Type::String
+              name: 'stepCount'
+              description: |
+                Output only. The number of steps the machine learning model has been trained for. Must be non-negative.
+      - !ruby/object:Api::Type::String
+        name: 'clientId'
+        description: |
+          Output only. The identifier of the client that originally requested this Trial. Each client is identified by a unique client_id. When a client asks for a suggestion, Vertex AI Vizier will assign it a Trial. The client should evaluate the Trial, complete it, and report back to Vertex AI Vizier. If suggestion is asked again by same client_id before the Trial is completed, the same Trial will be returned. Multiple clients with different client_ids can ask for suggestions simultaneously, each of them will get their own Trial.
+      - !ruby/object:Api::Type::String
+        name: 'customJob'
+        description: |
+          Output only. The CustomJob name linked to the Trial. It's set for a HyperparameterTuningJob's Trial.
+      - !ruby/object:Api::Type::Enum
+        name: 'state'
+        description: |
+          Output only. The detailed state of the Trial.
+        values:
+          - :STATE_UNSPECIFIED
+          - :REQUESTED
+          - :ACTIVE
+          - :STOPPING
+          - :SUCCEEDED
+          - :INFEASIBLE
+      - !ruby/object:Api::Type::NestedObject
+        name: 'webAccessUris'
+        description: |
+          Output only. URIs for accessing [interactive shells](https://cloud.google.com/vertex-ai/docs/training/monitor-debug-interactive-shell) (one URI for each training node). Only available if this trial is part of a HyperparameterTuningJob and the job's trial_job_spec.enable_web_access field is `true`. The keys are names of each node used for the trial; for example, `workerpool0-0` for the primary node, `workerpool1-0` for the first node in the second worker pool, and `workerpool1-1` for the second node in the second worker pool. The values are the URIs for each node's interactive shell.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+
       - !ruby/object:Api::Type::String
         name: 'id'
         description: |
