@@ -676,3 +676,13 @@ hyperparameter_tuning_job:
   create_time : "value_createtime"
   display_name : "inspec-hyper-test-hyperparameter-tuning-job"
 
+
+models_evaluation:
+  name : "value_name"
+  region : "value_region"
+  parent : "value_parent"
+  data_item_schema_uri : "value_dataitemschemauri"
+  metrics_schema_uri : "value_metricsschemauri"
+  create_time : "value_createtime"
+  annotation_schema_uri : "value_annotationschemauri"
+  display_name : "value_displayname"
