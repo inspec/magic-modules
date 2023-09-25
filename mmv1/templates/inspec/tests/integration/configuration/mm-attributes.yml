@@ -698,3 +698,13 @@ tensorboards_experiment:
   create_time : "value_createtime"
   update_time : "value_updatetime"
   etag : "value_etag"
+
+featurestore_entity_type_feature:
+  parent : "value_parent"
+  region : "value_region"
+  description : "value_description"
+  create_time : "value_createtime"
+  etag : "value_etag"
+  name : "value_name"
+  update_time : "value_updatetime"
+  value_type : "value_valuetype"
