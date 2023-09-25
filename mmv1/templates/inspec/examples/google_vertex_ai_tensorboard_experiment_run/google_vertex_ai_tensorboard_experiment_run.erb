@@ -1,0 +1,10 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% tensorboard_experiment_run = grab_attributes(pwd)['tensorboard_experiment_run'] -%>
+describe google_vertex_ai_tensorboard_experiment_run(name: "projects/#{gcp_project_id}/locations/#{tensorboard_experiment_run['region']}/tensorboards/#{tensorboard_experiment_run['tensorboard']}/experiments/#{tensorboard_experiment_run['experiment']}/runs/#{tensorboard_experiment_run['run']}", region: <%= doc_generation ? "' #{tensorboard_experiment_run['region']}'":"tensorboard_experiment_run['region']" -%>) do
+	it { should exist }
+
+end
+
+describe google_vertex_ai_tensorboard_experiment_run(name: "does_not_exit", region: <%= doc_generation ? "' #{tensorboard_experiment_run['region']}'":"tensorboard_experiment_run['region']" -%>) do
+	it { should_not exist }
+end
