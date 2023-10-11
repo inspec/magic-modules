@@ -7594,3 +7594,300 @@ objects:
         description: |
           Output only. The resource name of the Endpoint.
   
+
+    
+  - !ruby/object:Api::Resource
+    name: Endpoint
+    base_url: '{{parent}}/endpoints'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Models are deployed into it, and afterwards Endpoint is called to obtain predictions and explanations.
+    properties:
+  
+      - !ruby/object:Api::Type::String
+        name: 'encryptionSpec'
+        description: |
+          Customer-managed encryption key spec for an Endpoint. If set, this Endpoint and all sub-resources of this Endpoint will be secured by this key.
+      - !ruby/object:Api::Type::Boolean
+        name: 'enablePrivateServiceConnect'
+        description: |
+          Deprecated: If true, expose the Endpoint via private service connect. Only one of the fields, network or enable_private_service_connect, can be set.
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. Timestamp when this Endpoint was last updated.
+      - !ruby/object:Api::Type::String
+        name: 'modelDeploymentMonitoringJob'
+        description: |
+          Output only. Resource name of the Model Monitoring job associated with this Endpoint if monitoring is enabled by JobService.CreateModelDeploymentMonitoringJob. Format: `projects/{project}/locations/{location}/modelDeploymentMonitoringJobs/{model_deployment_monitoring_job}`
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          The description of the Endpoint.
+      - !ruby/object:Api::Type::Array
+        name: 'deployedModels'
+        description: |
+          Output only. The models deployed in this Endpoint. To add or remove DeployedModels use EndpointService.DeployModel and EndpointService.UndeployModel respectively.
+        item_type: Api::Type::String
+      - !ruby/object:Api::Type::String
+        name: 'network'
+        description: |
+          Optional. The full name of the Google Compute Engine [network](https://cloud.google.com//compute/docs/networks-and-firewalls#networks) to which the Endpoint should be peered. Private services access must already be configured for the network. If left unspecified, the Endpoint is not peered with any network. Only one of the fields, network or enable_private_service_connect, can be set. [Format](https://cloud.google.com/compute/docs/reference/rest/v1/networks/insert): `projects/{project}/global/networks/{network}`. Where `{project}` is a project number, as in `12345`, and `{network}` is network name.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'trafficSplit'
+        description: |
+          A map from a DeployedModel's ID to the percentage of this Endpoint's traffic that should be forwarded to that DeployedModel. If a DeployedModel's ID is not listed in this map, then it receives no traffic. The traffic percentage values must add up to 100, or map must be empty if the Endpoint is to not accept any traffic at a moment.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+              
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          The labels with user-defined metadata to organize your Endpoints. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+              
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          Required. The display name of the Endpoint. The name can be up to 128 characters long and can consist of any UTF-8 characters.
+      - !ruby/object:Api::Type::String
+        name: 'predictRequestResponseLoggingConfig'
+        description: |
+          Configures the request-response logging for online prediction.
+      - !ruby/object:Api::Type::String
+        name: 'etag'
+        description: |
+          Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this Endpoint was created.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. The resource name of the Endpoint.
+  
+
+    
+  - !ruby/object:Api::Resource
+    name: Endpoint
+    base_url: '{{parent}}/endpoints'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Models are deployed into it, and afterwards Endpoint is called to obtain predictions and explanations.
+    properties:
+  
+      - !ruby/object:Api::Type::String
+        name: 'encryptionSpec'
+        description: |
+          Customer-managed encryption key spec for an Endpoint. If set, this Endpoint and all sub-resources of this Endpoint will be secured by this key.
+      - !ruby/object:Api::Type::Boolean
+        name: 'enablePrivateServiceConnect'
+        description: |
+          Deprecated: If true, expose the Endpoint via private service connect. Only one of the fields, network or enable_private_service_connect, can be set.
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. Timestamp when this Endpoint was last updated.
+      - !ruby/object:Api::Type::String
+        name: 'modelDeploymentMonitoringJob'
+        description: |
+          Output only. Resource name of the Model Monitoring job associated with this Endpoint if monitoring is enabled by JobService.CreateModelDeploymentMonitoringJob. Format: `projects/{project}/locations/{location}/modelDeploymentMonitoringJobs/{model_deployment_monitoring_job}`
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          The description of the Endpoint.
+      - !ruby/object:Api::Type::Array
+        name: 'deployedModels'
+        description: |
+          Output only. The models deployed in this Endpoint. To add or remove DeployedModels use EndpointService.DeployModel and EndpointService.UndeployModel respectively.
+        item_type: Api::Type::String
+      - !ruby/object:Api::Type::String
+        name: 'network'
+        description: |
+          Optional. The full name of the Google Compute Engine [network](https://cloud.google.com//compute/docs/networks-and-firewalls#networks) to which the Endpoint should be peered. Private services access must already be configured for the network. If left unspecified, the Endpoint is not peered with any network. Only one of the fields, network or enable_private_service_connect, can be set. [Format](https://cloud.google.com/compute/docs/reference/rest/v1/networks/insert): `projects/{project}/global/networks/{network}`. Where `{project}` is a project number, as in `12345`, and `{network}` is network name.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'trafficSplit'
+        description: |
+          A map from a DeployedModel's ID to the percentage of this Endpoint's traffic that should be forwarded to that DeployedModel. If a DeployedModel's ID is not listed in this map, then it receives no traffic. The traffic percentage values must add up to 100, or map must be empty if the Endpoint is to not accept any traffic at a moment.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+              
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          The labels with user-defined metadata to organize your Endpoints. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+              
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          Required. The display name of the Endpoint. The name can be up to 128 characters long and can consist of any UTF-8 characters.
+      - !ruby/object:Api::Type::String
+        name: 'predictRequestResponseLoggingConfig'
+        description: |
+          Configures the request-response logging for online prediction.
+      - !ruby/object:Api::Type::String
+        name: 'etag'
+        description: |
+          Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this Endpoint was created.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. The resource name of the Endpoint.
+  
+
+    
+  - !ruby/object:Api::Resource
+    name: Endpoint
+    base_url: '{{parent}}/endpoints'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Models are deployed into it, and afterwards Endpoint is called to obtain predictions and explanations.
+    properties:
+  
+      - !ruby/object:Api::Type::String
+        name: 'encryptionSpec'
+        description: |
+          Customer-managed encryption key spec for an Endpoint. If set, this Endpoint and all sub-resources of this Endpoint will be secured by this key.
+      - !ruby/object:Api::Type::Boolean
+        name: 'enablePrivateServiceConnect'
+        description: |
+          Deprecated: If true, expose the Endpoint via private service connect. Only one of the fields, network or enable_private_service_connect, can be set.
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. Timestamp when this Endpoint was last updated.
+      - !ruby/object:Api::Type::String
+        name: 'modelDeploymentMonitoringJob'
+        description: |
+          Output only. Resource name of the Model Monitoring job associated with this Endpoint if monitoring is enabled by JobService.CreateModelDeploymentMonitoringJob. Format: `projects/{project}/locations/{location}/modelDeploymentMonitoringJobs/{model_deployment_monitoring_job}`
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          The description of the Endpoint.
+      - !ruby/object:Api::Type::Array
+        name: 'deployedModels'
+        description: |
+          Output only. The models deployed in this Endpoint. To add or remove DeployedModels use EndpointService.DeployModel and EndpointService.UndeployModel respectively.
+        item_type: Api::Type::String
+      - !ruby/object:Api::Type::String
+        name: 'network'
+        description: |
+          Optional. The full name of the Google Compute Engine [network](https://cloud.google.com//compute/docs/networks-and-firewalls#networks) to which the Endpoint should be peered. Private services access must already be configured for the network. If left unspecified, the Endpoint is not peered with any network. Only one of the fields, network or enable_private_service_connect, can be set. [Format](https://cloud.google.com/compute/docs/reference/rest/v1/networks/insert): `projects/{project}/global/networks/{network}`. Where `{project}` is a project number, as in `12345`, and `{network}` is network name.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'trafficSplit'
+        description: |
+          A map from a DeployedModel's ID to the percentage of this Endpoint's traffic that should be forwarded to that DeployedModel. If a DeployedModel's ID is not listed in this map, then it receives no traffic. The traffic percentage values must add up to 100, or map must be empty if the Endpoint is to not accept any traffic at a moment.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+              
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          The labels with user-defined metadata to organize your Endpoints. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+              
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          Required. The display name of the Endpoint. The name can be up to 128 characters long and can consist of any UTF-8 characters.
+      - !ruby/object:Api::Type::String
+        name: 'predictRequestResponseLoggingConfig'
+        description: |
+          Configures the request-response logging for online prediction.
+      - !ruby/object:Api::Type::String
+        name: 'etag'
+        description: |
+          Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this Endpoint was created.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. The resource name of the Endpoint.
+  
