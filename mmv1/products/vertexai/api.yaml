@@ -9063,9 +9063,6 @@ objects:
           - !ruby/object:Api::Type::String
             name: 'additionalProperties'
             description: |
-              
-  
-
 
   - !ruby/object:Api::Resource
     name: DatasetsSavedQuery
@@ -9206,4 +9203,55 @@ objects:
         name: 'annotationFilter'
         description: |
           Output only. Filters on the Annotations in the dataset.
+  
+
+
+  - !ruby/object:Api::Resource
+    name: DatasetsAnnotationSpec
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Identifies a concept with which DataItems may be annotated with.
+    properties:
+
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          Required. The user-defined name of the AnnotationSpec. The name can be up to 128 characters long and can consist of any UTF-8 characters.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. Resource name of the AnnotationSpec.
+      - !ruby/object:Api::Type::String
+        name: 'etag'
+        description: |
+          Optional. Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this AnnotationSpec was created.
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. Timestamp when AnnotationSpec was last updated.
   
