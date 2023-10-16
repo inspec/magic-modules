@@ -4640,7 +4640,7 @@ objects:
     description: |-
         A message representing a Trial. A Trial contains a unique set of Parameters that has been or will be evaluated, along with the objective metrics got by running the Trial.
     properties:
-  
+
       - !ruby/object:Api::Type::Array
         name: 'measurements'
         description: |
@@ -4753,14 +4753,14 @@ objects:
           - !ruby/object:Api::Type::String
             name: 'additionalProperties'
             description: |
-              
+
       - !ruby/object:Api::Type::String
         name: 'id'
         description: |
           Output only. The identifier of the Trial assigned by the service.
   
 
-    
+
   - !ruby/object:Api::Resource
     name: StudiesTrial
     base_url: '{{parent}}/trials'
@@ -4789,7 +4789,7 @@ objects:
     description: |-
         A message representing a Trial. A Trial contains a unique set of Parameters that has been or will be evaluated, along with the objective metrics got by running the Trial.
     properties:
-  
+
       - !ruby/object:Api::Type::Array
         name: 'measurements'
         description: |
@@ -4902,7 +4902,7 @@ objects:
           - !ruby/object:Api::Type::String
             name: 'additionalProperties'
             description: |
-              
+
       - !ruby/object:Api::Type::String
         name: 'id'
         description: |
@@ -7496,7 +7496,1917 @@ objects:
           Output only. Name of the TensorboardRun. Format: `projects/{project}/locations/{location}/tensorboards/{tensorboard}/experiments/{experiment}/runs/{run}`
   
 
-    
+
+  - !ruby/object:Api::Resource
+    name: DatasetDataItemAnnotation
+    base_url: '{{parent}}/annotations'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Used to assign specific AnnotationSpec to a particular area of a DataItem or the whole part of the DataItem.
+    properties:
+
+      - !ruby/object:Api::Type::String
+        name: 'payloadSchemaUri'
+        description: |
+          Required. Google Cloud Storage URI points to a YAML file describing payload. The schema is defined as an [OpenAPI 3.0.2 Schema Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.2.md#schemaObject). The schema files that can be used here are found in gs://google-cloud-aiplatform/schema/dataset/annotation/, note that the chosen schema must be consistent with the parent Dataset's metadata.
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this Annotation was created.
+      - !ruby/object:Api::Type::String
+        name: 'etag'
+        description: |
+          Optional. Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          Optional. The labels with user-defined metadata to organize your Annotations. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one Annotation(System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable. Following system labels exist for each Annotation: * "aiplatform.googleapis.com/annotation_set_name": optional, name of the UI's annotation set this Annotation belongs to. If not set, the Annotation is not visible in the UI. * "aiplatform.googleapis.com/payload_schema": output only, its value is the payload_schema's title.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. Timestamp when this Annotation was last updated.
+      - !ruby/object:Api::Type::String
+        name: 'payload'
+        description: |
+          Required. The schema of the payload can be found in payload_schema.
+      - !ruby/object:Api::Type::String
+        name: 'annotationSource'
+        description: |
+          Output only. The source of the Annotation.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. Resource name of the Annotation.
+  
+
+
+  - !ruby/object:Api::Resource
+    name: ModelDeploymentMonitoringJob
+    base_url: '{{parent}}/modelDeploymentMonitoringJobs'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Represents a job that runs periodically to monitor the deployed models in an endpoint. It will analyze the logged training & prediction data to detect any abnormal behaviors.
+    properties:
+
+      - !ruby/object:Api::Type::Array
+        name: 'modelDeploymentMonitoringObjectiveConfigs'
+        description: |
+          Required. The config for monitoring objectives. This is a per DeployedModel config. Each DeployedModel needs to be configured separately.
+        item_type: !ruby/object:Api::Type::NestedObject
+          properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'objectiveConfig'
+              description: |
+                The objective configuration for model monitoring, including the information needed to detect anomalies for one particular model.
+              properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'explanationConfig'
+                    description: |
+                      The config for integrating with Vertex Explainable AI. Only applicable if the Model has explanation_spec populated.
+                    properties:
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'explanationBaseline'
+                          description: |
+                            Output from BatchPredictionJob for Model Monitoring baseline dataset, which can be used to generate baseline attribution scores.
+                          properties:
+                              - !ruby/object:Api::Type::Enum
+                                name: 'predictionFormat'
+                                description: |
+                                  The storage format of the predictions generated BatchPrediction job.
+                                values:
+                                  - :PREDICTION_FORMAT_UNSPECIFIED
+                                  - :JSONL
+                                  - :BIGQUERY
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'gcs'
+                                description: |
+                                  The Google Cloud Storage location where the output is to be written to.
+                                properties:
+                                    - !ruby/object:Api::Type::String
+                                      name: 'outputUriPrefix'
+                                      description: |
+                                        Required. Google Cloud Storage URI to output directory. If the uri doesn't end with '/', a '/' will be automatically appended. The directory is created if it doesn't exist.
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'bigquery'
+                                description: |
+                                  The BigQuery location for the output content.
+                                properties:
+                                    - !ruby/object:Api::Type::String
+                                      name: 'outputUri'
+                                      description: |
+                                        Required. BigQuery URI to a project or table, up to 2000 characters long. When only the project is specified, the Dataset and Table is created. When the full table reference is specified, the Dataset must exist and table must not exist. Accepted forms: * BigQuery path. For example: `bq://projectId` or `bq://projectId.bqDatasetId` or `bq://projectId.bqDatasetId.bqTableId`.
+                        - !ruby/object:Api::Type::Boolean
+                          name: 'enableFeatureAttributes'
+                          description: |
+                            If want to analyze the Vertex Explainable AI feature attribute scores or not. If set to true, Vertex AI will log the feature attributions from explain response and do the skew/drift detection for them.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'trainingDataset'
+                    description: |
+                      Training Dataset information.
+                    properties:
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'loggingSamplingStrategy'
+                          description: |
+                            Sampling Strategy for logging, can be for both training and prediction dataset.
+                          properties:
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'randomSampleConfig'
+                                description: |
+                                  Requests are randomly selected.
+                                properties:
+                                    - !ruby/object:Api::Type::Integer
+                                      name: 'sampleRate'
+                                      description: |
+                                        Sample rate (0, 1]
+                        - !ruby/object:Api::Type::String
+                          name: 'dataset'
+                          description: |
+                            The resource name of the Dataset used to train this Model.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'gcsSource'
+                          description: |
+                            The Google Cloud Storage location for the input content.
+                          properties:
+                              - !ruby/object:Api::Type::Array
+                                name: 'uris'
+                                description: |
+                                  Required. Google Cloud Storage URI(-s) to the input file(s). May contain wildcards. For more information on wildcards, see https://cloud.google.com/storage/docs/gsutil/addlhelp/WildcardNames.
+                                item_type: Api::Type::String
+                        - !ruby/object:Api::Type::String
+                          name: 'targetField'
+                          description: |
+                            The target field name the model is to predict. This field will be excluded when doing Predict and (or) Explain for the training data.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'bigquerySource'
+                          description: |
+                            The BigQuery location for the input content.
+                          properties:
+                              - !ruby/object:Api::Type::String
+                                name: 'inputUri'
+                                description: |
+                                  Required. BigQuery URI to a table, up to 2000 characters long. Accepted forms: * BigQuery path. For example: `bq://projectId.bqDatasetId.bqTableId`.
+                        - !ruby/object:Api::Type::String
+                          name: 'dataFormat'
+                          description: |
+                            Data format of the dataset, only applicable if the input is from Google Cloud Storage. The possible formats are: "tf-record" The source file is a TFRecord file. "csv" The source file is a CSV file. "jsonl" The source file is a JSONL file.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'trainingPredictionSkewDetectionConfig'
+                    description: |
+                      The config for Training & Prediction data skew detection. It specifies the training dataset sources and the skew detection parameters.
+                    properties:
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'skewThresholds'
+                          description: |
+                            Key is the feature name and value is the threshold. If a feature needs to be monitored for skew, a value threshold must be configured for that feature. The threshold here is against feature distribution distance between the training and prediction feature.
+                          properties:
+                            - !ruby/object:Api::Type::String
+                              name: 'additionalProperties'
+                              description: |
+                                The config for feature monitoring threshold.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'defaultSkewThreshold'
+                          description: |
+                            The config for feature monitoring threshold.
+                          properties:
+                              - !ruby/object:Api::Type::Integer
+                                name: 'value'
+                                description: |
+                                  Specify a threshold value that can trigger the alert. If this threshold config is for feature distribution distance: 1. For categorical feature, the distribution distance is calculated by L-inifinity norm. 2. For numerical feature, the distribution distance is calculated by Jensen–Shannon divergence. Each feature must have a non-zero threshold if they need to be monitored. Otherwise no alert will be triggered for that feature.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'attributionScoreSkewThresholds'
+                          description: |
+                            Key is the feature name and value is the threshold. The threshold here is against attribution score distance between the training and prediction feature.
+                          properties:
+                            - !ruby/object:Api::Type::String
+                              name: 'additionalProperties'
+                              description: |
+                                The config for feature monitoring threshold.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'predictionDriftDetectionConfig'
+                    description: |
+                      The config for Prediction data drift detection.
+                    properties:
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'attributionScoreDriftThresholds'
+                          description: |
+                            Key is the feature name and value is the threshold. The threshold here is against attribution score distance between different time windows.
+                          properties:
+                            - !ruby/object:Api::Type::String
+                              name: 'additionalProperties'
+                              description: |
+                                The config for feature monitoring threshold.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'driftThresholds'
+                          description: |
+                            Key is the feature name and value is the threshold. If a feature needs to be monitored for drift, a value threshold must be configured for that feature. The threshold here is against feature distribution distance between different time windws.
+                          properties:
+                            - !ruby/object:Api::Type::String
+                              name: 'additionalProperties'
+                              description: |
+                                The config for feature monitoring threshold.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'defaultDriftThreshold'
+                          description: |
+                            The config for feature monitoring threshold.
+                          properties:
+                              - !ruby/object:Api::Type::Integer
+                                name: 'value'
+                                description: |
+                                  Specify a threshold value that can trigger the alert. If this threshold config is for feature distribution distance: 1. For categorical feature, the distribution distance is calculated by L-inifinity norm. 2. For numerical feature, the distribution distance is calculated by Jensen–Shannon divergence. Each feature must have a non-zero threshold if they need to be monitored. Otherwise no alert will be triggered for that feature.
+            - !ruby/object:Api::Type::String
+              name: 'deployedModelId'
+              description: |
+                The DeployedModel ID of the objective config.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          The labels with user-defined metadata to organize your ModelDeploymentMonitoringJob. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+
+      - !ruby/object:Api::Type::Enum
+        name: 'state'
+        description: |
+          Output only. The detailed state of the monitoring job. When the job is still creating, the state will be 'PENDING'. Once the job is successfully created, the state will be 'RUNNING'. Pause the job, the state will be 'PAUSED'. Resume the job, the state will return to 'RUNNING'.
+        values:
+          - :JOB_STATE_UNSPECIFIED
+          - :JOB_STATE_QUEUED
+          - :JOB_STATE_PENDING
+          - :JOB_STATE_RUNNING
+          - :JOB_STATE_SUCCEEDED
+          - :JOB_STATE_FAILED
+          - :JOB_STATE_CANCELLING
+          - :JOB_STATE_CANCELLED
+          - :JOB_STATE_PAUSED
+          - :JOB_STATE_EXPIRED
+          - :JOB_STATE_UPDATING
+          - :JOB_STATE_PARTIALLY_SUCCEEDED
+      - !ruby/object:Api::Type::String
+        name: 'analysisInstanceSchemaUri'
+        description: |
+          YAML schema file uri describing the format of a single instance that you want Tensorflow Data Validation (TFDV) to analyze. If this field is empty, all the feature data types are inferred from predict_instance_schema_uri, meaning that TFDV will use the data in the exact format(data type) as prediction request/response. If there are any data type differences between predict instance and TFDV instance, this field can be used to override the schema. For models trained with Vertex AI, this field must be set as all the fields in predict instance formatted as string.
+      - !ruby/object:Api::Type::Boolean
+        name: 'enableMonitoringPipelineLogs'
+        description: |
+          If true, the scheduled monitoring pipeline logs are sent to Google Cloud Logging, including pipeline status and anomalies detected. Please note the logs incur cost, which are subject to [Cloud Logging pricing](https://cloud.google.com/logging#pricing).
+      - !ruby/object:Api::Type::String
+        name: 'endpoint'
+        description: |
+          Required. Endpoint resource name. Format: `projects/{project}/locations/{location}/endpoints/{endpoint}`
+      - !ruby/object:Api::Type::NestedObject
+        name: 'loggingSamplingStrategy'
+        description: |
+          Sampling Strategy for logging, can be for both training and prediction dataset.
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'randomSampleConfig'
+              description: |
+                Requests are randomly selected.
+              properties:
+                  - !ruby/object:Api::Type::Integer
+                    name: 'sampleRate'
+                    description: |
+                      Sample rate (0, 1]
+      - !ruby/object:Api::Type::Array
+        name: 'bigqueryTables'
+        description: |
+          Output only. The created bigquery tables for the job under customer project. Customer could do their own query & analysis. There could be 4 log tables in maximum: 1. Training data logging predict request/response 2. Serving data logging predict request/response
+        item_type: !ruby/object:Api::Type::NestedObject
+          properties:
+            - !ruby/object:Api::Type::Enum
+              name: 'logSource'
+              description: |
+                The source of log.
+              values:
+                - :LOG_SOURCE_UNSPECIFIED
+                - :TRAINING
+                - :SERVING
+            - !ruby/object:Api::Type::String
+              name: 'bigqueryTablePath'
+              description: |
+                The created BigQuery table to store logs. Customer could do their own query & analysis. Format: `bq://.model_deployment_monitoring_._`
+            - !ruby/object:Api::Type::Enum
+              name: 'logType'
+              description: |
+                The type of log.
+              values:
+                - :LOG_TYPE_UNSPECIFIED
+                - :PREDICT
+                - :EXPLAIN
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          Required. The user-defined name of the ModelDeploymentMonitoringJob. The name can be up to 128 characters long and can consist of any UTF-8 characters. Display name of a ModelDeploymentMonitoringJob.
+      - !ruby/object:Api::Type::Enum
+        name: 'scheduleState'
+        description: |
+          Output only. Schedule state when the monitoring job is in Running state.
+        values:
+          - :MONITORING_SCHEDULE_STATE_UNSPECIFIED
+          - :PENDING
+          - :OFFLINE
+          - :RUNNING
+      - !ruby/object:Api::Type::NestedObject
+        name: 'error'
+        description: |
+          The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).
+        properties:
+            - !ruby/object:Api::Type::Array
+              name: 'details'
+              description: |
+                A list of messages that carry the error details. There is a common set of message types for APIs to use.
+              item_type: Api::Type::String
+            - !ruby/object:Api::Type::Integer
+              name: 'code'
+              description: |
+                The status code, which should be an enum value of google.rpc.Code.
+            - !ruby/object:Api::Type::String
+              name: 'message'
+              description: |
+                A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'modelMonitoringAlertConfig'
+        description: |
+
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'emailAlertConfig'
+              description: |
+                The config for email alert.
+              properties:
+                  - !ruby/object:Api::Type::Array
+                    name: 'userEmails'
+                    description: |
+                      The email addresses to send the alert.
+                    item_type: Api::Type::String
+            - !ruby/object:Api::Type::Boolean
+              name: 'enableLogging'
+              description: |
+                Dump the anomalies to Cloud Logging. The anomalies will be put to json payload encoded from proto google.cloud.aiplatform.logging.ModelMonitoringAnomaliesLogEntry. This can be further sinked to Pub/Sub or any other services supported by Cloud Logging.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'latestMonitoringPipelineMetadata'
+        description: |
+          All metadata of most recent monitoring pipelines.
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'status'
+              description: |
+                The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).
+              properties:
+                  - !ruby/object:Api::Type::Array
+                    name: 'details'
+                    description: |
+                      A list of messages that carry the error details. There is a common set of message types for APIs to use.
+                    item_type: Api::Type::String
+                  - !ruby/object:Api::Type::Integer
+                    name: 'code'
+                    description: |
+                      The status code, which should be an enum value of google.rpc.Code.
+                  - !ruby/object:Api::Type::String
+                    name: 'message'
+                    description: |
+                      A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+            - !ruby/object:Api::Type::String
+              name: 'runTime'
+              description: |
+                The time that most recent monitoring pipelines that is related to this run.
+      - !ruby/object:Api::Type::String
+        name: 'samplePredictInstance'
+        description: |
+          Sample Predict instance, same format as PredictRequest.instances, this can be set as a replacement of ModelDeploymentMonitoringJob.predict_instance_schema_uri. If not set, we will generate predict schema from collected predict requests.
+      - !ruby/object:Api::Type::String
+        name: 'predictInstanceSchemaUri'
+        description: |
+          YAML schema file uri describing the format of a single instance, which are given to format this Endpoint's prediction (and explanation). If not set, we will generate predict schema from collected predict requests.
+      - !ruby/object:Api::Type::String
+        name: 'nextScheduleTime'
+        description: |
+          Output only. Timestamp when this monitoring pipeline will be scheduled to run for the next round.
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this ModelDeploymentMonitoringJob was created.
+      - !ruby/object:Api::Type::String
+        name: 'logTtl'
+        description: |
+          The TTL of BigQuery tables in user projects which stores logs. A day is the basic unit of the TTL and we take the ceil of TTL/86400(a day). e.g. { second: 3600} indicates ttl = 1 day.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'statsAnomaliesBaseDirectory'
+        description: |
+          The Google Cloud Storage location where the output is to be written to.
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'outputUriPrefix'
+              description: |
+                Required. Google Cloud Storage URI to output directory. If the uri doesn't end with '/', a '/' will be automatically appended. The directory is created if it doesn't exist.
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. Timestamp when this ModelDeploymentMonitoringJob was updated most recently.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'modelDeploymentMonitoringScheduleConfig'
+        description: |
+          The config for scheduling monitoring job.
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'monitorWindow'
+              description: |
+                The time window of the prediction data being included in each prediction dataset. This window specifies how long the data should be collected from historical model results for each run. If not set, ModelDeploymentMonitoringScheduleConfig.monitor_interval will be used. e.g. If currently the cutoff time is 2022-01-08 14:30:00 and the monitor_window is set to be 3600, then data from 2022-01-08 13:30:00 to 2022-01-08 14:30:00 will be retrieved and aggregated to calculate the monitoring statistics.
+            - !ruby/object:Api::Type::String
+              name: 'monitorInterval'
+              description: |
+                Required. The model monitoring job scheduling interval. It will be rounded up to next full hour. This defines how often the monitoring jobs are triggered.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'encryptionSpec'
+        description: |
+          Represents a customer-managed encryption key spec that can be applied to a top-level resource.
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'kmsKeyName'
+              description: |
+                Required. The Cloud KMS resource identifier of the customer managed encryption key used to protect a resource. Has the form: `projects/my-project/locations/my-region/keyRings/my-kr/cryptoKeys/my-key`. The key needs to be in the same region as where the compute resource is created.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. Resource name of a ModelDeploymentMonitoringJob.
+  
+
+
+  - !ruby/object:Api::Resource
+    name: ModelDeploymentMonitoringJob
+    base_url: '{{parent}}/modelDeploymentMonitoringJobs'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Represents a job that runs periodically to monitor the deployed models in an endpoint. It will analyze the logged training & prediction data to detect any abnormal behaviors.
+    properties:
+
+      - !ruby/object:Api::Type::Array
+        name: 'modelDeploymentMonitoringObjectiveConfigs'
+        description: |
+          Required. The config for monitoring objectives. This is a per DeployedModel config. Each DeployedModel needs to be configured separately.
+        item_type: !ruby/object:Api::Type::NestedObject
+          properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'objectiveConfig'
+              description: |
+                The objective configuration for model monitoring, including the information needed to detect anomalies for one particular model.
+              properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'explanationConfig'
+                    description: |
+                      The config for integrating with Vertex Explainable AI. Only applicable if the Model has explanation_spec populated.
+                    properties:
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'explanationBaseline'
+                          description: |
+                            Output from BatchPredictionJob for Model Monitoring baseline dataset, which can be used to generate baseline attribution scores.
+                          properties:
+                              - !ruby/object:Api::Type::Enum
+                                name: 'predictionFormat'
+                                description: |
+                                  The storage format of the predictions generated BatchPrediction job.
+                                values:
+                                  - :PREDICTION_FORMAT_UNSPECIFIED
+                                  - :JSONL
+                                  - :BIGQUERY
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'gcs'
+                                description: |
+                                  The Google Cloud Storage location where the output is to be written to.
+                                properties:
+                                    - !ruby/object:Api::Type::String
+                                      name: 'outputUriPrefix'
+                                      description: |
+                                        Required. Google Cloud Storage URI to output directory. If the uri doesn't end with '/', a '/' will be automatically appended. The directory is created if it doesn't exist.
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'bigquery'
+                                description: |
+                                  The BigQuery location for the output content.
+                                properties:
+                                    - !ruby/object:Api::Type::String
+                                      name: 'outputUri'
+                                      description: |
+                                        Required. BigQuery URI to a project or table, up to 2000 characters long. When only the project is specified, the Dataset and Table is created. When the full table reference is specified, the Dataset must exist and table must not exist. Accepted forms: * BigQuery path. For example: `bq://projectId` or `bq://projectId.bqDatasetId` or `bq://projectId.bqDatasetId.bqTableId`.
+                        - !ruby/object:Api::Type::Boolean
+                          name: 'enableFeatureAttributes'
+                          description: |
+                            If want to analyze the Vertex Explainable AI feature attribute scores or not. If set to true, Vertex AI will log the feature attributions from explain response and do the skew/drift detection for them.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'trainingDataset'
+                    description: |
+                      Training Dataset information.
+                    properties:
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'loggingSamplingStrategy'
+                          description: |
+                            Sampling Strategy for logging, can be for both training and prediction dataset.
+                          properties:
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'randomSampleConfig'
+                                description: |
+                                  Requests are randomly selected.
+                                properties:
+                                    - !ruby/object:Api::Type::Integer
+                                      name: 'sampleRate'
+                                      description: |
+                                        Sample rate (0, 1]
+                        - !ruby/object:Api::Type::String
+                          name: 'dataset'
+                          description: |
+                            The resource name of the Dataset used to train this Model.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'gcsSource'
+                          description: |
+                            The Google Cloud Storage location for the input content.
+                          properties:
+                              - !ruby/object:Api::Type::Array
+                                name: 'uris'
+                                description: |
+                                  Required. Google Cloud Storage URI(-s) to the input file(s). May contain wildcards. For more information on wildcards, see https://cloud.google.com/storage/docs/gsutil/addlhelp/WildcardNames.
+                                item_type: Api::Type::String
+                        - !ruby/object:Api::Type::String
+                          name: 'targetField'
+                          description: |
+                            The target field name the model is to predict. This field will be excluded when doing Predict and (or) Explain for the training data.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'bigquerySource'
+                          description: |
+                            The BigQuery location for the input content.
+                          properties:
+                              - !ruby/object:Api::Type::String
+                                name: 'inputUri'
+                                description: |
+                                  Required. BigQuery URI to a table, up to 2000 characters long. Accepted forms: * BigQuery path. For example: `bq://projectId.bqDatasetId.bqTableId`.
+                        - !ruby/object:Api::Type::String
+                          name: 'dataFormat'
+                          description: |
+                            Data format of the dataset, only applicable if the input is from Google Cloud Storage. The possible formats are: "tf-record" The source file is a TFRecord file. "csv" The source file is a CSV file. "jsonl" The source file is a JSONL file.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'trainingPredictionSkewDetectionConfig'
+                    description: |
+                      The config for Training & Prediction data skew detection. It specifies the training dataset sources and the skew detection parameters.
+                    properties:
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'skewThresholds'
+                          description: |
+                            Key is the feature name and value is the threshold. If a feature needs to be monitored for skew, a value threshold must be configured for that feature. The threshold here is against feature distribution distance between the training and prediction feature.
+                          properties:
+                            - !ruby/object:Api::Type::String
+                              name: 'additionalProperties'
+                              description: |
+                                The config for feature monitoring threshold.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'defaultSkewThreshold'
+                          description: |
+                            The config for feature monitoring threshold.
+                          properties:
+                              - !ruby/object:Api::Type::Integer
+                                name: 'value'
+                                description: |
+                                  Specify a threshold value that can trigger the alert. If this threshold config is for feature distribution distance: 1. For categorical feature, the distribution distance is calculated by L-inifinity norm. 2. For numerical feature, the distribution distance is calculated by Jensen–Shannon divergence. Each feature must have a non-zero threshold if they need to be monitored. Otherwise no alert will be triggered for that feature.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'attributionScoreSkewThresholds'
+                          description: |
+                            Key is the feature name and value is the threshold. The threshold here is against attribution score distance between the training and prediction feature.
+                          properties:
+                            - !ruby/object:Api::Type::String
+                              name: 'additionalProperties'
+                              description: |
+                                The config for feature monitoring threshold.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'predictionDriftDetectionConfig'
+                    description: |
+                      The config for Prediction data drift detection.
+                    properties:
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'attributionScoreDriftThresholds'
+                          description: |
+                            Key is the feature name and value is the threshold. The threshold here is against attribution score distance between different time windows.
+                          properties:
+                            - !ruby/object:Api::Type::String
+                              name: 'additionalProperties'
+                              description: |
+                                The config for feature monitoring threshold.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'driftThresholds'
+                          description: |
+                            Key is the feature name and value is the threshold. If a feature needs to be monitored for drift, a value threshold must be configured for that feature. The threshold here is against feature distribution distance between different time windws.
+                          properties:
+                            - !ruby/object:Api::Type::String
+                              name: 'additionalProperties'
+                              description: |
+                                The config for feature monitoring threshold.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'defaultDriftThreshold'
+                          description: |
+                            The config for feature monitoring threshold.
+                          properties:
+                              - !ruby/object:Api::Type::Integer
+                                name: 'value'
+                                description: |
+                                  Specify a threshold value that can trigger the alert. If this threshold config is for feature distribution distance: 1. For categorical feature, the distribution distance is calculated by L-inifinity norm. 2. For numerical feature, the distribution distance is calculated by Jensen–Shannon divergence. Each feature must have a non-zero threshold if they need to be monitored. Otherwise no alert will be triggered for that feature.
+            - !ruby/object:Api::Type::String
+              name: 'deployedModelId'
+              description: |
+                The DeployedModel ID of the objective config.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          The labels with user-defined metadata to organize your ModelDeploymentMonitoringJob. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+
+      - !ruby/object:Api::Type::Enum
+        name: 'state'
+        description: |
+          Output only. The detailed state of the monitoring job. When the job is still creating, the state will be 'PENDING'. Once the job is successfully created, the state will be 'RUNNING'. Pause the job, the state will be 'PAUSED'. Resume the job, the state will return to 'RUNNING'.
+        values:
+          - :JOB_STATE_UNSPECIFIED
+          - :JOB_STATE_QUEUED
+          - :JOB_STATE_PENDING
+          - :JOB_STATE_RUNNING
+          - :JOB_STATE_SUCCEEDED
+          - :JOB_STATE_FAILED
+          - :JOB_STATE_CANCELLING
+          - :JOB_STATE_CANCELLED
+          - :JOB_STATE_PAUSED
+          - :JOB_STATE_EXPIRED
+          - :JOB_STATE_UPDATING
+          - :JOB_STATE_PARTIALLY_SUCCEEDED
+      - !ruby/object:Api::Type::String
+        name: 'analysisInstanceSchemaUri'
+        description: |
+          YAML schema file uri describing the format of a single instance that you want Tensorflow Data Validation (TFDV) to analyze. If this field is empty, all the feature data types are inferred from predict_instance_schema_uri, meaning that TFDV will use the data in the exact format(data type) as prediction request/response. If there are any data type differences between predict instance and TFDV instance, this field can be used to override the schema. For models trained with Vertex AI, this field must be set as all the fields in predict instance formatted as string.
+      - !ruby/object:Api::Type::Boolean
+        name: 'enableMonitoringPipelineLogs'
+        description: |
+          If true, the scheduled monitoring pipeline logs are sent to Google Cloud Logging, including pipeline status and anomalies detected. Please note the logs incur cost, which are subject to [Cloud Logging pricing](https://cloud.google.com/logging#pricing).
+      - !ruby/object:Api::Type::String
+        name: 'endpoint'
+        description: |
+          Required. Endpoint resource name. Format: `projects/{project}/locations/{location}/endpoints/{endpoint}`
+      - !ruby/object:Api::Type::NestedObject
+        name: 'loggingSamplingStrategy'
+        description: |
+          Sampling Strategy for logging, can be for both training and prediction dataset.
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'randomSampleConfig'
+              description: |
+                Requests are randomly selected.
+              properties:
+                  - !ruby/object:Api::Type::Integer
+                    name: 'sampleRate'
+                    description: |
+                      Sample rate (0, 1]
+      - !ruby/object:Api::Type::Array
+        name: 'bigqueryTables'
+        description: |
+          Output only. The created bigquery tables for the job under customer project. Customer could do their own query & analysis. There could be 4 log tables in maximum: 1. Training data logging predict request/response 2. Serving data logging predict request/response
+        item_type: !ruby/object:Api::Type::NestedObject
+          properties:
+            - !ruby/object:Api::Type::Enum
+              name: 'logSource'
+              description: |
+                The source of log.
+              values:
+                - :LOG_SOURCE_UNSPECIFIED
+                - :TRAINING
+                - :SERVING
+            - !ruby/object:Api::Type::String
+              name: 'bigqueryTablePath'
+              description: |
+                The created BigQuery table to store logs. Customer could do their own query & analysis. Format: `bq://.model_deployment_monitoring_._`
+            - !ruby/object:Api::Type::Enum
+              name: 'logType'
+              description: |
+                The type of log.
+              values:
+                - :LOG_TYPE_UNSPECIFIED
+                - :PREDICT
+                - :EXPLAIN
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          Required. The user-defined name of the ModelDeploymentMonitoringJob. The name can be up to 128 characters long and can consist of any UTF-8 characters. Display name of a ModelDeploymentMonitoringJob.
+      - !ruby/object:Api::Type::Enum
+        name: 'scheduleState'
+        description: |
+          Output only. Schedule state when the monitoring job is in Running state.
+        values:
+          - :MONITORING_SCHEDULE_STATE_UNSPECIFIED
+          - :PENDING
+          - :OFFLINE
+          - :RUNNING
+      - !ruby/object:Api::Type::NestedObject
+        name: 'error'
+        description: |
+          The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).
+        properties:
+            - !ruby/object:Api::Type::Array
+              name: 'details'
+              description: |
+                A list of messages that carry the error details. There is a common set of message types for APIs to use.
+              item_type: Api::Type::String
+            - !ruby/object:Api::Type::Integer
+              name: 'code'
+              description: |
+                The status code, which should be an enum value of google.rpc.Code.
+            - !ruby/object:Api::Type::String
+              name: 'message'
+              description: |
+                A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'modelMonitoringAlertConfig'
+        description: |
+
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'emailAlertConfig'
+              description: |
+                The config for email alert.
+              properties:
+                  - !ruby/object:Api::Type::Array
+                    name: 'userEmails'
+                    description: |
+                      The email addresses to send the alert.
+                    item_type: Api::Type::String
+            - !ruby/object:Api::Type::Boolean
+              name: 'enableLogging'
+              description: |
+                Dump the anomalies to Cloud Logging. The anomalies will be put to json payload encoded from proto google.cloud.aiplatform.logging.ModelMonitoringAnomaliesLogEntry. This can be further sinked to Pub/Sub or any other services supported by Cloud Logging.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'latestMonitoringPipelineMetadata'
+        description: |
+          All metadata of most recent monitoring pipelines.
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'status'
+              description: |
+                The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).
+              properties:
+                  - !ruby/object:Api::Type::Array
+                    name: 'details'
+                    description: |
+                      A list of messages that carry the error details. There is a common set of message types for APIs to use.
+                    item_type: Api::Type::String
+                  - !ruby/object:Api::Type::Integer
+                    name: 'code'
+                    description: |
+                      The status code, which should be an enum value of google.rpc.Code.
+                  - !ruby/object:Api::Type::String
+                    name: 'message'
+                    description: |
+                      A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+            - !ruby/object:Api::Type::String
+              name: 'runTime'
+              description: |
+                The time that most recent monitoring pipelines that is related to this run.
+      - !ruby/object:Api::Type::String
+        name: 'samplePredictInstance'
+        description: |
+          Sample Predict instance, same format as PredictRequest.instances, this can be set as a replacement of ModelDeploymentMonitoringJob.predict_instance_schema_uri. If not set, we will generate predict schema from collected predict requests.
+      - !ruby/object:Api::Type::String
+        name: 'predictInstanceSchemaUri'
+        description: |
+          YAML schema file uri describing the format of a single instance, which are given to format this Endpoint's prediction (and explanation). If not set, we will generate predict schema from collected predict requests.
+      - !ruby/object:Api::Type::String
+        name: 'nextScheduleTime'
+        description: |
+          Output only. Timestamp when this monitoring pipeline will be scheduled to run for the next round.
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this ModelDeploymentMonitoringJob was created.
+      - !ruby/object:Api::Type::String
+        name: 'logTtl'
+        description: |
+          The TTL of BigQuery tables in user projects which stores logs. A day is the basic unit of the TTL and we take the ceil of TTL/86400(a day). e.g. { second: 3600} indicates ttl = 1 day.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'statsAnomaliesBaseDirectory'
+        description: |
+          The Google Cloud Storage location where the output is to be written to.
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'outputUriPrefix'
+              description: |
+                Required. Google Cloud Storage URI to output directory. If the uri doesn't end with '/', a '/' will be automatically appended. The directory is created if it doesn't exist.
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. Timestamp when this ModelDeploymentMonitoringJob was updated most recently.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'modelDeploymentMonitoringScheduleConfig'
+        description: |
+          The config for scheduling monitoring job.
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'monitorWindow'
+              description: |
+                The time window of the prediction data being included in each prediction dataset. This window specifies how long the data should be collected from historical model results for each run. If not set, ModelDeploymentMonitoringScheduleConfig.monitor_interval will be used. e.g. If currently the cutoff time is 2022-01-08 14:30:00 and the monitor_window is set to be 3600, then data from 2022-01-08 13:30:00 to 2022-01-08 14:30:00 will be retrieved and aggregated to calculate the monitoring statistics.
+            - !ruby/object:Api::Type::String
+              name: 'monitorInterval'
+              description: |
+                Required. The model monitoring job scheduling interval. It will be rounded up to next full hour. This defines how often the monitoring jobs are triggered.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'encryptionSpec'
+        description: |
+          Represents a customer-managed encryption key spec that can be applied to a top-level resource.
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'kmsKeyName'
+              description: |
+                Required. The Cloud KMS resource identifier of the customer managed encryption key used to protect a resource. Has the form: `projects/my-project/locations/my-region/keyRings/my-kr/cryptoKeys/my-key`. The key needs to be in the same region as where the compute resource is created.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. Resource name of a ModelDeploymentMonitoringJob.
+  
+
+
+  - !ruby/object:Api::Resource
+    name: MetadataStoresMetadataSchema
+    base_url: '{{parent}}/metadataSchemas'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Instance of a general MetadataSchema.
+    properties:
+
+      - !ruby/object:Api::Type::Enum
+        name: 'schemaType'
+        description: |
+          The type of the MetadataSchema. This is a property that identifies which metadata types will use the MetadataSchema.
+        values:
+          - :METADATA_SCHEMA_TYPE_UNSPECIFIED
+          - :ARTIFACT_TYPE
+          - :EXECUTION_TYPE
+          - :CONTEXT_TYPE
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          Description of the Metadata Schema
+      - !ruby/object:Api::Type::String
+        name: 'schemaVersion'
+        description: |
+          The version of the MetadataSchema. The version's format must match the following regular expression: `^[0-9]+.+.+$`, which would allow to order/compare different versions. Example: 1.0.0, 1.0.1, etc.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. The resource name of the MetadataSchema.
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this MetadataSchema was created.
+      - !ruby/object:Api::Type::String
+        name: 'schema'
+        description: |
+          Required. The raw YAML string representation of the MetadataSchema. The combination of [MetadataSchema.version] and the schema name given by `title` in [MetadataSchema.schema] must be unique within a MetadataStore. The schema is defined as an OpenAPI 3.0.2 [MetadataSchema Object](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#schemaObject)
+  
+
+
+  - !ruby/object:Api::Resource
+    name: MetadataStoresMetadataSchema
+    base_url: '{{parent}}/metadataSchemas'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Instance of a general MetadataSchema.
+    properties:
+
+      - !ruby/object:Api::Type::Enum
+        name: 'schemaType'
+        description: |
+          The type of the MetadataSchema. This is a property that identifies which metadata types will use the MetadataSchema.
+        values:
+          - :METADATA_SCHEMA_TYPE_UNSPECIFIED
+          - :ARTIFACT_TYPE
+          - :EXECUTION_TYPE
+          - :CONTEXT_TYPE
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          Description of the Metadata Schema
+      - !ruby/object:Api::Type::String
+        name: 'schemaVersion'
+        description: |
+          The version of the MetadataSchema. The version's format must match the following regular expression: `^[0-9]+.+.+$`, which would allow to order/compare different versions. Example: 1.0.0, 1.0.1, etc.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. The resource name of the MetadataSchema.
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this MetadataSchema was created.
+      - !ruby/object:Api::Type::String
+        name: 'schema'
+        description: |
+          Required. The raw YAML string representation of the MetadataSchema. The combination of [MetadataSchema.version] and the schema name given by `title` in [MetadataSchema.schema] must be unique within a MetadataStore. The schema is defined as an OpenAPI 3.0.2 [MetadataSchema Object](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#schemaObject)
+  
+
+
+  - !ruby/object:Api::Resource
+    name: MetadataStoresExecution
+    base_url: '{{parent}}/executions'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Instance of a general execution.
+    properties:
+
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          The labels with user-defined metadata to organize your Executions. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one Execution (System labels are excluded).
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this Execution was created.
+      - !ruby/object:Api::Type::String
+        name: 'schemaVersion'
+        description: |
+          The version of the schema in `schema_title` to use. Schema title and version is expected to be registered in earlier Create Schema calls. And both are used together as unique identifiers to identify schemas within the local metadata store.
+      - !ruby/object:Api::Type::Enum
+        name: 'state'
+        description: |
+          The state of this Execution. This is a property of the Execution, and does not imply or capture any ongoing process. This property is managed by clients (such as Vertex AI Pipelines) and the system does not prescribe or check the validity of state transitions.
+        values:
+          - :STATE_UNSPECIFIED
+          - :NEW
+          - :RUNNING
+          - :COMPLETE
+          - :FAILED
+          - :CACHED
+          - :CANCELLED
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. The resource name of the Execution.
+      - !ruby/object:Api::Type::String
+        name: 'etag'
+        description: |
+          An eTag used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          User provided display name of the Execution. May be up to 128 Unicode characters.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'metadata'
+        description: |
+          Properties of the Execution. Top level metadata keys' heading and trailing spaces will be trimmed. The size of this field should not exceed 200KB.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+              Properties of the object.
+      - !ruby/object:Api::Type::String
+        name: 'schemaTitle'
+        description: |
+          The title of the schema describing the metadata. Schema title and version is expected to be registered in earlier Create Schema calls. And both are used together as unique identifiers to identify schemas within the local metadata store.
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          Description of the Execution
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. Timestamp when this Execution was last updated.
+  
+
+
+  - !ruby/object:Api::Resource
+    name: MetadataStoresExecution
+    base_url: '{{parent}}/executions'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Instance of a general execution.
+    properties:
+
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          The labels with user-defined metadata to organize your Executions. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one Execution (System labels are excluded).
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this Execution was created.
+      - !ruby/object:Api::Type::String
+        name: 'schemaVersion'
+        description: |
+          The version of the schema in `schema_title` to use. Schema title and version is expected to be registered in earlier Create Schema calls. And both are used together as unique identifiers to identify schemas within the local metadata store.
+      - !ruby/object:Api::Type::Enum
+        name: 'state'
+        description: |
+          The state of this Execution. This is a property of the Execution, and does not imply or capture any ongoing process. This property is managed by clients (such as Vertex AI Pipelines) and the system does not prescribe or check the validity of state transitions.
+        values:
+          - :STATE_UNSPECIFIED
+          - :NEW
+          - :RUNNING
+          - :COMPLETE
+          - :FAILED
+          - :CACHED
+          - :CANCELLED
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. The resource name of the Execution.
+      - !ruby/object:Api::Type::String
+        name: 'etag'
+        description: |
+          An eTag used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          User provided display name of the Execution. May be up to 128 Unicode characters.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'metadata'
+        description: |
+          Properties of the Execution. Top level metadata keys' heading and trailing spaces will be trimmed. The size of this field should not exceed 200KB.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+              Properties of the object.
+      - !ruby/object:Api::Type::String
+        name: 'schemaTitle'
+        description: |
+          The title of the schema describing the metadata. Schema title and version is expected to be registered in earlier Create Schema calls. And both are used together as unique identifiers to identify schemas within the local metadata store.
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          Description of the Execution
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. Timestamp when this Execution was last updated.
+  
+
+
+  - !ruby/object:Api::Resource
+    name: MetadataStoresContext
+    base_url: '{{parent}}/contexts'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Instance of a general context.
+    properties:
+
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Immutable. The resource name of the Context.
+      - !ruby/object:Api::Type::String
+        name: 'schemaTitle'
+        description: |
+          The title of the schema describing the metadata. Schema title and version is expected to be registered in earlier Create Schema calls. And both are used together as unique identifiers to identify schemas within the local metadata store.
+      - !ruby/object:Api::Type::String
+        name: 'etag'
+        description: |
+          An eTag used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          Description of the Context
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          User provided display name of the Context. May be up to 128 Unicode characters.
+      - !ruby/object:Api::Type::String
+        name: 'schemaVersion'
+        description: |
+          The version of the schema in schema_name to use. Schema title and version is expected to be registered in earlier Create Schema calls. And both are used together as unique identifiers to identify schemas within the local metadata store.
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this Context was created.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          The labels with user-defined metadata to organize your Contexts. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one Context (System labels are excluded).
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+
+      - !ruby/object:Api::Type::NestedObject
+        name: 'metadata'
+        description: |
+          Properties of the Context. Top level metadata keys' heading and trailing spaces will be trimmed. The size of this field should not exceed 200KB.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+              Properties of the object.
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. Timestamp when this Context was last updated.
+      - !ruby/object:Api::Type::Array
+        name: 'parentContexts'
+        description: |
+          Output only. A list of resource names of Contexts that are parents of this Context. A Context may have at most 10 parent_contexts.
+        item_type: Api::Type::String
+
+
+
+  - !ruby/object:Api::Resource
+    name: MetadataStoresContext
+    base_url: '{{parent}}/contexts'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Instance of a general context.
+    properties:
+
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Immutable. The resource name of the Context.
+      - !ruby/object:Api::Type::String
+        name: 'schemaTitle'
+        description: |
+          The title of the schema describing the metadata. Schema title and version is expected to be registered in earlier Create Schema calls. And both are used together as unique identifiers to identify schemas within the local metadata store.
+      - !ruby/object:Api::Type::String
+        name: 'etag'
+        description: |
+          An eTag used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          Description of the Context
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          User provided display name of the Context. May be up to 128 Unicode characters.
+      - !ruby/object:Api::Type::String
+        name: 'schemaVersion'
+        description: |
+          The version of the schema in schema_name to use. Schema title and version is expected to be registered in earlier Create Schema calls. And both are used together as unique identifiers to identify schemas within the local metadata store.
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this Context was created.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          The labels with user-defined metadata to organize your Contexts. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one Context (System labels are excluded).
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+
+      - !ruby/object:Api::Type::NestedObject
+        name: 'metadata'
+        description: |
+          Properties of the Context. Top level metadata keys' heading and trailing spaces will be trimmed. The size of this field should not exceed 200KB.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+              Properties of the object.
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. Timestamp when this Context was last updated.
+      - !ruby/object:Api::Type::Array
+        name: 'parentContexts'
+        description: |
+          Output only. A list of resource names of Contexts that are parents of this Context. A Context may have at most 10 parent_contexts.
+        item_type: Api::Type::String
+
+
+
+  - !ruby/object:Api::Resource
+    name: MetadataStoresArtifact
+    base_url: '{{parent}}/artifacts'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Instance of a general artifact.
+    properties:
+
+      - !ruby/object:Api::Type::String
+        name: 'schemaVersion'
+        description: |
+          The version of the schema in schema_name to use. Schema title and version is expected to be registered in earlier Create Schema calls. And both are used together as unique identifiers to identify schemas within the local metadata store.
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          User provided display name of the Artifact. May be up to 128 Unicode characters.
+      - !ruby/object:Api::Type::String
+        name: 'etag'
+        description: |
+          An eTag used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. The resource name of the Artifact.
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. Timestamp when this Artifact was last updated.
+      - !ruby/object:Api::Type::Enum
+        name: 'state'
+        description: |
+          The state of this Artifact. This is a property of the Artifact, and does not imply or capture any ongoing process. This property is managed by clients (such as Vertex AI Pipelines), and the system does not prescribe or check the validity of state transitions.
+        values:
+          - :STATE_UNSPECIFIED
+          - :PENDING
+          - :LIVE
+      - !ruby/object:Api::Type::NestedObject
+        name: 'metadata'
+        description: |
+          Properties of the Artifact. Top level metadata keys' heading and trailing spaces will be trimmed. The size of this field should not exceed 200KB.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+              Properties of the object.
+      - !ruby/object:Api::Type::String
+        name: 'uri'
+        description: |
+          The uniform resource identifier of the artifact file. May be empty if there is no actual artifact file.
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this Artifact was created.
+      - !ruby/object:Api::Type::String
+        name: 'schemaTitle'
+        description: |
+          The title of the schema describing the metadata. Schema title and version is expected to be registered in earlier Create Schema calls. And both are used together as unique identifiers to identify schemas within the local metadata store.
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          Description of the Artifact
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          The labels with user-defined metadata to organize your Artifacts. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one Artifact (System labels are excluded).
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+              
+  
+
+
+  - !ruby/object:Api::Resource
+    name: MetadataStoresArtifact
+    base_url: '{{parent}}/artifacts'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Instance of a general artifact.
+    properties:
+
+      - !ruby/object:Api::Type::String
+        name: 'schemaVersion'
+        description: |
+          The version of the schema in schema_name to use. Schema title and version is expected to be registered in earlier Create Schema calls. And both are used together as unique identifiers to identify schemas within the local metadata store.
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          User provided display name of the Artifact. May be up to 128 Unicode characters.
+      - !ruby/object:Api::Type::String
+        name: 'etag'
+        description: |
+          An eTag used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. The resource name of the Artifact.
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. Timestamp when this Artifact was last updated.
+      - !ruby/object:Api::Type::Enum
+        name: 'state'
+        description: |
+          The state of this Artifact. This is a property of the Artifact, and does not imply or capture any ongoing process. This property is managed by clients (such as Vertex AI Pipelines), and the system does not prescribe or check the validity of state transitions.
+        values:
+          - :STATE_UNSPECIFIED
+          - :PENDING
+          - :LIVE
+      - !ruby/object:Api::Type::NestedObject
+        name: 'metadata'
+        description: |
+          Properties of the Artifact. Top level metadata keys' heading and trailing spaces will be trimmed. The size of this field should not exceed 200KB.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+              Properties of the object.
+      - !ruby/object:Api::Type::String
+        name: 'uri'
+        description: |
+          The uniform resource identifier of the artifact file. May be empty if there is no actual artifact file.
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this Artifact was created.
+      - !ruby/object:Api::Type::String
+        name: 'schemaTitle'
+        description: |
+          The title of the schema describing the metadata. Schema title and version is expected to be registered in earlier Create Schema calls. And both are used together as unique identifiers to identify schemas within the local metadata store.
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          Description of the Artifact
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          The labels with user-defined metadata to organize your Artifacts. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one Artifact (System labels are excluded).
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+
+  - !ruby/object:Api::Resource
+    name: DatasetsSavedQuery
+    base_url: '{{parent}}/savedQueries'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        A SavedQuery is a view of the dataset. It references a subset of annotations by problem type and filters.
+    properties:
+
+      - !ruby/object:Api::Type::Integer
+        name: 'annotationSpecCount'
+        description: |
+          Output only. Number of AnnotationSpecs in the context of the SavedQuery.
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. Timestamp when SavedQuery was last updated.
+      - !ruby/object:Api::Type::Boolean
+        name: 'supportAutomlTraining'
+        description: |
+          Output only. If the Annotations belonging to the SavedQuery can be used for AutoML training.
+      - !ruby/object:Api::Type::String
+        name: 'metadata'
+        description: |
+          Some additional information about the SavedQuery.
+      - !ruby/object:Api::Type::String
+        name: 'problemType'
+        description: |
+          Required. Problem type of the SavedQuery. Allowed values: * IMAGE_CLASSIFICATION_SINGLE_LABEL * IMAGE_CLASSIFICATION_MULTI_LABEL * IMAGE_BOUNDING_POLY * IMAGE_BOUNDING_BOX * TEXT_CLASSIFICATION_SINGLE_LABEL * TEXT_CLASSIFICATION_MULTI_LABEL * TEXT_EXTRACTION * TEXT_SENTIMENT * VIDEO_CLASSIFICATION * VIDEO_OBJECT_TRACKING
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. Resource name of the SavedQuery.
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this SavedQuery was created.
+      - !ruby/object:Api::Type::String
+        name: 'etag'
+        description: |
+          Used to perform a consistent read-modify-write update. If not set, a blind "overwrite" update happens.
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          Required. The user-defined name of the SavedQuery. The name can be up to 128 characters long and can consist of any UTF-8 characters.
+      - !ruby/object:Api::Type::String
+        name: 'annotationFilter'
+        description: |
+          Output only. Filters on the Annotations in the dataset.
+  
+
+
+  - !ruby/object:Api::Resource
+    name: DatasetsSavedQuery
+    base_url: '{{parent}}/savedQueries'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        A SavedQuery is a view of the dataset. It references a subset of annotations by problem type and filters.
+    properties:
+
+      - !ruby/object:Api::Type::Integer
+        name: 'annotationSpecCount'
+        description: |
+          Output only. Number of AnnotationSpecs in the context of the SavedQuery.
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. Timestamp when SavedQuery was last updated.
+      - !ruby/object:Api::Type::Boolean
+        name: 'supportAutomlTraining'
+        description: |
+          Output only. If the Annotations belonging to the SavedQuery can be used for AutoML training.
+      - !ruby/object:Api::Type::String
+        name: 'metadata'
+        description: |
+          Some additional information about the SavedQuery.
+      - !ruby/object:Api::Type::String
+        name: 'problemType'
+        description: |
+          Required. Problem type of the SavedQuery. Allowed values: * IMAGE_CLASSIFICATION_SINGLE_LABEL * IMAGE_CLASSIFICATION_MULTI_LABEL * IMAGE_BOUNDING_POLY * IMAGE_BOUNDING_BOX * TEXT_CLASSIFICATION_SINGLE_LABEL * TEXT_CLASSIFICATION_MULTI_LABEL * TEXT_EXTRACTION * TEXT_SENTIMENT * VIDEO_CLASSIFICATION * VIDEO_OBJECT_TRACKING
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. Resource name of the SavedQuery.
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this SavedQuery was created.
+      - !ruby/object:Api::Type::String
+        name: 'etag'
+        description: |
+          Used to perform a consistent read-modify-write update. If not set, a blind "overwrite" update happens.
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          Required. The user-defined name of the SavedQuery. The name can be up to 128 characters long and can consist of any UTF-8 characters.
+      - !ruby/object:Api::Type::String
+        name: 'annotationFilter'
+        description: |
+          Output only. Filters on the Annotations in the dataset.
+  
+
+
+  - !ruby/object:Api::Resource
+    name: DatasetsAnnotationSpec
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Identifies a concept with which DataItems may be annotated with.
+    properties:
+
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          Required. The user-defined name of the AnnotationSpec. The name can be up to 128 characters long and can consist of any UTF-8 characters.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. Resource name of the AnnotationSpec.
+      - !ruby/object:Api::Type::String
+        name: 'etag'
+        description: |
+          Optional. Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this AnnotationSpec was created.
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. Timestamp when AnnotationSpec was last updated.
+  
+
+
+  - !ruby/object:Api::Resource
+    name: NasJobsNasTrialDetail
+    base_url: '{{parent}}/nasTrialDetails'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Represents a NasTrial details along with its parameters. If there is a corresponding train NasTrial, the train NasTrial is also returned.
+    properties:
+
+      - !ruby/object:Api::Type::String
+        name: 'parameters'
+        description: |
+          The parameters for the NasJob NasTrial.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. Resource name of the NasTrialDetail.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'searchTrial'
+        description: |
+          Represents a uCAIP NasJob trial.
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'id'
+              description: |
+                Output only. The identifier of the NasTrial assigned by the service.
+            - !ruby/object:Api::Type::Enum
+              name: 'state'
+              description: |
+                Output only. The detailed state of the NasTrial.
+              values:
+                - :STATE_UNSPECIFIED
+                - :REQUESTED
+                - :ACTIVE
+                - :STOPPING
+                - :SUCCEEDED
+                - :INFEASIBLE
+            - !ruby/object:Api::Type::NestedObject
+              name: 'finalMeasurement'
+              description: |
+                A message representing a Measurement of a Trial. A Measurement contains the Metrics got by executing a Trial using suggested hyperparameter values.
+              properties:
+                  - !ruby/object:Api::Type::Array
+                    name: 'metrics'
+                    description: |
+                      Output only. A list of metrics got by evaluating the objective functions using suggested Parameter values.
+                    item_type: !ruby/object:Api::Type::NestedObject
+                      properties:
+                        - !ruby/object:Api::Type::String
+                          name: 'metricId'
+                          description: |
+                            Output only. The ID of the Metric. The Metric should be defined in StudySpec's Metrics.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'value'
+                          description: |
+                            Output only. The value for this metric.
+                  - !ruby/object:Api::Type::String
+                    name: 'elapsedDuration'
+                    description: |
+                      Output only. Time that the Trial has been running at the point of this Measurement.
+                  - !ruby/object:Api::Type::String
+                    name: 'stepCount'
+                    description: |
+                      Output only. The number of steps the machine learning model has been trained for. Must be non-negative.
+            - !ruby/object:Api::Type::String
+              name: 'startTime'
+              description: |
+                Output only. Time when the NasTrial was started.
+            - !ruby/object:Api::Type::String
+              name: 'endTime'
+              description: |
+                Output only. Time when the NasTrial's status changed to `SUCCEEDED` or `INFEASIBLE`.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'trainTrial'
+        description: |
+          Represents a uCAIP NasJob trial.
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'id'
+              description: |
+                Output only. The identifier of the NasTrial assigned by the service.
+            - !ruby/object:Api::Type::Enum
+              name: 'state'
+              description: |
+                Output only. The detailed state of the NasTrial.
+              values:
+                - :STATE_UNSPECIFIED
+                - :REQUESTED
+                - :ACTIVE
+                - :STOPPING
+                - :SUCCEEDED
+                - :INFEASIBLE
+            - !ruby/object:Api::Type::NestedObject
+              name: 'finalMeasurement'
+              description: |
+                A message representing a Measurement of a Trial. A Measurement contains the Metrics got by executing a Trial using suggested hyperparameter values.
+              properties:
+                  - !ruby/object:Api::Type::Array
+                    name: 'metrics'
+                    description: |
+                      Output only. A list of metrics got by evaluating the objective functions using suggested Parameter values.
+                    item_type: !ruby/object:Api::Type::NestedObject
+                      properties:
+                        - !ruby/object:Api::Type::String
+                          name: 'metricId'
+                          description: |
+                            Output only. The ID of the Metric. The Metric should be defined in StudySpec's Metrics.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'value'
+                          description: |
+                            Output only. The value for this metric.
+                  - !ruby/object:Api::Type::String
+                    name: 'elapsedDuration'
+                    description: |
+                      Output only. Time that the Trial has been running at the point of this Measurement.
+                  - !ruby/object:Api::Type::String
+                    name: 'stepCount'
+                    description: |
+                      Output only. The number of steps the machine learning model has been trained for. Must be non-negative.
+            - !ruby/object:Api::Type::String
+              name: 'startTime'
+              description: |
+                Output only. Time when the NasTrial was started.
+            - !ruby/object:Api::Type::String
+              name: 'endTime'
+              description: |
+                Output only. Time when the NasTrial's status changed to `SUCCEEDED` or `INFEASIBLE`.
+  
+
+
   - !ruby/object:Api::Resource
     name: Endpoint
     base_url: '{{parent}}/endpoints'
@@ -7525,7 +9435,7 @@ objects:
     description: |-
         Models are deployed into it, and afterwards Endpoint is called to obtain predictions and explanations.
     properties:
-  
+
       - !ruby/object:Api::Type::String
         name: 'encryptionSpec'
         description: |
@@ -7563,7 +9473,7 @@ objects:
           - !ruby/object:Api::Type::String
             name: 'additionalProperties'
             description: |
-              
+
       - !ruby/object:Api::Type::NestedObject
         name: 'labels'
         description: |
@@ -7572,7 +9482,7 @@ objects:
           - !ruby/object:Api::Type::String
             name: 'additionalProperties'
             description: |
-              
+
       - !ruby/object:Api::Type::String
         name: 'displayName'
         description: |
@@ -7595,7 +9505,7 @@ objects:
           Output only. The resource name of the Endpoint.
   
 
-    
+
   - !ruby/object:Api::Resource
     name: Endpoint
     base_url: '{{parent}}/endpoints'
@@ -7624,7 +9534,7 @@ objects:
     description: |-
         Models are deployed into it, and afterwards Endpoint is called to obtain predictions and explanations.
     properties:
-  
+
       - !ruby/object:Api::Type::String
         name: 'encryptionSpec'
         description: |
@@ -7662,7 +9572,7 @@ objects:
           - !ruby/object:Api::Type::String
             name: 'additionalProperties'
             description: |
-              
+
       - !ruby/object:Api::Type::NestedObject
         name: 'labels'
         description: |
@@ -7671,7 +9581,7 @@ objects:
           - !ruby/object:Api::Type::String
             name: 'additionalProperties'
             description: |
-              
+
       - !ruby/object:Api::Type::String
         name: 'displayName'
         description: |
@@ -7694,7 +9604,7 @@ objects:
           Output only. The resource name of the Endpoint.
   
 
-    
+
   - !ruby/object:Api::Resource
     name: Endpoint
     base_url: '{{parent}}/endpoints'
@@ -7723,7 +9633,7 @@ objects:
     description: |-
         Models are deployed into it, and afterwards Endpoint is called to obtain predictions and explanations.
     properties:
-  
+
       - !ruby/object:Api::Type::String
         name: 'encryptionSpec'
         description: |
@@ -7761,7 +9671,7 @@ objects:
           - !ruby/object:Api::Type::String
             name: 'additionalProperties'
             description: |
-              
+
       - !ruby/object:Api::Type::NestedObject
         name: 'labels'
         description: |
@@ -7770,7 +9680,7 @@ objects:
           - !ruby/object:Api::Type::String
             name: 'additionalProperties'
             description: |
-              
+
       - !ruby/object:Api::Type::String
         name: 'displayName'
         description: |
@@ -7793,7 +9703,7 @@ objects:
           Output only. The resource name of the Endpoint.
   
 
-    
+
   - !ruby/object:Api::Resource
     name: Endpoint
     base_url: '{{parent}}/endpoints'
@@ -7822,7 +9732,7 @@ objects:
     description: |-
         Models are deployed into it, and afterwards Endpoint is called to obtain predictions and explanations.
     properties:
-  
+
       - !ruby/object:Api::Type::String
         name: 'encryptionSpec'
         description: |
@@ -7860,7 +9770,7 @@ objects:
           - !ruby/object:Api::Type::String
             name: 'additionalProperties'
             description: |
-              
+
       - !ruby/object:Api::Type::NestedObject
         name: 'labels'
         description: |
@@ -7869,7 +9779,7 @@ objects:
           - !ruby/object:Api::Type::String
             name: 'additionalProperties'
             description: |
-              
+
       - !ruby/object:Api::Type::String
         name: 'displayName'
         description: |
