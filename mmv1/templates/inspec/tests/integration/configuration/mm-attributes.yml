@@ -731,6 +731,18 @@ model_deployment_monitoring_job:
   log_ttl : "value_logttl"
   update_time : "value_updatetime"
 
+
+metadata_stores_metadata_schema:
+  name : "system-dag-execution-v0-0-1"
+  region : "us-central1"
+  parent : "projects/165434197229/locations/us-central1/metadataStores/default/metadataSchemas/"
+  metadataStore: "default"
+  schema_type : "EXECUTION_TYPE"
+  description : "value_description"
+  schema_version : "value_schemaversion"
+  create_time : "value_createtime"
+  schema : "value_schema"
+
 metadata_stores_execution:
   name : "12528100122877440041"
   region : "us-central1"
