@@ -623,6 +623,91 @@ model:
   version_create_time : "value_versioncreatetime"
   version_description : "value_versiondescription"
 
+index_endpoint:
+  name : "value_name"
+  region : "value_region"
+  parent : "value_parent"
+  display_name : "value_displayname"
+  create_time : "value_createtime"
+  network : "value_network"
+  update_time : "value_updatetime"
+  public_endpoint_domain_name : "value_publicendpointdomainname"
+  etag : "value_etag"
+  description : "value_description"
+
+featurestores_entity_type:
+  name : "value_name"
+  region : "value_region"
+  parent : "value_parent"
+  description : "value_description"
+  create_time : "value_createtime"
+  etag : "value_etag"
+  update_time : "value_updatetime"
+
+
+tensorboard_experiment_run:
+  name : "sklearn-2023-09-22-17-16-16-a25b0"
+  tensorboard: "1976367752880848896"
+  experiment: "autologging-experiment-fyc24zb2"
+  region : "us-central1"
+  parent : "projects/165434197229/locations/us-central1/tensorboards/1976367752880848896/experiments/autologging-experiment-fyc24zb2/runs/"
+
+studies_trial:
+  name : "1"
+  region : "us-central1"
+  parent : "projects/165434197229/locations/us-central1/studies/2975668570413/trials/"
+  study: "890385007008"
+  start_time : "value_starttime"
+  end_time : "value_endtime"
+  infeasible_reason : "value_infeasiblereason"
+  client_id : "value_clientid"
+  custom_job : "value_customjob"
+  state : "value_state"
+  id : "value_id"
+
+hyperparameter_tuning_job:
+  name : "9200900561803673600"
+  region : "us-central1"
+  parent : "projects/165434197229/locations/us-central1/hyperparameterTuningJobs/"
+  state : "JOB_STATE_RUNNING"
+  end_time : "value_endtime"
+  update_time : "value_updatetime"
+  start_time : "value_starttime"
+  create_time : "value_createtime"
+  display_name : "inspec-hyper-test-hyperparameter-tuning-job"
+
+
+models_evaluation:
+  name : "value_name"
+  region : "value_region"
+  parent : "value_parent"
+  data_item_schema_uri : "value_dataitemschemauri"
+  metrics_schema_uri : "value_metricsschemauri"
+  create_time : "value_createtime"
+  annotation_schema_uri : "value_annotationschemauri"
+  display_name : "value_displayname"
+
+tensorboards_experiment:
+  name : "inspec-tensor-experiment"
+  region : "us-central1"
+  parent : "projects/165434197229/locations/us-central1/tensorboards/6346548241290493952/experiments/"
+  description : "value_description"
+  tensorboard: "6346548241290493952"
+  source : "value_source"
+  display_name : "inspec-tensor-experiment"
+  create_time : "value_createtime"
+  update_time : "value_updatetime"
+  etag : "value_etag"
+
+featurestore_entity_type_feature:
+  parent : "value_parent"
+  region : "value_region"
+  description : "value_description"
+  create_time : "value_createtime"
+  etag : "value_etag"
+  name : "value_name"
+  update_time : "value_updatetime"
+  value_type : "value_valuetype"
 dataset_data_item_annotation:
   name: "1746031646898913280"
   region: "us-central1"

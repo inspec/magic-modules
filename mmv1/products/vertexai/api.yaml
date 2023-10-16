@@ -3692,6 +3692,1718 @@ objects:
 
     
   - !ruby/object:Api::Resource
+    name: TensorboardsExperiment
+    base_url: '{{parent}}/experiments'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        A TensorboardExperiment is a group of TensorboardRuns, that are typically the results of a training job run, in a Tensorboard.
+    properties:
+
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          Description of this TensorboardExperiment.
+      - !ruby/object:Api::Type::String
+        name: 'source'
+        description: |
+          Immutable. Source of the TensorboardExperiment. Example: a custom training job.
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          User provided name of this TensorboardExperiment.
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this TensorboardExperiment was created.
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. Timestamp when this TensorboardExperiment was last updated.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          The labels with user-defined metadata to organize your TensorboardExperiment. Label keys and values cannot be longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one Dataset (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with `aiplatform.googleapis.com/` and are immutable. The following system labels exist for each Dataset: * `aiplatform.googleapis.com/dataset_metadata_schema`: output only. Its value is the metadata_schema's title.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. Name of the TensorboardExperiment. Format: `projects/{project}/locations/{location}/tensorboards/{tensorboard}/experiments/{experiment}`
+      - !ruby/object:Api::Type::String
+        name: 'etag'
+        description: |
+          Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+  
+
+
+  - !ruby/object:Api::Resource
+    name: TensorboardsExperiment
+    base_url: '{{parent}}/experiments'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        A TensorboardExperiment is a group of TensorboardRuns, that are typically the results of a training job run, in a Tensorboard.
+    properties:
+
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          Description of this TensorboardExperiment.
+      - !ruby/object:Api::Type::String
+        name: 'source'
+        description: |
+          Immutable. Source of the TensorboardExperiment. Example: a custom training job.
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          User provided name of this TensorboardExperiment.
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this TensorboardExperiment was created.
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. Timestamp when this TensorboardExperiment was last updated.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          The labels with user-defined metadata to organize your TensorboardExperiment. Label keys and values cannot be longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one Dataset (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with `aiplatform.googleapis.com/` and are immutable. The following system labels exist for each Dataset: * `aiplatform.googleapis.com/dataset_metadata_schema`: output only. Its value is the metadata_schema's title.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. Name of the TensorboardExperiment. Format: `projects/{project}/locations/{location}/tensorboards/{tensorboard}/experiments/{experiment}`
+      - !ruby/object:Api::Type::String
+        name: 'etag'
+        description: |
+          Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+  
+
+
+  - !ruby/object:Api::Resource
+    name: ModelsEvaluation
+    base_url: '{{parent}}/evaluations'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        A collection of metrics calculated by comparing Model's predictions on all of the test data against annotations from the test data.
+    properties:
+
+      - !ruby/object:Api::Type::String
+        name: 'dataItemSchemaUri'
+        description: |
+          Points to a YAML file stored on Google Cloud Storage describing EvaluatedDataItemView.data_item_payload and EvaluatedAnnotation.data_item_payload. The schema is defined as an OpenAPI 3.0.2 [Schema Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.2.md#schemaObject). This field is not populated if there are neither EvaluatedDataItemViews nor EvaluatedAnnotations under this ModelEvaluation.
+      - !ruby/object:Api::Type::String
+        name: 'metadata'
+        description: |
+          The metadata of the ModelEvaluation. For the ModelEvaluation uploaded from Managed Pipeline, metadata contains a structured value with keys of "pipeline_job_id", "evaluation_dataset_type", "evaluation_dataset_path".
+      - !ruby/object:Api::Type::String
+        name: 'metricsSchemaUri'
+        description: |
+          Points to a YAML file stored on Google Cloud Storage describing the metrics of this ModelEvaluation. The schema is defined as an OpenAPI 3.0.2 [Schema Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.2.md#schemaObject).
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this ModelEvaluation was created.
+      - !ruby/object:Api::Type::String
+        name: 'annotationSchemaUri'
+        description: |
+          Points to a YAML file stored on Google Cloud Storage describing EvaluatedDataItemView.predictions, EvaluatedDataItemView.ground_truths, EvaluatedAnnotation.predictions, and EvaluatedAnnotation.ground_truths. The schema is defined as an OpenAPI 3.0.2 [Schema Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.2.md#schemaObject). This field is not populated if there are neither EvaluatedDataItemViews nor EvaluatedAnnotations under this ModelEvaluation.
+      - !ruby/object:Api::Type::String
+        name: 'metrics'
+        description: |
+          Evaluation metrics of the Model. The schema of the metrics is stored in metrics_schema_uri
+      - !ruby/object:Api::Type::Array
+        name: 'explanationSpecs'
+        description: |
+          Describes the values of ExplanationSpec that are used for explaining the predicted values on the evaluated data.
+        item_type: !ruby/object:Api::Type::NestedObject
+          properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'explanationSpec'
+              description: |
+                Specification of Model explanation.
+              properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'parameters'
+                    description: |
+                      Parameters to configure explaining for Model's predictions.
+                    properties:
+                        - !ruby/object:Api::Type::Array
+                          name: 'outputIndices'
+                          description: |
+                            If populated, only returns attributions that have output_index contained in output_indices. It must be an ndarray of integers, with the same shape of the output it's explaining. If not populated, returns attributions for top_k indices of outputs. If neither top_k nor output_indices is populated, returns the argmax index of the outputs. Only applicable to Models that predict multiple outputs (e,g, multi-class Models that predict multiple classes).
+                          item_type: Api::Type::String
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'examples'
+                          description: |
+                            Example-based explainability that returns the nearest neighbors from the provided dataset.
+                          properties:
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'presets'
+                                description: |
+                                  Preset configuration for example-based explanations
+                                properties:
+                                    - !ruby/object:Api::Type::Enum
+                                      name: 'modality'
+                                      description: |
+                                        The modality of the uploaded model, which automatically configures the distance measurement and feature normalization for the underlying example index and queries. If your model does not precisely fit one of these types, it is okay to choose the closest type.
+                                      values:
+                                        - :MODALITY_UNSPECIFIED
+                                        - :IMAGE
+                                        - :TEXT
+                                        - :TABULAR
+                                    - !ruby/object:Api::Type::Enum
+                                      name: 'query'
+                                      description: |
+                                        Preset option controlling parameters for speed-precision trade-off when querying for examples. If omitted, defaults to `PRECISE`.
+                                      values:
+                                        - :PRECISE
+                                        - :FAST
+                              - !ruby/object:Api::Type::Integer
+                                name: 'neighborCount'
+                                description: |
+                                  The number of neighbors to return when querying for examples.
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'exampleGcsSource'
+                                description: |
+                                  The Cloud Storage input instances.
+                                properties:
+                                    - !ruby/object:Api::Type::NestedObject
+                                      name: 'gcsSource'
+                                      description: |
+                                        The Google Cloud Storage location for the input content.
+                                      properties:
+                                          - !ruby/object:Api::Type::Array
+                                            name: 'uris'
+                                            description: |
+                                              Required. Google Cloud Storage URI(-s) to the input file(s). May contain wildcards. For more information on wildcards, see https://cloud.google.com/storage/docs/gsutil/addlhelp/WildcardNames.
+                                            item_type: Api::Type::String
+                                    - !ruby/object:Api::Type::Enum
+                                      name: 'dataFormat'
+                                      description: |
+                                        The format in which instances are given, if not specified, assume it's JSONL format. Currently only JSONL format is supported.
+                                      values:
+                                        - :DATA_FORMAT_UNSPECIFIED
+                                        - :JSONL
+                              - !ruby/object:Api::Type::String
+                                name: 'nearestNeighborSearchConfig'
+                                description: |
+                                  The full configuration for the generated index, the semantics are the same as metadata and should match [NearestNeighborSearchConfig](https://cloud.google.com/vertex-ai/docs/explainable-ai/configuring-explanations-example-based#nearest-neighbor-search-config).
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'xraiAttribution'
+                          description: |
+                            An explanation method that redistributes Integrated Gradients attributions to segmented regions, taking advantage of the model's fully differentiable structure. Refer to this paper for more details: https://arxiv.org/abs/1906.02825 Supported only by image Models.
+                          properties:
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'smoothGradConfig'
+                                description: |
+                                  Config for SmoothGrad approximation of gradients. When enabled, the gradients are approximated by averaging the gradients from noisy samples in the vicinity of the inputs. Adding noise can help improve the computed gradients. Refer to this paper for more details: https://arxiv.org/pdf/1706.03825.pdf
+                                properties:
+                                    - !ruby/object:Api::Type::NestedObject
+                                      name: 'featureNoiseSigma'
+                                      description: |
+                                        Noise sigma by features. Noise sigma represents the standard deviation of the gaussian kernel that will be used to add noise to interpolated inputs prior to computing gradients.
+                                      properties:
+                                          - !ruby/object:Api::Type::Array
+                                            name: 'noiseSigma'
+                                            description: |
+                                              Noise sigma per feature. No noise is added to features that are not set.
+                                            item_type: !ruby/object:Api::Type::NestedObject
+                                              properties:
+                                                - !ruby/object:Api::Type::String
+                                                  name: 'name'
+                                                  description: |
+                                                    The name of the input feature for which noise sigma is provided. The features are defined in explanation metadata inputs.
+                                                - !ruby/object:Api::Type::Integer
+                                                  name: 'sigma'
+                                                  description: |
+                                                    This represents the standard deviation of the Gaussian kernel that will be used to add noise to the feature prior to computing gradients. Similar to noise_sigma but represents the noise added to the current feature. Defaults to 0.1.
+                                    - !ruby/object:Api::Type::Integer
+                                      name: 'noiseSigma'
+                                      description: |
+                                        This is a single float value and will be used to add noise to all the features. Use this field when all features are normalized to have the same distribution: scale to range [0, 1], [-1, 1] or z-scoring, where features are normalized to have 0-mean and 1-variance. Learn more about [normalization](https://developers.google.com/machine-learning/data-prep/transform/normalization). For best results the recommended value is about 10% - 20% of the standard deviation of the input feature. Refer to section 3.2 of the SmoothGrad paper: https://arxiv.org/pdf/1706.03825.pdf. Defaults to 0.1. If the distribution is different per feature, set feature_noise_sigma instead for each feature.
+                                    - !ruby/object:Api::Type::Integer
+                                      name: 'noisySampleCount'
+                                      description: |
+                                        The number of gradient samples to use for approximation. The higher this number, the more accurate the gradient is, but the runtime complexity increases by this factor as well. Valid range of its value is [1, 50]. Defaults to 3.
+                              - !ruby/object:Api::Type::Integer
+                                name: 'stepCount'
+                                description: |
+                                  Required. The number of steps for approximating the path integral. A good value to start is 50 and gradually increase until the sum to diff property is met within the desired error range. Valid range of its value is [1, 100], inclusively.
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'blurBaselineConfig'
+                                description: |
+                                  Config for blur baseline. When enabled, a linear path from the maximally blurred image to the input image is created. Using a blurred baseline instead of zero (black image) is motivated by the BlurIG approach explained here: https://arxiv.org/abs/2004.03383
+                                properties:
+                                    - !ruby/object:Api::Type::Integer
+                                      name: 'maxBlurSigma'
+                                      description: |
+                                        The standard deviation of the blur kernel for the blurred baseline. The same blurring parameter is used for both the height and the width dimension. If not set, the method defaults to the zero (i.e. black for images) baseline.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'topK'
+                          description: |
+                            If populated, returns attributions for top K indices of outputs (defaults to 1). Only applies to Models that predicts more than one outputs (e,g, multi-class Models). When set to -1, returns explanations for all outputs.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'integratedGradientsAttribution'
+                          description: |
+                            An attribution method that computes the Aumann-Shapley value taking advantage of the model's fully differentiable structure. Refer to this paper for more details: https://arxiv.org/abs/1703.01365
+                          properties:
+                              - !ruby/object:Api::Type::Integer
+                                name: 'stepCount'
+                                description: |
+                                  Required. The number of steps for approximating the path integral. A good value to start is 50 and gradually increase until the sum to diff property is within the desired error range. Valid range of its value is [1, 100], inclusively.
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'smoothGradConfig'
+                                description: |
+                                  Config for SmoothGrad approximation of gradients. When enabled, the gradients are approximated by averaging the gradients from noisy samples in the vicinity of the inputs. Adding noise can help improve the computed gradients. Refer to this paper for more details: https://arxiv.org/pdf/1706.03825.pdf
+                                properties:
+                                    - !ruby/object:Api::Type::NestedObject
+                                      name: 'featureNoiseSigma'
+                                      description: |
+                                        Noise sigma by features. Noise sigma represents the standard deviation of the gaussian kernel that will be used to add noise to interpolated inputs prior to computing gradients.
+                                      properties:
+                                          - !ruby/object:Api::Type::Array
+                                            name: 'noiseSigma'
+                                            description: |
+                                              Noise sigma per feature. No noise is added to features that are not set.
+                                            item_type: !ruby/object:Api::Type::NestedObject
+                                              properties:
+                                                - !ruby/object:Api::Type::String
+                                                  name: 'name'
+                                                  description: |
+                                                    The name of the input feature for which noise sigma is provided. The features are defined in explanation metadata inputs.
+                                                - !ruby/object:Api::Type::Integer
+                                                  name: 'sigma'
+                                                  description: |
+                                                    This represents the standard deviation of the Gaussian kernel that will be used to add noise to the feature prior to computing gradients. Similar to noise_sigma but represents the noise added to the current feature. Defaults to 0.1.
+                                    - !ruby/object:Api::Type::Integer
+                                      name: 'noiseSigma'
+                                      description: |
+                                        This is a single float value and will be used to add noise to all the features. Use this field when all features are normalized to have the same distribution: scale to range [0, 1], [-1, 1] or z-scoring, where features are normalized to have 0-mean and 1-variance. Learn more about [normalization](https://developers.google.com/machine-learning/data-prep/transform/normalization). For best results the recommended value is about 10% - 20% of the standard deviation of the input feature. Refer to section 3.2 of the SmoothGrad paper: https://arxiv.org/pdf/1706.03825.pdf. Defaults to 0.1. If the distribution is different per feature, set feature_noise_sigma instead for each feature.
+                                    - !ruby/object:Api::Type::Integer
+                                      name: 'noisySampleCount'
+                                      description: |
+                                        The number of gradient samples to use for approximation. The higher this number, the more accurate the gradient is, but the runtime complexity increases by this factor as well. Valid range of its value is [1, 50]. Defaults to 3.
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'blurBaselineConfig'
+                                description: |
+                                  Config for blur baseline. When enabled, a linear path from the maximally blurred image to the input image is created. Using a blurred baseline instead of zero (black image) is motivated by the BlurIG approach explained here: https://arxiv.org/abs/2004.03383
+                                properties:
+                                    - !ruby/object:Api::Type::Integer
+                                      name: 'maxBlurSigma'
+                                      description: |
+                                        The standard deviation of the blur kernel for the blurred baseline. The same blurring parameter is used for both the height and the width dimension. If not set, the method defaults to the zero (i.e. black for images) baseline.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'sampledShapleyAttribution'
+                          description: |
+                            An attribution method that approximates Shapley values for features that contribute to the label being predicted. A sampling strategy is used to approximate the value rather than considering all subsets of features.
+                          properties:
+                              - !ruby/object:Api::Type::Integer
+                                name: 'pathCount'
+                                description: |
+                                  Required. The number of feature permutations to consider when approximating the Shapley values. Valid range of its value is [1, 50], inclusively.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'metadata'
+                    description: |
+                      Metadata describing the Model's input and output for explanation.
+                    properties:
+                        - !ruby/object:Api::Type::String
+                          name: 'featureAttributionsSchemaUri'
+                          description: |
+                            Points to a YAML file stored on Google Cloud Storage describing the format of the feature attributions. The schema is defined as an OpenAPI 3.0.2 [Schema Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.2.md#schemaObject). AutoML tabular Models always have this field populated by Vertex AI. Note: The URI given on output may be different, including the URI scheme, than the one given on input. The output URI will point to a location where the user only has a read access.
+                        - !ruby/object:Api::Type::String
+                          name: 'latentSpaceSource'
+                          description: |
+                            Name of the source to generate embeddings for example based explanations.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'outputs'
+                          description: |
+                            Required. Map from output names to output metadata. For Vertex AI-provided Tensorflow images, keys can be any user defined string that consists of any UTF-8 characters. For custom images, keys are the name of the output field in the prediction to be explained. Currently only one key is allowed.
+                          properties:
+                            - !ruby/object:Api::Type::String
+                              name: 'additionalProperties'
+                              description: |
+                                Metadata of the prediction output to be explained.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'inputs'
+                          description: |
+                            Required. Map from feature names to feature input metadata. Keys are the name of the features. Values are the specification of the feature. An empty InputMetadata is valid. It describes a text feature which has the name specified as the key in ExplanationMetadata.inputs. The baseline of the empty feature is chosen by Vertex AI. For Vertex AI-provided Tensorflow images, the key can be any friendly name of the feature. Once specified, featureAttributions are keyed by this key (if not grouped with another feature). For custom images, the key must match with the key in instance.
+                          properties:
+                            - !ruby/object:Api::Type::String
+                              name: 'additionalProperties'
+                              description: |
+                                Metadata of the input of a feature. Fields other than InputMetadata.input_baselines are applicable only for Models that are using Vertex AI-provided images for Tensorflow.
+            - !ruby/object:Api::Type::String
+              name: 'explanationType'
+              description: |
+                Explanation type. For AutoML Image Classification models, possible values are: * `image-integrated-gradients` * `image-xrai`
+      - !ruby/object:Api::Type::Array
+        name: 'sliceDimensions'
+        description: |
+          All possible dimensions of ModelEvaluationSlices. The dimensions can be used as the filter of the ModelService.ListModelEvaluationSlices request, in the form of `slice.dimension = `.
+        item_type: Api::Type::String
+      - !ruby/object:Api::Type::NestedObject
+        name: 'modelExplanation'
+        description: |
+          Aggregated explanation metrics for a Model over a set of instances.
+        properties:
+            - !ruby/object:Api::Type::Array
+              name: 'meanAttributions'
+              description: |
+                Output only. Aggregated attributions explaining the Model's prediction outputs over the set of instances. The attributions are grouped by outputs. For Models that predict only one output, such as regression Models that predict only one score, there is only one attibution that explains the predicted output. For Models that predict multiple outputs, such as multiclass Models that predict multiple classes, each element explains one specific item. Attribution.output_index can be used to identify which output this attribution is explaining. The baselineOutputValue, instanceOutputValue and featureAttributions fields are averaged over the test data. NOTE: Currently AutoML tabular classification Models produce only one attribution, which averages attributions over all the classes it predicts. Attribution.approximation_error is not populated.
+              item_type: !ruby/object:Api::Type::NestedObject
+                properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'outputDisplayName'
+                    description: |
+                      Output only. The display name of the output identified by output_index. For example, the predicted class name by a multi-classification Model. This field is only populated iff the Model predicts display names as a separate field along with the explained output. The predicted display name must has the same shape of the explained output, and can be located using output_index.
+                  - !ruby/object:Api::Type::Integer
+                    name: 'baselineOutputValue'
+                    description: |
+                      Output only. Model predicted output if the input instance is constructed from the baselines of all the features defined in ExplanationMetadata.inputs. The field name of the output is determined by the key in ExplanationMetadata.outputs. If the Model's predicted output has multiple dimensions (rank > 1), this is the value in the output located by output_index. If there are multiple baselines, their output values are averaged.
+                  - !ruby/object:Api::Type::String
+                    name: 'outputName'
+                    description: |
+                      Output only. Name of the explain output. Specified as the key in ExplanationMetadata.outputs.
+                  - !ruby/object:Api::Type::String
+                    name: 'featureAttributions'
+                    description: |
+                      Output only. Attributions of each explained feature. Features are extracted from the prediction instances according to explanation metadata for inputs. The value is a struct, whose keys are the name of the feature. The values are how much the feature in the instance contributed to the predicted result. The format of the value is determined by the feature's input format: * If the feature is a scalar value, the attribution value is a floating number. * If the feature is an array of scalar values, the attribution value is an array. * If the feature is a struct, the attribution value is a struct. The keys in the attribution value struct are the same as the keys in the feature struct. The formats of the values in the attribution struct are determined by the formats of the values in the feature struct. The ExplanationMetadata.feature_attributions_schema_uri field, pointed to by the ExplanationSpec field of the Endpoint.deployed_models object, points to the schema file that describes the features and their attribution values (if it is populated).
+                  - !ruby/object:Api::Type::Array
+                    name: 'outputIndex'
+                    description: |
+                      Output only. The index that locates the explained prediction output. If the prediction output is a scalar value, output_index is not populated. If the prediction output has multiple dimensions, the length of the output_index list is the same as the number of dimensions of the output. The i-th element in output_index is the element index of the i-th dimension of the output vector. Indices start from 0.
+                    item_type: Api::Type::String
+                  - !ruby/object:Api::Type::Integer
+                    name: 'instanceOutputValue'
+                    description: |
+                      Output only. Model predicted output on the corresponding explanation instance. The field name of the output is determined by the key in ExplanationMetadata.outputs. If the Model predicted output has multiple dimensions, this is the value in the output located by output_index.
+                  - !ruby/object:Api::Type::Integer
+                    name: 'approximationError'
+                    description: |
+                      Output only. Error of feature_attributions caused by approximation used in the explanation method. Lower value means more precise attributions. * For Sampled Shapley attribution, increasing path_count might reduce the error. * For Integrated Gradients attribution, increasing step_count might reduce the error. * For XRAI attribution, increasing step_count might reduce the error. See [this introduction](/vertex-ai/docs/explainable-ai/overview) for more information.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. The resource name of the ModelEvaluation.
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          The display name of the ModelEvaluation.
+  
+
+
+  - !ruby/object:Api::Resource
+    name: ModelsEvaluation
+    base_url: '{{parent}}/evaluations'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        A collection of metrics calculated by comparing Model's predictions on all of the test data against annotations from the test data.
+    properties:
+
+      - !ruby/object:Api::Type::String
+        name: 'dataItemSchemaUri'
+        description: |
+          Points to a YAML file stored on Google Cloud Storage describing EvaluatedDataItemView.data_item_payload and EvaluatedAnnotation.data_item_payload. The schema is defined as an OpenAPI 3.0.2 [Schema Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.2.md#schemaObject). This field is not populated if there are neither EvaluatedDataItemViews nor EvaluatedAnnotations under this ModelEvaluation.
+      - !ruby/object:Api::Type::String
+        name: 'metadata'
+        description: |
+          The metadata of the ModelEvaluation. For the ModelEvaluation uploaded from Managed Pipeline, metadata contains a structured value with keys of "pipeline_job_id", "evaluation_dataset_type", "evaluation_dataset_path".
+      - !ruby/object:Api::Type::String
+        name: 'metricsSchemaUri'
+        description: |
+          Points to a YAML file stored on Google Cloud Storage describing the metrics of this ModelEvaluation. The schema is defined as an OpenAPI 3.0.2 [Schema Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.2.md#schemaObject).
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this ModelEvaluation was created.
+      - !ruby/object:Api::Type::String
+        name: 'annotationSchemaUri'
+        description: |
+          Points to a YAML file stored on Google Cloud Storage describing EvaluatedDataItemView.predictions, EvaluatedDataItemView.ground_truths, EvaluatedAnnotation.predictions, and EvaluatedAnnotation.ground_truths. The schema is defined as an OpenAPI 3.0.2 [Schema Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.2.md#schemaObject). This field is not populated if there are neither EvaluatedDataItemViews nor EvaluatedAnnotations under this ModelEvaluation.
+      - !ruby/object:Api::Type::String
+        name: 'metrics'
+        description: |
+          Evaluation metrics of the Model. The schema of the metrics is stored in metrics_schema_uri
+      - !ruby/object:Api::Type::Array
+        name: 'explanationSpecs'
+        description: |
+          Describes the values of ExplanationSpec that are used for explaining the predicted values on the evaluated data.
+        item_type: !ruby/object:Api::Type::NestedObject
+          properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'explanationSpec'
+              description: |
+                Specification of Model explanation.
+              properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'parameters'
+                    description: |
+                      Parameters to configure explaining for Model's predictions.
+                    properties:
+                        - !ruby/object:Api::Type::Array
+                          name: 'outputIndices'
+                          description: |
+                            If populated, only returns attributions that have output_index contained in output_indices. It must be an ndarray of integers, with the same shape of the output it's explaining. If not populated, returns attributions for top_k indices of outputs. If neither top_k nor output_indices is populated, returns the argmax index of the outputs. Only applicable to Models that predict multiple outputs (e,g, multi-class Models that predict multiple classes).
+                          item_type: Api::Type::String
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'examples'
+                          description: |
+                            Example-based explainability that returns the nearest neighbors from the provided dataset.
+                          properties:
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'presets'
+                                description: |
+                                  Preset configuration for example-based explanations
+                                properties:
+                                    - !ruby/object:Api::Type::Enum
+                                      name: 'modality'
+                                      description: |
+                                        The modality of the uploaded model, which automatically configures the distance measurement and feature normalization for the underlying example index and queries. If your model does not precisely fit one of these types, it is okay to choose the closest type.
+                                      values:
+                                        - :MODALITY_UNSPECIFIED
+                                        - :IMAGE
+                                        - :TEXT
+                                        - :TABULAR
+                                    - !ruby/object:Api::Type::Enum
+                                      name: 'query'
+                                      description: |
+                                        Preset option controlling parameters for speed-precision trade-off when querying for examples. If omitted, defaults to `PRECISE`.
+                                      values:
+                                        - :PRECISE
+                                        - :FAST
+                              - !ruby/object:Api::Type::Integer
+                                name: 'neighborCount'
+                                description: |
+                                  The number of neighbors to return when querying for examples.
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'exampleGcsSource'
+                                description: |
+                                  The Cloud Storage input instances.
+                                properties:
+                                    - !ruby/object:Api::Type::NestedObject
+                                      name: 'gcsSource'
+                                      description: |
+                                        The Google Cloud Storage location for the input content.
+                                      properties:
+                                          - !ruby/object:Api::Type::Array
+                                            name: 'uris'
+                                            description: |
+                                              Required. Google Cloud Storage URI(-s) to the input file(s). May contain wildcards. For more information on wildcards, see https://cloud.google.com/storage/docs/gsutil/addlhelp/WildcardNames.
+                                            item_type: Api::Type::String
+                                    - !ruby/object:Api::Type::Enum
+                                      name: 'dataFormat'
+                                      description: |
+                                        The format in which instances are given, if not specified, assume it's JSONL format. Currently only JSONL format is supported.
+                                      values:
+                                        - :DATA_FORMAT_UNSPECIFIED
+                                        - :JSONL
+                              - !ruby/object:Api::Type::String
+                                name: 'nearestNeighborSearchConfig'
+                                description: |
+                                  The full configuration for the generated index, the semantics are the same as metadata and should match [NearestNeighborSearchConfig](https://cloud.google.com/vertex-ai/docs/explainable-ai/configuring-explanations-example-based#nearest-neighbor-search-config).
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'xraiAttribution'
+                          description: |
+                            An explanation method that redistributes Integrated Gradients attributions to segmented regions, taking advantage of the model's fully differentiable structure. Refer to this paper for more details: https://arxiv.org/abs/1906.02825 Supported only by image Models.
+                          properties:
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'smoothGradConfig'
+                                description: |
+                                  Config for SmoothGrad approximation of gradients. When enabled, the gradients are approximated by averaging the gradients from noisy samples in the vicinity of the inputs. Adding noise can help improve the computed gradients. Refer to this paper for more details: https://arxiv.org/pdf/1706.03825.pdf
+                                properties:
+                                    - !ruby/object:Api::Type::NestedObject
+                                      name: 'featureNoiseSigma'
+                                      description: |
+                                        Noise sigma by features. Noise sigma represents the standard deviation of the gaussian kernel that will be used to add noise to interpolated inputs prior to computing gradients.
+                                      properties:
+                                          - !ruby/object:Api::Type::Array
+                                            name: 'noiseSigma'
+                                            description: |
+                                              Noise sigma per feature. No noise is added to features that are not set.
+                                            item_type: !ruby/object:Api::Type::NestedObject
+                                              properties:
+                                                - !ruby/object:Api::Type::String
+                                                  name: 'name'
+                                                  description: |
+                                                    The name of the input feature for which noise sigma is provided. The features are defined in explanation metadata inputs.
+                                                - !ruby/object:Api::Type::Integer
+                                                  name: 'sigma'
+                                                  description: |
+                                                    This represents the standard deviation of the Gaussian kernel that will be used to add noise to the feature prior to computing gradients. Similar to noise_sigma but represents the noise added to the current feature. Defaults to 0.1.
+                                    - !ruby/object:Api::Type::Integer
+                                      name: 'noiseSigma'
+                                      description: |
+                                        This is a single float value and will be used to add noise to all the features. Use this field when all features are normalized to have the same distribution: scale to range [0, 1], [-1, 1] or z-scoring, where features are normalized to have 0-mean and 1-variance. Learn more about [normalization](https://developers.google.com/machine-learning/data-prep/transform/normalization). For best results the recommended value is about 10% - 20% of the standard deviation of the input feature. Refer to section 3.2 of the SmoothGrad paper: https://arxiv.org/pdf/1706.03825.pdf. Defaults to 0.1. If the distribution is different per feature, set feature_noise_sigma instead for each feature.
+                                    - !ruby/object:Api::Type::Integer
+                                      name: 'noisySampleCount'
+                                      description: |
+                                        The number of gradient samples to use for approximation. The higher this number, the more accurate the gradient is, but the runtime complexity increases by this factor as well. Valid range of its value is [1, 50]. Defaults to 3.
+                              - !ruby/object:Api::Type::Integer
+                                name: 'stepCount'
+                                description: |
+                                  Required. The number of steps for approximating the path integral. A good value to start is 50 and gradually increase until the sum to diff property is met within the desired error range. Valid range of its value is [1, 100], inclusively.
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'blurBaselineConfig'
+                                description: |
+                                  Config for blur baseline. When enabled, a linear path from the maximally blurred image to the input image is created. Using a blurred baseline instead of zero (black image) is motivated by the BlurIG approach explained here: https://arxiv.org/abs/2004.03383
+                                properties:
+                                    - !ruby/object:Api::Type::Integer
+                                      name: 'maxBlurSigma'
+                                      description: |
+                                        The standard deviation of the blur kernel for the blurred baseline. The same blurring parameter is used for both the height and the width dimension. If not set, the method defaults to the zero (i.e. black for images) baseline.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'topK'
+                          description: |
+                            If populated, returns attributions for top K indices of outputs (defaults to 1). Only applies to Models that predicts more than one outputs (e,g, multi-class Models). When set to -1, returns explanations for all outputs.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'integratedGradientsAttribution'
+                          description: |
+                            An attribution method that computes the Aumann-Shapley value taking advantage of the model's fully differentiable structure. Refer to this paper for more details: https://arxiv.org/abs/1703.01365
+                          properties:
+                              - !ruby/object:Api::Type::Integer
+                                name: 'stepCount'
+                                description: |
+                                  Required. The number of steps for approximating the path integral. A good value to start is 50 and gradually increase until the sum to diff property is within the desired error range. Valid range of its value is [1, 100], inclusively.
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'smoothGradConfig'
+                                description: |
+                                  Config for SmoothGrad approximation of gradients. When enabled, the gradients are approximated by averaging the gradients from noisy samples in the vicinity of the inputs. Adding noise can help improve the computed gradients. Refer to this paper for more details: https://arxiv.org/pdf/1706.03825.pdf
+                                properties:
+                                    - !ruby/object:Api::Type::NestedObject
+                                      name: 'featureNoiseSigma'
+                                      description: |
+                                        Noise sigma by features. Noise sigma represents the standard deviation of the gaussian kernel that will be used to add noise to interpolated inputs prior to computing gradients.
+                                      properties:
+                                          - !ruby/object:Api::Type::Array
+                                            name: 'noiseSigma'
+                                            description: |
+                                              Noise sigma per feature. No noise is added to features that are not set.
+                                            item_type: !ruby/object:Api::Type::NestedObject
+                                              properties:
+                                                - !ruby/object:Api::Type::String
+                                                  name: 'name'
+                                                  description: |
+                                                    The name of the input feature for which noise sigma is provided. The features are defined in explanation metadata inputs.
+                                                - !ruby/object:Api::Type::Integer
+                                                  name: 'sigma'
+                                                  description: |
+                                                    This represents the standard deviation of the Gaussian kernel that will be used to add noise to the feature prior to computing gradients. Similar to noise_sigma but represents the noise added to the current feature. Defaults to 0.1.
+                                    - !ruby/object:Api::Type::Integer
+                                      name: 'noiseSigma'
+                                      description: |
+                                        This is a single float value and will be used to add noise to all the features. Use this field when all features are normalized to have the same distribution: scale to range [0, 1], [-1, 1] or z-scoring, where features are normalized to have 0-mean and 1-variance. Learn more about [normalization](https://developers.google.com/machine-learning/data-prep/transform/normalization). For best results the recommended value is about 10% - 20% of the standard deviation of the input feature. Refer to section 3.2 of the SmoothGrad paper: https://arxiv.org/pdf/1706.03825.pdf. Defaults to 0.1. If the distribution is different per feature, set feature_noise_sigma instead for each feature.
+                                    - !ruby/object:Api::Type::Integer
+                                      name: 'noisySampleCount'
+                                      description: |
+                                        The number of gradient samples to use for approximation. The higher this number, the more accurate the gradient is, but the runtime complexity increases by this factor as well. Valid range of its value is [1, 50]. Defaults to 3.
+                              - !ruby/object:Api::Type::NestedObject
+                                name: 'blurBaselineConfig'
+                                description: |
+                                  Config for blur baseline. When enabled, a linear path from the maximally blurred image to the input image is created. Using a blurred baseline instead of zero (black image) is motivated by the BlurIG approach explained here: https://arxiv.org/abs/2004.03383
+                                properties:
+                                    - !ruby/object:Api::Type::Integer
+                                      name: 'maxBlurSigma'
+                                      description: |
+                                        The standard deviation of the blur kernel for the blurred baseline. The same blurring parameter is used for both the height and the width dimension. If not set, the method defaults to the zero (i.e. black for images) baseline.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'sampledShapleyAttribution'
+                          description: |
+                            An attribution method that approximates Shapley values for features that contribute to the label being predicted. A sampling strategy is used to approximate the value rather than considering all subsets of features.
+                          properties:
+                              - !ruby/object:Api::Type::Integer
+                                name: 'pathCount'
+                                description: |
+                                  Required. The number of feature permutations to consider when approximating the Shapley values. Valid range of its value is [1, 50], inclusively.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'metadata'
+                    description: |
+                      Metadata describing the Model's input and output for explanation.
+                    properties:
+                        - !ruby/object:Api::Type::String
+                          name: 'featureAttributionsSchemaUri'
+                          description: |
+                            Points to a YAML file stored on Google Cloud Storage describing the format of the feature attributions. The schema is defined as an OpenAPI 3.0.2 [Schema Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.2.md#schemaObject). AutoML tabular Models always have this field populated by Vertex AI. Note: The URI given on output may be different, including the URI scheme, than the one given on input. The output URI will point to a location where the user only has a read access.
+                        - !ruby/object:Api::Type::String
+                          name: 'latentSpaceSource'
+                          description: |
+                            Name of the source to generate embeddings for example based explanations.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'outputs'
+                          description: |
+                            Required. Map from output names to output metadata. For Vertex AI-provided Tensorflow images, keys can be any user defined string that consists of any UTF-8 characters. For custom images, keys are the name of the output field in the prediction to be explained. Currently only one key is allowed.
+                          properties:
+                            - !ruby/object:Api::Type::String
+                              name: 'additionalProperties'
+                              description: |
+                                Metadata of the prediction output to be explained.
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'inputs'
+                          description: |
+                            Required. Map from feature names to feature input metadata. Keys are the name of the features. Values are the specification of the feature. An empty InputMetadata is valid. It describes a text feature which has the name specified as the key in ExplanationMetadata.inputs. The baseline of the empty feature is chosen by Vertex AI. For Vertex AI-provided Tensorflow images, the key can be any friendly name of the feature. Once specified, featureAttributions are keyed by this key (if not grouped with another feature). For custom images, the key must match with the key in instance.
+                          properties:
+                            - !ruby/object:Api::Type::String
+                              name: 'additionalProperties'
+                              description: |
+                                Metadata of the input of a feature. Fields other than InputMetadata.input_baselines are applicable only for Models that are using Vertex AI-provided images for Tensorflow.
+            - !ruby/object:Api::Type::String
+              name: 'explanationType'
+              description: |
+                Explanation type. For AutoML Image Classification models, possible values are: * `image-integrated-gradients` * `image-xrai`
+      - !ruby/object:Api::Type::Array
+        name: 'sliceDimensions'
+        description: |
+          All possible dimensions of ModelEvaluationSlices. The dimensions can be used as the filter of the ModelService.ListModelEvaluationSlices request, in the form of `slice.dimension = `.
+        item_type: Api::Type::String
+      - !ruby/object:Api::Type::NestedObject
+        name: 'modelExplanation'
+        description: |
+          Aggregated explanation metrics for a Model over a set of instances.
+        properties:
+            - !ruby/object:Api::Type::Array
+              name: 'meanAttributions'
+              description: |
+                Output only. Aggregated attributions explaining the Model's prediction outputs over the set of instances. The attributions are grouped by outputs. For Models that predict only one output, such as regression Models that predict only one score, there is only one attibution that explains the predicted output. For Models that predict multiple outputs, such as multiclass Models that predict multiple classes, each element explains one specific item. Attribution.output_index can be used to identify which output this attribution is explaining. The baselineOutputValue, instanceOutputValue and featureAttributions fields are averaged over the test data. NOTE: Currently AutoML tabular classification Models produce only one attribution, which averages attributions over all the classes it predicts. Attribution.approximation_error is not populated.
+              item_type: !ruby/object:Api::Type::NestedObject
+                properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'outputDisplayName'
+                    description: |
+                      Output only. The display name of the output identified by output_index. For example, the predicted class name by a multi-classification Model. This field is only populated iff the Model predicts display names as a separate field along with the explained output. The predicted display name must has the same shape of the explained output, and can be located using output_index.
+                  - !ruby/object:Api::Type::Integer
+                    name: 'baselineOutputValue'
+                    description: |
+                      Output only. Model predicted output if the input instance is constructed from the baselines of all the features defined in ExplanationMetadata.inputs. The field name of the output is determined by the key in ExplanationMetadata.outputs. If the Model's predicted output has multiple dimensions (rank > 1), this is the value in the output located by output_index. If there are multiple baselines, their output values are averaged.
+                  - !ruby/object:Api::Type::String
+                    name: 'outputName'
+                    description: |
+                      Output only. Name of the explain output. Specified as the key in ExplanationMetadata.outputs.
+                  - !ruby/object:Api::Type::String
+                    name: 'featureAttributions'
+                    description: |
+                      Output only. Attributions of each explained feature. Features are extracted from the prediction instances according to explanation metadata for inputs. The value is a struct, whose keys are the name of the feature. The values are how much the feature in the instance contributed to the predicted result. The format of the value is determined by the feature's input format: * If the feature is a scalar value, the attribution value is a floating number. * If the feature is an array of scalar values, the attribution value is an array. * If the feature is a struct, the attribution value is a struct. The keys in the attribution value struct are the same as the keys in the feature struct. The formats of the values in the attribution struct are determined by the formats of the values in the feature struct. The ExplanationMetadata.feature_attributions_schema_uri field, pointed to by the ExplanationSpec field of the Endpoint.deployed_models object, points to the schema file that describes the features and their attribution values (if it is populated).
+                  - !ruby/object:Api::Type::Array
+                    name: 'outputIndex'
+                    description: |
+                      Output only. The index that locates the explained prediction output. If the prediction output is a scalar value, output_index is not populated. If the prediction output has multiple dimensions, the length of the output_index list is the same as the number of dimensions of the output. The i-th element in output_index is the element index of the i-th dimension of the output vector. Indices start from 0.
+                    item_type: Api::Type::String
+                  - !ruby/object:Api::Type::Integer
+                    name: 'instanceOutputValue'
+                    description: |
+                      Output only. Model predicted output on the corresponding explanation instance. The field name of the output is determined by the key in ExplanationMetadata.outputs. If the Model predicted output has multiple dimensions, this is the value in the output located by output_index.
+                  - !ruby/object:Api::Type::Integer
+                    name: 'approximationError'
+                    description: |
+                      Output only. Error of feature_attributions caused by approximation used in the explanation method. Lower value means more precise attributions. * For Sampled Shapley attribution, increasing path_count might reduce the error. * For Integrated Gradients attribution, increasing step_count might reduce the error. * For XRAI attribution, increasing step_count might reduce the error. See [this introduction](/vertex-ai/docs/explainable-ai/overview) for more information.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. The resource name of the ModelEvaluation.
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          The display name of the ModelEvaluation.
+  
+
+
+  - !ruby/object:Api::Resource
+    name: HyperparameterTuningJob
+    base_url: '{{parent}}/hyperparameterTuningJobs'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Represents a HyperparameterTuningJob. A HyperparameterTuningJob has a Study specification and multiple CustomJobs with identical CustomJob specification.
+    properties:
+
+      - !ruby/object:Api::Type::String
+        name: 'studySpec'
+        description: |
+          Required. Study configuration of the HyperparameterTuningJob.
+      - !ruby/object:Api::Type::Array
+        name: 'trials'
+        description: |
+          Output only. Trials of the HyperparameterTuningJob.
+        item_type: Api::Type::String
+      - !ruby/object:Api::Type::Enum
+        name: 'state'
+        description: |
+          Output only. The detailed state of the job.
+        values:
+          - :JOB_STATE_UNSPECIFIED
+          - :JOB_STATE_QUEUED
+          - :JOB_STATE_PENDING
+          - :JOB_STATE_RUNNING
+          - :JOB_STATE_SUCCEEDED
+          - :JOB_STATE_FAILED
+          - :JOB_STATE_CANCELLING
+          - :JOB_STATE_CANCELLED
+          - :JOB_STATE_PAUSED
+          - :JOB_STATE_EXPIRED
+          - :JOB_STATE_UPDATING
+          - :JOB_STATE_PARTIALLY_SUCCEEDED
+      - !ruby/object:Api::Type::Integer
+        name: 'maxFailedTrialCount'
+        description: |
+          The number of failed Trials that need to be seen before failing the HyperparameterTuningJob. If set to 0, Vertex AI decides how many Trials must fail before the whole job fails.
+      - !ruby/object:Api::Type::String
+        name: 'encryptionSpec'
+        description: |
+          Customer-managed encryption key options for a HyperparameterTuningJob. If this is set, then all resources created by the HyperparameterTuningJob will be encrypted with the provided encryption key.
+      - !ruby/object:Api::Type::String
+        name: 'error'
+        description: |
+          Output only. Only populated when job's state is JOB_STATE_FAILED or JOB_STATE_CANCELLED.
+      - !ruby/object:Api::Type::String
+        name: 'endTime'
+        description: |
+          Output only. Time when the HyperparameterTuningJob entered any of the following states: `JOB_STATE_SUCCEEDED`, `JOB_STATE_FAILED`, `JOB_STATE_CANCELLED`.
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. Time when the HyperparameterTuningJob was most recently updated.
+      - !ruby/object:Api::Type::String
+        name: 'startTime'
+        description: |
+          Output only. Time when the HyperparameterTuningJob for the first time entered the `JOB_STATE_RUNNING` state.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          The labels with user-defined metadata to organize HyperparameterTuningJobs. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Time when the HyperparameterTuningJob was created.
+      - !ruby/object:Api::Type::Integer
+        name: 'parallelTrialCount'
+        description: |
+          Required. The desired number of Trials to run in parallel.
+      - !ruby/object:Api::Type::String
+        name: 'trialJobSpec'
+        description: |
+          Required. The spec of a trial job. The same spec applies to the CustomJobs created in all the trials.
+      - !ruby/object:Api::Type::Integer
+        name: 'maxTrialCount'
+        description: |
+          Required. The desired total number of Trials.
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          Required. The display name of the HyperparameterTuningJob. The name can be up to 128 characters long and can consist of any UTF-8 characters.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. Resource name of the HyperparameterTuningJob.
+  
+
+
+  - !ruby/object:Api::Resource
+    name: StudiesTrial
+    base_url: '{{parent}}/trials'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        A message representing a Trial. A Trial contains a unique set of Parameters that has been or will be evaluated, along with the objective metrics got by running the Trial.
+    properties:
+
+      - !ruby/object:Api::Type::Array
+        name: 'measurements'
+        description: |
+          Output only. A list of measurements that are strictly lexicographically ordered by their induced tuples (steps, elapsed_duration). These are used for early stopping computations.
+        item_type: !ruby/object:Api::Type::NestedObject
+          properties:
+            - !ruby/object:Api::Type::Array
+              name: 'metrics'
+              description: |
+                Output only. A list of metrics got by evaluating the objective functions using suggested Parameter values.
+              item_type: !ruby/object:Api::Type::NestedObject
+                properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'metricId'
+                    description: |
+                      Output only. The ID of the Metric. The Metric should be defined in StudySpec's Metrics.
+                  - !ruby/object:Api::Type::Integer
+                    name: 'value'
+                    description: |
+                      Output only. The value for this metric.
+            - !ruby/object:Api::Type::String
+              name: 'elapsedDuration'
+              description: |
+                Output only. Time that the Trial has been running at the point of this Measurement.
+            - !ruby/object:Api::Type::String
+              name: 'stepCount'
+              description: |
+                Output only. The number of steps the machine learning model has been trained for. Must be non-negative.
+      - !ruby/object:Api::Type::String
+        name: 'startTime'
+        description: |
+          Output only. Time when the Trial was started.
+      - !ruby/object:Api::Type::String
+        name: 'endTime'
+        description: |
+          Output only. Time when the Trial's status changed to `SUCCEEDED` or `INFEASIBLE`.
+      - !ruby/object:Api::Type::Array
+        name: 'parameters'
+        description: |
+          Output only. The parameters of the Trial.
+        item_type: !ruby/object:Api::Type::NestedObject
+          properties:
+            - !ruby/object:Api::Type::String
+              name: 'value'
+              description: |
+                Output only. The value of the parameter. `number_value` will be set if a parameter defined in StudySpec is in type 'INTEGER', 'DOUBLE' or 'DISCRETE'. `string_value` will be set if a parameter defined in StudySpec is in type 'CATEGORICAL'.
+            - !ruby/object:Api::Type::String
+              name: 'parameterId'
+              description: |
+                Output only. The ID of the parameter. The parameter should be defined in StudySpec's Parameters.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. Resource name of the Trial assigned by the service.
+      - !ruby/object:Api::Type::String
+        name: 'infeasibleReason'
+        description: |
+          Output only. A human readable string describing why the Trial is infeasible. This is set only if Trial state is `INFEASIBLE`.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'finalMeasurement'
+        description: |
+          A message representing a Measurement of a Trial. A Measurement contains the Metrics got by executing a Trial using suggested hyperparameter values.
+        properties:
+            - !ruby/object:Api::Type::Array
+              name: 'metrics'
+              description: |
+                Output only. A list of metrics got by evaluating the objective functions using suggested Parameter values.
+              item_type: !ruby/object:Api::Type::NestedObject
+                properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'metricId'
+                    description: |
+                      Output only. The ID of the Metric. The Metric should be defined in StudySpec's Metrics.
+                  - !ruby/object:Api::Type::Integer
+                    name: 'value'
+                    description: |
+                      Output only. The value for this metric.
+            - !ruby/object:Api::Type::String
+              name: 'elapsedDuration'
+              description: |
+                Output only. Time that the Trial has been running at the point of this Measurement.
+            - !ruby/object:Api::Type::String
+              name: 'stepCount'
+              description: |
+                Output only. The number of steps the machine learning model has been trained for. Must be non-negative.
+      - !ruby/object:Api::Type::String
+        name: 'clientId'
+        description: |
+          Output only. The identifier of the client that originally requested this Trial. Each client is identified by a unique client_id. When a client asks for a suggestion, Vertex AI Vizier will assign it a Trial. The client should evaluate the Trial, complete it, and report back to Vertex AI Vizier. If suggestion is asked again by same client_id before the Trial is completed, the same Trial will be returned. Multiple clients with different client_ids can ask for suggestions simultaneously, each of them will get their own Trial.
+      - !ruby/object:Api::Type::String
+        name: 'customJob'
+        description: |
+          Output only. The CustomJob name linked to the Trial. It's set for a HyperparameterTuningJob's Trial.
+      - !ruby/object:Api::Type::Enum
+        name: 'state'
+        description: |
+          Output only. The detailed state of the Trial.
+        values:
+          - :STATE_UNSPECIFIED
+          - :REQUESTED
+          - :ACTIVE
+          - :STOPPING
+          - :SUCCEEDED
+          - :INFEASIBLE
+      - !ruby/object:Api::Type::NestedObject
+        name: 'webAccessUris'
+        description: |
+          Output only. URIs for accessing [interactive shells](https://cloud.google.com/vertex-ai/docs/training/monitor-debug-interactive-shell) (one URI for each training node). Only available if this trial is part of a HyperparameterTuningJob and the job's trial_job_spec.enable_web_access field is `true`. The keys are names of each node used for the trial; for example, `workerpool0-0` for the primary node, `workerpool1-0` for the first node in the second worker pool, and `workerpool1-1` for the second node in the second worker pool. The values are the URIs for each node's interactive shell.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+
+      - !ruby/object:Api::Type::String
+        name: 'id'
+        description: |
+          Output only. The identifier of the Trial assigned by the service.
+  
+
+
+  - !ruby/object:Api::Resource
+    name: StudiesTrial
+    base_url: '{{parent}}/trials'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        A message representing a Trial. A Trial contains a unique set of Parameters that has been or will be evaluated, along with the objective metrics got by running the Trial.
+    properties:
+
+      - !ruby/object:Api::Type::Array
+        name: 'measurements'
+        description: |
+          Output only. A list of measurements that are strictly lexicographically ordered by their induced tuples (steps, elapsed_duration). These are used for early stopping computations.
+        item_type: !ruby/object:Api::Type::NestedObject
+          properties:
+            - !ruby/object:Api::Type::Array
+              name: 'metrics'
+              description: |
+                Output only. A list of metrics got by evaluating the objective functions using suggested Parameter values.
+              item_type: !ruby/object:Api::Type::NestedObject
+                properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'metricId'
+                    description: |
+                      Output only. The ID of the Metric. The Metric should be defined in StudySpec's Metrics.
+                  - !ruby/object:Api::Type::Integer
+                    name: 'value'
+                    description: |
+                      Output only. The value for this metric.
+            - !ruby/object:Api::Type::String
+              name: 'elapsedDuration'
+              description: |
+                Output only. Time that the Trial has been running at the point of this Measurement.
+            - !ruby/object:Api::Type::String
+              name: 'stepCount'
+              description: |
+                Output only. The number of steps the machine learning model has been trained for. Must be non-negative.
+      - !ruby/object:Api::Type::String
+        name: 'startTime'
+        description: |
+          Output only. Time when the Trial was started.
+      - !ruby/object:Api::Type::String
+        name: 'endTime'
+        description: |
+          Output only. Time when the Trial's status changed to `SUCCEEDED` or `INFEASIBLE`.
+      - !ruby/object:Api::Type::Array
+        name: 'parameters'
+        description: |
+          Output only. The parameters of the Trial.
+        item_type: !ruby/object:Api::Type::NestedObject
+          properties:
+            - !ruby/object:Api::Type::String
+              name: 'value'
+              description: |
+                Output only. The value of the parameter. `number_value` will be set if a parameter defined in StudySpec is in type 'INTEGER', 'DOUBLE' or 'DISCRETE'. `string_value` will be set if a parameter defined in StudySpec is in type 'CATEGORICAL'.
+            - !ruby/object:Api::Type::String
+              name: 'parameterId'
+              description: |
+                Output only. The ID of the parameter. The parameter should be defined in StudySpec's Parameters.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. Resource name of the Trial assigned by the service.
+      - !ruby/object:Api::Type::String
+        name: 'infeasibleReason'
+        description: |
+          Output only. A human readable string describing why the Trial is infeasible. This is set only if Trial state is `INFEASIBLE`.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'finalMeasurement'
+        description: |
+          A message representing a Measurement of a Trial. A Measurement contains the Metrics got by executing a Trial using suggested hyperparameter values.
+        properties:
+            - !ruby/object:Api::Type::Array
+              name: 'metrics'
+              description: |
+                Output only. A list of metrics got by evaluating the objective functions using suggested Parameter values.
+              item_type: !ruby/object:Api::Type::NestedObject
+                properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'metricId'
+                    description: |
+                      Output only. The ID of the Metric. The Metric should be defined in StudySpec's Metrics.
+                  - !ruby/object:Api::Type::Integer
+                    name: 'value'
+                    description: |
+                      Output only. The value for this metric.
+            - !ruby/object:Api::Type::String
+              name: 'elapsedDuration'
+              description: |
+                Output only. Time that the Trial has been running at the point of this Measurement.
+            - !ruby/object:Api::Type::String
+              name: 'stepCount'
+              description: |
+                Output only. The number of steps the machine learning model has been trained for. Must be non-negative.
+      - !ruby/object:Api::Type::String
+        name: 'clientId'
+        description: |
+          Output only. The identifier of the client that originally requested this Trial. Each client is identified by a unique client_id. When a client asks for a suggestion, Vertex AI Vizier will assign it a Trial. The client should evaluate the Trial, complete it, and report back to Vertex AI Vizier. If suggestion is asked again by same client_id before the Trial is completed, the same Trial will be returned. Multiple clients with different client_ids can ask for suggestions simultaneously, each of them will get their own Trial.
+      - !ruby/object:Api::Type::String
+        name: 'customJob'
+        description: |
+          Output only. The CustomJob name linked to the Trial. It's set for a HyperparameterTuningJob's Trial.
+      - !ruby/object:Api::Type::Enum
+        name: 'state'
+        description: |
+          Output only. The detailed state of the Trial.
+        values:
+          - :STATE_UNSPECIFIED
+          - :REQUESTED
+          - :ACTIVE
+          - :STOPPING
+          - :SUCCEEDED
+          - :INFEASIBLE
+      - !ruby/object:Api::Type::NestedObject
+        name: 'webAccessUris'
+        description: |
+          Output only. URIs for accessing [interactive shells](https://cloud.google.com/vertex-ai/docs/training/monitor-debug-interactive-shell) (one URI for each training node). Only available if this trial is part of a HyperparameterTuningJob and the job's trial_job_spec.enable_web_access field is `true`. The keys are names of each node used for the trial; for example, `workerpool0-0` for the primary node, `workerpool1-0` for the first node in the second worker pool, and `workerpool1-1` for the second node in the second worker pool. The values are the URIs for each node's interactive shell.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+
+      - !ruby/object:Api::Type::String
+        name: 'id'
+        description: |
+          Output only. The identifier of the Trial assigned by the service.
+  
+
+
+  - !ruby/object:Api::Resource
+    name: FeaturestoresEntityType
+    base_url: '{{parent}}/entityTypes'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        An entity type is a type of object in a system that needs to be modeled and have stored information about. For example, driver is an entity type, and driver0 is an instance of an entity type driver.
+    properties:
+
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          Optional. The labels with user-defined metadata to organize your EntityTypes. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information on and examples of labels. No more than 64 user labels can be associated with one EntityType (System labels are excluded)." System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          Optional. Description of the EntityType.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Immutable. Name of the EntityType. Format: `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}` The last part entity_type is assigned by the client. The entity_type can be up to 64 characters long and can consist only of ASCII Latin letters A-Z and a-z and underscore(_), and ASCII digits 0-9 starting with a letter. The value will be unique given a featurestore.
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this EntityType was created.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'monitoringConfig'
+        description: |
+          Configuration of how features in Featurestore are monitored.
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'importFeaturesAnalysis'
+              description: |
+                Configuration of the Featurestore's ImportFeature Analysis Based Monitoring. This type of analysis generates statistics for values of each Feature imported by every ImportFeatureValues operation.
+              properties:
+                  - !ruby/object:Api::Type::Enum
+                    name: 'anomalyDetectionBaseline'
+                    description: |
+                      The baseline used to do anomaly detection for the statistics generated by import features analysis.
+                    values:
+                      - :BASELINE_UNSPECIFIED
+                      - :LATEST_STATS
+                      - :MOST_RECENT_SNAPSHOT_STATS
+                      - :PREVIOUS_IMPORT_FEATURES_STATS
+                  - !ruby/object:Api::Type::Enum
+                    name: 'state'
+                    description: |
+                      Whether to enable / disable / inherite default hebavior for import features analysis.
+                    values:
+                      - :STATE_UNSPECIFIED
+                      - :DEFAULT
+                      - :ENABLED
+                      - :DISABLED
+            - !ruby/object:Api::Type::NestedObject
+              name: 'numericalThresholdConfig'
+              description: |
+                The config for Featurestore Monitoring threshold.
+              properties:
+                  - !ruby/object:Api::Type::Integer
+                    name: 'value'
+                    description: |
+                      Specify a threshold value that can trigger the alert. 1. For categorical feature, the distribution distance is calculated by L-inifinity norm. 2. For numerical feature, the distribution distance is calculated by Jensen–Shannon divergence. Each feature must have a non-zero threshold if they need to be monitored. Otherwise no alert will be triggered for that feature.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'categoricalThresholdConfig'
+              description: |
+                The config for Featurestore Monitoring threshold.
+              properties:
+                  - !ruby/object:Api::Type::Integer
+                    name: 'value'
+                    description: |
+                      Specify a threshold value that can trigger the alert. 1. For categorical feature, the distribution distance is calculated by L-inifinity norm. 2. For numerical feature, the distribution distance is calculated by Jensen–Shannon divergence. Each feature must have a non-zero threshold if they need to be monitored. Otherwise no alert will be triggered for that feature.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'snapshotAnalysis'
+              description: |
+                Configuration of the Featurestore's Snapshot Analysis Based Monitoring. This type of analysis generates statistics for each Feature based on a snapshot of the latest feature value of each entities every monitoring_interval.
+              properties:
+                  - !ruby/object:Api::Type::Integer
+                    name: 'monitoringIntervalDays'
+                    description: |
+                      Configuration of the snapshot analysis based monitoring pipeline running interval. The value indicates number of days.
+                  - !ruby/object:Api::Type::Integer
+                    name: 'stalenessDays'
+                    description: |
+                      Customized export features time window for snapshot analysis. Unit is one day. Default value is 3 weeks. Minimum value is 1 day. Maximum value is 4000 days.
+                  - !ruby/object:Api::Type::Boolean
+                    name: 'disabled'
+                    description: |
+                      The monitoring schedule for snapshot analysis. For EntityType-level config: unset / disabled = true indicates disabled by default for Features under it; otherwise by default enable snapshot analysis monitoring with monitoring_interval for Features under it. Feature-level config: disabled = true indicates disabled regardless of the EntityType-level config; unset monitoring_interval indicates going with EntityType-level config; otherwise run snapshot analysis monitoring with monitoring_interval regardless of the EntityType-level config. Explicitly Disable the snapshot analysis based monitoring.
+      - !ruby/object:Api::Type::String
+        name: 'etag'
+        description: |
+          Optional. Used to perform a consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. Timestamp when this EntityType was most recently updated.
+      - !ruby/object:Api::Type::Integer
+        name: 'offlineStorageTtlDays'
+        description: |
+          Optional. Config for data retention policy in offline storage. TTL in days for feature values that will be stored in offline storage. The Feature Store offline storage periodically removes obsolete feature values older than `offline_storage_ttl_days` since the feature generation time. If unset (or explicitly set to 0), default to 4000 days TTL.
+  
+
+
+  - !ruby/object:Api::Resource
+    name: FeaturestoresEntityType
+    base_url: '{{parent}}/entityTypes'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        An entity type is a type of object in a system that needs to be modeled and have stored information about. For example, driver is an entity type, and driver0 is an instance of an entity type driver.
+    properties:
+
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          Optional. The labels with user-defined metadata to organize your EntityTypes. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information on and examples of labels. No more than 64 user labels can be associated with one EntityType (System labels are excluded)." System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          Optional. Description of the EntityType.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Immutable. Name of the EntityType. Format: `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}` The last part entity_type is assigned by the client. The entity_type can be up to 64 characters long and can consist only of ASCII Latin letters A-Z and a-z and underscore(_), and ASCII digits 0-9 starting with a letter. The value will be unique given a featurestore.
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this EntityType was created.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'monitoringConfig'
+        description: |
+          Configuration of how features in Featurestore are monitored.
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'importFeaturesAnalysis'
+              description: |
+                Configuration of the Featurestore's ImportFeature Analysis Based Monitoring. This type of analysis generates statistics for values of each Feature imported by every ImportFeatureValues operation.
+              properties:
+                  - !ruby/object:Api::Type::Enum
+                    name: 'anomalyDetectionBaseline'
+                    description: |
+                      The baseline used to do anomaly detection for the statistics generated by import features analysis.
+                    values:
+                      - :BASELINE_UNSPECIFIED
+                      - :LATEST_STATS
+                      - :MOST_RECENT_SNAPSHOT_STATS
+                      - :PREVIOUS_IMPORT_FEATURES_STATS
+                  - !ruby/object:Api::Type::Enum
+                    name: 'state'
+                    description: |
+                      Whether to enable / disable / inherite default hebavior for import features analysis.
+                    values:
+                      - :STATE_UNSPECIFIED
+                      - :DEFAULT
+                      - :ENABLED
+                      - :DISABLED
+            - !ruby/object:Api::Type::NestedObject
+              name: 'numericalThresholdConfig'
+              description: |
+                The config for Featurestore Monitoring threshold.
+              properties:
+                  - !ruby/object:Api::Type::Integer
+                    name: 'value'
+                    description: |
+                      Specify a threshold value that can trigger the alert. 1. For categorical feature, the distribution distance is calculated by L-inifinity norm. 2. For numerical feature, the distribution distance is calculated by Jensen–Shannon divergence. Each feature must have a non-zero threshold if they need to be monitored. Otherwise no alert will be triggered for that feature.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'categoricalThresholdConfig'
+              description: |
+                The config for Featurestore Monitoring threshold.
+              properties:
+                  - !ruby/object:Api::Type::Integer
+                    name: 'value'
+                    description: |
+                      Specify a threshold value that can trigger the alert. 1. For categorical feature, the distribution distance is calculated by L-inifinity norm. 2. For numerical feature, the distribution distance is calculated by Jensen–Shannon divergence. Each feature must have a non-zero threshold if they need to be monitored. Otherwise no alert will be triggered for that feature.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'snapshotAnalysis'
+              description: |
+                Configuration of the Featurestore's Snapshot Analysis Based Monitoring. This type of analysis generates statistics for each Feature based on a snapshot of the latest feature value of each entities every monitoring_interval.
+              properties:
+                  - !ruby/object:Api::Type::Integer
+                    name: 'monitoringIntervalDays'
+                    description: |
+                      Configuration of the snapshot analysis based monitoring pipeline running interval. The value indicates number of days.
+                  - !ruby/object:Api::Type::Integer
+                    name: 'stalenessDays'
+                    description: |
+                      Customized export features time window for snapshot analysis. Unit is one day. Default value is 3 weeks. Minimum value is 1 day. Maximum value is 4000 days.
+                  - !ruby/object:Api::Type::Boolean
+                    name: 'disabled'
+                    description: |
+                      The monitoring schedule for snapshot analysis. For EntityType-level config: unset / disabled = true indicates disabled by default for Features under it; otherwise by default enable snapshot analysis monitoring with monitoring_interval for Features under it. Feature-level config: disabled = true indicates disabled regardless of the EntityType-level config; unset monitoring_interval indicates going with EntityType-level config; otherwise run snapshot analysis monitoring with monitoring_interval regardless of the EntityType-level config. Explicitly Disable the snapshot analysis based monitoring.
+      - !ruby/object:Api::Type::String
+        name: 'etag'
+        description: |
+          Optional. Used to perform a consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. Timestamp when this EntityType was most recently updated.
+      - !ruby/object:Api::Type::Integer
+        name: 'offlineStorageTtlDays'
+        description: |
+          Optional. Config for data retention policy in offline storage. TTL in days for feature values that will be stored in offline storage. The Feature Store offline storage periodically removes obsolete feature values older than `offline_storage_ttl_days` since the feature generation time. If unset (or explicitly set to 0), default to 4000 days TTL.
+  
+
+
+  - !ruby/object:Api::Resource
+    name: IndexEndpoint
+    base_url: '{{parent}}/indexEndpoints'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Indexes are deployed into it. An IndexEndpoint can have multiple DeployedIndexes.
+    properties:
+
+      - !ruby/object:Api::Type::Array
+        name: 'deployedIndexes'
+        description: |
+          Output only. The indexes deployed in this endpoint.
+        item_type: !ruby/object:Api::Type::NestedObject
+          properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'privateEndpoints'
+              description: |
+                IndexPrivateEndpoints proto is used to provide paths for users to send requests via private endpoints (e.g. private service access, private service connect). To send request via private service access, use match_grpc_address. To send request via private service connect, use service_attachment.
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'serviceAttachment'
+                    description: |
+                      Output only. The name of the service attachment resource. Populated if private service connect is enabled.
+                  - !ruby/object:Api::Type::String
+                    name: 'matchGrpcAddress'
+                    description: |
+                      Output only. The ip address used to send match gRPC requests.
+            - !ruby/object:Api::Type::String
+              name: 'deploymentGroup'
+              description: |
+                Optional. The deployment group can be no longer than 64 characters (eg: 'test', 'prod'). If not set, we will use the 'default' deployment group. Creating `deployment_groups` with `reserved_ip_ranges` is a recommended practice when the peered network has multiple peering ranges. This creates your deployments from predictable IP spaces for easier traffic administration. Also, one deployment_group (except 'default') can only be used with the same reserved_ip_ranges which means if the deployment_group has been used with reserved_ip_ranges: [a, b, c], using it with [a, b] or [d, e] is disallowed. Note: we only support up to 5 deployment groups(not including 'default').
+            - !ruby/object:Api::Type::NestedObject
+              name: 'dedicatedResources'
+              description: |
+                A description of resources that are dedicated to a DeployedModel, and that need a higher degree of manual configuration.
+              properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'machineSpec'
+                    description: |
+                      Specification of a single machine.
+                    properties:
+                        - !ruby/object:Api::Type::Enum
+                          name: 'acceleratorType'
+                          description: |
+                            Immutable. The type of accelerator(s) that may be attached to the machine as per accelerator_count.
+                          values:
+                            - :ACCELERATOR_TYPE_UNSPECIFIED
+                            - :NVIDIA_TESLA_K80
+                            - :NVIDIA_TESLA_P100
+                            - :NVIDIA_TESLA_V100
+                            - :NVIDIA_TESLA_P4
+                            - :NVIDIA_TESLA_T4
+                            - :NVIDIA_TESLA_A100
+                            - :NVIDIA_A100_80GB
+                            - :NVIDIA_L4
+                            - :TPU_V2
+                            - :TPU_V3
+                            - :TPU_V4_POD
+                        - !ruby/object:Api::Type::String
+                          name: 'machineType'
+                          description: |
+                            Immutable. The type of the machine. See the [list of machine types supported for prediction](https://cloud.google.com/vertex-ai/docs/predictions/configure-compute#machine-types) See the [list of machine types supported for custom training](https://cloud.google.com/vertex-ai/docs/training/configure-compute#machine-types). For DeployedModel this field is optional, and the default value is `n1-standard-2`. For BatchPredictionJob or as part of WorkerPoolSpec this field is required.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'acceleratorCount'
+                          description: |
+                            The number of accelerators to attach to the machine.
+                  - !ruby/object:Api::Type::Integer
+                    name: 'maxReplicaCount'
+                    description: |
+                      Immutable. The maximum number of replicas this DeployedModel may be deployed on when the traffic against it increases. If the requested value is too large, the deployment will error, but if deployment succeeds then the ability to scale the model to that many replicas is guaranteed (barring service outages). If traffic against the DeployedModel increases beyond what its replicas at maximum may handle, a portion of the traffic will be dropped. If this value is not provided, will use min_replica_count as the default value. The value of this field impacts the charge against Vertex CPU and GPU quotas. Specifically, you will be charged for (max_replica_count * number of cores in the selected machine type) and (max_replica_count * number of GPUs per replica in the selected machine type).
+                  - !ruby/object:Api::Type::Array
+                    name: 'autoscalingMetricSpecs'
+                    description: |
+                      Immutable. The metric specifications that overrides a resource utilization metric (CPU utilization, accelerator's duty cycle, and so on) target value (default to 60 if not set). At most one entry is allowed per metric. If machine_spec.accelerator_count is above 0, the autoscaling will be based on both CPU utilization and accelerator's duty cycle metrics and scale up when either metrics exceeds its target value while scale down if both metrics are under their target value. The default target value is 60 for both metrics. If machine_spec.accelerator_count is 0, the autoscaling will be based on CPU utilization metric only with default target value 60 if not explicitly set. For example, in the case of Online Prediction, if you want to override target CPU utilization to 80, you should set autoscaling_metric_specs.metric_name to `aiplatform.googleapis.com/prediction/online/cpu/utilization` and autoscaling_metric_specs.target to `80`.
+                    item_type: !ruby/object:Api::Type::NestedObject
+                      properties:
+                        - !ruby/object:Api::Type::Integer
+                          name: 'target'
+                          description: |
+                            The target resource utilization in percentage (1% - 100%) for the given metric; once the real usage deviates from the target by a certain percentage, the machine replicas change. The default value is 60 (representing 60%) if not provided.
+                        - !ruby/object:Api::Type::String
+                          name: 'metricName'
+                          description: |
+                            Required. The resource metric name. Supported metrics: * For Online Prediction: * `aiplatform.googleapis.com/prediction/online/accelerator/duty_cycle` * `aiplatform.googleapis.com/prediction/online/cpu/utilization`
+                  - !ruby/object:Api::Type::Integer
+                    name: 'minReplicaCount'
+                    description: |
+                      Required. Immutable. The minimum number of machine replicas this DeployedModel will be always deployed on. This value must be greater than or equal to 1. If traffic against the DeployedModel increases, it may dynamically be deployed onto more replicas, and as traffic decreases, some of these extra replicas may be freed.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'deployedIndexAuthConfig'
+              description: |
+                Used to set up the auth on the DeployedIndex's private endpoint.
+              properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'authProvider'
+                    description: |
+                      Configuration for an authentication provider, including support for [JSON Web Token (JWT)](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32).
+                    properties:
+                        - !ruby/object:Api::Type::Array
+                          name: 'audiences'
+                          description: |
+                            The list of JWT [audiences](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.3). that are allowed to access. A JWT containing any of these audiences will be accepted.
+                          item_type: Api::Type::String
+                        - !ruby/object:Api::Type::Array
+                          name: 'allowedIssuers'
+                          description: |
+                            A list of allowed JWT issuers. Each entry must be a valid Google service account, in the following format: `service-account-name@project-id.iam.gserviceaccount.com`
+                          item_type: Api::Type::String
+            - !ruby/object:Api::Type::String
+              name: 'id'
+              description: |
+                Required. The user specified ID of the DeployedIndex. The ID can be up to 128 characters long and must start with a letter and only contain letters, numbers, and underscores. The ID must be unique within the project it is created in.
+            - !ruby/object:Api::Type::String
+              name: 'indexSyncTime'
+              description: |
+                Output only. The DeployedIndex may depend on various data on its original Index. Additionally when certain changes to the original Index are being done (e.g. when what the Index contains is being changed) the DeployedIndex may be asynchronously updated in the background to reflect these changes. If this timestamp's value is at least the Index.update_time of the original Index, it means that this DeployedIndex and the original Index are in sync. If this timestamp is older, then to see which updates this DeployedIndex already contains (and which it does not), one must list the operations that are running on the original Index. Only the successfully completed Operations with update_time equal or before this sync time are contained in this DeployedIndex.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'automaticResources'
+              description: |
+                A description of resources that to large degree are decided by Vertex AI, and require only a modest additional configuration. Each Model supporting these resources documents its specific guidelines.
+              properties:
+                  - !ruby/object:Api::Type::Integer
+                    name: 'maxReplicaCount'
+                    description: |
+                      Immutable. The maximum number of replicas this DeployedModel may be deployed on when the traffic against it increases. If the requested value is too large, the deployment will error, but if deployment succeeds then the ability to scale the model to that many replicas is guaranteed (barring service outages). If traffic against the DeployedModel increases beyond what its replicas at maximum may handle, a portion of the traffic will be dropped. If this value is not provided, a no upper bound for scaling under heavy traffic will be assume, though Vertex AI may be unable to scale beyond certain replica number.
+                  - !ruby/object:Api::Type::Integer
+                    name: 'minReplicaCount'
+                    description: |
+                      Immutable. The minimum number of replicas this DeployedModel will be always deployed on. If traffic against it increases, it may dynamically be deployed onto more replicas up to max_replica_count, and as traffic decreases, some of these extra replicas may be freed. If the requested value is too large, the deployment will error.
+            - !ruby/object:Api::Type::Boolean
+              name: 'enableAccessLogging'
+              description: |
+                Optional. If true, private endpoint's access logs are sent to Cloud Logging. These logs are like standard server access logs, containing information like timestamp and latency for each MatchRequest. Note that logs may incur a cost, especially if the deployed index receives a high queries per second rate (QPS). Estimate your costs before enabling this option.
+            - !ruby/object:Api::Type::String
+              name: 'createTime'
+              description: |
+                Output only. Timestamp when the DeployedIndex was created.
+            - !ruby/object:Api::Type::Array
+              name: 'reservedIpRanges'
+              description: |
+                Optional. A list of reserved ip ranges under the VPC network that can be used for this DeployedIndex. If set, we will deploy the index within the provided ip ranges. Otherwise, the index might be deployed to any ip ranges under the provided VPC network. The value should be the name of the address (https://cloud.google.com/compute/docs/reference/rest/v1/addresses) Example: 'vertex-ai-ip-range'.
+              item_type: Api::Type::String
+            - !ruby/object:Api::Type::String
+              name: 'index'
+              description: |
+                Required. The name of the Index this is the deployment of. We may refer to this Index as the DeployedIndex's "original" Index.
+            - !ruby/object:Api::Type::String
+              name: 'displayName'
+              description: |
+                The display name of the DeployedIndex. If not provided upon creation, the Index's display_name is used.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'privateServiceConnectConfig'
+        description: |
+          Represents configuration for private service connect.
+        properties:
+            - !ruby/object:Api::Type::Array
+              name: 'projectAllowlist'
+              description: |
+                A list of Projects from which the forwarding rule will target the service attachment.
+              item_type: Api::Type::String
+            - !ruby/object:Api::Type::Boolean
+              name: 'enablePrivateServiceConnect'
+              description: |
+                Required. If true, expose the IndexEndpoint via private service connect.
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          Required. The display name of the IndexEndpoint. The name can be up to 128 characters long and can consist of any UTF-8 characters.
+      - !ruby/object:Api::Type::Boolean
+        name: 'publicEndpointEnabled'
+        description: |
+          Optional. If true, the deployed index will be accessible through public endpoint.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          The labels with user-defined metadata to organize your IndexEndpoints. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this IndexEndpoint was created.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. The resource name of the IndexEndpoint.
+      - !ruby/object:Api::Type::String
+        name: 'network'
+        description: |
+          Optional. The full name of the Google Compute Engine [network](https://cloud.google.com/compute/docs/networks-and-firewalls#networks) to which the IndexEndpoint should be peered. Private services access must already be configured for the network. If left unspecified, the Endpoint is not peered with any network. network and private_service_connect_config are mutually exclusive. [Format](https://cloud.google.com/compute/docs/reference/rest/v1/networks/insert): `projects/{project}/global/networks/{network}`. Where {project} is a project number, as in '12345', and {network} is network name.
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. Timestamp when this IndexEndpoint was last updated. This timestamp is not updated when the endpoint's DeployedIndexes are updated, e.g. due to updates of the original Indexes they are the deployments of.
+      - !ruby/object:Api::Type::String
+        name: 'publicEndpointDomainName'
+        description: |
+          Output only. If public_endpoint_enabled is true, this field will be populated with the domain name to use for this index endpoint.
+      - !ruby/object:Api::Type::Boolean
+        name: 'enablePrivateServiceConnect'
+        description: |
+          Optional. Deprecated: If true, expose the IndexEndpoint via private service connect. Only one of the fields, network or enable_private_service_connect, can be set.
+      - !ruby/object:Api::Type::String
+        name: 'etag'
+        description: |
+          Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          The description of the IndexEndpoint.
+  
+
+
+  - !ruby/object:Api::Resource
     name: PipelineJob
     base_url: '{{parent}}/pipelineJobs'
     self_link: '{{name}}'
@@ -3719,7 +5431,7 @@ objects:
     description: |-
         An instance of a machine learning PipelineJob.
     properties:
-  
+
       - !ruby/object:Api::Type::NestedObject
         name: 'encryptionSpec'
         description: |
@@ -3852,7 +5564,7 @@ objects:
                             - !ruby/object:Api::Type::String
                               name: 'additionalProperties'
                               description: |
-                                
+
                         - !ruby/object:Api::Type::String
                           name: 'createTime'
                           description: |
@@ -4034,7 +5746,7 @@ objects:
                       - !ruby/object:Api::Type::String
                         name: 'additionalProperties'
                         description: |
-                          
+
                   - !ruby/object:Api::Type::NestedObject
                     name: 'metadata'
                     description: |
@@ -4094,7 +5806,7 @@ objects:
                       - !ruby/object:Api::Type::String
                         name: 'additionalProperties'
                         description: |
-                          
+
                   - !ruby/object:Api::Type::NestedObject
                     name: 'metadata'
                     description: |
@@ -4190,7 +5902,7 @@ objects:
           - !ruby/object:Api::Type::String
             name: 'additionalProperties'
             description: |
-              
+
       - !ruby/object:Api::Type::NestedObject
         name: 'runtimeConfig'
         description: |
@@ -4208,7 +5920,7 @@ objects:
                 - !ruby/object:Api::Type::String
                   name: 'additionalProperties'
                   description: |
-                    
+
             - !ruby/object:Api::Type::Enum
               name: 'failurePolicy'
               description: |
@@ -4237,7 +5949,7 @@ objects:
                     The type of an input artifact.
   
 
-    
+
   - !ruby/object:Api::Resource
     name: Schedule
     base_url: '{{parent}}/schedules'
@@ -4266,7 +5978,7 @@ objects:
     description: |-
         An instance of a Schedule periodically schedules runs to make API calls based on user specified time specification and API request type.
     properties:
-  
+
       - !ruby/object:Api::Type::String
         name: 'startedRunCount'
         description: |
@@ -4479,7 +6191,7 @@ objects:
                                         - !ruby/object:Api::Type::String
                                           name: 'additionalProperties'
                                           description: |
-                                            
+
                                     - !ruby/object:Api::Type::String
                                       name: 'createTime'
                                       description: |
@@ -4661,7 +6373,7 @@ objects:
                                   - !ruby/object:Api::Type::String
                                     name: 'additionalProperties'
                                     description: |
-                                      
+
                               - !ruby/object:Api::Type::NestedObject
                                 name: 'metadata'
                                 description: |
@@ -4721,7 +6433,7 @@ objects:
                                   - !ruby/object:Api::Type::String
                                     name: 'additionalProperties'
                                     description: |
-                                      
+
                               - !ruby/object:Api::Type::NestedObject
                                 name: 'metadata'
                                 description: |
@@ -4817,7 +6529,7 @@ objects:
                       - !ruby/object:Api::Type::String
                         name: 'additionalProperties'
                         description: |
-                          
+
                   - !ruby/object:Api::Type::NestedObject
                     name: 'runtimeConfig'
                     description: |
@@ -4835,7 +6547,7 @@ objects:
                             - !ruby/object:Api::Type::String
                               name: 'additionalProperties'
                               description: |
-                                
+
                         - !ruby/object:Api::Type::Enum
                           name: 'failurePolicy'
                           description: |
@@ -4884,7 +6596,7 @@ objects:
           Optional. Timestamp after which no new runs can be scheduled. If specified, The schedule will be completed when either end_time is reached or when scheduled_run_count >= max_run_count. If not specified, new runs will keep getting scheduled until this Schedule is paused or deleted. Already scheduled runs will be allowed to complete. Unset if not specified.
   
 
-    
+
   - !ruby/object:Api::Resource
     name: Tensorboard
     base_url: '{{parent}}/tensorboards'
@@ -4913,7 +6625,7 @@ objects:
     description: |-
         Tensorboard is a physical database that stores users' training metrics. A default Tensorboard is provided in each region of a Google Cloud project. If needed users can also create extra Tensorboards in their projects.
     properties:
-  
+
       - !ruby/object:Api::Type::String
         name: 'name'
         description: |
@@ -4934,7 +6646,7 @@ objects:
           - !ruby/object:Api::Type::String
             name: 'additionalProperties'
             description: |
-              
+
       - !ruby/object:Api::Type::String
         name: 'blobStoragePathPrefix'
         description: |
@@ -4970,7 +6682,7 @@ objects:
           Description of this Tensorboard.
   
 
-    
+
   - !ruby/object:Api::Resource
     name: Model
     base_url: '{{parent}}/models'
@@ -4999,7 +6711,7 @@ objects:
     description: |-
         A trained machine learning Model.
     properties:
-  
+
       - !ruby/object:Api::Type::NestedObject
         name: 'modelSourceInfo'
         description: |
@@ -5445,7 +7157,7 @@ objects:
               
   
 
-    
+
   - !ruby/object:Api::Resource
     name: Featurestore
     base_url: '{{parent}}/featurestores'
@@ -5474,7 +7186,7 @@ objects:
     description: |-
         Vertex AI Feature Store provides a centralized repository for organizing, storing, and serving ML features. The Featurestore is a top-level container for your features and their values.
     properties:
-  
+
       - !ruby/object:Api::Type::Enum
         name: 'state'
         description: |
@@ -5512,7 +7224,7 @@ objects:
           - !ruby/object:Api::Type::String
             name: 'additionalProperties'
             description: |
-              
+
       - !ruby/object:Api::Type::String
         name: 'updateTime'
         description: |
@@ -5549,7 +7261,242 @@ objects:
                       Optional. The cpu utilization that the Autoscaler should be trying to achieve. This number is on a scale from 0 (no utilization) to 100 (total utilization), and is limited between 10 and 80. When a cluster's CPU utilization exceeds the target that you have set, Bigtable immediately adds nodes to the cluster. When CPU utilization is substantially lower than the target, Bigtable removes nodes. If not set or set to 0, default to 50.
   
 
-    
+
+  - !ruby/object:Api::Resource
+    name: FeaturestoreEntityTypeFeature
+    base_url: '{{parent}}/features'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Feature Metadata information that describes an attribute of an entity type. For example, apple is an entity type, and color is a feature that describes apple.
+    properties:
+
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          Description of the Feature.
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this EntityType was created.
+      - !ruby/object:Api::Type::Array
+        name: 'monitoringStatsAnomalies'
+        description: |
+          Output only. The list of historical stats and anomalies with specified objectives.
+        item_type: Api::Type::String
+      - !ruby/object:Api::Type::String
+        name: 'etag'
+        description: |
+          Used to perform a consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          Optional. The labels with user-defined metadata to organize your Features. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information on and examples of labels. No more than 64 user labels can be associated with one Feature (System labels are excluded)." System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Immutable. Name of the Feature. Format: `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}/features/{feature}` The last part feature is assigned by the client. The feature can be up to 64 characters long and can consist only of ASCII Latin letters A-Z and a-z, underscore(_), and ASCII digits 0-9 starting with a letter. The value will be unique given an entity type.
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. Timestamp when this EntityType was most recently updated.
+      - !ruby/object:Api::Type::Boolean
+        name: 'disableMonitoring'
+        description: |
+          Optional. If not set, use the monitoring_config defined for the EntityType this Feature belongs to. Only Features with type (Feature.ValueType) BOOL, STRING, DOUBLE or INT64 can enable monitoring. If set to true, all types of data monitoring are disabled despite the config on EntityType.
+      - !ruby/object:Api::Type::Enum
+        name: 'valueType'
+        description: |
+          Required. Immutable. Type of Feature value.
+        values:
+          - :VALUE_TYPE_UNSPECIFIED
+          - :BOOL
+          - :BOOL_ARRAY
+          - :DOUBLE
+          - :DOUBLE_ARRAY
+          - :INT64
+          - :INT64_ARRAY
+          - :STRING
+          - :STRING_ARRAY
+          - :BYTES
+
+
+
+  - !ruby/object:Api::Resource
+    name: FeaturestoreEntityTypeFeature
+    base_url: '{{parent}}/features'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Feature Metadata information that describes an attribute of an entity type. For example, apple is an entity type, and color is a feature that describes apple.
+    properties:
+
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          Description of the Feature.
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this EntityType was created.
+      - !ruby/object:Api::Type::Array
+        name: 'monitoringStatsAnomalies'
+        description: |
+          Output only. The list of historical stats and anomalies with specified objectives.
+        item_type: Api::Type::String
+      - !ruby/object:Api::Type::String
+        name: 'etag'
+        description: |
+          Used to perform a consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          Optional. The labels with user-defined metadata to organize your Features. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information on and examples of labels. No more than 64 user labels can be associated with one Feature (System labels are excluded)." System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Immutable. Name of the Feature. Format: `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}/features/{feature}` The last part feature is assigned by the client. The feature can be up to 64 characters long and can consist only of ASCII Latin letters A-Z and a-z, underscore(_), and ASCII digits 0-9 starting with a letter. The value will be unique given an entity type.
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. Timestamp when this EntityType was most recently updated.
+      - !ruby/object:Api::Type::Boolean
+        name: 'disableMonitoring'
+        description: |
+          Optional. If not set, use the monitoring_config defined for the EntityType this Feature belongs to. Only Features with type (Feature.ValueType) BOOL, STRING, DOUBLE or INT64 can enable monitoring. If set to true, all types of data monitoring are disabled despite the config on EntityType.
+      - !ruby/object:Api::Type::Enum
+        name: 'valueType'
+        description: |
+          Required. Immutable. Type of Feature value.
+        values:
+          - :VALUE_TYPE_UNSPECIFIED
+          - :BOOL
+          - :BOOL_ARRAY
+          - :DOUBLE
+          - :DOUBLE_ARRAY
+          - :INT64
+          - :INT64_ARRAY
+          - :STRING
+          - :STRING_ARRAY
+          - :BYTES
+
+
+
+  - !ruby/object:Api::Resource
+    name: TensorboardExperimentRun
+    base_url: '{{parent}}/runs'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        TensorboardRun maps to a specific execution of a training job with a given set of hyperparameter values, model definition, dataset, etc
+    properties:
+
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          Required. User provided name of this TensorboardRun. This value must be unique among all TensorboardRuns belonging to the same parent TensorboardExperiment.
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. Timestamp when this TensorboardRun was last updated.
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          Description of this TensorboardRun.
+      - !ruby/object:Api::Type::String
+        name: 'etag'
+        description: |
+          Used to perform a consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          The labels with user-defined metadata to organize your TensorboardRuns. This field will be used to filter and visualize Runs in the Tensorboard UI. For example, a Vertex AI training job can set a label aiplatform.googleapis.com/training_job_id=xxxxx to all the runs created within that job. An end user can set a label experiment_id=xxxxx for all the runs produced in a Jupyter notebook. These runs can be grouped by a label value and visualized together in the Tensorboard UI. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one TensorboardRun (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this TensorboardRun was created.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. Name of the TensorboardRun. Format: `projects/{project}/locations/{location}/tensorboards/{tensorboard}/experiments/{experiment}/runs/{run}`
+  
+
+
   - !ruby/object:Api::Resource
     name: DatasetDataItemAnnotation
     base_url: '{{parent}}/annotations'
@@ -5577,7 +7524,7 @@ objects:
     description: |-
         Used to assign specific AnnotationSpec to a particular area of a DataItem or the whole part of the DataItem.
     properties:
-  
+
       - !ruby/object:Api::Type::String
         name: 'payloadSchemaUri'
         description: |
@@ -5598,7 +7545,7 @@ objects:
           - !ruby/object:Api::Type::String
             name: 'additionalProperties'
             description: |
-              
+
       - !ruby/object:Api::Type::String
         name: 'updateTime'
         description: |
