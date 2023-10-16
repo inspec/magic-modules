@@ -806,3 +806,10 @@ datasets_annotation_spec:
   etag : "value_etag"
   create_time : "value_createtime"
   update_time : "value_updatetime"
+
+nas_jobs_nas_trial_detail:
+  name : "1"
+  region : "us-central1"
+  nasJob: "3217974009958236160"
+  parent : "projects/ppradhan/locations/us-central1/nasJobs/3217974009958236160/nasTrialDetails/"
+  parameters : "value_parameters"

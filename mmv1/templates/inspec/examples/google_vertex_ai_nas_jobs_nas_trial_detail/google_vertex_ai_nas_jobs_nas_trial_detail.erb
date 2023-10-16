@@ -1,0 +1,12 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% nas_jobs_nas_trial_detail = grab_attributes(pwd)['nas_jobs_nas_trial_detail'] -%>
+describe google_vertex_ai_nas_jobs_nas_trial_detail(name: "projects/#{gcp_project_id}/locations/#{nas_jobs_nas_trial_detail['region']}/nasJobs/#{nas_jobs_nas_trial_detail['nasJob']}/nasTrialDetails/#{nas_jobs_nas_trial_detail['name']}", region: <%= doc_generation ? "' #{nas_jobs_nas_trial_detail['region']}'":"nas_jobs_nas_trial_detail['region']" -%>) do
+	it { should exist }
+	its('parameters') { should cmp <%= doc_generation ? "'#{nas_jobs_nas_trial_detail['parameters']}'" : "nas_jobs_nas_trial_detail['parameters']" -%> }
+	its('name') { should cmp <%= doc_generation ? "'#{nas_jobs_nas_trial_detail['name']}'" : "nas_jobs_nas_trial_detail['name']" -%> }
+
+end
+
+describe google_vertex_ai_nas_jobs_nas_trial_detail(name: "does_not_exit", region: <%= doc_generation ? "' #{nas_jobs_nas_trial_detail['region']}'":"nas_jobs_nas_trial_detail['region']" -%>) do
+	it { should_not exist }
+end
