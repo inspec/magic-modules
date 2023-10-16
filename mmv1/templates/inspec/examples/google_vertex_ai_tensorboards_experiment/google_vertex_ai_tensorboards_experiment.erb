@@ -1,0 +1,17 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% tensorboards_experiment = grab_attributes(pwd)['tensorboards_experiment'] -%>
+describe google_vertex_ai_tensorboards_experiment(name: "projects/#{gcp_project_id}/locations/#{tensorboards_experiment['region']}/tensorboards/#{tensorboards_experiment['tensorboard']}/experiments/#{tensorboards_experiment['name']}", region: <%= doc_generation ? "' #{tensorboards_experiment['region']}'":"tensorboards_experiment['region']" -%>) do
+	it { should exist }
+	its('description') { should cmp <%= doc_generation ? "'#{tensorboards_experiment['description']}'" : "tensorboards_experiment['description']" -%> }
+	its('source') { should cmp <%= doc_generation ? "'#{tensorboards_experiment['source']}'" : "tensorboards_experiment['source']" -%> }
+	its('display_name') { should cmp <%= doc_generation ? "'#{tensorboards_experiment['display_name']}'" : "tensorboards_experiment['display_name']" -%> }
+	its('create_time') { should cmp <%= doc_generation ? "'#{tensorboards_experiment['create_time']}'" : "tensorboards_experiment['create_time']" -%> }
+	its('update_time') { should cmp <%= doc_generation ? "'#{tensorboards_experiment['update_time']}'" : "tensorboards_experiment['update_time']" -%> }
+	its('name') { should cmp <%= doc_generation ? "'#{tensorboards_experiment['name']}'" : "tensorboards_experiment['name']" -%> }
+	its('etag') { should cmp <%= doc_generation ? "'#{tensorboards_experiment['etag']}'" : "tensorboards_experiment['etag']" -%> }
+
+end
+
+describe google_vertex_ai_tensorboards_experiment(name: "does_not_exit", region: <%= doc_generation ? "' #{tensorboards_experiment['region']}'":"tensorboards_experiment['region']" -%>) do
+	it { should_not exist }
+end
