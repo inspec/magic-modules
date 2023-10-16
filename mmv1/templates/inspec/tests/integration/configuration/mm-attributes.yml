@@ -797,6 +797,16 @@ datasets_saved_query:
   display_name : "inspec-annotation-test"
   annotation_filter : "value_annotationfilter"
 
+datasets_annotation_spec:
+  name : "5438527833485869056"
+  region : "us-central1"
+  dataset: "1044994542735982592"
+  parent: "projects/165434197229/locations/us-central1/datasets/1044994542735982592/annotationSpecs/"
+  display_name : "InSpec"
+  etag : "value_etag"
+  create_time : "value_createtime"
+  update_time : "value_updatetime"
+
 nas_jobs_nas_trial_detail:
   name : "1"
   region : "us-central1"
