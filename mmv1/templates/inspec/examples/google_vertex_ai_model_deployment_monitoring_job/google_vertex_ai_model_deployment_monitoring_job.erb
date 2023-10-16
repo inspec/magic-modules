@@ -1,0 +1,21 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% model_deployment_monitoring_job = grab_attributes(pwd)['model_deployment_monitoring_job'] -%>
+describe google_vertex_ai_model_deployment_monitoring_job(name: "projects/#{gcp_project_id}/locations/#{model_deployment_monitoring_job['region']}/modelDeploymentMonitoringJobs/#{model_deployment_monitoring_job['name']}", region: <%= doc_generation ? "' #{model_deployment_monitoring_job['region']}'":"model_deployment_monitoring_job['region']" -%>) do
+	it { should exist }
+	its('state') { should cmp <%= doc_generation ? "'#{model_deployment_monitoring_job['state']}'" : "model_deployment_monitoring_job['state']" -%> }
+	its('analysis_instance_schema_uri') { should cmp <%= doc_generation ? "'#{model_deployment_monitoring_job['analysis_instance_schema_uri']}'" : "model_deployment_monitoring_job['analysis_instance_schema_uri']" -%> }
+	its('endpoint') { should cmp <%= doc_generation ? "'#{model_deployment_monitoring_job['endpoint']}'" : "model_deployment_monitoring_job['endpoint']" -%> }
+	its('display_name') { should cmp <%= doc_generation ? "'#{model_deployment_monitoring_job['display_name']}'" : "model_deployment_monitoring_job['display_name']" -%> }
+	its('schedule_state') { should cmp <%= doc_generation ? "'#{model_deployment_monitoring_job['schedule_state']}'" : "model_deployment_monitoring_job['schedule_state']" -%> }
+	its('predict_instance_schema_uri') { should cmp <%= doc_generation ? "'#{model_deployment_monitoring_job['predict_instance_schema_uri']}'" : "model_deployment_monitoring_job['predict_instance_schema_uri']" -%> }
+	its('next_schedule_time') { should cmp <%= doc_generation ? "'#{model_deployment_monitoring_job['next_schedule_time']}'" : "model_deployment_monitoring_job['next_schedule_time']" -%> }
+	its('create_time') { should cmp <%= doc_generation ? "'#{model_deployment_monitoring_job['create_time']}'" : "model_deployment_monitoring_job['create_time']" -%> }
+	its('log_ttl') { should cmp <%= doc_generation ? "'#{model_deployment_monitoring_job['log_ttl']}'" : "model_deployment_monitoring_job['log_ttl']" -%> }
+	its('update_time') { should cmp <%= doc_generation ? "'#{model_deployment_monitoring_job['update_time']}'" : "model_deployment_monitoring_job['update_time']" -%> }
+	its('name') { should cmp <%= doc_generation ? "'#{model_deployment_monitoring_job['name']}'" : "model_deployment_monitoring_job['name']" -%> }
+
+end
+
+describe google_vertex_ai_model_deployment_monitoring_job(name: "does_not_exit", region: <%= doc_generation ? "' #{model_deployment_monitoring_job['region']}'":"model_deployment_monitoring_job['region']" -%>) do
+	it { should_not exist }
+end
