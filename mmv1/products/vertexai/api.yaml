@@ -9982,3 +9982,123 @@ objects:
         description: |
           Output only. Points to a YAML file stored on Google Cloud Storage describing the metrics of this ModelEvaluationSlice. The schema is defined as an OpenAPI 3.0.2 [Schema Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.2.md#schemaObject).
   
+
+
+  - !ruby/object:Api::Resource
+    name: DatasetsDataItem
+    base_url: '{{parent}}/dataItems'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        A piece of data in a Dataset. Could be an image, a video, a document or plain text.
+    properties:
+
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. Timestamp when this DataItem was last updated.
+      - !ruby/object:Api::Type::String
+        name: 'etag'
+        description: |
+          Optional. Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. The resource name of the DataItem.
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this DataItem was created.
+      - !ruby/object:Api::Type::String
+        name: 'payload'
+        description: |
+          Required. The data that the DataItem represents (for example, an image or a text snippet). The schema of the payload is stored in the parent Dataset's metadata schema's dataItemSchemaUri field.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          Optional. The labels with user-defined metadata to organize your DataItems. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one DataItem(System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+              
+  
+
+
+  - !ruby/object:Api::Resource
+    name: DatasetsDataItem
+    base_url: '{{parent}}/dataItems'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        A piece of data in a Dataset. Could be an image, a video, a document or plain text.
+    properties:
+
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. Timestamp when this DataItem was last updated.
+      - !ruby/object:Api::Type::String
+        name: 'etag'
+        description: |
+          Optional. Used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. The resource name of the DataItem.
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this DataItem was created.
+      - !ruby/object:Api::Type::String
+        name: 'payload'
+        description: |
+          Required. The data that the DataItem represents (for example, an image or a text snippet). The schema of the payload is stored in the parent Dataset's metadata schema's dataItemSchemaUri field.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          Optional. The labels with user-defined metadata to organize your DataItems. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one DataItem(System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with "aiplatform.googleapis.com/" and are immutable.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+              
+  
