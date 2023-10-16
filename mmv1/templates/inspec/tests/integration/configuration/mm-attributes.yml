@@ -730,7 +730,6 @@ model_deployment_monitoring_job:
   log_ttl : "value_logttl"
   update_time : "value_updatetime"
 
-
 metadata_stores_metadata_schema:
   name : "system-dag-execution-v0-0-1"
   region : "us-central1"
@@ -856,3 +855,16 @@ study:
   state : "value_state"
   create_time : "value_createtime"
   inactive_reason : "value_inactivereason"
+
+tensorboard_experiment_run_time_series_resource:
+  name : "value_name"
+  region : "value_region"
+  parent : "value_parent"
+  plugin_name : "value_pluginname"
+  plugin_data : "value_plugindata"
+  description : "value_description"
+  etag : "value_etag"
+  display_name : "value_displayname"
+  update_time : "value_updatetime"
+  create_time : "value_createtime"
+  value_type : "value_valuetype"
