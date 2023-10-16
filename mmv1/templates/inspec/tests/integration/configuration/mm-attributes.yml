@@ -708,3 +708,9 @@ featurestore_entity_type_feature:
   name : "value_name"
   update_time : "value_updatetime"
   value_type : "value_valuetype"
+dataset_data_item_annotation:
+  name: "1746031646898913280"
+  region: "us-central1"
+  dataset: "1044994542735982592"
+  dataItem: "75173735366921"
+  parent: "projects/165434197229/locations/us-central1/datasets/1044994542735982592/dataItems/75173735366921/annotations/"
