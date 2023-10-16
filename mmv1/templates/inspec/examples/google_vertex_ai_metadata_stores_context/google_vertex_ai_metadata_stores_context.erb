@@ -1,0 +1,18 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% metadata_stores_context = grab_attributes(pwd)['metadata_stores_context'] -%>
+describe google_vertex_ai_metadata_stores_context(name: "projects/#{gcp_project_id}/locations/#{metadata_stores_context['region']}/metadataStores/#{metadata_stores_context['metadataStore']}/contexts/#{metadata_stores_context['name']}", region: <%= doc_generation ? "' #{metadata_stores_context['region']}'":"metadata_stores_context['region']" -%>) do
+	it { should exist }
+	its('name') { should cmp <%= doc_generation ? "'#{metadata_stores_context['name']}'" : "metadata_stores_context['name']" -%> }
+	its('schema_title') { should cmp <%= doc_generation ? "'#{metadata_stores_context['schema_title']}'" : "metadata_stores_context['schema_title']" -%> }
+	its('etag') { should cmp <%= doc_generation ? "'#{metadata_stores_context['etag']}'" : "metadata_stores_context['etag']" -%> }
+	its('description') { should cmp <%= doc_generation ? "'#{metadata_stores_context['description']}'" : "metadata_stores_context['description']" -%> }
+	its('display_name') { should cmp <%= doc_generation ? "'#{metadata_stores_context['display_name']}'" : "metadata_stores_context['display_name']" -%> }
+	its('schema_version') { should cmp <%= doc_generation ? "'#{metadata_stores_context['schema_version']}'" : "metadata_stores_context['schema_version']" -%> }
+	its('create_time') { should cmp <%= doc_generation ? "'#{metadata_stores_context['create_time']}'" : "metadata_stores_context['create_time']" -%> }
+	its('update_time') { should cmp <%= doc_generation ? "'#{metadata_stores_context['update_time']}'" : "metadata_stores_context['update_time']" -%> }
+
+end
+
+describe google_vertex_ai_metadata_stores_context(name: "does_not_exit", region: <%= doc_generation ? "' #{metadata_stores_context['region']}'":"metadata_stores_context['region']" -%>) do
+	it { should_not exist }
+end
