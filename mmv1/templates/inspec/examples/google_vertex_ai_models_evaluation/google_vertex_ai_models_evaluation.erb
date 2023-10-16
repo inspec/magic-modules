@@ -1,0 +1,16 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% models_evaluation = grab_attributes(pwd)['models_evaluation'] -%>
+describe google_vertex_ai_models_evaluation(name: "projects/#{gcp_project_id}/locations/#{models_evaluation['region']}/models/#{models_evaluation['model']}/evaluations/#{models_evaluation['name']}", region: <%= doc_generation ? "' #{models_evaluation['region']}'":"models_evaluation['region']" -%>) do
+	it { should exist }
+	its('data_item_schema_uri') { should cmp <%= doc_generation ? "'#{models_evaluation['data_item_schema_uri']}'" : "models_evaluation['data_item_schema_uri']" -%> }
+	its('metrics_schema_uri') { should cmp <%= doc_generation ? "'#{models_evaluation['metrics_schema_uri']}'" : "models_evaluation['metrics_schema_uri']" -%> }
+	its('create_time') { should cmp <%= doc_generation ? "'#{models_evaluation['create_time']}'" : "models_evaluation['create_time']" -%> }
+	its('annotation_schema_uri') { should cmp <%= doc_generation ? "'#{models_evaluation['annotation_schema_uri']}'" : "models_evaluation['annotation_schema_uri']" -%> }
+	its('name') { should cmp <%= doc_generation ? "'#{models_evaluation['name']}'" : "models_evaluation['name']" -%> }
+	its('display_name') { should cmp <%= doc_generation ? "'#{models_evaluation['display_name']}'" : "models_evaluation['display_name']" -%> }
+
+end
+
+describe google_vertex_ai_models_evaluation(name: "does_not_exit", region: <%= doc_generation ? "' #{models_evaluation['region']}'":"models_evaluation['region']" -%>) do
+	it { should_not exist }
+end

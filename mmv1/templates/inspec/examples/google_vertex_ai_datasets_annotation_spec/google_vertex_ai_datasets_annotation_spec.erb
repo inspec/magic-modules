@@ -1,0 +1,15 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% datasets_annotation_spec = grab_attributes(pwd)['datasets_annotation_spec'] -%>
+describe google_vertex_ai_datasets_annotation_spec(name: "projects/#{gcp_project_id}/locations/#{datasets_annotation_spec['region']}/datasets/#{datasets_annotation_spec['dataset']}/annotationSpecs/#{datasets_annotation_spec['name']}", region: <%= doc_generation ? "' #{datasets_annotation_spec['region']}'":"datasets_annotation_spec['region']" -%>) do
+	it { should exist }
+	its('display_name') { should cmp <%= doc_generation ? "'#{datasets_annotation_spec['display_name']}'" : "datasets_annotation_spec['display_name']" -%> }
+	its('name') { should cmp <%= doc_generation ? "'#{datasets_annotation_spec['name']}'" : "datasets_annotation_spec['name']" -%> }
+	its('etag') { should cmp <%= doc_generation ? "'#{datasets_annotation_spec['etag']}'" : "datasets_annotation_spec['etag']" -%> }
+	its('create_time') { should cmp <%= doc_generation ? "'#{datasets_annotation_spec['create_time']}'" : "datasets_annotation_spec['create_time']" -%> }
+	its('update_time') { should cmp <%= doc_generation ? "'#{datasets_annotation_spec['update_time']}'" : "datasets_annotation_spec['update_time']" -%> }
+
+end
+
+describe google_vertex_ai_datasets_annotation_spec(name: "does_not_exit", region: <%= doc_generation ? "' #{datasets_annotation_spec['region']}'":"datasets_annotation_spec['region']" -%>) do
+	it { should_not exist }
+end
