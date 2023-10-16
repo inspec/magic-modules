@@ -708,9 +708,25 @@ featurestore_entity_type_feature:
   name : "value_name"
   update_time : "value_updatetime"
   value_type : "value_valuetype"
+
 dataset_data_item_annotation:
   name: "1746031646898913280"
   region: "us-central1"
   dataset: "1044994542735982592"
   dataItem: "75173735366921"
   parent: "projects/165434197229/locations/us-central1/datasets/1044994542735982592/dataItems/75173735366921/annotations/"
+
+model_deployment_monitoring_job:
+  name : "4965515800912855040"
+  region : "us-central1"
+  parent : "projects/165434197229/locations/us-central1/modelDeploymentMonitoringJobs/"
+  state : "value_state"
+  analysis_instance_schema_uri : "value_analysisinstanceschemauri"
+  endpoint : "projects/165434197229/locations/us-central1/endpoints/5787303642054787072"
+  display_name : "churn"
+  schedule_state : "value_schedulestate"
+  predict_instance_schema_uri : "value_predictinstanceschemauri"
+  next_schedule_time : "value_nextscheduletime"
+  create_time : "value_createtime"
+  log_ttl : "value_logttl"
+  update_time : "value_updatetime"
