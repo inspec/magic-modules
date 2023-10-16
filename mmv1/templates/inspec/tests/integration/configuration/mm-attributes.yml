@@ -769,3 +769,18 @@ metadata_stores_context:
   schema_version : "value_schemaversion"
   create_time : "value_createtime"
   update_time : "value_updatetime"
+
+metadata_stores_artifact:
+  name : "2811503570633325756"
+  region : "us-central1"
+  parent : "projects/165434197229/locations/us-central1/metadataStores/default/artifacts/"
+  metadataStore: "default"
+  schema_version : "value_schemaversion"
+  display_name : "value_displayname"
+  etag : "value_etag"
+  update_time : "value_updatetime"
+  state : "value_state"
+  uri : "value_uri"
+  create_time : "value_createtime"
+  schema_title : "value_schematitle"
+  description : "value_description"
