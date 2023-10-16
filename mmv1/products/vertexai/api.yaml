@@ -9256,7 +9256,157 @@ objects:
           Output only. Timestamp when AnnotationSpec was last updated.
   
 
-    
+
+  - !ruby/object:Api::Resource
+    name: NasJobsNasTrialDetail
+    base_url: '{{parent}}/nasTrialDetails'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Represents a NasTrial details along with its parameters. If there is a corresponding train NasTrial, the train NasTrial is also returned.
+    properties:
+
+      - !ruby/object:Api::Type::String
+        name: 'parameters'
+        description: |
+          The parameters for the NasJob NasTrial.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. Resource name of the NasTrialDetail.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'searchTrial'
+        description: |
+          Represents a uCAIP NasJob trial.
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'id'
+              description: |
+                Output only. The identifier of the NasTrial assigned by the service.
+            - !ruby/object:Api::Type::Enum
+              name: 'state'
+              description: |
+                Output only. The detailed state of the NasTrial.
+              values:
+                - :STATE_UNSPECIFIED
+                - :REQUESTED
+                - :ACTIVE
+                - :STOPPING
+                - :SUCCEEDED
+                - :INFEASIBLE
+            - !ruby/object:Api::Type::NestedObject
+              name: 'finalMeasurement'
+              description: |
+                A message representing a Measurement of a Trial. A Measurement contains the Metrics got by executing a Trial using suggested hyperparameter values.
+              properties:
+                  - !ruby/object:Api::Type::Array
+                    name: 'metrics'
+                    description: |
+                      Output only. A list of metrics got by evaluating the objective functions using suggested Parameter values.
+                    item_type: !ruby/object:Api::Type::NestedObject
+                      properties:
+                        - !ruby/object:Api::Type::String
+                          name: 'metricId'
+                          description: |
+                            Output only. The ID of the Metric. The Metric should be defined in StudySpec's Metrics.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'value'
+                          description: |
+                            Output only. The value for this metric.
+                  - !ruby/object:Api::Type::String
+                    name: 'elapsedDuration'
+                    description: |
+                      Output only. Time that the Trial has been running at the point of this Measurement.
+                  - !ruby/object:Api::Type::String
+                    name: 'stepCount'
+                    description: |
+                      Output only. The number of steps the machine learning model has been trained for. Must be non-negative.
+            - !ruby/object:Api::Type::String
+              name: 'startTime'
+              description: |
+                Output only. Time when the NasTrial was started.
+            - !ruby/object:Api::Type::String
+              name: 'endTime'
+              description: |
+                Output only. Time when the NasTrial's status changed to `SUCCEEDED` or `INFEASIBLE`.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'trainTrial'
+        description: |
+          Represents a uCAIP NasJob trial.
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'id'
+              description: |
+                Output only. The identifier of the NasTrial assigned by the service.
+            - !ruby/object:Api::Type::Enum
+              name: 'state'
+              description: |
+                Output only. The detailed state of the NasTrial.
+              values:
+                - :STATE_UNSPECIFIED
+                - :REQUESTED
+                - :ACTIVE
+                - :STOPPING
+                - :SUCCEEDED
+                - :INFEASIBLE
+            - !ruby/object:Api::Type::NestedObject
+              name: 'finalMeasurement'
+              description: |
+                A message representing a Measurement of a Trial. A Measurement contains the Metrics got by executing a Trial using suggested hyperparameter values.
+              properties:
+                  - !ruby/object:Api::Type::Array
+                    name: 'metrics'
+                    description: |
+                      Output only. A list of metrics got by evaluating the objective functions using suggested Parameter values.
+                    item_type: !ruby/object:Api::Type::NestedObject
+                      properties:
+                        - !ruby/object:Api::Type::String
+                          name: 'metricId'
+                          description: |
+                            Output only. The ID of the Metric. The Metric should be defined in StudySpec's Metrics.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'value'
+                          description: |
+                            Output only. The value for this metric.
+                  - !ruby/object:Api::Type::String
+                    name: 'elapsedDuration'
+                    description: |
+                      Output only. Time that the Trial has been running at the point of this Measurement.
+                  - !ruby/object:Api::Type::String
+                    name: 'stepCount'
+                    description: |
+                      Output only. The number of steps the machine learning model has been trained for. Must be non-negative.
+            - !ruby/object:Api::Type::String
+              name: 'startTime'
+              description: |
+                Output only. Time when the NasTrial was started.
+            - !ruby/object:Api::Type::String
+              name: 'endTime'
+              description: |
+                Output only. Time when the NasTrial's status changed to `SUCCEEDED` or `INFEASIBLE`.
+  
+
+
   - !ruby/object:Api::Resource
     name: MetadataStore
     base_url: '{{parent}}/metadataStores'
@@ -9285,7 +9435,7 @@ objects:
     description: |-
         Instance of a metadata store. Contains a set of metadata that can be queried.
     properties:
-  
+
       - !ruby/object:Api::Type::String
         name: 'description'
         description: |
