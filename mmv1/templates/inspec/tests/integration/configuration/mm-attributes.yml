@@ -846,6 +846,16 @@ datasets_data_item:
   etag : "value_etag"
   name : "value_name"
   create_time : "value_createtime"
+
+study:
+  name : "value_name"
+  region : "value_region"
+  parent : "value_parent"
+  display_name : "value_displayname"
+  state : "value_state"
+  create_time : "value_createtime"
+  inactive_reason : "value_inactivereason"
+
 tensorboard_experiment_run_time_series_resource:
   name : "value_name"
   region : "value_region"
