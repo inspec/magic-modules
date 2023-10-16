@@ -3690,7 +3690,7 @@ objects:
           Output only. The resource name of the Endpoint.
   
 
-
+    
   - !ruby/object:Api::Resource
     name: TensorboardsExperiment
     base_url: '{{parent}}/experiments'
@@ -8877,6 +8877,194 @@ objects:
           Output only. A list of resource names of Contexts that are parents of this Context. A Context may have at most 10 parent_contexts.
         item_type: Api::Type::String
 
+
+
+  - !ruby/object:Api::Resource
+    name: MetadataStoresArtifact
+    base_url: '{{parent}}/artifacts'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Instance of a general artifact.
+    properties:
+
+      - !ruby/object:Api::Type::String
+        name: 'schemaVersion'
+        description: |
+          The version of the schema in schema_name to use. Schema title and version is expected to be registered in earlier Create Schema calls. And both are used together as unique identifiers to identify schemas within the local metadata store.
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          User provided display name of the Artifact. May be up to 128 Unicode characters.
+      - !ruby/object:Api::Type::String
+        name: 'etag'
+        description: |
+          An eTag used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. The resource name of the Artifact.
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. Timestamp when this Artifact was last updated.
+      - !ruby/object:Api::Type::Enum
+        name: 'state'
+        description: |
+          The state of this Artifact. This is a property of the Artifact, and does not imply or capture any ongoing process. This property is managed by clients (such as Vertex AI Pipelines), and the system does not prescribe or check the validity of state transitions.
+        values:
+          - :STATE_UNSPECIFIED
+          - :PENDING
+          - :LIVE
+      - !ruby/object:Api::Type::NestedObject
+        name: 'metadata'
+        description: |
+          Properties of the Artifact. Top level metadata keys' heading and trailing spaces will be trimmed. The size of this field should not exceed 200KB.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+              Properties of the object.
+      - !ruby/object:Api::Type::String
+        name: 'uri'
+        description: |
+          The uniform resource identifier of the artifact file. May be empty if there is no actual artifact file.
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this Artifact was created.
+      - !ruby/object:Api::Type::String
+        name: 'schemaTitle'
+        description: |
+          The title of the schema describing the metadata. Schema title and version is expected to be registered in earlier Create Schema calls. And both are used together as unique identifiers to identify schemas within the local metadata store.
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          Description of the Artifact
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          The labels with user-defined metadata to organize your Artifacts. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one Artifact (System labels are excluded).
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+              
+  
+
+
+  - !ruby/object:Api::Resource
+    name: MetadataStoresArtifact
+    base_url: '{{parent}}/artifacts'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Instance of a general artifact.
+    properties:
+
+      - !ruby/object:Api::Type::String
+        name: 'schemaVersion'
+        description: |
+          The version of the schema in schema_name to use. Schema title and version is expected to be registered in earlier Create Schema calls. And both are used together as unique identifiers to identify schemas within the local metadata store.
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          User provided display name of the Artifact. May be up to 128 Unicode characters.
+      - !ruby/object:Api::Type::String
+        name: 'etag'
+        description: |
+          An eTag used to perform consistent read-modify-write updates. If not set, a blind "overwrite" update happens.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. The resource name of the Artifact.
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. Timestamp when this Artifact was last updated.
+      - !ruby/object:Api::Type::Enum
+        name: 'state'
+        description: |
+          The state of this Artifact. This is a property of the Artifact, and does not imply or capture any ongoing process. This property is managed by clients (such as Vertex AI Pipelines), and the system does not prescribe or check the validity of state transitions.
+        values:
+          - :STATE_UNSPECIFIED
+          - :PENDING
+          - :LIVE
+      - !ruby/object:Api::Type::NestedObject
+        name: 'metadata'
+        description: |
+          Properties of the Artifact. Top level metadata keys' heading and trailing spaces will be trimmed. The size of this field should not exceed 200KB.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+              Properties of the object.
+      - !ruby/object:Api::Type::String
+        name: 'uri'
+        description: |
+          The uniform resource identifier of the artifact file. May be empty if there is no actual artifact file.
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this Artifact was created.
+      - !ruby/object:Api::Type::String
+        name: 'schemaTitle'
+        description: |
+          The title of the schema describing the metadata. Schema title and version is expected to be registered in earlier Create Schema calls. And both are used together as unique identifiers to identify schemas within the local metadata store.
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          Description of the Artifact
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          The labels with user-defined metadata to organize your Artifacts. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one Artifact (System labels are excluded).
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+              
+  
 
 
   - !ruby/object:Api::Resource
