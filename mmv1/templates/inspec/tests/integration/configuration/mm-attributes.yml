@@ -813,3 +813,11 @@ nas_jobs_nas_trial_detail:
   nasJob: "3217974009958236160"
   parent : "projects/ppradhan/locations/us-central1/nasJobs/3217974009958236160/nasTrialDetails/"
   parameters : "value_parameters"
+
+metadata_store:
+  name : "default"
+  region : "us-central1"
+  parent : "projects/165434197229/locations/us-central1/metadataStores/"
+  description : "value_description"
+  create_time : "value_createtime"
+  update_time : "value_updatetime"
