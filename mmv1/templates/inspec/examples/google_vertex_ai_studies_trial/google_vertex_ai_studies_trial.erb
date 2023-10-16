@@ -1,0 +1,18 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% studies_trial = grab_attributes(pwd)['studies_trial'] -%>
+describe google_vertex_ai_studies_trial(name: "projects/#{gcp_project_id}/locations/#{studies_trial['region']}/studies/#{studies_trial['study']}/trials/#{studies_trial['name']}", region: <%= doc_generation ? "' #{studies_trial['region']}'":"studies_trial['region']" -%>) do
+	it { should exist }
+	its('start_time') { should cmp <%= doc_generation ? "'#{studies_trial['start_time']}'" : "studies_trial['start_time']" -%> }
+	its('end_time') { should cmp <%= doc_generation ? "'#{studies_trial['end_time']}'" : "studies_trial['end_time']" -%> }
+	its('name') { should cmp <%= doc_generation ? "'#{studies_trial['name']}'" : "studies_trial['name']" -%> }
+	its('infeasible_reason') { should cmp <%= doc_generation ? "'#{studies_trial['infeasible_reason']}'" : "studies_trial['infeasible_reason']" -%> }
+	its('client_id') { should cmp <%= doc_generation ? "'#{studies_trial['client_id']}'" : "studies_trial['client_id']" -%> }
+	its('custom_job') { should cmp <%= doc_generation ? "'#{studies_trial['custom_job']}'" : "studies_trial['custom_job']" -%> }
+	its('state') { should cmp <%= doc_generation ? "'#{studies_trial['state']}'" : "studies_trial['state']" -%> }
+	its('id') { should cmp <%= doc_generation ? "'#{studies_trial['id']}'" : "studies_trial['id']" -%> }
+
+end
+
+describe google_vertex_ai_studies_trial(name: "does_not_exit", region: <%= doc_generation ? "' #{studies_trial['region']}'":"studies_trial['region']" -%>) do
+	it { should_not exist }
+end

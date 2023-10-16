@@ -1,0 +1,5 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+  <% studies_trial = grab_attributes(pwd)['studies_trial'] -%>
+  describe google_vertex_ai_studies_trials(parent: "projects/#{gcp_project_id}/locations/#{studies_trial['region']}/studies/#{studies_trial['study']}", region: <%= doc_generation ? "' #{studies_trial['region']}'":"studies_trial['region']" -%>) do
+    it { should exist }
+  end
