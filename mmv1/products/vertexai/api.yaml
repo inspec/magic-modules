@@ -8393,3 +8393,125 @@ objects:
         description: |
           Output only. Resource name of a ModelDeploymentMonitoringJob.
   
+
+
+  - !ruby/object:Api::Resource
+    name: MetadataStoresMetadataSchema
+    base_url: '{{parent}}/metadataSchemas'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Instance of a general MetadataSchema.
+    properties:
+
+      - !ruby/object:Api::Type::Enum
+        name: 'schemaType'
+        description: |
+          The type of the MetadataSchema. This is a property that identifies which metadata types will use the MetadataSchema.
+        values:
+          - :METADATA_SCHEMA_TYPE_UNSPECIFIED
+          - :ARTIFACT_TYPE
+          - :EXECUTION_TYPE
+          - :CONTEXT_TYPE
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          Description of the Metadata Schema
+      - !ruby/object:Api::Type::String
+        name: 'schemaVersion'
+        description: |
+          The version of the MetadataSchema. The version's format must match the following regular expression: `^[0-9]+.+.+$`, which would allow to order/compare different versions. Example: 1.0.0, 1.0.1, etc.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. The resource name of the MetadataSchema.
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this MetadataSchema was created.
+      - !ruby/object:Api::Type::String
+        name: 'schema'
+        description: |
+          Required. The raw YAML string representation of the MetadataSchema. The combination of [MetadataSchema.version] and the schema name given by `title` in [MetadataSchema.schema] must be unique within a MetadataStore. The schema is defined as an OpenAPI 3.0.2 [MetadataSchema Object](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#schemaObject)
+  
+
+
+  - !ruby/object:Api::Resource
+    name: MetadataStoresMetadataSchema
+    base_url: '{{parent}}/metadataSchemas'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/vertex-ai/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Instance of a general MetadataSchema.
+    properties:
+
+      - !ruby/object:Api::Type::Enum
+        name: 'schemaType'
+        description: |
+          The type of the MetadataSchema. This is a property that identifies which metadata types will use the MetadataSchema.
+        values:
+          - :METADATA_SCHEMA_TYPE_UNSPECIFIED
+          - :ARTIFACT_TYPE
+          - :EXECUTION_TYPE
+          - :CONTEXT_TYPE
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          Description of the Metadata Schema
+      - !ruby/object:Api::Type::String
+        name: 'schemaVersion'
+        description: |
+          The version of the MetadataSchema. The version's format must match the following regular expression: `^[0-9]+.+.+$`, which would allow to order/compare different versions. Example: 1.0.0, 1.0.1, etc.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. The resource name of the MetadataSchema.
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. Timestamp when this MetadataSchema was created.
+      - !ruby/object:Api::Type::String
+        name: 'schema'
+        description: |
+          Required. The raw YAML string representation of the MetadataSchema. The combination of [MetadataSchema.version] and the schema name given by `title` in [MetadataSchema.schema] must be unique within a MetadataStore. The schema is defined as an OpenAPI 3.0.2 [MetadataSchema Object](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#schemaObject)
+  
