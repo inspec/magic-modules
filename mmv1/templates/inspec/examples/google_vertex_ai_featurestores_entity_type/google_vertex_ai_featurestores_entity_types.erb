@@ -1,0 +1,5 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+  <% featurestores_entity_type = grab_attributes(pwd)['featurestores_entity_type'] -%>
+  describe google_vertex_ai_featurestores_entity_types(parent: "projects/#{gcp_project_id}/locations/#{featurestores_entity_type['region']}/featurestores/#{featurestores_entity_type['featurestore']}", region: <%= doc_generation ? "' #{featurestores_entity_type['region']}'":"featurestores_entity_type['region']" -%>) do
+    it { should exist }
+  end
