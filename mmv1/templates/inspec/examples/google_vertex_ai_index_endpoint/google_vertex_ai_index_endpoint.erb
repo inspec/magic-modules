@@ -1,0 +1,18 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% index_endpoint = grab_attributes(pwd)['index_endpoint'] -%>
+describe google_vertex_ai_index_endpoint(name: "projects/#{gcp_project_id}/locations/#{index_endpoint['region']}/indexEndpoints/#{index_endpoint['name']}", region: <%= doc_generation ? "' #{index_endpoint['region']}'":"index_endpoint['region']" -%>) do
+	it { should exist }
+	its('display_name') { should cmp <%= doc_generation ? "'#{index_endpoint['display_name']}'" : "index_endpoint['display_name']" -%> }
+	its('create_time') { should cmp <%= doc_generation ? "'#{index_endpoint['create_time']}'" : "index_endpoint['create_time']" -%> }
+	its('name') { should cmp <%= doc_generation ? "'#{index_endpoint['name']}'" : "index_endpoint['name']" -%> }
+	its('network') { should cmp <%= doc_generation ? "'#{index_endpoint['network']}'" : "index_endpoint['network']" -%> }
+	its('update_time') { should cmp <%= doc_generation ? "'#{index_endpoint['update_time']}'" : "index_endpoint['update_time']" -%> }
+	its('public_endpoint_domain_name') { should cmp <%= doc_generation ? "'#{index_endpoint['public_endpoint_domain_name']}'" : "index_endpoint['public_endpoint_domain_name']" -%> }
+	its('etag') { should cmp <%= doc_generation ? "'#{index_endpoint['etag']}'" : "index_endpoint['etag']" -%> }
+	its('description') { should cmp <%= doc_generation ? "'#{index_endpoint['description']}'" : "index_endpoint['description']" -%> }
+
+end
+
+describe google_vertex_ai_index_endpoint(name: "does_not_exit", region: <%= doc_generation ? "' #{index_endpoint['region']}'":"index_endpoint['region']" -%>) do
+	it { should_not exist }
+end
