@@ -1,0 +1,5 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+  <% datasets_saved_query = grab_attributes(pwd)['datasets_saved_query'] -%>
+  describe google_vertex_ai_datasets_saved_queries(parent: "projects/#{gcp_project_id}/locations/#{datasets_saved_query['region']}/datasets/#{datasets_saved_query['dataset']}", region: <%= doc_generation ? "' #{datasets_saved_query['region']}'":"datasets_saved_query['region']" -%>) do
+    it { should exist }
+  end

@@ -1,0 +1,5 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+  <% model_deployment_monitoring_job = grab_attributes(pwd)['model_deployment_monitoring_job'] -%>
+  describe google_vertex_ai_model_deployment_monitoring_jobs(parent: "projects/#{gcp_project_id}/locations/#{model_deployment_monitoring_job['region']}", region: <%= doc_generation ? "' #{model_deployment_monitoring_job['region']}'":"model_deployment_monitoring_job['region']" -%>) do
+    it { should exist }
+  end
