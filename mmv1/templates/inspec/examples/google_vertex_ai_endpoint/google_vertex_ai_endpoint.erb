@@ -1,0 +1,18 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% endpoint = grab_attributes(pwd)['endpoint'] -%>
+describe google_vertex_ai_endpoint(name: "projects/#{gcp_project_id}/locations/#{endpoint['region']}/endpoints/#{endpoint['name']}", region: <%= doc_generation ? "' #{endpoint['region']}'":"endpoint['region']" -%>) do
+it { should exist }
+	its('update_time') { should cmp <%= doc_generation ? "'#{endpoint['update_time']}'" : "endpoint['update_time']" -%> }
+	its('model_deployment_monitoring_job') { should cmp <%= doc_generation ? "'#{endpoint['model_deployment_monitoring_job']}'" : "endpoint['model_deployment_monitoring_job']" -%> }
+	its('description') { should cmp <%= doc_generation ? "'#{endpoint['description']}'" : "endpoint['description']" -%> }
+	its('network') { should cmp <%= doc_generation ? "'#{endpoint['network']}'" : "endpoint['network']" -%> }
+	its('display_name') { should cmp <%= doc_generation ? "'#{endpoint['display_name']}'" : "endpoint['display_name']" -%> }
+	its('etag') { should cmp <%= doc_generation ? "'#{endpoint['etag']}'" : "endpoint['etag']" -%> }
+	its('create_time') { should cmp <%= doc_generation ? "'#{endpoint['create_time']}'" : "endpoint['create_time']" -%> }
+	its('name') { should cmp <%= doc_generation ? "'#{endpoint['name']}'" : "endpoint['name']" -%> }
+
+end
+
+describe google_vertex_ai_endpoint(name: "does_not_exit", region: <%= doc_generation ? "' #{endpoint['region']}'":"endpoint['region']" -%>) do
+	it { should_not exist }
+end

@@ -1,0 +1,14 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% metadata_store = grab_attributes(pwd)['metadata_store'] -%>
+describe google_vertex_ai_metadata_store(name: "projects/#{gcp_project_id}/locations/#{metadata_store['region']}/metadataStores/#{metadata_store['name']}", region: <%= doc_generation ? "' #{metadata_store['region']}'":"metadata_store['region']" -%>) do
+	it { should exist }
+	its('description') { should cmp <%= doc_generation ? "'#{metadata_store['description']}'" : "metadata_store['description']" -%> }
+	its('create_time') { should cmp <%= doc_generation ? "'#{metadata_store['create_time']}'" : "metadata_store['create_time']" -%> }
+	its('update_time') { should cmp <%= doc_generation ? "'#{metadata_store['update_time']}'" : "metadata_store['update_time']" -%> }
+	its('name') { should cmp <%= doc_generation ? "'#{metadata_store['name']}'" : "metadata_store['name']" -%> }
+
+end
+
+describe google_vertex_ai_metadata_store(name: "does_not_exit", region: <%= doc_generation ? "' #{metadata_store['region']}'":"metadata_store['region']" -%>) do
+	it { should_not exist }
+end
