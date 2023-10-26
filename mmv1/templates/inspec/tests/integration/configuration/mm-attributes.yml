@@ -593,6 +593,18 @@ custom_job:
   region : "value_region"
   parent : "value_parent"
 
+index:
+  name : "value_name"
+  region : "value_region"
+  parent : "value_parent"
+  description : "value_description"
+  display_name : "value_displayname"
+  metadata_schema_uri : "value_metadataschemauri"
+  index_update_method : "value_indexupdatemethod"
+  update_time : "value_updatetime"
+  create_time : "value_createtime"
+  etag : "value_etag"
+  
 tensorboard:
   name : "value_name"
   region : "value_region"

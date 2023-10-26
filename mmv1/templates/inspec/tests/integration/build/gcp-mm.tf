@@ -1538,3 +1538,16 @@ resource "google_service_directory_endpoint" "example" {
   port    = 5353
 }
 
+
+resource "google_datastore_index" "default" {
+  kind = "foo"
+  properties {
+    name = "property_a-${local.name_suffix}"
+    direction = "ASCENDING"
+  }
+  properties {
+    name = "property_b-${local.name_suffix}"
+    direction = "ASCENDING"
+  }
+}
+
