@@ -880,3 +880,6 @@ tensorboard_experiment_run_time_series_resource:
   update_time : "value_updatetime"
   create_time : "value_createtime"
   value_type : "value_valuetype"
+
+project_location_image_version:
+  parent : "value_parent"
