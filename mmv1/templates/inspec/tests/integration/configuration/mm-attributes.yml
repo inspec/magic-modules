@@ -880,3 +880,10 @@ tensorboard_experiment_run_time_series_resource:
   update_time : "value_updatetime"
   create_time : "value_createtime"
   value_type : "value_valuetype"
+
+organization_api_revision:
+  cluster_name : "value_clustername"
+  project_id : "value_projectid"
+  region : "value_region"
+organization_api_revision:
+  name : "value_name"
