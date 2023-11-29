@@ -498,3 +498,101 @@ objects:
         'Creating an environment':
           'https://cloud.google.com/apigee/docs/api-platform/get-started/create-environment'
       api: 'https://cloud.google.com/apigee/docs/reference/apis/apigee/rest/v1/organizations.endpointAttachments/create'
+
+
+    
+  - !ruby/object:Api::Resource
+    name: OrganizationEnvgroupAttachment
+    base_url: '{{parent}}/attachments'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/apigee/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        EnvironmentGroupAttachment is a resource which defines an attachment of an environment to an environment group.
+    properties:
+  
+      - !ruby/object:Api::Type::String
+        name: 'createdAt'
+        description: |
+          Output only. The time at which the environment group attachment was created as milliseconds since epoch.
+      - !ruby/object:Api::Type::String
+        name: 'environment'
+        description: |
+          Required. ID of the attached environment.
+      - !ruby/object:Api::Type::String
+        name: 'environmentGroupId'
+        description: |
+          Output only. ID of the environment group.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          ID of the environment group attachment.
+  
+
+
+    
+  - !ruby/object:Api::Resource
+    name: OrganizationEnvgroupAttachment
+    base_url: '{{parent}}/attachments'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/apigee/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        EnvironmentGroupAttachment is a resource which defines an attachment of an environment to an environment group.
+    properties:
+  
+      - !ruby/object:Api::Type::String
+        name: 'createdAt'
+        description: |
+          Output only. The time at which the environment group attachment was created as milliseconds since epoch.
+      - !ruby/object:Api::Type::String
+        name: 'environment'
+        description: |
+          Required. ID of the attached environment.
+      - !ruby/object:Api::Type::String
+        name: 'environmentGroupId'
+        description: |
+          Output only. ID of the environment group.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          ID of the environment group attachment.
+  

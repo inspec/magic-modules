@@ -896,3 +896,9 @@ vpn_gateway:
   self_link : "value_selflink"
   label_fingerprint : "value_labelfingerprint"
   stack_type : "value_stacktype"
+organization_envgroup_attachment:
+  name : "value_name"
+  parent : "value_parent"
+  created_at : "value_createdat"
+  environment : "value_environment"
+  environment_group_id : "value_environmentgroupid"
