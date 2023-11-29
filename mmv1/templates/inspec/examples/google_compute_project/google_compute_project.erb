@@ -1,0 +1,20 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% project = grab_attributes(pwd)['project'] -%>
+describe google_compute_project(project: <%= gcp_project_id -%>) do
+	it { should exist }
+	its('kind') { should cmp <%= doc_generation ? "'#{project['kind']}'" : "project['kind']" -%> }
+	its('id') { should cmp <%= doc_generation ? "'#{project['id']}'" : "project['id']" -%> }
+	its('creation_timestamp') { should cmp <%= doc_generation ? "'#{project['creation_timestamp']}'" : "project['creation_timestamp']" -%> }
+	its('name') { should cmp <%= doc_generation ? "'#{project['name']}'" : "project['name']" -%> }
+	its('description') { should cmp <%= doc_generation ? "'#{project['description']}'" : "project['description']" -%> }
+	its('self_link') { should cmp <%= doc_generation ? "'#{project['self_link']}'" : "project['self_link']" -%> }
+	its('default_service_account') { should cmp <%= doc_generation ? "'#{project['default_service_account']}'" : "project['default_service_account']" -%> }
+	its('xpn_project_status') { should cmp <%= doc_generation ? "'#{project['xpn_project_status']}'" : "project['xpn_project_status']" -%> }
+	its('default_network_tier') { should cmp <%= doc_generation ? "'#{project['default_network_tier']}'" : "project['default_network_tier']" -%> }
+	its('vm_dns_setting') { should cmp <%= doc_generation ? "'#{project['vm_dns_setting']}'" : "project['vm_dns_setting']" -%> }
+
+end
+
+describe google_compute_project(project: <%= gcp_project_id -%>) do
+	it { should_not exist }
+end
