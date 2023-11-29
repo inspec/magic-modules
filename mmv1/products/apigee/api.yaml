@@ -498,3 +498,209 @@ objects:
         'Creating an environment':
           'https://cloud.google.com/apigee/docs/api-platform/get-started/create-environment'
       api: 'https://cloud.google.com/apigee/docs/reference/apis/apigee/rest/v1/organizations.endpointAttachments/create'
+
+
+    
+  - !ruby/object:Api::Resource
+    name: OrganizationEnvironment
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/apigee/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        No description
+    properties:
+  
+      - !ruby/object:Api::Type::Enum
+        name: 'type'
+        description: |
+          Optional. EnvironmentType selected for the environment.
+        values:
+          - :ENVIRONMENT_TYPE_UNSPECIFIED
+          - :BASE
+          - :INTERMEDIATE
+          - :COMPREHENSIVE
+      - !ruby/object:Api::Type::String
+        name: 'properties'
+        description: |
+          Optional. Key-value pairs that may be used for customizing the environment.
+      - !ruby/object:Api::Type::Boolean
+        name: 'hasAttachedFlowHooks'
+        description: |
+          
+      - !ruby/object:Api::Type::Enum
+        name: 'state'
+        description: |
+          Output only. State of the environment. Values other than ACTIVE means the resource is not ready to use.
+        values:
+          - :STATE_UNSPECIFIED
+          - :CREATING
+          - :ACTIVE
+          - :DELETING
+          - :UPDATING
+      - !ruby/object:Api::Type::Enum
+        name: 'apiProxyType'
+        description: |
+          Optional. API Proxy type supported by the environment. The type can be set when creating the Environment and cannot be changed.
+        values:
+          - :API_PROXY_TYPE_UNSPECIFIED
+          - :PROGRAMMABLE
+          - :CONFIGURABLE
+      - !ruby/object:Api::Type::String
+        name: 'forwardProxyUri'
+        description: |
+          Optional. Url of the forward proxy to be applied to the runtime instances in this environment. Must be in the format of {scheme}://{hostname}:{port}. Note that scheme must be one of "http" or "https", and port must be supplied.
+      - !ruby/object:Api::Type::String
+        name: 'nodeConfig'
+        description: |
+          Optional. NodeConfig of the environment.
+      - !ruby/object:Api::Type::Enum
+        name: 'deploymentType'
+        description: |
+          Optional. Deployment type supported by the environment. The deployment type can be set when creating the environment and cannot be changed. When you enable archive deployment, you will be **prevented from performing** a [subset of actions](/apigee/docs/api-platform/local-development/overview#prevented-actions) within the environment, including: * Managing the deployment of API proxy or shared flow revisions * Creating, updating, or deleting resource files * Creating, updating, or deleting target servers
+        values:
+          - :DEPLOYMENT_TYPE_UNSPECIFIED
+          - :PROXY
+          - :ARCHIVE
+      - !ruby/object:Api::Type::String
+        name: 'lastModifiedAt'
+        description: |
+          Output only. Last modification time of this environment as milliseconds since epoch.
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          Optional. Display name for this environment.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Required. Name of the environment. Values must match the regular expression `^[.\\p{Alnum}-_]{1,255}$`
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          Optional. Description of the environment.
+      - !ruby/object:Api::Type::String
+        name: 'createdAt'
+        description: |
+          Output only. Creation time of this environment as milliseconds since epoch.
+  
+
+
+    
+  - !ruby/object:Api::Resource
+    name: OrganizationEnvironment
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/apigee/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        No description
+    properties:
+  
+      - !ruby/object:Api::Type::Enum
+        name: 'type'
+        description: |
+          Optional. EnvironmentType selected for the environment.
+        values:
+          - :ENVIRONMENT_TYPE_UNSPECIFIED
+          - :BASE
+          - :INTERMEDIATE
+          - :COMPREHENSIVE
+      - !ruby/object:Api::Type::String
+        name: 'properties'
+        description: |
+          Optional. Key-value pairs that may be used for customizing the environment.
+      - !ruby/object:Api::Type::Boolean
+        name: 'hasAttachedFlowHooks'
+        description: |
+          
+      - !ruby/object:Api::Type::Enum
+        name: 'state'
+        description: |
+          Output only. State of the environment. Values other than ACTIVE means the resource is not ready to use.
+        values:
+          - :STATE_UNSPECIFIED
+          - :CREATING
+          - :ACTIVE
+          - :DELETING
+          - :UPDATING
+      - !ruby/object:Api::Type::Enum
+        name: 'apiProxyType'
+        description: |
+          Optional. API Proxy type supported by the environment. The type can be set when creating the Environment and cannot be changed.
+        values:
+          - :API_PROXY_TYPE_UNSPECIFIED
+          - :PROGRAMMABLE
+          - :CONFIGURABLE
+      - !ruby/object:Api::Type::String
+        name: 'forwardProxyUri'
+        description: |
+          Optional. Url of the forward proxy to be applied to the runtime instances in this environment. Must be in the format of {scheme}://{hostname}:{port}. Note that scheme must be one of "http" or "https", and port must be supplied.
+      - !ruby/object:Api::Type::String
+        name: 'nodeConfig'
+        description: |
+          Optional. NodeConfig of the environment.
+      - !ruby/object:Api::Type::Enum
+        name: 'deploymentType'
+        description: |
+          Optional. Deployment type supported by the environment. The deployment type can be set when creating the environment and cannot be changed. When you enable archive deployment, you will be **prevented from performing** a [subset of actions](/apigee/docs/api-platform/local-development/overview#prevented-actions) within the environment, including: * Managing the deployment of API proxy or shared flow revisions * Creating, updating, or deleting resource files * Creating, updating, or deleting target servers
+        values:
+          - :DEPLOYMENT_TYPE_UNSPECIFIED
+          - :PROXY
+          - :ARCHIVE
+      - !ruby/object:Api::Type::String
+        name: 'lastModifiedAt'
+        description: |
+          Output only. Last modification time of this environment as milliseconds since epoch.
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          Optional. Display name for this environment.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Required. Name of the environment. Values must match the regular expression `^[.\\p{Alnum}-_]{1,255}$`
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          Optional. Description of the environment.
+      - !ruby/object:Api::Type::String
+        name: 'createdAt'
+        description: |
+          Output only. Creation time of this environment as milliseconds since epoch.
+  
