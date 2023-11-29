@@ -1,0 +1,21 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% service_attachment = grab_attributes(pwd)['service_attachment'] -%>
+describe google_compute_service_attachment(project: <%= gcp_project_id -%>, region: <%= doc_generation ? "' #{service_attachment['region']}'":"service_attachment['region']" -%>, serviceAttachment: <%= doc_generation ? "' #{service_attachment['serviceAttachment']}'":"service_attachment['serviceAttachment']" -%>) do
+	it { should exist }
+	its('kind') { should cmp <%= doc_generation ? "'#{service_attachment['kind']}'" : "service_attachment['kind']" -%> }
+	its('id') { should cmp <%= doc_generation ? "'#{service_attachment['id']}'" : "service_attachment['id']" -%> }
+	its('creation_timestamp') { should cmp <%= doc_generation ? "'#{service_attachment['creation_timestamp']}'" : "service_attachment['creation_timestamp']" -%> }
+	its('name') { should cmp <%= doc_generation ? "'#{service_attachment['name']}'" : "service_attachment['name']" -%> }
+	its('description') { should cmp <%= doc_generation ? "'#{service_attachment['description']}'" : "service_attachment['description']" -%> }
+	its('self_link') { should cmp <%= doc_generation ? "'#{service_attachment['self_link']}'" : "service_attachment['self_link']" -%> }
+	its('region') { should cmp <%= doc_generation ? "'#{service_attachment['region']}'" : "service_attachment['region']" -%> }
+	its('producer_forwarding_rule') { should cmp <%= doc_generation ? "'#{service_attachment['producer_forwarding_rule']}'" : "service_attachment['producer_forwarding_rule']" -%> }
+	its('target_service') { should cmp <%= doc_generation ? "'#{service_attachment['target_service']}'" : "service_attachment['target_service']" -%> }
+	its('connection_preference') { should cmp <%= doc_generation ? "'#{service_attachment['connection_preference']}'" : "service_attachment['connection_preference']" -%> }
+	its('fingerprint') { should cmp <%= doc_generation ? "'#{service_attachment['fingerprint']}'" : "service_attachment['fingerprint']" -%> }
+
+end
+
+describe google_compute_service_attachment(project: <%= gcp_project_id -%>, region: <%= doc_generation ? "' #{service_attachment['region']}'":"service_attachment['region']" -%>, serviceAttachment: <%= doc_generation ? "' #{service_attachment['serviceAttachment']}'":"service_attachment['serviceAttachment']" -%>) do
+	it { should_not exist }
+end
