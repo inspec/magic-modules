@@ -498,3 +498,123 @@ objects:
         'Creating an environment':
           'https://cloud.google.com/apigee/docs/api-platform/get-started/create-environment'
       api: 'https://cloud.google.com/apigee/docs/reference/apis/apigee/rest/v1/organizations.endpointAttachments/create'
+
+
+    
+  - !ruby/object:Api::Resource
+    name: OrganizationEnvgroup
+    base_url: '{{parent}}/envgroups'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/apigee/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        EnvironmentGroup configuration. An environment group is used to group one or more Apigee environments under a single host name.
+    properties:
+  
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          ID of the environment group.
+      - !ruby/object:Api::Type::String
+        name: 'lastModifiedAt'
+        description: |
+          Output only. The time at which the environment group was last updated as milliseconds since epoch.
+      - !ruby/object:Api::Type::Array
+        name: 'hostnames'
+        description: |
+          Required. Host names for this environment group.
+        item_type: Api::Type::String
+      - !ruby/object:Api::Type::Enum
+        name: 'state'
+        description: |
+          Output only. State of the environment group. Values other than ACTIVE means the resource is not ready to use.
+        values:
+          - :STATE_UNSPECIFIED
+          - :CREATING
+          - :ACTIVE
+          - :DELETING
+          - :UPDATING
+      - !ruby/object:Api::Type::String
+        name: 'createdAt'
+        description: |
+          Output only. The time at which the environment group was created as milliseconds since epoch.
+  
+
+
+    
+  - !ruby/object:Api::Resource
+    name: OrganizationEnvgroup
+    base_url: '{{parent}}/envgroups'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/apigee/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        EnvironmentGroup configuration. An environment group is used to group one or more Apigee environments under a single host name.
+    properties:
+  
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          ID of the environment group.
+      - !ruby/object:Api::Type::String
+        name: 'lastModifiedAt'
+        description: |
+          Output only. The time at which the environment group was last updated as milliseconds since epoch.
+      - !ruby/object:Api::Type::Array
+        name: 'hostnames'
+        description: |
+          Required. Host names for this environment group.
+        item_type: Api::Type::String
+      - !ruby/object:Api::Type::Enum
+        name: 'state'
+        description: |
+          Output only. State of the environment group. Values other than ACTIVE means the resource is not ready to use.
+        values:
+          - :STATE_UNSPECIFIED
+          - :CREATING
+          - :ACTIVE
+          - :DELETING
+          - :UPDATING
+      - !ruby/object:Api::Type::String
+        name: 'createdAt'
+        description: |
+          Output only. The time at which the environment group was created as milliseconds since epoch.
+  
