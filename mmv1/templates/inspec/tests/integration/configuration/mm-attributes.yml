@@ -896,3 +896,8 @@ vpn_gateway:
   self_link : "value_selflink"
   label_fingerprint : "value_labelfingerprint"
   stack_type : "value_stacktype"
+organization_api:
+  name : "value_name"
+  parent : "value_parent"
+  latest_revision_id : "value_latestrevisionid"
+  api_proxy_type : "value_apiproxytype"
