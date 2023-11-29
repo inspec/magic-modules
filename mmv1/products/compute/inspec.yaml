@@ -206,8 +206,6 @@ overrides: !ruby/object:Overrides::ResourceOverrides
         exclude: true
       pathMatchers.defaultRouteAction.weightedBackendServices: !ruby/object:Overrides::Inspec::PropertyOverride
         exclude: true
-  VpnGateway: !ruby/object:Overrides::Inspec::ResourceOverride
-    exclude: true
   VpnTunnel: !ruby/object:Overrides::Inspec::ResourceOverride
     singular_extra_examples: third_party/inspec/documentation/google_compute_vpn_tunnel.md
     plural_extra_examples: third_party/inspec/documentation/google_compute_vpn_tunnels.md
