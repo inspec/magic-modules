@@ -12,7 +12,7 @@
 # limitations under the License.
 
 --- !ruby/object:Api::Product
-name: ArtifactRegistry
+name: Artifactregistry
 display_name: Artifact Registry
 scopes:
   - https://www.googleapis.com/auth/cloud-platform
