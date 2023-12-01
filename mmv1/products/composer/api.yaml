@@ -49,5 +49,3 @@ objects:
       - !ruby/object:Api::Type::String
         name: 'nextPageToken'
         description: |
-          The page token used to query for the next page if one exists.
-  
