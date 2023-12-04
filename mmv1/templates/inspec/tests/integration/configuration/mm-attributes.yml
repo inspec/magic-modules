@@ -881,8 +881,14 @@ tensorboard_experiment_run_time_series_resource:
   create_time : "value_createtime"
   value_type : "value_valuetype"
 
+project_region_cluster:
+  cluster_name : "value_clustername"
+  project_id : "value_projectid"
+  region : "value_region"
+
 project_location_image_version:
   parent : "value_parent"
+  
 vpn_gateway:
   project : "value_project"
   region : "value_region"
