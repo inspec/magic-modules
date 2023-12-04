@@ -1,0 +1,52 @@
+--- !ruby/object:Api::Product
+name: composer
+display_name: composer
+versions:
+  - !ruby/object:Api::Product::Version
+    name: ga
+    base_url: https://composer.googleapis.com//V1/
+scopes:
+  - https://composer.googleapis.com//auth/cloud-platform
+apis_required:
+  - !ruby/object:Api::Product::ApiReference
+    name: https://composer.googleapis.com/
+    url: https://console.cloud.google.com/apis/library/composer.googleapis.com/
+objects:
+    
+  - !ruby/object:Api::Resource
+    name: ProjectLocationImageVersion
+    base_url: '{{parent}}/imageVersions'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/composer/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        The ImageVersions in a project and location.
+    properties:
+  
+      - !ruby/object:Api::Type::Array
+        name: 'imageVersions'
+        description: |
+          The list of supported ImageVersions in a location.
+        item_type: Api::Type::String
+      - !ruby/object:Api::Type::String
+        name: 'nextPageToken'
+        description: |
+          The page token used to query for the next page if one exists.

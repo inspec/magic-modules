@@ -14356,146 +14356,6 @@ objects:
                       description: |
                        The size of the disk in base-2 GB.
   - !ruby/object:Api::Resource
-    name: 'ServiceAttachment'
-    kind: 'compute#ServiceAttachment'
-    base_url: projects/{{project}}/regions/{{region}}/serviceAttachments
-    has_self_link: true
-    update_verb: :PATCH
-    description: |
-      Represents a ServiceAttachment resource.
-    references: !ruby/object:Api::Resource::ReferenceLinks
-      guides:
-        'Configuring Private Service Connect to access services': 'https://cloud.google.com/vpc/docs/configure-private-service-connect-services'
-      api: 'https://cloud.google.com/compute/docs/reference/beta/serviceAttachments'
-    async: !ruby/object:Api::OpAsync
-      operation: !ruby/object:Api::OpAsync::Operation
-        kind: 'compute#operation'
-        path: 'name'
-        base_url: 'projects/{{project}}/regions/{{region}}/operations/{{op_id}}'
-        wait_ms: 1000
-      result: !ruby/object:Api::OpAsync::Result
-        path: 'targetLink'
-      status: !ruby/object:Api::OpAsync::Status
-        path: 'status'
-        complete: 'DONE'
-        allowed:
-          - 'PENDING'
-          - 'RUNNING'
-          - 'DONE'
-      error: !ruby/object:Api::OpAsync::Error
-        path: 'error/errors'
-        message: 'message'
-    parameters:
-      - !ruby/object:Api::Type::ResourceRef
-        name: 'region'
-        resource: 'Region'
-        imports: 'name'
-        description: |
-          URL of the region where the resource resides.
-        required: true
-        input: true
-    properties:
-      - !ruby/object:Api::Type::String
-        name: 'name'
-        required: true
-        description: |
-          Name of the resource. The name must be 1-63 characters long, and
-          comply with RFC1035. Specifically, the name must be 1-63 characters
-          long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?`
-          which means the first character must be a lowercase letter, and all
-          following characters must be a dash, lowercase letter, or digit,
-          except the last character, which cannot be a dash.
-        input: true
-      - !ruby/object:Api::Type::String
-        name: 'description'
-        description: |
-          An optional description of this resource.
-      - !ruby/object:Api::Type::Fingerprint
-        name: 'fingerprint'
-        description: |
-          Fingerprint of this resource. This field is used internally during
-          updates of this resource.
-      - !ruby/object:Api::Type::String
-        name: 'connectionPreference'
-        required: true
-        description: |
-          The connection preference to use for this service attachment. Valid
-          values include "ACCEPT_AUTOMATIC", "ACCEPT_MANUAL".
-      - !ruby/object:Api::Type::Array
-        name: 'connectedEndpoints'
-        output: true
-        description: |
-          An array of the consumer forwarding rules connected to this service
-          attachment.
-        item_type: !ruby/object:Api::Type::NestedObject
-          properties:
-          - !ruby/object:Api::Type::String
-            name: 'endpoint'
-            output: true
-            description: |
-              The URL of the consumer forwarding rule.
-          - !ruby/object:Api::Type::String
-            name: 'status'
-            output: true
-            description: |
-              The status of the connection from the consumer forwarding rule to
-              this service attachment.
-      - !ruby/object:Api::Type::ResourceRef
-        name: targetService
-        required: true
-        input: true
-        resource: 'ForwardingRule'
-        imports: 'selfLink'
-        description: |
-          The URL of a forwarding rule that represents the service identified by
-          this service attachment.
-      - !ruby/object:Api::Type::Array
-        name: 'natSubnets'
-        required: true
-        send_empty_value: true
-        description: |
-          An array of subnets that is provided for NAT in this service attachment.
-        item_type: !ruby/object:Api::Type::ResourceRef
-          name: 'subnet'
-          resource: 'Subnetwork'
-          imports: 'selfLink'
-          description: |
-            A subnet that is provided for NAT in this service attachment.
-      - !ruby/object:Api::Type::Boolean
-        name: 'enableProxyProtocol'
-        required: true
-        input: true
-        description: |
-          If true, enable the proxy protocol which is for supplying client TCP/IP
-          address data in TCP connections that traverse proxies on their way to
-          destination servers.
-      - !ruby/object:Api::Type::Array
-        name: 'consumerRejectLists'
-        item_type: Api::Type::String
-        send_empty_value: true
-        description: |
-          An array of projects that are not allowed to connect to this service
-          attachment.
-      - !ruby/object:Api::Type::Array
-        name: 'consumerAcceptLists'
-        description: |
-          An array of projects that are allowed to connect to this service
-          attachment.
-        send_empty_value: true
-        item_type: !ruby/object:Api::Type::NestedObject
-          properties:
-          - !ruby/object:Api::Type::String
-            name: 'projectIdOrNum'
-            required: true
-            description: |
-              A project that is allowed to connect to this service attachment.
-          - !ruby/object:Api::Type::Integer
-            name: 'connectionLimit'
-            required: true
-            description: |
-              The number of consumer forwarding rules the consumer project can
-              create.
-  - !ruby/object:Api::Resource
     name: 'SslPolicy'
     kind: 'compute#sslPolicy'
     base_url: projects/{{project}}/global/sslPolicies
@@ -15788,107 +15648,6 @@ objects:
             A ForwardingRule resource associated with this VPN gateway.
         output: true
         # status is not useful for state convergence
-  - !ruby/object:Api::Resource
-    name: 'VpnGateway'
-    kind: 'compute#vpnGateway'
-    base_url: projects/{{project}}/regions/{{region}}/vpnGateways
-    collection_url_key: 'items'
-    input: true
-    has_self_link: true
-    description: |
-      Represents a VPN gateway running in GCP. This virtual device is managed
-      by Google, but used only by you. This type of VPN Gateway allows for the creation
-      of VPN solutions with higher availability than classic Target VPN Gateways.
-    references: !ruby/object:Api::Resource::ReferenceLinks
-      guides:
-        'Choosing a VPN': https://cloud.google.com/vpn/docs/how-to/choosing-a-vpn
-        'Cloud VPN Overview': 'https://cloud.google.com/vpn/docs/concepts/overview'
-      api: https://cloud.google.com/compute/docs/reference/rest/v1/vpnGateways
-    async: !ruby/object:Api::OpAsync
-      operation: !ruby/object:Api::OpAsync::Operation
-        kind: 'compute#operation'
-        path: 'name'
-        base_url: 'projects/{{project}}/regions/{{region}}/operations/{{op_id}}'
-        wait_ms: 1000
-      result: !ruby/object:Api::OpAsync::Result
-        path: 'targetLink'
-      status: !ruby/object:Api::OpAsync::Status
-        path: 'status'
-        complete: 'DONE'
-        allowed:
-          - 'PENDING'
-          - 'RUNNING'
-          - 'DONE'
-      error: !ruby/object:Api::OpAsync::Error
-        path: 'error/errors'
-        message: 'message'
-    parameters:
-      - !ruby/object:Api::Type::ResourceRef
-        name: 'region'
-        resource: 'Region'
-        imports: 'name'
-        description: |
-          The region this gateway should sit in.
-        required: true
-    properties:
-      - !ruby/object:Api::Type::Time
-        name: 'creationTimestamp'
-        description: 'Creation timestamp in RFC3339 text format.'
-        output: true
-      - !ruby/object:Api::Type::String
-        name: 'description'
-        description: 'An optional description of this resource.'
-        input: true
-      - !ruby/object:Api::Type::String
-        name: 'name'
-        description: |
-          Name of the resource. Provided by the client when the resource is
-          created. The name must be 1-63 characters long, and comply with
-          RFC1035.  Specifically, the name must be 1-63 characters long and
-          match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means
-          the first character must be a lowercase letter, and all following
-          characters must be a dash, lowercase letter, or digit, except the last
-          character, which cannot be a dash.
-        required: true
-        input: true
-      - !ruby/object:Api::Type::Integer
-        name: 'id'
-        description: 'The unique identifier for the resource.'
-        output: true
-      - !ruby/object:Api::Type::ResourceRef
-        name: 'network'
-        resource: 'Network'
-        imports: 'selfLink'
-        description: |
-          The network this VPN gateway is accepting traffic for.
-        required: true
-        input: true
-      - !ruby/object:Api::Type::Array
-        name: 'vpnInterfaces'
-        description: |
-          A list of interfaces on this VPN gateway.
-        item_type: !ruby/object:Api::Type::NestedObject
-          properties:
-            - !ruby/object:Api::Type::Integer
-              name: 'id'
-              description: 'The numeric ID of this VPN gateway interface.'
-            - !ruby/object:Api::Type::String
-              name: 'ipAddress'
-              description: 'The external IP address for this VPN gateway interface.'
-              output: true
-            - !ruby/object:Api::Type::ResourceRef
-              name: 'interconnectAttachment'
-              resource: 'InterconnectAttachment'
-              imports: 'selfLink'
-              description: |
-                  URL of the interconnect attachment resource. When the value
-                  of this field is present, the VPN Gateway will be used for
-                  IPsec-encrypted Cloud Interconnect; all Egress or Ingress
-                  traffic for this VPN Gateway interface will go through the
-                  specified interconnect attachment resource.
-
-                  Not currently available publicly.
-              input: true
   - !ruby/object:Api::Resource
     name: 'ExternalVpnGateway'
     kind: 'compute#externalVpnGateway'
@@ -19821,3 +19580,224 @@ objects:
           - :READY_TO_ANNOUNCE
           - :ANNOUNCED
           - :DELETING
+
+
+    
+  - !ruby/object:Api::Resource
+    name: ServiceAttachment
+    base_url: 'projects/{{project}}/regions/{{region}}/serviceAttachments'
+    self_link: 'projects/{{project}}/regions/{{region}}/serviceAttachments/{{serviceAttachment}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/compute/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Represents a ServiceAttachment resource. A service attachment represents a service that a producer has exposed. It encapsulates the load balancer which fronts the service runs and a list of NAT IP ranges that the producers uses to represent the consumers connecting to the service.
+    properties:
+  
+      - !ruby/object:Api::Type::String
+        name: 'kind'
+        description: |
+          [Output Only] Type of the resource. Always compute#serviceAttachment for service attachments.
+      - !ruby/object:Api::Type::String
+        name: 'id'
+        description: |
+          [Output Only] The unique identifier for the resource type. The server generates this identifier.
+      - !ruby/object:Api::Type::String
+        name: 'creationTimestamp'
+        description: |
+          [Output Only] Creation timestamp in RFC3339 text format.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          An optional description of this resource. Provide this property when you create the resource.
+      - !ruby/object:Api::Type::String
+        name: 'selfLink'
+        description: |
+          [Output Only] Server-defined URL for the resource.
+      - !ruby/object:Api::Type::String
+        name: 'region'
+        description: |
+          [Output Only] URL of the region where the service attachment resides. This field applies only to the region resource. You must specify this field as part of the HTTP request URL. It is not settable as a field in the request body.
+      - !ruby/object:Api::Type::String
+        name: 'producerForwardingRule'
+        description: |
+          The URL of a forwarding rule with loadBalancingScheme INTERNAL* that is serving the endpoint identified by this service attachment.
+      - !ruby/object:Api::Type::String
+        name: 'targetService'
+        description: |
+          The URL of a service serving the endpoint identified by this service attachment.
+      - !ruby/object:Api::Type::Enum
+        name: 'connectionPreference'
+        description: |
+          The connection preference of service attachment. The value can be set to ACCEPT_AUTOMATIC. An ACCEPT_AUTOMATIC service attachment is one that always accepts the connection from consumer forwarding rules.
+        values:
+          - :ACCEPT_AUTOMATIC
+          - :ACCEPT_MANUAL
+          - :CONNECTION_PREFERENCE_UNSPECIFIED
+      - !ruby/object:Api::Type::Array
+        name: 'connectedEndpoints'
+        description: |
+          [Output Only] An array of connections for all the consumers connected to this service attachment.
+        item_type: Api::Type::String
+      - !ruby/object:Api::Type::Array
+        name: 'natSubnets'
+        description: |
+          An array of URLs where each entry is the URL of a subnet provided by the service producer to use for NAT in this service attachment.
+        item_type: Api::Type::String
+      - !ruby/object:Api::Type::Boolean
+        name: 'enableProxyProtocol'
+        description: |
+          If true, enable the proxy protocol which is for supplying client TCP/IP address data in TCP connections that traverse proxies on their way to destination servers.
+      - !ruby/object:Api::Type::Array
+        name: 'consumerRejectLists'
+        description: |
+          Projects that are not allowed to connect to this service attachment. The project can be specified using its id or number.
+        item_type: Api::Type::String
+      - !ruby/object:Api::Type::Array
+        name: 'consumerAcceptLists'
+        description: |
+          Projects that are allowed to connect to this service attachment.
+        item_type: Api::Type::String
+      - !ruby/object:Api::Type::String
+        name: 'pscServiceAttachmentId'
+        description: |
+          [Output Only] An 128-bit global unique ID of the PSC service attachment.
+      - !ruby/object:Api::Type::String
+        name: 'fingerprint'
+        description: |
+          Fingerprint of this resource. A hash of the contents stored in this object. This field is used in optimistic locking. This field will be ignored when inserting a ServiceAttachment. An up-to-date fingerprint must be provided in order to patch/update the ServiceAttachment; otherwise, the request will fail with error 412 conditionNotMet. To see the latest fingerprint, make a get() request to retrieve the ServiceAttachment.
+      - !ruby/object:Api::Type::Array
+        name: 'domainNames'
+        description: |
+          If specified, the domain name will be used during the integration between the PSC connected endpoints and the Cloud DNS. For example, this is a valid domain name: "p.mycompany.com.". Current max number of domain names supported is 1.
+        item_type: Api::Type::String
+      - !ruby/object:Api::Type::Boolean
+        name: 'reconcileConnections'
+        description: |
+          This flag determines whether a consumer accept/reject list change can reconcile the statuses of existing ACCEPTED or REJECTED PSC endpoints. - If false, connection policy update will only affect existing PENDING PSC endpoints. Existing ACCEPTED/REJECTED endpoints will remain untouched regardless how the connection policy is modified . - If true, update will affect both PENDING and ACCEPTED/REJECTED PSC endpoints. For example, an ACCEPTED PSC endpoint will be moved to REJECTED if its project is added to the reject list. For newly created service attachment, this boolean defaults to false.
+  
+
+
+    
+  - !ruby/object:Api::Resource
+    name: VpnGateway
+    base_url: 'projects/{{project}}/regions/{{region}}/vpnGateways'
+    self_link: 'projects/{{project}}/regions/{{region}}/vpnGateways/{{vpnGateway}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/compute/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Represents a HA VPN gateway. HA VPN is a high-availability (HA) Cloud VPN solution that lets you securely connect your on-premises network to your Google Cloud Virtual Private Cloud network through an IPsec VPN connection in a single region. For more information about Cloud HA VPN solutions, see Cloud VPN topologies .
+    properties:
+  
+      - !ruby/object:Api::Type::String
+        name: 'kind'
+        description: |
+          [Output Only] Type of resource. Always compute#vpnGateway for VPN gateways.
+      - !ruby/object:Api::Type::String
+        name: 'id'
+        description: |
+          [Output Only] The unique identifier for the resource. This identifier is defined by the server.
+      - !ruby/object:Api::Type::String
+        name: 'creationTimestamp'
+        description: |
+          [Output Only] Creation timestamp in RFC3339 text format.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          An optional description of this resource. Provide this property when you create the resource.
+      - !ruby/object:Api::Type::String
+        name: 'region'
+        description: |
+          [Output Only] URL of the region where the VPN gateway resides.
+      - !ruby/object:Api::Type::String
+        name: 'network'
+        description: |
+          URL of the network to which this VPN gateway is attached. Provided by the client when the VPN gateway is created.
+      - !ruby/object:Api::Type::String
+        name: 'selfLink'
+        description: |
+          [Output Only] Server-defined URL for the resource.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          Labels for this resource. These can only be added or modified by the setLabels method. Each label key/value pair must comply with RFC1035. Label values may be empty.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+              
+      - !ruby/object:Api::Type::String
+        name: 'labelFingerprint'
+        description: |
+          A fingerprint for the labels being applied to this VpnGateway, which is essentially a hash of the labels set used for optimistic locking. The fingerprint is initially generated by Compute Engine and changes after every request to modify or update labels. You must always provide an up-to-date fingerprint hash in order to update or change labels, otherwise the request will fail with error 412 conditionNotMet. To see the latest fingerprint, make a get() request to retrieve a VpnGateway.
+      - !ruby/object:Api::Type::Array
+        name: 'vpnInterfaces'
+        description: |
+          The list of VPN interfaces associated with this VPN gateway.
+        item_type: !ruby/object:Api::Type::NestedObject
+          properties:
+            - !ruby/object:Api::Type::Integer
+              name: 'id'
+              description: |
+                [Output Only] Numeric identifier for this VPN interface associated with the VPN gateway.
+            - !ruby/object:Api::Type::String
+              name: 'ipAddress'
+              description: |
+                [Output Only] IP address for this VPN interface associated with the VPN gateway. The IP address could be either a regional external IP address or a regional internal IP address. The two IP addresses for a VPN gateway must be all regional external or regional internal IP addresses. There cannot be a mix of regional external IP addresses and regional internal IP addresses. For HA VPN over Cloud Interconnect, the IP addresses for both interfaces could either be regional internal IP addresses or regional external IP addresses. For regular (non HA VPN over Cloud Interconnect) HA VPN tunnels, the IP address must be a regional external IP address.
+            - !ruby/object:Api::Type::String
+              name: 'interconnectAttachment'
+              description: |
+                URL of the VLAN attachment (interconnectAttachment) resource for this VPN gateway interface. When the value of this field is present, the VPN gateway is used for HA VPN over Cloud Interconnect; all egress or ingress traffic for this VPN gateway interface goes through the specified VLAN attachment resource.
+      - !ruby/object:Api::Type::Enum
+        name: 'stackType'
+        description: |
+          The stack type for this VPN gateway to identify the IP protocols that are enabled. Possible values are: IPV4_ONLY, IPV4_IPV6. If not specified, IPV4_ONLY will be used.
+        values:
+          - :IPV4_IPV6
+          - :IPV4_ONLY
+  
