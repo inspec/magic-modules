@@ -105,4 +105,3 @@ objects:
         name: 'nextPageToken'
         description: |
           The page token used to query for the next page if one exists.
-  
