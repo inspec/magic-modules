@@ -888,7 +888,7 @@ project_region_cluster:
 
 project_location_image_version:
   parent : "value_parent"
-  
+
 vpn_gateway:
   project : "value_project"
   region : "value_region"
@@ -926,3 +926,10 @@ organization:
   apigee_project_id : "value_apigeeprojectid"
   expires_at : "value_expiresat"
   billing_type : "value_billingtype"
+project_location_environment:
+  name : "value_name"
+  parent : "value_parent"
+  uuid : "value_uuid"
+  state : "value_state"
+  create_time : "value_createtime"
+  update_time : "value_updatetime"
