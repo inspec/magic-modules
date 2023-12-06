@@ -2062,3 +2062,1009 @@ objects:
               description: |
                 Optional. The name of the Cloud Storage bucket used by the environment. No `gs://` prefix.
   
+
+
+    
+  - !ruby/object:Api::Resource
+    name: ProjectLocationEnvironment
+    base_url: '{{parent}}/environments'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/composer/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        An environment for running orchestration tasks.
+    properties:
+  
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          The resource name of the environment, in the form: "projects/{projectId}/locations/{locationId}/environments/{environmentId}" EnvironmentId must start with a lowercase letter followed by up to 63 lowercase letters, numbers, or hyphens, and cannot end with a hyphen.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'config'
+        description: |
+          Configuration information for an environment.
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'gkeCluster'
+              description: |
+                Output only. The Kubernetes Engine cluster used to run this environment.
+            - !ruby/object:Api::Type::String
+              name: 'dagGcsPrefix'
+              description: |
+                Output only. The Cloud Storage prefix of the DAGs for this environment. Although Cloud Storage objects reside in a flat namespace, a hierarchical file tree can be simulated using "/"-delimited object name prefixes. DAG objects for this environment reside in a simulated directory with the given prefix.
+            - !ruby/object:Api::Type::Integer
+              name: 'nodeCount'
+              description: |
+                The number of nodes in the Kubernetes Engine cluster that will be used to run this environment. This field is supported for Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'softwareConfig'
+              description: |
+                Specifies the selection and configuration of software inside the environment.
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'imageVersion'
+                    description: |
+                      The version of the software running in the environment. This encapsulates both the version of Cloud Composer functionality and the version of Apache Airflow. It must match the regular expression `composer-([0-9]+(\.[0-9]+\.[0-9]+(-preview\.[0-9]+)?)?|latest)-airflow-([0-9]+(\.[0-9]+(\.[0-9]+)?)?)`. When used as input, the server also checks if the provided version is supported and denies the request for an unsupported version. The Cloud Composer portion of the image version is a full [semantic version](https://semver.org), or an alias in the form of major version number or `latest`. When an alias is provided, the server replaces it with the current Cloud Composer version that satisfies the alias. The Apache Airflow portion of the image version is a full semantic version that points to one of the supported Apache Airflow versions, or an alias in the form of only major or major.minor versions specified. When an alias is provided, the server replaces it with the latest Apache Airflow version that satisfies the alias and is supported in the given Cloud Composer version. In all cases, the resolved image version is stored in the same field. See also [version list](/composer/docs/concepts/versioning/composer-versions) and [versioning overview](/composer/docs/concepts/versioning/composer-versioning-overview).
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'airflowConfigOverrides'
+                    description: |
+                      Optional. Apache Airflow configuration properties to override. Property keys contain the section and property names, separated by a hyphen, for example "core-dags_are_paused_at_creation". Section names must not contain hyphens ("-"), opening square brackets ("["), or closing square brackets ("]"). The property name must not be empty and must not contain an equals sign ("=") or semicolon (";"). Section and property names must not contain a period ("."). Apache Airflow configuration property names must be written in [snake_case](https://en.wikipedia.org/wiki/Snake_case). Property values can contain any character, and can be written in any lower/upper case format. Certain Apache Airflow configuration property values are [blocked](/composer/docs/concepts/airflow-configurations), and cannot be overridden.
+                    properties:
+                      - !ruby/object:Api::Type::String
+                        name: 'additionalProperties'
+                        description: |
+                          
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'pypiPackages'
+                    description: |
+                      Optional. Custom Python Package Index (PyPI) packages to be installed in the environment. Keys refer to the lowercase package name such as "numpy" and values are the lowercase extras and version specifier such as "==1.12.0", "[devel,gcp_api]", or "[devel]>=1.8.2, <1.9.2". To specify a package without pinning it to a version specifier, use the empty string as the value.
+                    properties:
+                      - !ruby/object:Api::Type::String
+                        name: 'additionalProperties'
+                        description: |
+                          
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'envVariables'
+                    description: |
+                      Optional. Additional environment variables to provide to the Apache Airflow scheduler, worker, and webserver processes. Environment variable names must match the regular expression `a-zA-Z_*`. They cannot specify Apache Airflow software configuration overrides (they cannot match the regular expression `AIRFLOW__[A-Z0-9_]+__[A-Z0-9_]+`), and they cannot match any of the following reserved names: * `AIRFLOW_HOME` * `C_FORCE_ROOT` * `CONTAINER_NAME` * `DAGS_FOLDER` * `GCP_PROJECT` * `GCS_BUCKET` * `GKE_CLUSTER_NAME` * `SQL_DATABASE` * `SQL_INSTANCE` * `SQL_PASSWORD` * `SQL_PROJECT` * `SQL_REGION` * `SQL_USER`
+                    properties:
+                      - !ruby/object:Api::Type::String
+                        name: 'additionalProperties'
+                        description: |
+                          
+                  - !ruby/object:Api::Type::String
+                    name: 'pythonVersion'
+                    description: |
+                      Optional. The major version of Python used to run the Apache Airflow scheduler, worker, and webserver processes. Can be set to '2' or '3'. If not specified, the default is '3'. Cannot be updated. This field is only supported for Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*. Environments in newer versions always use Python major version 3.
+                  - !ruby/object:Api::Type::Integer
+                    name: 'schedulerCount'
+                    description: |
+                      Optional. The number of schedulers for Airflow. This field is supported for Cloud Composer environments in versions composer-1.*.*-airflow-2.*.*.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'nodeConfig'
+              description: |
+                The configuration information for the Kubernetes Engine nodes running the Apache Airflow software.
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'location'
+                    description: |
+                      Optional. The Compute Engine [zone](/compute/docs/regions-zones) in which to deploy the VMs used to run the Apache Airflow software, specified as a [relative resource name](/apis/design/resource_names#relative_resource_name). For example: "projects/{projectId}/zones/{zoneId}". This `location` must belong to the enclosing environment's project and location. If both this field and `nodeConfig.machineType` are specified, `nodeConfig.machineType` must belong to this `location`; if both are unspecified, the service will pick a zone in the Compute Engine region corresponding to the Cloud Composer location, and propagate that choice to both fields. If only one field (`location` or `nodeConfig.machineType`) is specified, the location information from the specified field will be propagated to the unspecified field. This field is supported for Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*.
+                  - !ruby/object:Api::Type::String
+                    name: 'machineType'
+                    description: |
+                      Optional. The Compute Engine [machine type](/compute/docs/machine-types) used for cluster instances, specified as a [relative resource name](/apis/design/resource_names#relative_resource_name). For example: "projects/{projectId}/zones/{zoneId}/machineTypes/{machineTypeId}". The `machineType` must belong to the enclosing environment's project and location. If both this field and `nodeConfig.location` are specified, this `machineType` must belong to the `nodeConfig.location`; if both are unspecified, the service will pick a zone in the Compute Engine region corresponding to the Cloud Composer location, and propagate that choice to both fields. If exactly one of this field and `nodeConfig.location` is specified, the location information from the specified field will be propagated to the unspecified field. The `machineTypeId` must not be a [shared-core machine type](/compute/docs/machine-types#sharedcore). If this field is unspecified, the `machineTypeId` defaults to "n1-standard-1". This field is supported for Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*.
+                  - !ruby/object:Api::Type::String
+                    name: 'network'
+                    description: |
+                      Optional. The Compute Engine network to be used for machine communications, specified as a [relative resource name](/apis/design/resource_names#relative_resource_name). For example: "projects/{projectId}/global/networks/{networkId}". If unspecified, the "default" network ID in the environment's project is used. If a [Custom Subnet Network](/vpc/docs/vpc#vpc_networks_and_subnets) is provided, `nodeConfig.subnetwork` must also be provided. For [Shared VPC](/vpc/docs/shared-vpc) subnetwork requirements, see `nodeConfig.subnetwork`.
+                  - !ruby/object:Api::Type::String
+                    name: 'subnetwork'
+                    description: |
+                      Optional. The Compute Engine subnetwork to be used for machine communications, specified as a [relative resource name](/apis/design/resource_names#relative_resource_name). For example: "projects/{projectId}/regions/{regionId}/subnetworks/{subnetworkId}" If a subnetwork is provided, `nodeConfig.network` must also be provided, and the subnetwork must belong to the enclosing environment's project and location.
+                  - !ruby/object:Api::Type::Integer
+                    name: 'diskSizeGb'
+                    description: |
+                      Optional. The disk size in GB used for node VMs. Minimum size is 30GB. If unspecified, defaults to 100GB. Cannot be updated. This field is supported for Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*.
+                  - !ruby/object:Api::Type::Array
+                    name: 'oauthScopes'
+                    description: |
+                      Optional. The set of Google API scopes to be made available on all node VMs. If `oauth_scopes` is empty, defaults to ["https://www.googleapis.com/auth/cloud-platform"]. Cannot be updated. This field is supported for Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*.
+                    item_type: Api::Type::String
+                  - !ruby/object:Api::Type::String
+                    name: 'serviceAccount'
+                    description: |
+                      Optional. The Google Cloud Platform Service Account to be used by the node VMs. If a service account is not specified, the "default" Compute Engine service account is used. Cannot be updated.
+                  - !ruby/object:Api::Type::Array
+                    name: 'tags'
+                    description: |
+                      Optional. The list of instance tags applied to all node VMs. Tags are used to identify valid sources or targets for network firewalls. Each tag within the list must comply with [RFC1035](https://www.ietf.org/rfc/rfc1035.txt). Cannot be updated.
+                    item_type: Api::Type::String
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'ipAllocationPolicy'
+                    description: |
+                      Configuration for controlling how IPs are allocated in the GKE cluster running the Apache Airflow software.
+                    properties:
+                        - !ruby/object:Api::Type::Boolean
+                          name: 'useIpAliases'
+                          description: |
+                            Optional. Whether or not to enable Alias IPs in the GKE cluster. If `true`, a VPC-native cluster is created. This field is only supported for Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*. Environments in newer versions always use VPC-native GKE clusters.
+                        - !ruby/object:Api::Type::String
+                          name: 'clusterSecondaryRangeName'
+                          description: |
+                            Optional. The name of the GKE cluster's secondary range used to allocate IP addresses to pods. For Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*, this field is applicable only when `use_ip_aliases` is true.
+                        - !ruby/object:Api::Type::String
+                          name: 'clusterIpv4CidrBlock'
+                          description: |
+                            Optional. The IP address range used to allocate IP addresses to pods in the GKE cluster. For Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*, this field is applicable only when `use_ip_aliases` is true. Set to blank to have GKE choose a range with the default size. Set to /netmask (e.g. `/14`) to have GKE choose a range with a specific netmask. Set to a [CIDR](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) notation (e.g. `10.96.0.0/14`) from the RFC-1918 private networks (e.g. `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`) to pick a specific range to use.
+                        - !ruby/object:Api::Type::String
+                          name: 'servicesSecondaryRangeName'
+                          description: |
+                            Optional. The name of the services' secondary range used to allocate IP addresses to the GKE cluster. For Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*, this field is applicable only when `use_ip_aliases` is true.
+                        - !ruby/object:Api::Type::String
+                          name: 'servicesIpv4CidrBlock'
+                          description: |
+                            Optional. The IP address range of the services IP addresses in this GKE cluster. For Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*, this field is applicable only when `use_ip_aliases` is true. Set to blank to have GKE choose a range with the default size. Set to /netmask (e.g. `/14`) to have GKE choose a range with a specific netmask. Set to a [CIDR](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) notation (e.g. `10.96.0.0/14`) from the RFC-1918 private networks (e.g. `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`) to pick a specific range to use.
+                  - !ruby/object:Api::Type::Boolean
+                    name: 'enableIpMasqAgent'
+                    description: |
+                      Optional. Deploys 'ip-masq-agent' daemon set in the GKE cluster and defines nonMasqueradeCIDRs equals to pod IP range so IP masquerading is used for all destination addresses, except between pods traffic. See: https://cloud.google.com/kubernetes-engine/docs/how-to/ip-masquerade-agent
+            - !ruby/object:Api::Type::NestedObject
+              name: 'privateEnvironmentConfig'
+              description: |
+                The configuration information for configuring a Private IP Cloud Composer environment.
+              properties:
+                  - !ruby/object:Api::Type::Boolean
+                    name: 'enablePrivateEnvironment'
+                    description: |
+                      Optional. If `true`, a Private IP Cloud Composer environment is created. If this field is set to true, `IPAllocationPolicy.use_ip_aliases` must be set to true for Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'privateClusterConfig'
+                    description: |
+                      Configuration options for the private GKE cluster in a Cloud Composer environment.
+                    properties:
+                        - !ruby/object:Api::Type::Boolean
+                          name: 'enablePrivateEndpoint'
+                          description: |
+                            Optional. If `true`, access to the public endpoint of the GKE cluster is denied.
+                        - !ruby/object:Api::Type::String
+                          name: 'masterIpv4CidrBlock'
+                          description: |
+                            Optional. The CIDR block from which IPv4 range for GKE master will be reserved. If left blank, the default value of '172.16.0.0/23' is used.
+                        - !ruby/object:Api::Type::String
+                          name: 'masterIpv4ReservedRange'
+                          description: |
+                            Output only. The IP range in CIDR notation to use for the hosted master network. This range is used for assigning internal IP addresses to the GKE cluster master or set of masters and to the internal load balancer virtual IP. This range must not overlap with any other ranges in use within the cluster's network.
+                  - !ruby/object:Api::Type::String
+                    name: 'webServerIpv4CidrBlock'
+                    description: |
+                      Optional. The CIDR block from which IP range for web server will be reserved. Needs to be disjoint from `private_cluster_config.master_ipv4_cidr_block` and `cloud_sql_ipv4_cidr_block`. This field is supported for Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*.
+                  - !ruby/object:Api::Type::String
+                    name: 'cloudSqlIpv4CidrBlock'
+                    description: |
+                      Optional. The CIDR block from which IP range in tenant project will be reserved for Cloud SQL. Needs to be disjoint from `web_server_ipv4_cidr_block`.
+                  - !ruby/object:Api::Type::String
+                    name: 'webServerIpv4ReservedRange'
+                    description: |
+                      Output only. The IP range reserved for the tenant project's App Engine VMs. This field is supported for Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*.
+                  - !ruby/object:Api::Type::String
+                    name: 'cloudComposerNetworkIpv4CidrBlock'
+                    description: |
+                      Optional. The CIDR block from which IP range for Cloud Composer Network in tenant project will be reserved. Needs to be disjoint from private_cluster_config.master_ipv4_cidr_block and cloud_sql_ipv4_cidr_block. This field is supported for Cloud Composer environments in versions composer-2.*.*-airflow-*.*.* and newer.
+                  - !ruby/object:Api::Type::String
+                    name: 'cloudComposerNetworkIpv4ReservedRange'
+                    description: |
+                      Output only. The IP range reserved for the tenant project's Cloud Composer network. This field is supported for Cloud Composer environments in versions composer-2.*.*-airflow-*.*.* and newer.
+                  - !ruby/object:Api::Type::Boolean
+                    name: 'enablePrivatelyUsedPublicIps'
+                    description: |
+                      Optional. When enabled, IPs from public (non-RFC1918) ranges can be used for `IPAllocationPolicy.cluster_ipv4_cidr_block` and `IPAllocationPolicy.service_ipv4_cidr_block`.
+                  - !ruby/object:Api::Type::String
+                    name: 'cloudComposerConnectionSubnetwork'
+                    description: |
+                      Optional. When specified, the environment will use Private Service Connect instead of VPC peerings to connect to Cloud SQL in the Tenant Project, and the PSC endpoint in the Customer Project will use an IP address from this subnetwork.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'networkingConfig'
+                    description: |
+                      Configuration options for networking connections in the Composer 2 environment.
+                    properties:
+                        - !ruby/object:Api::Type::Enum
+                          name: 'connectionType'
+                          description: |
+                            Optional. Indicates the user requested specifc connection type between Tenant and Customer projects. You cannot set networking connection type in public IP environment.
+                          values:
+                            - :CONNECTION_TYPE_UNSPECIFIED
+                            - :VPC_PEERING
+                            - :PRIVATE_SERVICE_CONNECT
+            - !ruby/object:Api::Type::NestedObject
+              name: 'webServerNetworkAccessControl'
+              description: |
+                Network-level access control policy for the Airflow web server.
+              properties:
+                  - !ruby/object:Api::Type::Array
+                    name: 'allowedIpRanges'
+                    description: |
+                      A collection of allowed IP ranges with descriptions.
+                    item_type: !ruby/object:Api::Type::NestedObject
+                      properties:
+                        - !ruby/object:Api::Type::String
+                          name: 'value'
+                          description: |
+                            IP address or range, defined using CIDR notation, of requests that this rule applies to. Examples: `192.168.1.1` or `192.168.0.0/16` or `2001:db8::/32` or `2001:0db8:0000:0042:0000:8a2e:0370:7334`. IP range prefixes should be properly truncated. For example, `1.2.3.4/24` should be truncated to `1.2.3.0/24`. Similarly, for IPv6, `2001:db8::1/32` should be truncated to `2001:db8::/32`.
+                        - !ruby/object:Api::Type::String
+                          name: 'description'
+                          description: |
+                            Optional. User-provided description. It must contain at most 300 characters.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'databaseConfig'
+              description: |
+                The configuration of Cloud SQL instance that is used by the Apache Airflow software.
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'machineType'
+                    description: |
+                      Optional. Cloud SQL machine type used by Airflow database. It has to be one of: db-n1-standard-2, db-n1-standard-4, db-n1-standard-8 or db-n1-standard-16. If not specified, db-n1-standard-2 will be used. Supported for Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*.
+                  - !ruby/object:Api::Type::String
+                    name: 'zone'
+                    description: |
+                      Optional. The Compute Engine zone where the Airflow database is created. If zone is provided, it must be in the region selected for the environment. If zone is not provided, a zone is automatically selected. The zone can only be set during environment creation. Supported for Cloud Composer environments in versions composer-2.*.*-airflow-*.*.*.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'webServerConfig'
+              description: |
+                The configuration settings for the Airflow web server App Engine instance. Supported for Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'machineType'
+                    description: |
+                      Optional. Machine type on which Airflow web server is running. It has to be one of: composer-n1-webserver-2, composer-n1-webserver-4 or composer-n1-webserver-8. If not specified, composer-n1-webserver-2 will be used. Value custom is returned only in response, if Airflow web server parameters were manually changed to a non-standard values.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'encryptionConfig'
+              description: |
+                The encryption options for the Cloud Composer environment and its dependencies.Supported for Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*.
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'kmsKeyName'
+                    description: |
+                      Optional. Customer-managed Encryption Key available through Google's Key Management Service. Cannot be updated. If not specified, Google-managed key will be used.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'maintenanceWindow'
+              description: |
+                The configuration settings for Cloud Composer maintenance window. The following example: ``` { "startTime":"2019-08-01T01:00:00Z" "endTime":"2019-08-01T07:00:00Z" "recurrence":"FREQ=WEEKLY;BYDAY=TU,WE" } ``` would define a maintenance window between 01 and 07 hours UTC during each Tuesday and Wednesday.
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'startTime'
+                    description: |
+                      Required. Start time of the first recurrence of the maintenance window.
+                  - !ruby/object:Api::Type::String
+                    name: 'endTime'
+                    description: |
+                      Required. Maintenance window end time. It is used only to calculate the duration of the maintenance window. The value for end-time must be in the future, relative to `start_time`.
+                  - !ruby/object:Api::Type::String
+                    name: 'recurrence'
+                    description: |
+                      Required. Maintenance window recurrence. Format is a subset of [RFC-5545](https://tools.ietf.org/html/rfc5545) `RRULE`. The only allowed values for `FREQ` field are `FREQ=DAILY` and `FREQ=WEEKLY;BYDAY=...` Example values: `FREQ=WEEKLY;BYDAY=TU,WE`, `FREQ=DAILY`.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'workloadsConfig'
+              description: |
+                The Kubernetes workloads configuration for GKE cluster associated with the Cloud Composer environment. Supported for Cloud Composer environments in versions composer-2.*.*-airflow-*.*.* and newer.
+              properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'scheduler'
+                    description: |
+                      Configuration for resources used by Airflow schedulers.
+                    properties:
+                        - !ruby/object:Api::Type::Integer
+                          name: 'cpu'
+                          description: |
+                            Optional. CPU request and limit for a single Airflow scheduler replica.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'memoryGb'
+                          description: |
+                            Optional. Memory (GB) request and limit for a single Airflow scheduler replica.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'storageGb'
+                          description: |
+                            Optional. Storage (GB) request and limit for a single Airflow scheduler replica.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'count'
+                          description: |
+                            Optional. The number of schedulers.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'webServer'
+                    description: |
+                      Configuration for resources used by Airflow web server.
+                    properties:
+                        - !ruby/object:Api::Type::Integer
+                          name: 'cpu'
+                          description: |
+                            Optional. CPU request and limit for Airflow web server.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'memoryGb'
+                          description: |
+                            Optional. Memory (GB) request and limit for Airflow web server.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'storageGb'
+                          description: |
+                            Optional. Storage (GB) request and limit for Airflow web server.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'worker'
+                    description: |
+                      Configuration for resources used by Airflow workers.
+                    properties:
+                        - !ruby/object:Api::Type::Integer
+                          name: 'cpu'
+                          description: |
+                            Optional. CPU request and limit for a single Airflow worker replica.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'memoryGb'
+                          description: |
+                            Optional. Memory (GB) request and limit for a single Airflow worker replica.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'storageGb'
+                          description: |
+                            Optional. Storage (GB) request and limit for a single Airflow worker replica.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'minCount'
+                          description: |
+                            Optional. Minimum number of workers for autoscaling.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'maxCount'
+                          description: |
+                            Optional. Maximum number of workers for autoscaling.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'triggerer'
+                    description: |
+                      Configuration for resources used by Airflow triggerers.
+                    properties:
+                        - !ruby/object:Api::Type::Integer
+                          name: 'count'
+                          description: |
+                            Optional. The number of triggerers.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'cpu'
+                          description: |
+                            Optional. CPU request and limit for a single Airflow triggerer replica.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'memoryGb'
+                          description: |
+                            Optional. Memory (GB) request and limit for a single Airflow triggerer replica.
+            - !ruby/object:Api::Type::Enum
+              name: 'environmentSize'
+              description: |
+                Optional. The size of the Cloud Composer environment. This field is supported for Cloud Composer environments in versions composer-2.*.*-airflow-*.*.* and newer.
+              values:
+                - :ENVIRONMENT_SIZE_UNSPECIFIED
+                - :ENVIRONMENT_SIZE_SMALL
+                - :ENVIRONMENT_SIZE_MEDIUM
+                - :ENVIRONMENT_SIZE_LARGE
+            - !ruby/object:Api::Type::String
+              name: 'airflowUri'
+              description: |
+                Output only. The URI of the Apache Airflow Web UI hosted within this environment (see [Airflow web interface](/composer/docs/how-to/accessing/airflow-web-interface)).
+            - !ruby/object:Api::Type::String
+              name: 'airflowByoidUri'
+              description: |
+                Output only. The 'bring your own identity' variant of the URI of the Apache Airflow Web UI hosted within this environment, to be accessed with external identities using workforce identity federation (see [Access environments with workforce identity federation](/composer/docs/composer-2/access-environments-with-workforce-identity-federation)).
+            - !ruby/object:Api::Type::NestedObject
+              name: 'masterAuthorizedNetworksConfig'
+              description: |
+                Configuration options for the master authorized networks feature. Enabled master authorized networks will disallow all external traffic to access Kubernetes master through HTTPS except traffic from the given CIDR blocks, Google Compute Engine Public IPs and Google Prod IPs.
+              properties:
+                  - !ruby/object:Api::Type::Boolean
+                    name: 'enabled'
+                    description: |
+                      Whether or not master authorized networks feature is enabled.
+                  - !ruby/object:Api::Type::Array
+                    name: 'cidrBlocks'
+                    description: |
+                      Up to 50 external networks that could access Kubernetes master through HTTPS.
+                    item_type: !ruby/object:Api::Type::NestedObject
+                      properties:
+                        - !ruby/object:Api::Type::String
+                          name: 'displayName'
+                          description: |
+                            User-defined name that identifies the CIDR block.
+                        - !ruby/object:Api::Type::String
+                          name: 'cidrBlock'
+                          description: |
+                            CIDR block that must be specified in CIDR notation.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'recoveryConfig'
+              description: |
+                The Recovery settings of an environment.
+              properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'scheduledSnapshotsConfig'
+                    description: |
+                      The configuration for scheduled snapshot creation mechanism.
+                    properties:
+                        - !ruby/object:Api::Type::Boolean
+                          name: 'enabled'
+                          description: |
+                            Optional. Whether scheduled snapshots creation is enabled.
+                        - !ruby/object:Api::Type::String
+                          name: 'snapshotLocation'
+                          description: |
+                            Optional. The Cloud Storage location for storing automatically created snapshots.
+                        - !ruby/object:Api::Type::String
+                          name: 'snapshotCreationSchedule'
+                          description: |
+                            Optional. The cron expression representing the time when snapshots creation mechanism runs. This field is subject to additional validation around frequency of execution.
+                        - !ruby/object:Api::Type::String
+                          name: 'timeZone'
+                          description: |
+                            Optional. Time zone that sets the context to interpret snapshot_creation_schedule.
+            - !ruby/object:Api::Type::Enum
+              name: 'resilienceMode'
+              description: |
+                Optional. Resilience mode of the Cloud Composer Environment. This field is supported for Cloud Composer environments in versions composer-2.2.0-airflow-*.*.* and newer.
+              values:
+                - :RESILIENCE_MODE_UNSPECIFIED
+                - :HIGH_RESILIENCE
+      - !ruby/object:Api::Type::String
+        name: 'uuid'
+        description: |
+          Output only. The UUID (Universally Unique IDentifier) associated with this environment. This value is generated when the environment is created.
+      - !ruby/object:Api::Type::Enum
+        name: 'state'
+        description: |
+          The current state of the environment.
+        values:
+          - :STATE_UNSPECIFIED
+          - :CREATING
+          - :RUNNING
+          - :UPDATING
+          - :DELETING
+          - :ERROR
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. The time at which this environment was created.
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. The time at which this environment was last modified.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          Optional. User-defined labels for this environment. The labels map can contain no more than 64 entries. Entries of the labels map are UTF8 strings that comply with the following restrictions: * Keys must conform to regexp: \p{Ll}\p{Lo}{0,62} * Values must conform to regexp: [\p{Ll}\p{Lo}\p{N}_-]{0,63} * Both keys and values are additionally constrained to be <= 128 bytes in size.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+              
+      - !ruby/object:Api::Type::Boolean
+        name: 'satisfiesPzs'
+        description: |
+          Output only. Reserved for future use.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'storageConfig'
+        description: |
+          The configuration for data storage in the environment.
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'bucket'
+              description: |
+                Optional. The name of the Cloud Storage bucket used by the environment. No `gs://` prefix.
+  
+
+
+    
+  - !ruby/object:Api::Resource
+    name: ProjectLocationEnvironment
+    base_url: '{{parent}}/environments'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/composer/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        An environment for running orchestration tasks.
+    properties:
+  
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          The resource name of the environment, in the form: "projects/{projectId}/locations/{locationId}/environments/{environmentId}" EnvironmentId must start with a lowercase letter followed by up to 63 lowercase letters, numbers, or hyphens, and cannot end with a hyphen.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'config'
+        description: |
+          Configuration information for an environment.
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'gkeCluster'
+              description: |
+                Output only. The Kubernetes Engine cluster used to run this environment.
+            - !ruby/object:Api::Type::String
+              name: 'dagGcsPrefix'
+              description: |
+                Output only. The Cloud Storage prefix of the DAGs for this environment. Although Cloud Storage objects reside in a flat namespace, a hierarchical file tree can be simulated using "/"-delimited object name prefixes. DAG objects for this environment reside in a simulated directory with the given prefix.
+            - !ruby/object:Api::Type::Integer
+              name: 'nodeCount'
+              description: |
+                The number of nodes in the Kubernetes Engine cluster that will be used to run this environment. This field is supported for Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'softwareConfig'
+              description: |
+                Specifies the selection and configuration of software inside the environment.
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'imageVersion'
+                    description: |
+                      The version of the software running in the environment. This encapsulates both the version of Cloud Composer functionality and the version of Apache Airflow. It must match the regular expression `composer-([0-9]+(\.[0-9]+\.[0-9]+(-preview\.[0-9]+)?)?|latest)-airflow-([0-9]+(\.[0-9]+(\.[0-9]+)?)?)`. When used as input, the server also checks if the provided version is supported and denies the request for an unsupported version. The Cloud Composer portion of the image version is a full [semantic version](https://semver.org), or an alias in the form of major version number or `latest`. When an alias is provided, the server replaces it with the current Cloud Composer version that satisfies the alias. The Apache Airflow portion of the image version is a full semantic version that points to one of the supported Apache Airflow versions, or an alias in the form of only major or major.minor versions specified. When an alias is provided, the server replaces it with the latest Apache Airflow version that satisfies the alias and is supported in the given Cloud Composer version. In all cases, the resolved image version is stored in the same field. See also [version list](/composer/docs/concepts/versioning/composer-versions) and [versioning overview](/composer/docs/concepts/versioning/composer-versioning-overview).
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'airflowConfigOverrides'
+                    description: |
+                      Optional. Apache Airflow configuration properties to override. Property keys contain the section and property names, separated by a hyphen, for example "core-dags_are_paused_at_creation". Section names must not contain hyphens ("-"), opening square brackets ("["), or closing square brackets ("]"). The property name must not be empty and must not contain an equals sign ("=") or semicolon (";"). Section and property names must not contain a period ("."). Apache Airflow configuration property names must be written in [snake_case](https://en.wikipedia.org/wiki/Snake_case). Property values can contain any character, and can be written in any lower/upper case format. Certain Apache Airflow configuration property values are [blocked](/composer/docs/concepts/airflow-configurations), and cannot be overridden.
+                    properties:
+                      - !ruby/object:Api::Type::String
+                        name: 'additionalProperties'
+                        description: |
+                          
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'pypiPackages'
+                    description: |
+                      Optional. Custom Python Package Index (PyPI) packages to be installed in the environment. Keys refer to the lowercase package name such as "numpy" and values are the lowercase extras and version specifier such as "==1.12.0", "[devel,gcp_api]", or "[devel]>=1.8.2, <1.9.2". To specify a package without pinning it to a version specifier, use the empty string as the value.
+                    properties:
+                      - !ruby/object:Api::Type::String
+                        name: 'additionalProperties'
+                        description: |
+                          
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'envVariables'
+                    description: |
+                      Optional. Additional environment variables to provide to the Apache Airflow scheduler, worker, and webserver processes. Environment variable names must match the regular expression `a-zA-Z_*`. They cannot specify Apache Airflow software configuration overrides (they cannot match the regular expression `AIRFLOW__[A-Z0-9_]+__[A-Z0-9_]+`), and they cannot match any of the following reserved names: * `AIRFLOW_HOME` * `C_FORCE_ROOT` * `CONTAINER_NAME` * `DAGS_FOLDER` * `GCP_PROJECT` * `GCS_BUCKET` * `GKE_CLUSTER_NAME` * `SQL_DATABASE` * `SQL_INSTANCE` * `SQL_PASSWORD` * `SQL_PROJECT` * `SQL_REGION` * `SQL_USER`
+                    properties:
+                      - !ruby/object:Api::Type::String
+                        name: 'additionalProperties'
+                        description: |
+                          
+                  - !ruby/object:Api::Type::String
+                    name: 'pythonVersion'
+                    description: |
+                      Optional. The major version of Python used to run the Apache Airflow scheduler, worker, and webserver processes. Can be set to '2' or '3'. If not specified, the default is '3'. Cannot be updated. This field is only supported for Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*. Environments in newer versions always use Python major version 3.
+                  - !ruby/object:Api::Type::Integer
+                    name: 'schedulerCount'
+                    description: |
+                      Optional. The number of schedulers for Airflow. This field is supported for Cloud Composer environments in versions composer-1.*.*-airflow-2.*.*.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'nodeConfig'
+              description: |
+                The configuration information for the Kubernetes Engine nodes running the Apache Airflow software.
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'location'
+                    description: |
+                      Optional. The Compute Engine [zone](/compute/docs/regions-zones) in which to deploy the VMs used to run the Apache Airflow software, specified as a [relative resource name](/apis/design/resource_names#relative_resource_name). For example: "projects/{projectId}/zones/{zoneId}". This `location` must belong to the enclosing environment's project and location. If both this field and `nodeConfig.machineType` are specified, `nodeConfig.machineType` must belong to this `location`; if both are unspecified, the service will pick a zone in the Compute Engine region corresponding to the Cloud Composer location, and propagate that choice to both fields. If only one field (`location` or `nodeConfig.machineType`) is specified, the location information from the specified field will be propagated to the unspecified field. This field is supported for Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*.
+                  - !ruby/object:Api::Type::String
+                    name: 'machineType'
+                    description: |
+                      Optional. The Compute Engine [machine type](/compute/docs/machine-types) used for cluster instances, specified as a [relative resource name](/apis/design/resource_names#relative_resource_name). For example: "projects/{projectId}/zones/{zoneId}/machineTypes/{machineTypeId}". The `machineType` must belong to the enclosing environment's project and location. If both this field and `nodeConfig.location` are specified, this `machineType` must belong to the `nodeConfig.location`; if both are unspecified, the service will pick a zone in the Compute Engine region corresponding to the Cloud Composer location, and propagate that choice to both fields. If exactly one of this field and `nodeConfig.location` is specified, the location information from the specified field will be propagated to the unspecified field. The `machineTypeId` must not be a [shared-core machine type](/compute/docs/machine-types#sharedcore). If this field is unspecified, the `machineTypeId` defaults to "n1-standard-1". This field is supported for Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*.
+                  - !ruby/object:Api::Type::String
+                    name: 'network'
+                    description: |
+                      Optional. The Compute Engine network to be used for machine communications, specified as a [relative resource name](/apis/design/resource_names#relative_resource_name). For example: "projects/{projectId}/global/networks/{networkId}". If unspecified, the "default" network ID in the environment's project is used. If a [Custom Subnet Network](/vpc/docs/vpc#vpc_networks_and_subnets) is provided, `nodeConfig.subnetwork` must also be provided. For [Shared VPC](/vpc/docs/shared-vpc) subnetwork requirements, see `nodeConfig.subnetwork`.
+                  - !ruby/object:Api::Type::String
+                    name: 'subnetwork'
+                    description: |
+                      Optional. The Compute Engine subnetwork to be used for machine communications, specified as a [relative resource name](/apis/design/resource_names#relative_resource_name). For example: "projects/{projectId}/regions/{regionId}/subnetworks/{subnetworkId}" If a subnetwork is provided, `nodeConfig.network` must also be provided, and the subnetwork must belong to the enclosing environment's project and location.
+                  - !ruby/object:Api::Type::Integer
+                    name: 'diskSizeGb'
+                    description: |
+                      Optional. The disk size in GB used for node VMs. Minimum size is 30GB. If unspecified, defaults to 100GB. Cannot be updated. This field is supported for Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*.
+                  - !ruby/object:Api::Type::Array
+                    name: 'oauthScopes'
+                    description: |
+                      Optional. The set of Google API scopes to be made available on all node VMs. If `oauth_scopes` is empty, defaults to ["https://www.googleapis.com/auth/cloud-platform"]. Cannot be updated. This field is supported for Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*.
+                    item_type: Api::Type::String
+                  - !ruby/object:Api::Type::String
+                    name: 'serviceAccount'
+                    description: |
+                      Optional. The Google Cloud Platform Service Account to be used by the node VMs. If a service account is not specified, the "default" Compute Engine service account is used. Cannot be updated.
+                  - !ruby/object:Api::Type::Array
+                    name: 'tags'
+                    description: |
+                      Optional. The list of instance tags applied to all node VMs. Tags are used to identify valid sources or targets for network firewalls. Each tag within the list must comply with [RFC1035](https://www.ietf.org/rfc/rfc1035.txt). Cannot be updated.
+                    item_type: Api::Type::String
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'ipAllocationPolicy'
+                    description: |
+                      Configuration for controlling how IPs are allocated in the GKE cluster running the Apache Airflow software.
+                    properties:
+                        - !ruby/object:Api::Type::Boolean
+                          name: 'useIpAliases'
+                          description: |
+                            Optional. Whether or not to enable Alias IPs in the GKE cluster. If `true`, a VPC-native cluster is created. This field is only supported for Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*. Environments in newer versions always use VPC-native GKE clusters.
+                        - !ruby/object:Api::Type::String
+                          name: 'clusterSecondaryRangeName'
+                          description: |
+                            Optional. The name of the GKE cluster's secondary range used to allocate IP addresses to pods. For Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*, this field is applicable only when `use_ip_aliases` is true.
+                        - !ruby/object:Api::Type::String
+                          name: 'clusterIpv4CidrBlock'
+                          description: |
+                            Optional. The IP address range used to allocate IP addresses to pods in the GKE cluster. For Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*, this field is applicable only when `use_ip_aliases` is true. Set to blank to have GKE choose a range with the default size. Set to /netmask (e.g. `/14`) to have GKE choose a range with a specific netmask. Set to a [CIDR](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) notation (e.g. `10.96.0.0/14`) from the RFC-1918 private networks (e.g. `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`) to pick a specific range to use.
+                        - !ruby/object:Api::Type::String
+                          name: 'servicesSecondaryRangeName'
+                          description: |
+                            Optional. The name of the services' secondary range used to allocate IP addresses to the GKE cluster. For Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*, this field is applicable only when `use_ip_aliases` is true.
+                        - !ruby/object:Api::Type::String
+                          name: 'servicesIpv4CidrBlock'
+                          description: |
+                            Optional. The IP address range of the services IP addresses in this GKE cluster. For Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*, this field is applicable only when `use_ip_aliases` is true. Set to blank to have GKE choose a range with the default size. Set to /netmask (e.g. `/14`) to have GKE choose a range with a specific netmask. Set to a [CIDR](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) notation (e.g. `10.96.0.0/14`) from the RFC-1918 private networks (e.g. `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`) to pick a specific range to use.
+                  - !ruby/object:Api::Type::Boolean
+                    name: 'enableIpMasqAgent'
+                    description: |
+                      Optional. Deploys 'ip-masq-agent' daemon set in the GKE cluster and defines nonMasqueradeCIDRs equals to pod IP range so IP masquerading is used for all destination addresses, except between pods traffic. See: https://cloud.google.com/kubernetes-engine/docs/how-to/ip-masquerade-agent
+            - !ruby/object:Api::Type::NestedObject
+              name: 'privateEnvironmentConfig'
+              description: |
+                The configuration information for configuring a Private IP Cloud Composer environment.
+              properties:
+                  - !ruby/object:Api::Type::Boolean
+                    name: 'enablePrivateEnvironment'
+                    description: |
+                      Optional. If `true`, a Private IP Cloud Composer environment is created. If this field is set to true, `IPAllocationPolicy.use_ip_aliases` must be set to true for Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'privateClusterConfig'
+                    description: |
+                      Configuration options for the private GKE cluster in a Cloud Composer environment.
+                    properties:
+                        - !ruby/object:Api::Type::Boolean
+                          name: 'enablePrivateEndpoint'
+                          description: |
+                            Optional. If `true`, access to the public endpoint of the GKE cluster is denied.
+                        - !ruby/object:Api::Type::String
+                          name: 'masterIpv4CidrBlock'
+                          description: |
+                            Optional. The CIDR block from which IPv4 range for GKE master will be reserved. If left blank, the default value of '172.16.0.0/23' is used.
+                        - !ruby/object:Api::Type::String
+                          name: 'masterIpv4ReservedRange'
+                          description: |
+                            Output only. The IP range in CIDR notation to use for the hosted master network. This range is used for assigning internal IP addresses to the GKE cluster master or set of masters and to the internal load balancer virtual IP. This range must not overlap with any other ranges in use within the cluster's network.
+                  - !ruby/object:Api::Type::String
+                    name: 'webServerIpv4CidrBlock'
+                    description: |
+                      Optional. The CIDR block from which IP range for web server will be reserved. Needs to be disjoint from `private_cluster_config.master_ipv4_cidr_block` and `cloud_sql_ipv4_cidr_block`. This field is supported for Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*.
+                  - !ruby/object:Api::Type::String
+                    name: 'cloudSqlIpv4CidrBlock'
+                    description: |
+                      Optional. The CIDR block from which IP range in tenant project will be reserved for Cloud SQL. Needs to be disjoint from `web_server_ipv4_cidr_block`.
+                  - !ruby/object:Api::Type::String
+                    name: 'webServerIpv4ReservedRange'
+                    description: |
+                      Output only. The IP range reserved for the tenant project's App Engine VMs. This field is supported for Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*.
+                  - !ruby/object:Api::Type::String
+                    name: 'cloudComposerNetworkIpv4CidrBlock'
+                    description: |
+                      Optional. The CIDR block from which IP range for Cloud Composer Network in tenant project will be reserved. Needs to be disjoint from private_cluster_config.master_ipv4_cidr_block and cloud_sql_ipv4_cidr_block. This field is supported for Cloud Composer environments in versions composer-2.*.*-airflow-*.*.* and newer.
+                  - !ruby/object:Api::Type::String
+                    name: 'cloudComposerNetworkIpv4ReservedRange'
+                    description: |
+                      Output only. The IP range reserved for the tenant project's Cloud Composer network. This field is supported for Cloud Composer environments in versions composer-2.*.*-airflow-*.*.* and newer.
+                  - !ruby/object:Api::Type::Boolean
+                    name: 'enablePrivatelyUsedPublicIps'
+                    description: |
+                      Optional. When enabled, IPs from public (non-RFC1918) ranges can be used for `IPAllocationPolicy.cluster_ipv4_cidr_block` and `IPAllocationPolicy.service_ipv4_cidr_block`.
+                  - !ruby/object:Api::Type::String
+                    name: 'cloudComposerConnectionSubnetwork'
+                    description: |
+                      Optional. When specified, the environment will use Private Service Connect instead of VPC peerings to connect to Cloud SQL in the Tenant Project, and the PSC endpoint in the Customer Project will use an IP address from this subnetwork.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'networkingConfig'
+                    description: |
+                      Configuration options for networking connections in the Composer 2 environment.
+                    properties:
+                        - !ruby/object:Api::Type::Enum
+                          name: 'connectionType'
+                          description: |
+                            Optional. Indicates the user requested specifc connection type between Tenant and Customer projects. You cannot set networking connection type in public IP environment.
+                          values:
+                            - :CONNECTION_TYPE_UNSPECIFIED
+                            - :VPC_PEERING
+                            - :PRIVATE_SERVICE_CONNECT
+            - !ruby/object:Api::Type::NestedObject
+              name: 'webServerNetworkAccessControl'
+              description: |
+                Network-level access control policy for the Airflow web server.
+              properties:
+                  - !ruby/object:Api::Type::Array
+                    name: 'allowedIpRanges'
+                    description: |
+                      A collection of allowed IP ranges with descriptions.
+                    item_type: !ruby/object:Api::Type::NestedObject
+                      properties:
+                        - !ruby/object:Api::Type::String
+                          name: 'value'
+                          description: |
+                            IP address or range, defined using CIDR notation, of requests that this rule applies to. Examples: `192.168.1.1` or `192.168.0.0/16` or `2001:db8::/32` or `2001:0db8:0000:0042:0000:8a2e:0370:7334`. IP range prefixes should be properly truncated. For example, `1.2.3.4/24` should be truncated to `1.2.3.0/24`. Similarly, for IPv6, `2001:db8::1/32` should be truncated to `2001:db8::/32`.
+                        - !ruby/object:Api::Type::String
+                          name: 'description'
+                          description: |
+                            Optional. User-provided description. It must contain at most 300 characters.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'databaseConfig'
+              description: |
+                The configuration of Cloud SQL instance that is used by the Apache Airflow software.
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'machineType'
+                    description: |
+                      Optional. Cloud SQL machine type used by Airflow database. It has to be one of: db-n1-standard-2, db-n1-standard-4, db-n1-standard-8 or db-n1-standard-16. If not specified, db-n1-standard-2 will be used. Supported for Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*.
+                  - !ruby/object:Api::Type::String
+                    name: 'zone'
+                    description: |
+                      Optional. The Compute Engine zone where the Airflow database is created. If zone is provided, it must be in the region selected for the environment. If zone is not provided, a zone is automatically selected. The zone can only be set during environment creation. Supported for Cloud Composer environments in versions composer-2.*.*-airflow-*.*.*.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'webServerConfig'
+              description: |
+                The configuration settings for the Airflow web server App Engine instance. Supported for Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'machineType'
+                    description: |
+                      Optional. Machine type on which Airflow web server is running. It has to be one of: composer-n1-webserver-2, composer-n1-webserver-4 or composer-n1-webserver-8. If not specified, composer-n1-webserver-2 will be used. Value custom is returned only in response, if Airflow web server parameters were manually changed to a non-standard values.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'encryptionConfig'
+              description: |
+                The encryption options for the Cloud Composer environment and its dependencies.Supported for Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*.
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'kmsKeyName'
+                    description: |
+                      Optional. Customer-managed Encryption Key available through Google's Key Management Service. Cannot be updated. If not specified, Google-managed key will be used.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'maintenanceWindow'
+              description: |
+                The configuration settings for Cloud Composer maintenance window. The following example: ``` { "startTime":"2019-08-01T01:00:00Z" "endTime":"2019-08-01T07:00:00Z" "recurrence":"FREQ=WEEKLY;BYDAY=TU,WE" } ``` would define a maintenance window between 01 and 07 hours UTC during each Tuesday and Wednesday.
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'startTime'
+                    description: |
+                      Required. Start time of the first recurrence of the maintenance window.
+                  - !ruby/object:Api::Type::String
+                    name: 'endTime'
+                    description: |
+                      Required. Maintenance window end time. It is used only to calculate the duration of the maintenance window. The value for end-time must be in the future, relative to `start_time`.
+                  - !ruby/object:Api::Type::String
+                    name: 'recurrence'
+                    description: |
+                      Required. Maintenance window recurrence. Format is a subset of [RFC-5545](https://tools.ietf.org/html/rfc5545) `RRULE`. The only allowed values for `FREQ` field are `FREQ=DAILY` and `FREQ=WEEKLY;BYDAY=...` Example values: `FREQ=WEEKLY;BYDAY=TU,WE`, `FREQ=DAILY`.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'workloadsConfig'
+              description: |
+                The Kubernetes workloads configuration for GKE cluster associated with the Cloud Composer environment. Supported for Cloud Composer environments in versions composer-2.*.*-airflow-*.*.* and newer.
+              properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'scheduler'
+                    description: |
+                      Configuration for resources used by Airflow schedulers.
+                    properties:
+                        - !ruby/object:Api::Type::Integer
+                          name: 'cpu'
+                          description: |
+                            Optional. CPU request and limit for a single Airflow scheduler replica.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'memoryGb'
+                          description: |
+                            Optional. Memory (GB) request and limit for a single Airflow scheduler replica.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'storageGb'
+                          description: |
+                            Optional. Storage (GB) request and limit for a single Airflow scheduler replica.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'count'
+                          description: |
+                            Optional. The number of schedulers.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'webServer'
+                    description: |
+                      Configuration for resources used by Airflow web server.
+                    properties:
+                        - !ruby/object:Api::Type::Integer
+                          name: 'cpu'
+                          description: |
+                            Optional. CPU request and limit for Airflow web server.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'memoryGb'
+                          description: |
+                            Optional. Memory (GB) request and limit for Airflow web server.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'storageGb'
+                          description: |
+                            Optional. Storage (GB) request and limit for Airflow web server.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'worker'
+                    description: |
+                      Configuration for resources used by Airflow workers.
+                    properties:
+                        - !ruby/object:Api::Type::Integer
+                          name: 'cpu'
+                          description: |
+                            Optional. CPU request and limit for a single Airflow worker replica.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'memoryGb'
+                          description: |
+                            Optional. Memory (GB) request and limit for a single Airflow worker replica.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'storageGb'
+                          description: |
+                            Optional. Storage (GB) request and limit for a single Airflow worker replica.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'minCount'
+                          description: |
+                            Optional. Minimum number of workers for autoscaling.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'maxCount'
+                          description: |
+                            Optional. Maximum number of workers for autoscaling.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'triggerer'
+                    description: |
+                      Configuration for resources used by Airflow triggerers.
+                    properties:
+                        - !ruby/object:Api::Type::Integer
+                          name: 'count'
+                          description: |
+                            Optional. The number of triggerers.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'cpu'
+                          description: |
+                            Optional. CPU request and limit for a single Airflow triggerer replica.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'memoryGb'
+                          description: |
+                            Optional. Memory (GB) request and limit for a single Airflow triggerer replica.
+            - !ruby/object:Api::Type::Enum
+              name: 'environmentSize'
+              description: |
+                Optional. The size of the Cloud Composer environment. This field is supported for Cloud Composer environments in versions composer-2.*.*-airflow-*.*.* and newer.
+              values:
+                - :ENVIRONMENT_SIZE_UNSPECIFIED
+                - :ENVIRONMENT_SIZE_SMALL
+                - :ENVIRONMENT_SIZE_MEDIUM
+                - :ENVIRONMENT_SIZE_LARGE
+            - !ruby/object:Api::Type::String
+              name: 'airflowUri'
+              description: |
+                Output only. The URI of the Apache Airflow Web UI hosted within this environment (see [Airflow web interface](/composer/docs/how-to/accessing/airflow-web-interface)).
+            - !ruby/object:Api::Type::String
+              name: 'airflowByoidUri'
+              description: |
+                Output only. The 'bring your own identity' variant of the URI of the Apache Airflow Web UI hosted within this environment, to be accessed with external identities using workforce identity federation (see [Access environments with workforce identity federation](/composer/docs/composer-2/access-environments-with-workforce-identity-federation)).
+            - !ruby/object:Api::Type::NestedObject
+              name: 'masterAuthorizedNetworksConfig'
+              description: |
+                Configuration options for the master authorized networks feature. Enabled master authorized networks will disallow all external traffic to access Kubernetes master through HTTPS except traffic from the given CIDR blocks, Google Compute Engine Public IPs and Google Prod IPs.
+              properties:
+                  - !ruby/object:Api::Type::Boolean
+                    name: 'enabled'
+                    description: |
+                      Whether or not master authorized networks feature is enabled.
+                  - !ruby/object:Api::Type::Array
+                    name: 'cidrBlocks'
+                    description: |
+                      Up to 50 external networks that could access Kubernetes master through HTTPS.
+                    item_type: !ruby/object:Api::Type::NestedObject
+                      properties:
+                        - !ruby/object:Api::Type::String
+                          name: 'displayName'
+                          description: |
+                            User-defined name that identifies the CIDR block.
+                        - !ruby/object:Api::Type::String
+                          name: 'cidrBlock'
+                          description: |
+                            CIDR block that must be specified in CIDR notation.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'recoveryConfig'
+              description: |
+                The Recovery settings of an environment.
+              properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'scheduledSnapshotsConfig'
+                    description: |
+                      The configuration for scheduled snapshot creation mechanism.
+                    properties:
+                        - !ruby/object:Api::Type::Boolean
+                          name: 'enabled'
+                          description: |
+                            Optional. Whether scheduled snapshots creation is enabled.
+                        - !ruby/object:Api::Type::String
+                          name: 'snapshotLocation'
+                          description: |
+                            Optional. The Cloud Storage location for storing automatically created snapshots.
+                        - !ruby/object:Api::Type::String
+                          name: 'snapshotCreationSchedule'
+                          description: |
+                            Optional. The cron expression representing the time when snapshots creation mechanism runs. This field is subject to additional validation around frequency of execution.
+                        - !ruby/object:Api::Type::String
+                          name: 'timeZone'
+                          description: |
+                            Optional. Time zone that sets the context to interpret snapshot_creation_schedule.
+            - !ruby/object:Api::Type::Enum
+              name: 'resilienceMode'
+              description: |
+                Optional. Resilience mode of the Cloud Composer Environment. This field is supported for Cloud Composer environments in versions composer-2.2.0-airflow-*.*.* and newer.
+              values:
+                - :RESILIENCE_MODE_UNSPECIFIED
+                - :HIGH_RESILIENCE
+      - !ruby/object:Api::Type::String
+        name: 'uuid'
+        description: |
+          Output only. The UUID (Universally Unique IDentifier) associated with this environment. This value is generated when the environment is created.
+      - !ruby/object:Api::Type::Enum
+        name: 'state'
+        description: |
+          The current state of the environment.
+        values:
+          - :STATE_UNSPECIFIED
+          - :CREATING
+          - :RUNNING
+          - :UPDATING
+          - :DELETING
+          - :ERROR
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. The time at which this environment was created.
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. The time at which this environment was last modified.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          Optional. User-defined labels for this environment. The labels map can contain no more than 64 entries. Entries of the labels map are UTF8 strings that comply with the following restrictions: * Keys must conform to regexp: \p{Ll}\p{Lo}{0,62} * Values must conform to regexp: [\p{Ll}\p{Lo}\p{N}_-]{0,63} * Both keys and values are additionally constrained to be <= 128 bytes in size.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+              
+      - !ruby/object:Api::Type::Boolean
+        name: 'satisfiesPzs'
+        description: |
+          Output only. Reserved for future use.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'storageConfig'
+        description: |
+          The configuration for data storage in the environment.
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'bucket'
+              description: |
+                Optional. The name of the Cloud Storage bucket used by the environment. No `gs://` prefix.
+  
