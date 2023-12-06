@@ -615,3 +615,153 @@ objects:
                     name: 'realm'
                     description: |
                       The name of the on-cluster Kerberos realm.
+
+
+    
+  - !ruby/object:Api::Resource
+    name: ProjectRegionCluster
+    base_url: 'projects/{{projectId}}/regions/{{region}}/clusters'
+    self_link: 'projects/{{projectId}}/regions/{{region}}/clusters/{{clusterName}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/dataproc/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Describes the identifying information, config, and status of a Dataproc cluster
+    properties:
+  
+      - !ruby/object:Api::Type::String
+        name: 'projectId'
+        description: |
+          Required. The Google Cloud Platform project ID that the cluster belongs to.
+      - !ruby/object:Api::Type::String
+        name: 'clusterName'
+        description: |
+          Required. The cluster name, which must be unique within a project. The name must start with a lowercase letter, and can contain up to 51 lowercase letters, numbers, and hyphens. It cannot end with a hyphen. The name of a deleted cluster can be reused.
+      - !ruby/object:Api::Type::String
+        name: 'config'
+        description: |
+          Optional. The cluster config for a cluster of Compute Engine Instances. Note that Dataproc may set default values, and values may change when clusters are updated.Exactly one of ClusterConfig or VirtualClusterConfig must be specified.
+      - !ruby/object:Api::Type::String
+        name: 'virtualClusterConfig'
+        description: |
+          Optional. The virtual cluster config is used when creating a Dataproc cluster that does not directly control the underlying compute resources, for example, when creating a Dataproc-on-GKE cluster (https://cloud.google.com/dataproc/docs/guides/dpgke/dataproc-gke-overview). Dataproc may set default values, and values may change when clusters are updated. Exactly one of config or virtual_cluster_config must be specified.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          Optional. The labels to associate with this cluster. Label keys must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label values may be empty, but, if present, must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be associated with a cluster.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+              
+      - !ruby/object:Api::Type::String
+        name: 'status'
+        description: |
+          Output only. Cluster status.
+      - !ruby/object:Api::Type::Array
+        name: 'statusHistory'
+        description: |
+          Output only. The previous cluster status.
+        item_type: Api::Type::String
+      - !ruby/object:Api::Type::String
+        name: 'clusterUuid'
+        description: |
+          Output only. A cluster UUID (Unique Universal Identifier). Dataproc generates this value when it creates the cluster.
+      - !ruby/object:Api::Type::String
+        name: 'metrics'
+        description: |
+          Output only. Contains cluster daemon metrics such as HDFS and YARN stats.Beta Feature: This report is available for testing purposes only. It may be changed before final release.
+  
+
+
+    
+  - !ruby/object:Api::Resource
+    name: ProjectRegionCluster
+    base_url: 'projects/{{projectId}}/regions/{{region}}/clusters'
+    self_link: 'projects/{{projectId}}/regions/{{region}}/clusters/{{clusterName}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/dataproc/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Describes the identifying information, config, and status of a Dataproc cluster
+    properties:
+  
+      - !ruby/object:Api::Type::String
+        name: 'projectId'
+        description: |
+          Required. The Google Cloud Platform project ID that the cluster belongs to.
+      - !ruby/object:Api::Type::String
+        name: 'clusterName'
+        description: |
+          Required. The cluster name, which must be unique within a project. The name must start with a lowercase letter, and can contain up to 51 lowercase letters, numbers, and hyphens. It cannot end with a hyphen. The name of a deleted cluster can be reused.
+      - !ruby/object:Api::Type::String
+        name: 'config'
+        description: |
+          Optional. The cluster config for a cluster of Compute Engine Instances. Note that Dataproc may set default values, and values may change when clusters are updated.Exactly one of ClusterConfig or VirtualClusterConfig must be specified.
+      - !ruby/object:Api::Type::String
+        name: 'virtualClusterConfig'
+        description: |
+          Optional. The virtual cluster config is used when creating a Dataproc cluster that does not directly control the underlying compute resources, for example, when creating a Dataproc-on-GKE cluster (https://cloud.google.com/dataproc/docs/guides/dpgke/dataproc-gke-overview). Dataproc may set default values, and values may change when clusters are updated. Exactly one of config or virtual_cluster_config must be specified.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          Optional. The labels to associate with this cluster. Label keys must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label values may be empty, but, if present, must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be associated with a cluster.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+              
+      - !ruby/object:Api::Type::String
+        name: 'status'
+        description: |
+          Output only. Cluster status.
+      - !ruby/object:Api::Type::Array
+        name: 'statusHistory'
+        description: |
+          Output only. The previous cluster status.
+        item_type: Api::Type::String
+      - !ruby/object:Api::Type::String
+        name: 'clusterUuid'
+        description: |
+          Output only. A cluster UUID (Unique Universal Identifier). Dataproc generates this value when it creates the cluster.
+      - !ruby/object:Api::Type::String
+        name: 'metrics'
+        description: |
+          Output only. Contains cluster daemon metrics such as HDFS and YARN stats.Beta Feature: This report is available for testing purposes only. It may be changed before final release.
+  
