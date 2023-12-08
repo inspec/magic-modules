@@ -902,6 +902,14 @@ vpn_gateway:
   self_link : "value_selflink"
   label_fingerprint : "value_labelfingerprint"
   stack_type : "value_stacktype"
+
+organization_envgroup:
+  name : "value_name"
+  parent : "value_parent"
+  last_modified_at : "value_lastmodifiedat"
+  state : "value_state"
+  created_at : "value_createdat"
+
 organization:
   name : "value_name"
   parent : "value_parent"
@@ -926,6 +934,7 @@ organization:
   apigee_project_id : "value_apigeeprojectid"
   expires_at : "value_expiresat"
   billing_type : "value_billingtype"
+
 project_location_environment:
   name : "value_name"
   parent : "value_parent"
