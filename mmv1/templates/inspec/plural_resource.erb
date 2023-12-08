@@ -39,7 +39,7 @@ name = resource_name(object, product)
 
   filter_table_config.connect(self, :table)
 
-<% 
+<%
 link_query_items = object&.nested_query&.keys&.first || object.collection_url_key
 -%>
   def initialize(params = {})
@@ -82,7 +82,7 @@ link_query_items = object&.nested_query&.keys&.first || object.collection_url_ke
   def transformers
     {
 <% object.all_user_properties.reject(&:exclude_plural).each do |prop| -%>
-      '<%= prop.api_name -%>' => ->(obj) { <%= "return :#{ prop.override_name || prop.out_name }, #{parse_code(prop, 'obj')}" -%> },
+      '<%= prop.api_name -%>' => ->(obj) { <%= "[:#{ prop.override_name || prop.out_name }, #{parse_code(prop, 'obj')}]" -%> },
 <% end # object.all_user_properties.each -%>
     }
   end
