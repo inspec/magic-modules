@@ -1,0 +1,11 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% organization_policy = grab_attributes(pwd)['organization_policy'] -%>
+describe google_orgpolicy_organization_policy(name: <%= doc_generation ? "' #{organization_policy['name']}'":"organization_policy['name']" -%>) do
+	it { should exist }
+	its('name') { should cmp <%= doc_generation ? "'#{organization_policy['name']}'" : "organization_policy['name']" -%> }
+
+end
+
+describe google_orgpolicy_organization_policy(name: "does_not_exit") do
+	it { should_not exist }
+end
