@@ -942,3 +942,7 @@ project_location_environment:
   state : "value_state"
   create_time : "value_createtime"
   update_time : "value_updatetime"
+
+folder_policy:
+  name : "value_name"
+  parent : "value_parent"
