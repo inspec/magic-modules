@@ -10,7 +10,8 @@ on:
 jobs:
   sonarqube:
     name: SonarQube
-    runs-on: ubuntu-latest
+    #runs-on: ubuntu-latest
+    runs-on: ip-range-controlled
     steps:
       - uses: actions/checkout@v2
         with:
