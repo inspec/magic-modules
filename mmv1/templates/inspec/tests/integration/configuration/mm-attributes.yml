@@ -942,3 +942,6 @@ project_location_environment:
   state : "value_state"
   create_time : "value_createtime"
   update_time : "value_updatetime"
+
+service_connection:
+  parent : "value_parent"
