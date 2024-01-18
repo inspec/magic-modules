@@ -944,6 +944,11 @@ project_location_environment:
   update_time : "value_updatetime"
 
 
+project_location_key_ring:
+  name : "value_name"
+  parent : "value_parent"
+  create_time : "value_createtime"
+
 project_secret:
   name : "value_name"
 

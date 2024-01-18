@@ -1,0 +1,54 @@
+
+--- !ruby/object:Api::Product
+name: cloudkms
+display_name: cloudkms
+versions:
+  - !ruby/object:Api::Product::Version
+    name: ga
+    base_url: https://cloudkms.googleapis.com//v1/
+scopes:
+  - https://cloudkms.googleapis.com//auth/cloud-platform
+apis_required:
+  - !ruby/object:Api::Product::ApiReference
+    name: https://cloudkms.googleapis.com/
+    url: https://console.cloud.google.com/apis/library/cloudkms.googleapis.com/
+objects:
+    
+  - !ruby/object:Api::Resource
+    name: ProjectLocationKeyRing
+    base_url: '{{parent}}/keyRings'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/cloudkms/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        A KeyRing is a toplevel logical grouping of CryptoKeys.
+    properties:
+  
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. The resource name for the KeyRing in the format `projects/*/locations/*/keyRings/*`.
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. The time at which this KeyRing was created.
+  
