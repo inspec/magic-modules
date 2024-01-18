@@ -943,6 +943,10 @@ project_location_environment:
   create_time : "value_createtime"
   update_time : "value_updatetime"
 
+organization_api_revision:
+  name : "value_name"
+  content_type : "value_contenttype"
+  data : "value_data"
 
 project_location_key_ring:
   name : "value_name"
