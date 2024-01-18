@@ -943,6 +943,9 @@ project_location_environment:
   create_time : "value_createtime"
   update_time : "value_updatetime"
 
+
 project_secret:
   name : "value_name"
+
+service_connection:
   parent : "value_parent"
