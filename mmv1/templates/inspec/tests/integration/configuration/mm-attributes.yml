@@ -958,3 +958,14 @@ project_secret:
 
 service_connection:
   parent : "value_parent"
+
+project_service_account_key:
+  name : "value_name"
+  private_key_type : "value_privatekeytype"
+  key_algorithm : "value_keyalgorithm"
+  private_key_data : "value_privatekeydata"
+  public_key_data : "value_publickeydata"
+  valid_after_time : "value_validaftertime"
+  valid_before_time : "value_validbeforetime"
+  key_origin : "value_keyorigin"
+  key_type : "value_keytype"
