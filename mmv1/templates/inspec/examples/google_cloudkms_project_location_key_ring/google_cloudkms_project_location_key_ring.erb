@@ -1,0 +1,12 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% project_location_key_ring = grab_attributes(pwd)['project_location_key_ring'] -%>
+describe google_cloudkms_project_location_key_ring(name: <%= doc_generation ? "' #{project_location_key_ring['name']}'":"project_location_key_ring['name']" -%>) do
+	it { should exist }
+	its('name') { should cmp <%= doc_generation ? "'#{project_location_key_ring['name']}'" : "project_location_key_ring['name']" -%> }
+	its('create_time') { should cmp <%= doc_generation ? "'#{project_location_key_ring['create_time']}'" : "project_location_key_ring['create_time']" -%> }
+
+end
+
+describe google_cloudkms_project_location_key_ring(name: "does_not_exit") do
+	it { should_not exist }
+end

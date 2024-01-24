@@ -943,6 +943,34 @@ project_location_environment:
   create_time : "value_createtime"
   update_time : "value_updatetime"
 
+
 folder_policy:
   name : "value_name"
   parent : "value_parent"
+
+organization_api_revision:
+  name : "value_name"
+  content_type : "value_contenttype"
+  data : "value_data"
+
+project_location_key_ring:
+  name : "value_name"
+  parent : "value_parent"
+  create_time : "value_createtime"
+
+project_secret:
+  name : "value_name"
+
+service_connection:
+  parent : "value_parent"
+
+project_service_account_key:
+  name : "value_name"
+  private_key_type : "value_privatekeytype"
+  key_algorithm : "value_keyalgorithm"
+  private_key_data : "value_privatekeydata"
+  public_key_data : "value_publickeydata"
+  valid_after_time : "value_validaftertime"
+  valid_before_time : "value_validbeforetime"
+  key_origin : "value_keyorigin"
+  key_type : "value_keytype"
