@@ -1,0 +1,17 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% license = grab_attributes(pwd)['license'] -%>
+describe google_compute_v1_license(networkAttachment: <%= doc_generation ? "' #{license['networkAttachment']}'":"license['networkAttachment']" -%>, project: <%= gcp_project_id -%>, region: <%= doc_generation ? "' #{license['region']}'":"license['region']" -%>) do
+	it { should exist }
+	its('kind') { should cmp <%= doc_generation ? "'#{license['kind']}'" : "license['kind']" -%> }
+	its('name') { should cmp <%= doc_generation ? "'#{license['name']}'" : "license['name']" -%> }
+	its('id') { should cmp <%= doc_generation ? "'#{license['id']}'" : "license['id']" -%> }
+	its('license_code') { should cmp <%= doc_generation ? "'#{license['license_code']}'" : "license['license_code']" -%> }
+	its('creation_timestamp') { should cmp <%= doc_generation ? "'#{license['creation_timestamp']}'" : "license['creation_timestamp']" -%> }
+	its('description') { should cmp <%= doc_generation ? "'#{license['description']}'" : "license['description']" -%> }
+	its('self_link') { should cmp <%= doc_generation ? "'#{license['self_link']}'" : "license['self_link']" -%> }
+
+end
+
+describe google_compute_v1_license(networkAttachment: <%= doc_generation ? "' #{license['networkAttachment']}'":"license['networkAttachment']" -%>, project: <%= gcp_project_id -%>, region: <%= doc_generation ? "' #{license['region']}'":"license['region']" -%>) do
+	it { should_not exist }
+end
