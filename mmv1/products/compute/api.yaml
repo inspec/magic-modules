@@ -19801,3 +19801,110 @@ objects:
           - :IPV4_IPV6
           - :IPV4_ONLY
   
+
+
+    
+  - !ruby/object:Api::Resource
+    name: NodeType
+    base_url: 'projects/{{project}}/zones/{{zone}}/nodeTypes'
+    self_link: 'projects/{{project}}/zones/{{zone}}/nodeTypes/{{nodeType}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/compute_v1/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Represent a sole-tenant Node Type resource. Each node within a node group must have a node type. A node type specifies the total amount of cores and memory for that node. Currently, the only available node type is n1-node-96-624 node type that has 96 vCPUs and 624 GB of memory, available in multiple zones. For more information read Node types.
+    properties:
+  
+      - !ruby/object:Api::Type::String
+        name: 'kind'
+        description: |
+          [Output Only] The type of the resource. Always compute#nodeType for node types.
+      - !ruby/object:Api::Type::String
+        name: 'id'
+        description: |
+          [Output Only] The unique identifier for the resource. This identifier is defined by the server.
+      - !ruby/object:Api::Type::String
+        name: 'creationTimestamp'
+        description: |
+          [Output Only] Creation timestamp in RFC3339 text format.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          [Output Only] Name of the resource.
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          [Output Only] An optional textual description of the resource.
+      - !ruby/object:Api::Type::String
+        name: 'cpuPlatform'
+        description: |
+          [Output Only] The CPU platform used by this node type.
+      - !ruby/object:Api::Type::Integer
+        name: 'guestCpus'
+        description: |
+          [Output Only] The number of virtual CPUs that are available to the node type.
+      - !ruby/object:Api::Type::Integer
+        name: 'memoryMb'
+        description: |
+          [Output Only] The amount of physical memory available to the node type, defined in MB.
+      - !ruby/object:Api::Type::Integer
+        name: 'localSsdGb'
+        description: |
+          [Output Only] Local SSD available to the node type, defined in GB.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'deprecated'
+        description: |
+          Deprecation status for a public resource.
+        properties:
+            - !ruby/object:Api::Type::Enum
+              name: 'state'
+              description: |
+                The deprecation state of this resource. This can be ACTIVE, DEPRECATED, OBSOLETE, or DELETED. Operations which communicate the end of life date for an image, can use ACTIVE. Operations which create a new resource using a DEPRECATED resource will return successfully, but with a warning indicating the deprecated resource and recommending its replacement. Operations which use OBSOLETE or DELETED resources will be rejected and result in an error.
+              values:
+                - :ACTIVE
+                - :DELETED
+                - :DEPRECATED
+                - :OBSOLETE
+            - !ruby/object:Api::Type::String
+              name: 'replacement'
+              description: |
+                The URL of the suggested replacement for a deprecated resource. The suggested replacement resource must be the same kind of resource as the deprecated resource.
+            - !ruby/object:Api::Type::String
+              name: 'deprecated'
+              description: |
+                An optional RFC3339 timestamp on or after which the state of this resource is intended to change to DEPRECATED. This is only informational and the status will not change unless the client explicitly changes it.
+            - !ruby/object:Api::Type::String
+              name: 'obsolete'
+              description: |
+                An optional RFC3339 timestamp on or after which the state of this resource is intended to change to OBSOLETE. This is only informational and the status will not change unless the client explicitly changes it.
+            - !ruby/object:Api::Type::String
+              name: 'deleted'
+              description: |
+                An optional RFC3339 timestamp on or after which the state of this resource is intended to change to DELETED. This is only informational and the status will not change unless the client explicitly changes it.
+      - !ruby/object:Api::Type::String
+        name: 'zone'
+        description: |
+          [Output Only] The name of the zone where the node type resides, such as us-central1-a.
+      - !ruby/object:Api::Type::String
+        name: 'selfLink'
+        description: |
+          [Output Only] Server-defined URL for the resource.
+  
