@@ -1,0 +1,23 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% public_advertised_prefix = grab_attributes(pwd)['public_advertised_prefix'] -%>
+describe google_compute_v1_public_advertised_prefix(project: <%= gcp_project_id -%>, publicAdvertisedPrefix: <%= doc_generation ? "' #{public_advertised_prefix['publicAdvertisedPrefix']}'":"public_advertised_prefix['publicAdvertisedPrefix']" -%>) do
+	it { should exist }
+	its('kind') { should cmp <%= doc_generation ? "'#{public_advertised_prefix['kind']}'" : "public_advertised_prefix['kind']" -%> }
+	its('id') { should cmp <%= doc_generation ? "'#{public_advertised_prefix['id']}'" : "public_advertised_prefix['id']" -%> }
+	its('creation_timestamp') { should cmp <%= doc_generation ? "'#{public_advertised_prefix['creation_timestamp']}'" : "public_advertised_prefix['creation_timestamp']" -%> }
+	its('name') { should cmp <%= doc_generation ? "'#{public_advertised_prefix['name']}'" : "public_advertised_prefix['name']" -%> }
+	its('description') { should cmp <%= doc_generation ? "'#{public_advertised_prefix['description']}'" : "public_advertised_prefix['description']" -%> }
+	its('self_link') { should cmp <%= doc_generation ? "'#{public_advertised_prefix['self_link']}'" : "public_advertised_prefix['self_link']" -%> }
+	its('ip_cidr_range') { should cmp <%= doc_generation ? "'#{public_advertised_prefix['ip_cidr_range']}'" : "public_advertised_prefix['ip_cidr_range']" -%> }
+	its('dns_verification_ip') { should cmp <%= doc_generation ? "'#{public_advertised_prefix['dns_verification_ip']}'" : "public_advertised_prefix['dns_verification_ip']" -%> }
+	its('shared_secret') { should cmp <%= doc_generation ? "'#{public_advertised_prefix['shared_secret']}'" : "public_advertised_prefix['shared_secret']" -%> }
+	its('status') { should cmp <%= doc_generation ? "'#{public_advertised_prefix['status']}'" : "public_advertised_prefix['status']" -%> }
+	its('pdp_scope') { should cmp <%= doc_generation ? "'#{public_advertised_prefix['pdp_scope']}'" : "public_advertised_prefix['pdp_scope']" -%> }
+	its('fingerprint') { should cmp <%= doc_generation ? "'#{public_advertised_prefix['fingerprint']}'" : "public_advertised_prefix['fingerprint']" -%> }
+	its('byoip_api_version') { should cmp <%= doc_generation ? "'#{public_advertised_prefix['byoip_api_version']}'" : "public_advertised_prefix['byoip_api_version']" -%> }
+
+end
+
+describe google_compute_v1_public_advertised_prefix(project: <%= gcp_project_id -%>, publicAdvertisedPrefix: <%= doc_generation ? "' #{public_advertised_prefix['publicAdvertisedPrefix']}'":"public_advertised_prefix['publicAdvertisedPrefix']" -%>) do
+	it { should_not exist }
+end
