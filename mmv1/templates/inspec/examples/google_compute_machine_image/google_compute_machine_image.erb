@@ -1,0 +1,19 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% machine_image = grab_attributes(pwd)['machine_image'] -%>
+describe google_compute_v1_machine_image(machineImage: <%= doc_generation ? "' #{machine_image['machineImage']}'":"machine_image['machineImage']" -%>, project: <%= gcp_project_id -%>) do
+	it { should exist }
+	its('kind') { should cmp <%= doc_generation ? "'#{machine_image['kind']}'" : "machine_image['kind']" -%> }
+	its('id') { should cmp <%= doc_generation ? "'#{machine_image['id']}'" : "machine_image['id']" -%> }
+	its('creation_timestamp') { should cmp <%= doc_generation ? "'#{machine_image['creation_timestamp']}'" : "machine_image['creation_timestamp']" -%> }
+	its('name') { should cmp <%= doc_generation ? "'#{machine_image['name']}'" : "machine_image['name']" -%> }
+	its('description') { should cmp <%= doc_generation ? "'#{machine_image['description']}'" : "machine_image['description']" -%> }
+	its('self_link') { should cmp <%= doc_generation ? "'#{machine_image['self_link']}'" : "machine_image['self_link']" -%> }
+	its('source_instance') { should cmp <%= doc_generation ? "'#{machine_image['source_instance']}'" : "machine_image['source_instance']" -%> }
+	its('status') { should cmp <%= doc_generation ? "'#{machine_image['status']}'" : "machine_image['status']" -%> }
+	its('total_storage_bytes') { should cmp <%= doc_generation ? "'#{machine_image['total_storage_bytes']}'" : "machine_image['total_storage_bytes']" -%> }
+
+end
+
+describe google_compute_v1_machine_image(machineImage: <%= doc_generation ? "' #{machine_image['machineImage']}'":"machine_image['machineImage']" -%>, project: <%= gcp_project_id -%>) do
+	it { should_not exist }
+end
