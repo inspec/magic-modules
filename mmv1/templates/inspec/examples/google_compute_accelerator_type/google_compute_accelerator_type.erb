@@ -1,6 +1,17 @@
 <% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
 <% accelerator_type = grab_attributes(pwd)['accelerator_type'] -%>
-describe google_compute_accelerator_type(project: <%= gcp_project_id -%>, zone: 'us-east1-b', name: <%= doc_generation ? "'#{accelerator_type['name']}'" : "accelerator_type['name']" -%>) do
-  it { should exist }
-  it { should be_up }
+describe google_compute_v1_accelerator_type(acceleratorType: <%= doc_generation ? "' #{accelerator_type['acceleratorType']}'":"accelerator_type['acceleratorType']" -%>, project: <%= gcp_project_id -%>, zone: <%= doc_generation ? "' #{accelerator_type['zone']}'":"accelerator_type['zone']" -%>) do
+	it { should exist }
+	its('kind') { should cmp <%= doc_generation ? "'#{accelerator_type['kind']}'" : "accelerator_type['kind']" -%> }
+	its('id') { should cmp <%= doc_generation ? "'#{accelerator_type['id']}'" : "accelerator_type['id']" -%> }
+	its('creation_timestamp') { should cmp <%= doc_generation ? "'#{accelerator_type['creation_timestamp']}'" : "accelerator_type['creation_timestamp']" -%> }
+	its('name') { should cmp <%= doc_generation ? "'#{accelerator_type['name']}'" : "accelerator_type['name']" -%> }
+	its('description') { should cmp <%= doc_generation ? "'#{accelerator_type['description']}'" : "accelerator_type['description']" -%> }
+	its('zone') { should cmp <%= doc_generation ? "'#{accelerator_type['zone']}'" : "accelerator_type['zone']" -%> }
+	its('self_link') { should cmp <%= doc_generation ? "'#{accelerator_type['self_link']}'" : "accelerator_type['self_link']" -%> }
+
+end
+
+describe google_compute_v1_accelerator_type(acceleratorType: <%= doc_generation ? "' #{accelerator_type['acceleratorType']}'":"accelerator_type['acceleratorType']" -%>, project: <%= gcp_project_id -%>, zone: <%= doc_generation ? "' #{accelerator_type['zone']}'":"accelerator_type['zone']" -%>) do
+	it { should_not exist }
 end
