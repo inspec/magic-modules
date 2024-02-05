@@ -974,3 +974,13 @@ project_service_account_key:
   valid_before_time : "value_validbeforetime"
   key_origin : "value_keyorigin"
   key_type : "value_keytype"
+license:
+  license : "value_license"
+  project : "value_project"
+  kind : "value_kind"
+  name : "value_name"
+  id : "value_id"
+  license_code : "value_licensecode"
+  creation_timestamp : "value_creationtimestamp"
+  description : "value_description"
+  self_link : "value_selflink"
