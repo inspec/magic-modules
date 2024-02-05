@@ -1,0 +1,22 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% network_firewall_policy = grab_attributes(pwd)['network_firewall_policy'] -%>
+describe google_compute_network_firewall_policy(firewallPolicy: <%= doc_generation ? "' #{network_firewall_policy['firewallPolicy']}'":"network_firewall_policy['firewallPolicy']" -%>, project: <%= gcp_project_id -%>) do
+	it { should exist }
+	its('kind') { should cmp <%= doc_generation ? "'#{network_firewall_policy['kind']}'" : "network_firewall_policy['kind']" -%> }
+	its('id') { should cmp <%= doc_generation ? "'#{network_firewall_policy['id']}'" : "network_firewall_policy['id']" -%> }
+	its('creation_timestamp') { should cmp <%= doc_generation ? "'#{network_firewall_policy['creation_timestamp']}'" : "network_firewall_policy['creation_timestamp']" -%> }
+	its('name') { should cmp <%= doc_generation ? "'#{network_firewall_policy['name']}'" : "network_firewall_policy['name']" -%> }
+	its('description') { should cmp <%= doc_generation ? "'#{network_firewall_policy['description']}'" : "network_firewall_policy['description']" -%> }
+	its('fingerprint') { should cmp <%= doc_generation ? "'#{network_firewall_policy['fingerprint']}'" : "network_firewall_policy['fingerprint']" -%> }
+	its('self_link') { should cmp <%= doc_generation ? "'#{network_firewall_policy['self_link']}'" : "network_firewall_policy['self_link']" -%> }
+	its('self_link_with_id') { should cmp <%= doc_generation ? "'#{network_firewall_policy['self_link_with_id']}'" : "network_firewall_policy['self_link_with_id']" -%> }
+	its('short_name') { should cmp <%= doc_generation ? "'#{network_firewall_policy['short_name']}'" : "network_firewall_policy['short_name']" -%> }
+	its('display_name') { should cmp <%= doc_generation ? "'#{network_firewall_policy['display_name']}'" : "network_firewall_policy['display_name']" -%> }
+	its('parent') { should cmp <%= doc_generation ? "'#{network_firewall_policy['parent']}'" : "network_firewall_policy['parent']" -%> }
+	its('region') { should cmp <%= doc_generation ? "'#{network_firewall_policy['region']}'" : "network_firewall_policy['region']" -%> }
+
+end
+
+describe google_compute_network_firewall_policy(firewallPolicy: <%= doc_generation ? "' #{network_firewall_policy['firewallPolicy']}'":"network_firewall_policy['firewallPolicy']" -%>, project: <%= gcp_project_id -%>) do
+	it { should_not exist }
+end
