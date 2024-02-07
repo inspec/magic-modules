@@ -1,0 +1,21 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% network_attachment = grab_attributes(pwd)['network_attachment'] -%>
+describe google_compute_v1_network_attachment(networkAttachment: <%= doc_generation ? "' #{network_attachment['networkAttachment']}'":"network_attachment['networkAttachment']" -%>, project: <%= gcp_project_id -%>, region: <%= doc_generation ? "' #{network_attachment['region']}'":"network_attachment['region']" -%>) do
+	it { should exist }
+	its('kind') { should cmp <%= doc_generation ? "'#{network_attachment['kind']}'" : "network_attachment['kind']" -%> }
+	its('id') { should cmp <%= doc_generation ? "'#{network_attachment['id']}'" : "network_attachment['id']" -%> }
+	its('creation_timestamp') { should cmp <%= doc_generation ? "'#{network_attachment['creation_timestamp']}'" : "network_attachment['creation_timestamp']" -%> }
+	its('name') { should cmp <%= doc_generation ? "'#{network_attachment['name']}'" : "network_attachment['name']" -%> }
+	its('description') { should cmp <%= doc_generation ? "'#{network_attachment['description']}'" : "network_attachment['description']" -%> }
+	its('self_link') { should cmp <%= doc_generation ? "'#{network_attachment['self_link']}'" : "network_attachment['self_link']" -%> }
+	its('self_link_with_id') { should cmp <%= doc_generation ? "'#{network_attachment['self_link_with_id']}'" : "network_attachment['self_link_with_id']" -%> }
+	its('region') { should cmp <%= doc_generation ? "'#{network_attachment['region']}'" : "network_attachment['region']" -%> }
+	its('connection_preference') { should cmp <%= doc_generation ? "'#{network_attachment['connection_preference']}'" : "network_attachment['connection_preference']" -%> }
+	its('fingerprint') { should cmp <%= doc_generation ? "'#{network_attachment['fingerprint']}'" : "network_attachment['fingerprint']" -%> }
+	its('network') { should cmp <%= doc_generation ? "'#{network_attachment['network']}'" : "network_attachment['network']" -%> }
+
+end
+
+describe google_compute_v1_network_attachment(networkAttachment: <%= doc_generation ? "' #{network_attachment['networkAttachment']}'":"network_attachment['networkAttachment']" -%>, project: <%= gcp_project_id -%>, region: <%= doc_generation ? "' #{network_attachment['region']}'":"network_attachment['region']" -%>) do
+	it { should_not exist }
+end
