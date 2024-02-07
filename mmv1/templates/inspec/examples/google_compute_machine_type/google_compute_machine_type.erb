@@ -1,0 +1,18 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% machine_type = grab_attributes(pwd)['machine_type'] -%>
+describe google_compute_machine_type(machineType: <%= doc_generation ? "' #{machine_type['machineType']}'":"machine_type['machineType']" -%>, project: <%= gcp_project_id -%>, zone: <%= doc_generation ? "' #{machine_type['zone']}'":"machine_type['zone']" -%>) do
+	it { should exist }
+	its('kind') { should cmp <%= doc_generation ? "'#{machine_type['kind']}'" : "machine_type['kind']" -%> }
+	its('id') { should cmp <%= doc_generation ? "'#{machine_type['id']}'" : "machine_type['id']" -%> }
+	its('creation_timestamp') { should cmp <%= doc_generation ? "'#{machine_type['creation_timestamp']}'" : "machine_type['creation_timestamp']" -%> }
+	its('name') { should cmp <%= doc_generation ? "'#{machine_type['name']}'" : "machine_type['name']" -%> }
+	its('description') { should cmp <%= doc_generation ? "'#{machine_type['description']}'" : "machine_type['description']" -%> }
+	its('maximum_persistent_disks_size_gb') { should cmp <%= doc_generation ? "'#{machine_type['maximum_persistent_disks_size_gb']}'" : "machine_type['maximum_persistent_disks_size_gb']" -%> }
+	its('zone') { should cmp <%= doc_generation ? "'#{machine_type['zone']}'" : "machine_type['zone']" -%> }
+	its('self_link') { should cmp <%= doc_generation ? "'#{machine_type['self_link']}'" : "machine_type['self_link']" -%> }
+
+end
+
+describe google_compute_machine_type(machineType: <%= doc_generation ? "' #{machine_type['machineType']}'":"machine_type['machineType']" -%>, project: <%= gcp_project_id -%>, zone: <%= doc_generation ? "' #{machine_type['zone']}'":"machine_type['zone']" -%>) do
+	it { should_not exist }
+end
