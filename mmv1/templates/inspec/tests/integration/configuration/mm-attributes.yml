@@ -1075,3 +1075,9 @@ organization_api:
 project_location_repository:
   name : "value_name"
   parent : "value_parent"
+organization_envgroup_attachment:
+  name : "value_name"
+  parent : "value_parent"
+  created_at : "value_createdat"
+  environment : "value_environment"
+  environment_group_id : "value_environmentgroupid"
