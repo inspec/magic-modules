@@ -1,0 +1,3 @@
+gcp_project_id = input(:gcp_project_id, value: '<%= external_attribute(pwd, 'gcp_project_id') -%>', description: 'The GCP project identifier.')
+
+  machine_type = input('machine_type', value: <%= JSON.pretty_generate(grab_attributes(pwd)['machine_type']) -%>, description: 'machine_type description')
