@@ -1067,3 +1067,8 @@ region_network_endpoint_group:
   network : "value_network"
   subnetwork : "value_subnetwork"
   psc_target_service : "value_psctargetservice"
+organization_api:
+  name : "value_name"
+  parent : "value_parent"
+  latest_revision_id : "value_latestrevisionid"
+  api_proxy_type : "value_apiproxytype"
