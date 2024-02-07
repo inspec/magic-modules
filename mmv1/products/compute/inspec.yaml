@@ -87,18 +87,6 @@ overrides: !ruby/object:Overrides::ResourceOverrides
         override_name: "instance_group_id"
       name: !ruby/object:Overrides::Inspec::PropertyOverride
         override_name: "instance_group_name"
-  InstanceGroupNamedPort: !ruby/object:Overrides::Inspec::ResourceOverride
-    exclude: true
-  InterconnectAttachment: !ruby/object:Overrides::Inspec::ResourceOverride
-    exclude: true
-  License: !ruby/object:Overrides::Inspec::ResourceOverride
-    exclude: true
-  MachineType: !ruby/object:Overrides::Inspec::ResourceOverride
-    exclude: true
-  MachineImage: !ruby/object:Overrides::Inspec::ResourceOverride
-    exclude: true
-  ManagedSslCertificate: !ruby/object:Overrides::Inspec::ResourceOverride
-    exclude: true
   Network: !ruby/object:Overrides::Inspec::ResourceOverride
     additional_functions: third_party/inspec/custom_functions/google_compute_network.erb
     singular_extra_examples: third_party/inspec/documentation/google_compute_network.md
