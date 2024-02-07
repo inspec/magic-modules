@@ -995,6 +995,18 @@ license:
   creation_timestamp : "value_creationtimestamp"
   description : "value_description"
   self_link : "value_selflink"
+machine_image:
+  machine_image : "value_machineimage"
+  project : "value_project"
+  kind : "value_kind"
+  id : "value_id"
+  creation_timestamp : "value_creationtimestamp"
+  name : "value_name"
+  description : "value_description"
+  self_link : "value_selflink"
+  source_instance : "value_sourceinstance"
+  status : "value_status"
+  total_storage_bytes : "value_totalstoragebytes"
 project_location_job:
   job_id : "value_jobid"
   location : "value_location"
