@@ -1,0 +1,55 @@
+
+--- !ruby/object:Api::Product
+name: ServiceNetworking
+display_name: ServiceNetworking
+versions:
+  - !ruby/object:Api::Product::Version
+    name: ga
+    base_url: https://servicenetworking.googleapis.com//v1/
+scopes:
+  - https://servicenetworking.googleapis.com//auth/cloud-platform
+apis_required:
+  - !ruby/object:Api::Product::ApiReference
+    name: https://servicenetworking.googleapis.com/
+    url: https://console.cloud.google.com/apis/library/servicenetworking.googleapis.com/
+objects:
+
+  - !ruby/object:Api::Resource
+    name: 'service_connection'
+    kind: 'compute#services_connections'
+    base_url: '{{parent}}/connections'
+    collection_url_key: 'items'
+    input: true
+    has_self_link: true
+    description: |
+      An instance is a virtual machine (VM) hosted on Google's infrastructure.
+    properties:
+      - !ruby/object:Api::Type::String
+        name: 'network'
+        description: |
+          The name of service consumer's VPC network
+          that's connected with service producer network
+      - !ruby/object:Api::Type::Array
+        name: 'reservedPeeringRanges'
+        description: |
+          The name of one or more allocated IP address ranges for this
+          service producer of type PEERING. Note that invoking connections.
+          create method with a different range when connection is already
+          established will not modify already provisioned service producer subnetworks.
+          If connections.create method is invoked repeatedly to reconnect when peering
+          connection had been disconnected on the consumer side, leaving this field
+          empty will restore previously allocated IP ranges.
+        item_type: Api::Type::String
+      - !ruby/object:Api::Type::String
+        name: 'peering'
+        description: |
+          The name of the VPC Network Peering connection
+          that was created by the service producer.
+        output: true
+
+      - !ruby/object:Api::Type::String
+        name: 'service'
+        description: |
+          The name of the peering service that's associated
+          with this connection, in the following format: services/{service name}.
+        output: true
