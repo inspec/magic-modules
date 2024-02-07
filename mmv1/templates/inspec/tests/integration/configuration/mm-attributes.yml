@@ -985,3 +985,13 @@ machine_type:
   description : "value_description"
   maximum_persistent_disks_size_gb : "value_maximumpersistentdiskssizegb"
   self_link : "value_selflink"
+license:
+  license : "value_license"
+  project : "value_project"
+  kind : "value_kind"
+  name : "value_name"
+  id : "value_id"
+  license_code : "value_licensecode"
+  creation_timestamp : "value_creationtimestamp"
+  description : "value_description"
+  self_link : "value_selflink"
