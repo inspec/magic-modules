@@ -1072,3 +1072,6 @@ organization_api:
   parent : "value_parent"
   latest_revision_id : "value_latestrevisionid"
   api_proxy_type : "value_apiproxytype"
+project_location_repository:
+  name : "value_name"
+  parent : "value_parent"
