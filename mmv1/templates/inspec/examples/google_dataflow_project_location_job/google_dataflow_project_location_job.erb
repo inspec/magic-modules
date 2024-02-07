@@ -1,0 +1,25 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% project_location_job = grab_attributes(pwd)['project_location_job'] -%>
+describe google_dataflow_project_location_job(jobId: <%= doc_generation ? "' #{project_location_job['jobId']}'":"project_location_job['jobId']" -%>, location: <%= doc_generation ? "' #{project_location_job['location']}'":"project_location_job['location']" -%>, projectId: <%= doc_generation ? "' #{project_location_job['projectId']}'":"project_location_job['projectId']" -%>) do
+	it { should exist }
+	its('id') { should cmp <%= doc_generation ? "'#{project_location_job['id']}'" : "project_location_job['id']" -%> }
+	its('project_id') { should cmp <%= doc_generation ? "'#{project_location_job['project_id']}'" : "project_location_job['project_id']" -%> }
+	its('name') { should cmp <%= doc_generation ? "'#{project_location_job['name']}'" : "project_location_job['name']" -%> }
+	its('type') { should cmp <%= doc_generation ? "'#{project_location_job['type']}'" : "project_location_job['type']" -%> }
+	its('steps_location') { should cmp <%= doc_generation ? "'#{project_location_job['steps_location']}'" : "project_location_job['steps_location']" -%> }
+	its('current_state') { should cmp <%= doc_generation ? "'#{project_location_job['current_state']}'" : "project_location_job['current_state']" -%> }
+	its('current_state_time') { should cmp <%= doc_generation ? "'#{project_location_job['current_state_time']}'" : "project_location_job['current_state_time']" -%> }
+	its('requested_state') { should cmp <%= doc_generation ? "'#{project_location_job['requested_state']}'" : "project_location_job['requested_state']" -%> }
+	its('create_time') { should cmp <%= doc_generation ? "'#{project_location_job['create_time']}'" : "project_location_job['create_time']" -%> }
+	its('replace_job_id') { should cmp <%= doc_generation ? "'#{project_location_job['replace_job_id']}'" : "project_location_job['replace_job_id']" -%> }
+	its('client_request_id') { should cmp <%= doc_generation ? "'#{project_location_job['client_request_id']}'" : "project_location_job['client_request_id']" -%> }
+	its('replaced_by_job_id') { should cmp <%= doc_generation ? "'#{project_location_job['replaced_by_job_id']}'" : "project_location_job['replaced_by_job_id']" -%> }
+	its('location') { should cmp <%= doc_generation ? "'#{project_location_job['location']}'" : "project_location_job['location']" -%> }
+	its('start_time') { should cmp <%= doc_generation ? "'#{project_location_job['start_time']}'" : "project_location_job['start_time']" -%> }
+	its('created_from_snapshot_id') { should cmp <%= doc_generation ? "'#{project_location_job['created_from_snapshot_id']}'" : "project_location_job['created_from_snapshot_id']" -%> }
+
+end
+
+describe google_dataflow_project_location_job(jobId: <%= doc_generation ? "' #{project_location_job['jobId']}'":"project_location_job['jobId']" -%>, location: <%= doc_generation ? "' #{project_location_job['location']}'":"project_location_job['location']" -%>, projectId: <%= doc_generation ? "' #{project_location_job['projectId']}'":"project_location_job['projectId']" -%>) do
+	it { should_not exist }
+end
