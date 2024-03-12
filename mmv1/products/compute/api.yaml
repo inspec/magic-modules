@@ -24497,3 +24497,69 @@ objects:
         description: |
           [Output Only] Server-defined URL for the resource.
   
+
+
+    
+  - !ruby/object:Api::Resource
+    name: RegionDiskType
+    base_url: 'projects/{{project}}/regions/{{region}}/diskTypes'
+    self_link: 'projects/{{project}}/regions/{{region}}/diskTypes/{{diskType}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/compute/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        No description
+    properties:
+  
+  
+
+
+    
+  - !ruby/object:Api::Resource
+    name: RegionDiskType
+    base_url: 'projects/{{project}}/regions/{{region}}/diskTypes'
+    self_link: 'projects/{{project}}/regions/{{region}}/diskTypes/{{diskType}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/compute/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        No description
+    properties:
+  
+  

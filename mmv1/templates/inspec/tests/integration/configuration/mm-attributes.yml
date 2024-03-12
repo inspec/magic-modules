@@ -1092,3 +1092,11 @@ node_type:
   description : "value_description"
   cpu_platform : "value_cpuplatform"
   self_link : "value_selflink"
+region_disk_type:
+  disk_type : "value_disktype"
+  project : "value_project"
+  region : "value_region"
+region_disk_type:
+  disk_type : "value_disktype"
+  project : "value_project"
+  region : "value_region"
