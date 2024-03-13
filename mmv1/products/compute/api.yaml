@@ -24497,3 +24497,329 @@ objects:
         description: |
           [Output Only] Server-defined URL for the resource.
   
+
+
+    
+  - !ruby/object:Api::Resource
+    name: PacketMirroring
+    base_url: 'projects/{{project}}/regions/{{region}}/packetMirrorings'
+    self_link: 'projects/{{project}}/regions/{{region}}/packetMirrorings/{{packetMirroring}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/compute/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Represents a Packet Mirroring resource. Packet Mirroring clones the traffic of specified instances in your Virtual Private Cloud (VPC) network and forwards it to a collector destination, such as an instance group of an internal TCP/UDP load balancer, for analysis or examination. For more information about setting up Packet Mirroring, see Using Packet Mirroring.
+    properties:
+  
+      - !ruby/object:Api::Type::String
+        name: 'kind'
+        description: |
+          [Output Only] Type of the resource. Always compute#packetMirroring for packet mirrorings.
+      - !ruby/object:Api::Type::String
+        name: 'id'
+        description: |
+          [Output Only] The unique identifier for the resource. This identifier is defined by the server.
+      - !ruby/object:Api::Type::String
+        name: 'creationTimestamp'
+        description: |
+          [Output Only] Creation timestamp in RFC3339 text format.
+      - !ruby/object:Api::Type::String
+        name: 'selfLink'
+        description: |
+          [Output Only] Server-defined URL for the resource.
+      - !ruby/object:Api::Type::String
+        name: 'selfLinkWithId'
+        description: |
+          [Output Only] Server-defined URL for this resource with the resource id.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          An optional description of this resource. Provide this property when you create the resource.
+      - !ruby/object:Api::Type::String
+        name: 'region'
+        description: |
+          [Output Only] URI of the region where the packetMirroring resides.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'network'
+        description: |
+          
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'url'
+              description: |
+                URL of the network resource.
+            - !ruby/object:Api::Type::String
+              name: 'canonicalUrl'
+              description: |
+                [Output Only] Unique identifier for the network; defined by the server.
+      - !ruby/object:Api::Type::Integer
+        name: 'priority'
+        description: |
+          The priority of applying this configuration. Priority is used to break ties in cases where there is more than one matching rule. In the case of two rules that apply for a given Instance, the one with the lowest-numbered priority value wins. Default value is 1000. Valid range is 0 through 65535.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'collectorIlb'
+        description: |
+          
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'url'
+              description: |
+                Resource URL to the forwarding rule representing the ILB configured as destination of the mirrored traffic.
+            - !ruby/object:Api::Type::String
+              name: 'canonicalUrl'
+              description: |
+                [Output Only] Unique identifier for the forwarding rule; defined by the server.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'mirroredResources'
+        description: |
+          
+        properties:
+            - !ruby/object:Api::Type::Array
+              name: 'subnetworks'
+              description: |
+                A set of subnetworks for which traffic from/to all VM instances will be mirrored. They must live in the same region as this packetMirroring. You may specify a maximum of 5 subnetworks.
+              item_type: !ruby/object:Api::Type::NestedObject
+                properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'url'
+                    description: |
+                      Resource URL to the subnetwork for which traffic from/to all VM instances will be mirrored.
+                  - !ruby/object:Api::Type::String
+                    name: 'canonicalUrl'
+                    description: |
+                      [Output Only] Unique identifier for the subnetwork; defined by the server.
+            - !ruby/object:Api::Type::Array
+              name: 'instances'
+              description: |
+                A set of virtual machine instances that are being mirrored. They must live in zones contained in the same region as this packetMirroring. Note that this config will apply only to those network interfaces of the Instances that belong to the network specified in this packetMirroring. You may specify a maximum of 50 Instances.
+              item_type: !ruby/object:Api::Type::NestedObject
+                properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'url'
+                    description: |
+                      Resource URL to the virtual machine instance which is being mirrored.
+                  - !ruby/object:Api::Type::String
+                    name: 'canonicalUrl'
+                    description: |
+                      [Output Only] Unique identifier for the instance; defined by the server.
+            - !ruby/object:Api::Type::Array
+              name: 'tags'
+              description: |
+                A set of mirrored tags. Traffic from/to all VM instances that have one or more of these tags will be mirrored.
+              item_type: Api::Type::String
+      - !ruby/object:Api::Type::NestedObject
+        name: 'filter'
+        description: |
+          
+        properties:
+            - !ruby/object:Api::Type::Array
+              name: 'cidrRanges'
+              description: |
+                One or more IPv4 or IPv6 CIDR ranges that apply as filter on the source (ingress) or destination (egress) IP in the IP header. If no ranges are specified, all IPv4 traffic that matches the specified IPProtocols is mirrored. If neither cidrRanges nor IPProtocols is specified, all IPv4 traffic is mirrored. To mirror all IPv4 and IPv6 traffic, use "0.0.0.0/0,::/0". Note: Support for IPv6 traffic is in preview.
+              item_type: Api::Type::String
+            - !ruby/object:Api::Type::Array
+              name: 'IPProtocols'
+              description: |
+                Protocols that apply as filter on mirrored traffic. If no protocols are specified, all traffic that matches the specified CIDR ranges is mirrored. If neither cidrRanges nor IPProtocols is specified, all IPv4 traffic is mirrored.
+              item_type: Api::Type::String
+            - !ruby/object:Api::Type::Enum
+              name: 'direction'
+              description: |
+                Direction of traffic to mirror, either INGRESS, EGRESS, or BOTH. The default is BOTH.
+              values:
+                - :BOTH
+                - :EGRESS
+                - :INGRESS
+      - !ruby/object:Api::Type::Enum
+        name: 'enable'
+        description: |
+          Indicates whether or not this packet mirroring takes effect. If set to FALSE, this packet mirroring policy will not be enforced on the network. The default is TRUE.
+        values:
+          - :FALSE
+          - :TRUE
+  
+
+
+    
+  - !ruby/object:Api::Resource
+    name: PacketMirroring
+    base_url: 'projects/{{project}}/regions/{{region}}/packetMirrorings'
+    self_link: 'projects/{{project}}/regions/{{region}}/packetMirrorings/{{packetMirroring}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/compute/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Represents a Packet Mirroring resource. Packet Mirroring clones the traffic of specified instances in your Virtual Private Cloud (VPC) network and forwards it to a collector destination, such as an instance group of an internal TCP/UDP load balancer, for analysis or examination. For more information about setting up Packet Mirroring, see Using Packet Mirroring.
+    properties:
+  
+      - !ruby/object:Api::Type::String
+        name: 'kind'
+        description: |
+          [Output Only] Type of the resource. Always compute#packetMirroring for packet mirrorings.
+      - !ruby/object:Api::Type::String
+        name: 'id'
+        description: |
+          [Output Only] The unique identifier for the resource. This identifier is defined by the server.
+      - !ruby/object:Api::Type::String
+        name: 'creationTimestamp'
+        description: |
+          [Output Only] Creation timestamp in RFC3339 text format.
+      - !ruby/object:Api::Type::String
+        name: 'selfLink'
+        description: |
+          [Output Only] Server-defined URL for the resource.
+      - !ruby/object:Api::Type::String
+        name: 'selfLinkWithId'
+        description: |
+          [Output Only] Server-defined URL for this resource with the resource id.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          An optional description of this resource. Provide this property when you create the resource.
+      - !ruby/object:Api::Type::String
+        name: 'region'
+        description: |
+          [Output Only] URI of the region where the packetMirroring resides.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'network'
+        description: |
+          
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'url'
+              description: |
+                URL of the network resource.
+            - !ruby/object:Api::Type::String
+              name: 'canonicalUrl'
+              description: |
+                [Output Only] Unique identifier for the network; defined by the server.
+      - !ruby/object:Api::Type::Integer
+        name: 'priority'
+        description: |
+          The priority of applying this configuration. Priority is used to break ties in cases where there is more than one matching rule. In the case of two rules that apply for a given Instance, the one with the lowest-numbered priority value wins. Default value is 1000. Valid range is 0 through 65535.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'collectorIlb'
+        description: |
+          
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'url'
+              description: |
+                Resource URL to the forwarding rule representing the ILB configured as destination of the mirrored traffic.
+            - !ruby/object:Api::Type::String
+              name: 'canonicalUrl'
+              description: |
+                [Output Only] Unique identifier for the forwarding rule; defined by the server.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'mirroredResources'
+        description: |
+          
+        properties:
+            - !ruby/object:Api::Type::Array
+              name: 'subnetworks'
+              description: |
+                A set of subnetworks for which traffic from/to all VM instances will be mirrored. They must live in the same region as this packetMirroring. You may specify a maximum of 5 subnetworks.
+              item_type: !ruby/object:Api::Type::NestedObject
+                properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'url'
+                    description: |
+                      Resource URL to the subnetwork for which traffic from/to all VM instances will be mirrored.
+                  - !ruby/object:Api::Type::String
+                    name: 'canonicalUrl'
+                    description: |
+                      [Output Only] Unique identifier for the subnetwork; defined by the server.
+            - !ruby/object:Api::Type::Array
+              name: 'instances'
+              description: |
+                A set of virtual machine instances that are being mirrored. They must live in zones contained in the same region as this packetMirroring. Note that this config will apply only to those network interfaces of the Instances that belong to the network specified in this packetMirroring. You may specify a maximum of 50 Instances.
+              item_type: !ruby/object:Api::Type::NestedObject
+                properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'url'
+                    description: |
+                      Resource URL to the virtual machine instance which is being mirrored.
+                  - !ruby/object:Api::Type::String
+                    name: 'canonicalUrl'
+                    description: |
+                      [Output Only] Unique identifier for the instance; defined by the server.
+            - !ruby/object:Api::Type::Array
+              name: 'tags'
+              description: |
+                A set of mirrored tags. Traffic from/to all VM instances that have one or more of these tags will be mirrored.
+              item_type: Api::Type::String
+      - !ruby/object:Api::Type::NestedObject
+        name: 'filter'
+        description: |
+          
+        properties:
+            - !ruby/object:Api::Type::Array
+              name: 'cidrRanges'
+              description: |
+                One or more IPv4 or IPv6 CIDR ranges that apply as filter on the source (ingress) or destination (egress) IP in the IP header. If no ranges are specified, all IPv4 traffic that matches the specified IPProtocols is mirrored. If neither cidrRanges nor IPProtocols is specified, all IPv4 traffic is mirrored. To mirror all IPv4 and IPv6 traffic, use "0.0.0.0/0,::/0". Note: Support for IPv6 traffic is in preview.
+              item_type: Api::Type::String
+            - !ruby/object:Api::Type::Array
+              name: 'IPProtocols'
+              description: |
+                Protocols that apply as filter on mirrored traffic. If no protocols are specified, all traffic that matches the specified CIDR ranges is mirrored. If neither cidrRanges nor IPProtocols is specified, all IPv4 traffic is mirrored.
+              item_type: Api::Type::String
+            - !ruby/object:Api::Type::Enum
+              name: 'direction'
+              description: |
+                Direction of traffic to mirror, either INGRESS, EGRESS, or BOTH. The default is BOTH.
+              values:
+                - :BOTH
+                - :EGRESS
+                - :INGRESS
+      - !ruby/object:Api::Type::Enum
+        name: 'enable'
+        description: |
+          Indicates whether or not this packet mirroring takes effect. If set to FALSE, this packet mirroring policy will not be enforced on the network. The default is TRUE.
+        values:
+          - :FALSE
+          - :TRUE
+  
