@@ -119,7 +119,7 @@ overrides: !ruby/object:Overrides::ResourceOverrides
   OrganizationSecurityPolicyRule: !ruby/object:Overrides::Inspec::ResourceOverride
     exclude: true
   PacketMirroring:  !ruby/object:Overrides::Inspec::ResourceOverride
-    exclude: true
+    exclude: false
   ProjectInfo:  !ruby/object:Overrides::Inspec::ResourceOverride
     singular_only: true
     singular_extra_examples: third_party/inspec/documentation/google_compute_project_info.md
