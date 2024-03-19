@@ -1,0 +1,20 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% region_disk_type = grab_attributes(pwd)['region_disk_type'] -%>
+describe google_compute_region_disk_type(diskType: <%= doc_generation ? "' #{region_disk_type['diskType']}'":"region_disk_type['diskType']" -%>, project: <%= gcp_project_id -%>, region: <%= doc_generation ? "' #{region_disk_type['region']}'":"region_disk_type['region']" -%>) do
+	it { should exist }
+	its('kind') { should cmp <%= doc_generation ? "'#{region_disk_type['kind']}'" : "region_disk_type['kind']" -%> }
+	its('id') { should cmp <%= doc_generation ? "'#{region_disk_type['id']}'" : "region_disk_type['id']" -%> }
+	its('creation_timestamp') { should cmp <%= doc_generation ? "'#{region_disk_type['creation_timestamp']}'" : "region_disk_type['creation_timestamp']" -%> }
+	its('name') { should cmp <%= doc_generation ? "'#{region_disk_type['name']}'" : "region_disk_type['name']" -%> }
+	its('description') { should cmp <%= doc_generation ? "'#{region_disk_type['description']}'" : "region_disk_type['description']" -%> }
+	its('valid_disk_size') { should cmp <%= doc_generation ? "'#{region_disk_type['valid_disk_size']}'" : "region_disk_type['valid_disk_size']" -%> }
+	its('zone') { should cmp <%= doc_generation ? "'#{region_disk_type['zone']}'" : "region_disk_type['zone']" -%> }
+	its('self_link') { should cmp <%= doc_generation ? "'#{region_disk_type['self_link']}'" : "region_disk_type['self_link']" -%> }
+	its('default_disk_size_gb') { should cmp <%= doc_generation ? "'#{region_disk_type['default_disk_size_gb']}'" : "region_disk_type['default_disk_size_gb']" -%> }
+	its('region') { should cmp <%= doc_generation ? "'#{region_disk_type['region']}'" : "region_disk_type['region']" -%> }
+
+end
+
+describe google_compute_region_disk_type(diskType: <%= doc_generation ? "' #{region_disk_type['diskType']}'":"region_disk_type['diskType']" -%>, project: <%= gcp_project_id -%>, region: <%= doc_generation ? "' #{region_disk_type['region']}'":"region_disk_type['region']" -%>) do
+	it { should_not exist }
+end
