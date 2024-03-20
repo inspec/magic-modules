@@ -1,0 +1,28 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% region_target_https_proxy = grab_attributes(pwd)['region_target_https_proxy'] -%>
+describe google_compute_region_target_https_proxy(project: <%= gcp_project_id -%>, region: <%= doc_generation ? "' #{region_target_https_proxy['region']}'":"region_target_https_proxy['region']" -%>, targetHttpsProxy: <%= doc_generation ? "' #{region_target_https_proxy['targetHttpsProxy']}'":"region_target_https_proxy['targetHttpsProxy']" -%>) do
+	it { should exist }
+	its('kind') { should cmp <%= doc_generation ? "'#{region_target_https_proxy['kind']}'" : "region_target_https_proxy['kind']" -%> }
+	its('id') { should cmp <%= doc_generation ? "'#{region_target_https_proxy['id']}'" : "region_target_https_proxy['id']" -%> }
+	its('creation_timestamp') { should cmp <%= doc_generation ? "'#{region_target_https_proxy['creation_timestamp']}'" : "region_target_https_proxy['creation_timestamp']" -%> }
+	its('name') { should cmp <%= doc_generation ? "'#{region_target_https_proxy['name']}'" : "region_target_https_proxy['name']" -%> }
+	its('description') { should cmp <%= doc_generation ? "'#{region_target_https_proxy['description']}'" : "region_target_https_proxy['description']" -%> }
+	its('self_link') { should cmp <%= doc_generation ? "'#{region_target_https_proxy['self_link']}'" : "region_target_https_proxy['self_link']" -%> }
+	its('self_link_with_id') { should cmp <%= doc_generation ? "'#{region_target_https_proxy['self_link_with_id']}'" : "region_target_https_proxy['self_link_with_id']" -%> }
+	its('url_map') { should cmp <%= doc_generation ? "'#{region_target_https_proxy['url_map']}'" : "region_target_https_proxy['url_map']" -%> }
+	its('certificate_map') { should cmp <%= doc_generation ? "'#{region_target_https_proxy['certificate_map']}'" : "region_target_https_proxy['certificate_map']" -%> }
+	its('quic_override') { should cmp <%= doc_generation ? "'#{region_target_https_proxy['quic_override']}'" : "region_target_https_proxy['quic_override']" -%> }
+	its('ssl_policy') { should cmp <%= doc_generation ? "'#{region_target_https_proxy['ssl_policy']}'" : "region_target_https_proxy['ssl_policy']" -%> }
+	its('region') { should cmp <%= doc_generation ? "'#{region_target_https_proxy['region']}'" : "region_target_https_proxy['region']" -%> }
+	its('server_tls_policy') { should cmp <%= doc_generation ? "'#{region_target_https_proxy['server_tls_policy']}'" : "region_target_https_proxy['server_tls_policy']" -%> }
+	its('authentication') { should cmp <%= doc_generation ? "'#{region_target_https_proxy['authentication']}'" : "region_target_https_proxy['authentication']" -%> }
+	its('authorization_policy') { should cmp <%= doc_generation ? "'#{region_target_https_proxy['authorization_policy']}'" : "region_target_https_proxy['authorization_policy']" -%> }
+	its('authorization') { should cmp <%= doc_generation ? "'#{region_target_https_proxy['authorization']}'" : "region_target_https_proxy['authorization']" -%> }
+	its('fingerprint') { should cmp <%= doc_generation ? "'#{region_target_https_proxy['fingerprint']}'" : "region_target_https_proxy['fingerprint']" -%> }
+	its('tls_early_data') { should cmp <%= doc_generation ? "'#{region_target_https_proxy['tls_early_data']}'" : "region_target_https_proxy['tls_early_data']" -%> }
+
+end
+
+describe google_compute_region_target_https_proxy(project: <%= gcp_project_id -%>, region: <%= doc_generation ? "' #{region_target_https_proxy['region']}'":"region_target_https_proxy['region']" -%>, targetHttpsProxy: <%= doc_generation ? "' #{region_target_https_proxy['targetHttpsProxy']}'":"region_target_https_proxy['targetHttpsProxy']" -%>) do
+	it { should_not exist }
+end
