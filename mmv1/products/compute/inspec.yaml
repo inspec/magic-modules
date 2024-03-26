@@ -153,8 +153,6 @@ overrides: !ruby/object:Overrides::ResourceOverrides
         override_name: "instance_group_manager_name"
   RegionSslCertificate: !ruby/object:Overrides::Inspec::ResourceOverride
     exclude: true
-  RegionUrlMap: !ruby/object:Overrides::Inspec::ResourceOverride
-    exclude: true
   Reservation: !ruby/object:Overrides::Inspec::ResourceOverride
     exclude: true
   ResourcePolicy: !ruby/object:Overrides::Inspec::ResourceOverride
