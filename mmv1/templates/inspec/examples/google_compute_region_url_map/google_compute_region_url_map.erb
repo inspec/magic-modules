@@ -1,0 +1,19 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% region_url_map = grab_attributes(pwd)['region_url_map'] -%>
+describe google_compute_region_url_map(project: <%= gcp_project_id -%>, region: <%= doc_generation ? "' #{region_url_map['region']}'":"region_url_map['region']" -%>, urlMap: <%= doc_generation ? "' #{region_url_map['urlMap']}'":"region_url_map['urlMap']" -%>) do
+	it { should exist }
+	its('kind') { should cmp <%= doc_generation ? "'#{region_url_map['kind']}'" : "region_url_map['kind']" -%> }
+	its('id') { should cmp <%= doc_generation ? "'#{region_url_map['id']}'" : "region_url_map['id']" -%> }
+	its('creation_timestamp') { should cmp <%= doc_generation ? "'#{region_url_map['creation_timestamp']}'" : "region_url_map['creation_timestamp']" -%> }
+	its('name') { should cmp <%= doc_generation ? "'#{region_url_map['name']}'" : "region_url_map['name']" -%> }
+	its('description') { should cmp <%= doc_generation ? "'#{region_url_map['description']}'" : "region_url_map['description']" -%> }
+	its('self_link') { should cmp <%= doc_generation ? "'#{region_url_map['self_link']}'" : "region_url_map['self_link']" -%> }
+	its('default_service') { should cmp <%= doc_generation ? "'#{region_url_map['default_service']}'" : "region_url_map['default_service']" -%> }
+	its('fingerprint') { should cmp <%= doc_generation ? "'#{region_url_map['fingerprint']}'" : "region_url_map['fingerprint']" -%> }
+	its('region') { should cmp <%= doc_generation ? "'#{region_url_map['region']}'" : "region_url_map['region']" -%> }
+
+end
+
+describe google_compute_region_url_map(project: <%= gcp_project_id -%>, region: <%= doc_generation ? "' #{region_url_map['region']}'":"region_url_map['region']" -%>, urlMap: <%= doc_generation ? "' #{region_url_map['urlMap']}'":"region_url_map['urlMap']" -%>) do
+	it { should_not exist }
+end
