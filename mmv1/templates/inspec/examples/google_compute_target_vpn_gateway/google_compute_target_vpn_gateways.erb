@@ -1,0 +1,5 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+  <% target_vpn_gateway = grab_attributes(pwd)['target_vpn_gateway'] -%>
+  describe google_compute_target_vpn_gateways(project: <%= gcp_project_id -%>, region: <%= doc_generation ? "' #{target_vpn_gateway['region']}'":"target_vpn_gateway['region']" -%>) do
+    it { should exist }
+  end
