@@ -1,0 +1,20 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% target_ssl_proxy = grab_attributes(pwd)['target_ssl_proxy'] -%>
+describe google_compute_target_ssl_proxy(project: <%= gcp_project_id -%>, targetSslProxy: <%= doc_generation ? "' #{target_ssl_proxy['targetSslProxy']}'":"target_ssl_proxy['targetSslProxy']" -%>) do
+	it { should exist }
+	its('kind') { should cmp <%= doc_generation ? "'#{target_ssl_proxy['kind']}'" : "target_ssl_proxy['kind']" -%> }
+	its('id') { should cmp <%= doc_generation ? "'#{target_ssl_proxy['id']}'" : "target_ssl_proxy['id']" -%> }
+	its('creation_timestamp') { should cmp <%= doc_generation ? "'#{target_ssl_proxy['creation_timestamp']}'" : "target_ssl_proxy['creation_timestamp']" -%> }
+	its('name') { should cmp <%= doc_generation ? "'#{target_ssl_proxy['name']}'" : "target_ssl_proxy['name']" -%> }
+	its('description') { should cmp <%= doc_generation ? "'#{target_ssl_proxy['description']}'" : "target_ssl_proxy['description']" -%> }
+	its('self_link') { should cmp <%= doc_generation ? "'#{target_ssl_proxy['self_link']}'" : "target_ssl_proxy['self_link']" -%> }
+	its('service') { should cmp <%= doc_generation ? "'#{target_ssl_proxy['service']}'" : "target_ssl_proxy['service']" -%> }
+	its('certificate_map') { should cmp <%= doc_generation ? "'#{target_ssl_proxy['certificate_map']}'" : "target_ssl_proxy['certificate_map']" -%> }
+	its('proxy_header') { should cmp <%= doc_generation ? "'#{target_ssl_proxy['proxy_header']}'" : "target_ssl_proxy['proxy_header']" -%> }
+	its('ssl_policy') { should cmp <%= doc_generation ? "'#{target_ssl_proxy['ssl_policy']}'" : "target_ssl_proxy['ssl_policy']" -%> }
+
+end
+
+describe google_compute_target_ssl_proxy(project: <%= gcp_project_id -%>, targetSslProxy: <%= doc_generation ? "' #{target_ssl_proxy['targetSslProxy']}'":"target_ssl_proxy['targetSslProxy']" -%>) do
+	it { should_not exist }
+end
