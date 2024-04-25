@@ -1,0 +1,19 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% resource_policy = grab_attributes(pwd)['resource_policy'] -%>
+describe google_compute_resource_policy(project: <%= gcp_project_id -%>, region: <%= doc_generation ? "' #{resource_policy['region']}'":"resource_policy['region']" -%>, resourcePolicy: <%= doc_generation ? "' #{resource_policy['resourcePolicy']}'":"resource_policy['resourcePolicy']" -%>) do
+	it { should exist }
+	its('kind') { should cmp <%= doc_generation ? "'#{resource_policy['kind']}'" : "resource_policy['kind']" -%> }
+	its('id') { should cmp <%= doc_generation ? "'#{resource_policy['id']}'" : "resource_policy['id']" -%> }
+	its('creation_timestamp') { should cmp <%= doc_generation ? "'#{resource_policy['creation_timestamp']}'" : "resource_policy['creation_timestamp']" -%> }
+	its('self_link') { should cmp <%= doc_generation ? "'#{resource_policy['self_link']}'" : "resource_policy['self_link']" -%> }
+	its('self_link_with_id') { should cmp <%= doc_generation ? "'#{resource_policy['self_link_with_id']}'" : "resource_policy['self_link_with_id']" -%> }
+	its('region') { should cmp <%= doc_generation ? "'#{resource_policy['region']}'" : "resource_policy['region']" -%> }
+	its('description') { should cmp <%= doc_generation ? "'#{resource_policy['description']}'" : "resource_policy['description']" -%> }
+	its('name') { should cmp <%= doc_generation ? "'#{resource_policy['name']}'" : "resource_policy['name']" -%> }
+	its('status') { should cmp <%= doc_generation ? "'#{resource_policy['status']}'" : "resource_policy['status']" -%> }
+
+end
+
+describe google_compute_resource_policy(project: <%= gcp_project_id -%>, region: <%= doc_generation ? "' #{resource_policy['region']}'":"resource_policy['region']" -%>, resourcePolicy: <%= doc_generation ? "' #{resource_policy['resourcePolicy']}'":"resource_policy['resourcePolicy']" -%>) do
+	it { should_not exist }
+end

@@ -1,0 +1,15 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% project_location_environment = grab_attributes(pwd)['project_location_environment'] -%>
+describe google_composer_project_location_environment(name: <%= doc_generation ? "' #{project_location_environment['name']}'":"project_location_environment['name']" -%>) do
+	it { should exist }
+	its('name') { should cmp <%= doc_generation ? "'#{project_location_environment['name']}'" : "project_location_environment['name']" -%> }
+	its('uuid') { should cmp <%= doc_generation ? "'#{project_location_environment['uuid']}'" : "project_location_environment['uuid']" -%> }
+	its('state') { should cmp <%= doc_generation ? "'#{project_location_environment['state']}'" : "project_location_environment['state']" -%> }
+	its('create_time') { should cmp <%= doc_generation ? "'#{project_location_environment['create_time']}'" : "project_location_environment['create_time']" -%> }
+	its('update_time') { should cmp <%= doc_generation ? "'#{project_location_environment['update_time']}'" : "project_location_environment['update_time']" -%> }
+
+end
+
+describe google_composer_project_location_environment(name: "does_not_exit") do
+	it { should_not exist }
+end

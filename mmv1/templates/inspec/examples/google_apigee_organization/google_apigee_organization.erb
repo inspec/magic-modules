@@ -1,0 +1,32 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% organization = grab_attributes(pwd)['organization'] -%>
+describe google_apigee_organization(name: <%= doc_generation ? "' #{organization['name']}'":"organization['name']" -%>) do
+	it { should exist }
+	its('api_consumer_data_encryption_key_name') { should cmp <%= doc_generation ? "'#{organization['api_consumer_data_encryption_key_name']}'" : "organization['api_consumer_data_encryption_key_name']" -%> }
+	its('runtime_database_encryption_key_name') { should cmp <%= doc_generation ? "'#{organization['runtime_database_encryption_key_name']}'" : "organization['runtime_database_encryption_key_name']" -%> }
+	its('runtime_type') { should cmp <%= doc_generation ? "'#{organization['runtime_type']}'" : "organization['runtime_type']" -%> }
+	its('type') { should cmp <%= doc_generation ? "'#{organization['type']}'" : "organization['type']" -%> }
+	its('authorized_network') { should cmp <%= doc_generation ? "'#{organization['authorized_network']}'" : "organization['authorized_network']" -%> }
+	its('project_id') { should cmp <%= doc_generation ? "'#{organization['project_id']}'" : "organization['project_id']" -%> }
+	its('description') { should cmp <%= doc_generation ? "'#{organization['description']}'" : "organization['description']" -%> }
+	its('ca_certificate') { should cmp <%= doc_generation ? "'#{organization['ca_certificate']}'" : "organization['ca_certificate']" -%> }
+	its('subscription_type') { should cmp <%= doc_generation ? "'#{organization['subscription_type']}'" : "organization['subscription_type']" -%> }
+	its('customer_name') { should cmp <%= doc_generation ? "'#{organization['customer_name']}'" : "organization['customer_name']" -%> }
+	its('created_at') { should cmp <%= doc_generation ? "'#{organization['created_at']}'" : "organization['created_at']" -%> }
+	its('last_modified_at') { should cmp <%= doc_generation ? "'#{organization['last_modified_at']}'" : "organization['last_modified_at']" -%> }
+	its('subscription_plan') { should cmp <%= doc_generation ? "'#{organization['subscription_plan']}'" : "organization['subscription_plan']" -%> }
+	its('state') { should cmp <%= doc_generation ? "'#{organization['state']}'" : "organization['state']" -%> }
+	its('name') { should cmp <%= doc_generation ? "'#{organization['name']}'" : "organization['name']" -%> }
+	its('control_plane_encryption_key_name') { should cmp <%= doc_generation ? "'#{organization['control_plane_encryption_key_name']}'" : "organization['control_plane_encryption_key_name']" -%> }
+	its('analytics_region') { should cmp <%= doc_generation ? "'#{organization['analytics_region']}'" : "organization['analytics_region']" -%> }
+	its('api_consumer_data_location') { should cmp <%= doc_generation ? "'#{organization['api_consumer_data_location']}'" : "organization['api_consumer_data_location']" -%> }
+	its('display_name') { should cmp <%= doc_generation ? "'#{organization['display_name']}'" : "organization['display_name']" -%> }
+	its('apigee_project_id') { should cmp <%= doc_generation ? "'#{organization['apigee_project_id']}'" : "organization['apigee_project_id']" -%> }
+	its('expires_at') { should cmp <%= doc_generation ? "'#{organization['expires_at']}'" : "organization['expires_at']" -%> }
+	its('billing_type') { should cmp <%= doc_generation ? "'#{organization['billing_type']}'" : "organization['billing_type']" -%> }
+
+end
+
+describe google_apigee_organization(name: "does_not_exit") do
+	it { should_not exist }
+end

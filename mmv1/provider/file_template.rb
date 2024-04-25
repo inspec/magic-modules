@@ -62,6 +62,10 @@ module Provider
 
       Google::LOGGER.debug "Generating #{path}"
       path = pwd + '/' +path
+
+      # create the directory if it doesn't exist
+      FileUtils.mkdir_p(File.dirname(path)) unless File.exist?(File.dirname(path))
+
       File.open(path, 'w') { |f| f.puts compile_file(ctx, pwd + '/' + template) }
 
       # Files are often generated in parallel.
