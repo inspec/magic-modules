@@ -1,0 +1,18 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% node_type = grab_attributes(pwd)['node_type'] -%>
+describe google_compute_v1_node_type(nodeType: <%= doc_generation ? "' #{node_type['nodeType']}'":"node_type['nodeType']" -%>, project: <%= gcp_project_id -%>, zone: <%= doc_generation ? "' #{node_type['zone']}'":"node_type['zone']" -%>) do
+	it { should exist }
+	its('kind') { should cmp <%= doc_generation ? "'#{node_type['kind']}'" : "node_type['kind']" -%> }
+	its('id') { should cmp <%= doc_generation ? "'#{node_type['id']}'" : "node_type['id']" -%> }
+	its('creation_timestamp') { should cmp <%= doc_generation ? "'#{node_type['creation_timestamp']}'" : "node_type['creation_timestamp']" -%> }
+	its('name') { should cmp <%= doc_generation ? "'#{node_type['name']}'" : "node_type['name']" -%> }
+	its('description') { should cmp <%= doc_generation ? "'#{node_type['description']}'" : "node_type['description']" -%> }
+	its('cpu_platform') { should cmp <%= doc_generation ? "'#{node_type['cpu_platform']}'" : "node_type['cpu_platform']" -%> }
+	its('zone') { should cmp <%= doc_generation ? "'#{node_type['zone']}'" : "node_type['zone']" -%> }
+	its('self_link') { should cmp <%= doc_generation ? "'#{node_type['self_link']}'" : "node_type['self_link']" -%> }
+
+end
+
+describe google_compute_v1_node_type(nodeType: <%= doc_generation ? "' #{node_type['nodeType']}'":"node_type['nodeType']" -%>, project: <%= gcp_project_id -%>, zone: <%= doc_generation ? "' #{node_type['zone']}'":"node_type['zone']" -%>) do
+	it { should_not exist }
+end

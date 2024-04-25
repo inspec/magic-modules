@@ -498,3 +498,976 @@ objects:
         'Creating an environment':
           'https://cloud.google.com/apigee/docs/api-platform/get-started/create-environment'
       api: 'https://cloud.google.com/apigee/docs/reference/apis/apigee/rest/v1/organizations.endpointAttachments/create'
+
+
+
+  - !ruby/object:Api::Resource
+    name: Organization
+    base_url: '{{parent}}'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/apigee/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        No description
+    properties:
+
+      - !ruby/object:Api::Type::String
+        name: 'apiConsumerDataEncryptionKeyName'
+        description: |
+          Cloud KMS key name used for encrypting API consumer data. Required for US/EU regions when [BillingType](#BillingType) is `SUBSCRIPTION`. When [BillingType](#BillingType) is `EVALUATION` or the region is not US/EU, a Google-Managed encryption key will be used. Format: `projects/*/locations/*/keyRings/*/cryptoKeys/*`
+      - !ruby/object:Api::Type::String
+        name: 'runtimeDatabaseEncryptionKeyName'
+        description: |
+          Cloud KMS key name used for encrypting the data that is stored and replicated across runtime instances. Update is not allowed after the organization is created. Required when [RuntimeType](#RuntimeType) is `CLOUD`. If not specified when [RuntimeType](#RuntimeType) is `TRIAL`, a Google-Managed encryption key will be used. For example: "projects/foo/locations/us/keyRings/bar/cryptoKeys/baz". **Note:** Not supported for Apigee hybrid.
+      - !ruby/object:Api::Type::Array
+        name: 'environments'
+        description: |
+          Output only. List of environments in the Apigee organization.
+        item_type: Api::Type::String
+      - !ruby/object:Api::Type::Enum
+        name: 'runtimeType'
+        description: |
+          Required. Runtime type of the Apigee organization based on the Apigee subscription purchased.
+        values:
+          - :RUNTIME_TYPE_UNSPECIFIED
+          - :CLOUD
+          - :HYBRID
+      - !ruby/object:Api::Type::Enum
+        name: 'type'
+        description: |
+          Not used by Apigee.
+        values:
+          - :TYPE_UNSPECIFIED
+          - :TYPE_TRIAL
+          - :TYPE_PAID
+          - :TYPE_INTERNAL
+      - !ruby/object:Api::Type::Boolean
+        name: 'portalDisabled'
+        description: |
+          Configuration for the Portals settings.
+      - !ruby/object:Api::Type::String
+        name: 'authorizedNetwork'
+        description: |
+          Compute Engine network used for Service Networking to be peered with Apigee runtime instances. See [Getting started with the Service Networking API](https://cloud.google.com/service-infrastructure/docs/service-networking/getting-started). Valid only when [RuntimeType](#RuntimeType) is set to `CLOUD`. The value must be set before the creation of a runtime instance and can be updated only when there are no runtime instances. For example: `default`. Apigee also supports shared VPC (that is, the host network project is not the same as the one that is peering with Apigee). See [Shared VPC overview](https://cloud.google.com/vpc/docs/shared-vpc). To use a shared VPC network, use the following format: `projects/{host-project-id}/{region}/networks/{network-name}`. For example: `projects/my-sharedvpc-host/global/networks/mynetwork` **Note:** Not supported for Apigee hybrid.
+      - !ruby/object:Api::Type::String
+        name: 'projectId'
+        description: |
+          Output only. Project ID associated with the Apigee organization.
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          Description of the Apigee organization.
+      - !ruby/object:Api::Type::String
+        name: 'caCertificate'
+        description: |
+          Output only. Base64-encoded public certificate for the root CA of the Apigee organization. Valid only when [RuntimeType](#RuntimeType) is `CLOUD`.
+      - !ruby/object:Api::Type::Enum
+        name: 'subscriptionType'
+        description: |
+          Output only. DEPRECATED: This will eventually be replaced by BillingType. Subscription type of the Apigee organization. Valid values include trial (free, limited, and for evaluation purposes only) or paid (full subscription has been purchased). See [Apigee pricing](https://cloud.google.com/apigee/pricing/).
+        values:
+          - :SUBSCRIPTION_TYPE_UNSPECIFIED
+          - :PAID
+          - :TRIAL
+      - !ruby/object:Api::Type::NestedObject
+        name: 'addonsConfig'
+        description: |
+          Add-on configurations for the Apigee organization.
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'integrationConfig'
+              description: |
+                Configuration for the Integration add-on.
+              properties:
+                  - !ruby/object:Api::Type::Boolean
+                    name: 'enabled'
+                    description: |
+                      Flag that specifies whether the Integration add-on is enabled.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'apiSecurityConfig'
+              description: |
+                Configurations of the API Security add-on.
+              properties:
+                  - !ruby/object:Api::Type::Boolean
+                    name: 'enabled'
+                    description: |
+                      Flag that specifies whether the API security add-on is enabled.
+                  - !ruby/object:Api::Type::String
+                    name: 'expiresAt'
+                    description: |
+                      Output only. Time at which the API Security add-on expires in in milliseconds since epoch. If unspecified, the add-on will never expire.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'monetizationConfig'
+              description: |
+                Configuration for the Monetization add-on.
+              properties:
+                  - !ruby/object:Api::Type::Boolean
+                    name: 'enabled'
+                    description: |
+                      Flag that specifies whether the Monetization add-on is enabled.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'connectorsPlatformConfig'
+              description: |
+                Configuration for the Connectors Platform add-on.
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'expiresAt'
+                    description: |
+                      Output only. Time at which the Connectors Platform add-on expires in milliseconds since epoch. If unspecified, the add-on will never expire.
+                  - !ruby/object:Api::Type::Boolean
+                    name: 'enabled'
+                    description: |
+                      Flag that specifies whether the Connectors Platform add-on is enabled.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'analyticsConfig'
+              description: |
+                Configuration for the Analytics add-on.
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'expireTimeMillis'
+                    description: |
+                      Output only. Time at which the Analytics add-on expires in milliseconds since epoch. If unspecified, the add-on will never expire.
+                  - !ruby/object:Api::Type::Enum
+                    name: 'state'
+                    description: |
+                      Output only. The state of the Analytics add-on.
+                    values:
+                      - :ADDON_STATE_UNSPECIFIED
+                      - :ENABLING
+                      - :ENABLED
+                      - :DISABLING
+                      - :DISABLED
+                  - !ruby/object:Api::Type::Boolean
+                    name: 'enabled'
+                    description: |
+                      Whether the Analytics add-on is enabled.
+                  - !ruby/object:Api::Type::String
+                    name: 'updateTime'
+                    description: |
+                      Output only. The latest update time.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'advancedApiOpsConfig'
+              description: |
+                Configuration for the Advanced API Ops add-on.
+              properties:
+                  - !ruby/object:Api::Type::Boolean
+                    name: 'enabled'
+                    description: |
+                      Flag that specifies whether the Advanced API Ops add-on is enabled.
+      - !ruby/object:Api::Type::String
+        name: 'customerName'
+        description: |
+          Not used by Apigee.
+      - !ruby/object:Api::Type::String
+        name: 'createdAt'
+        description: |
+          Output only. Time that the Apigee organization was created in milliseconds since epoch.
+      - !ruby/object:Api::Type::String
+        name: 'lastModifiedAt'
+        description: |
+          Output only. Time that the Apigee organization was last modified in milliseconds since epoch.
+      - !ruby/object:Api::Type::Enum
+        name: 'subscriptionPlan'
+        description: |
+          Output only. Subscription plan that the customer has purchased. Output only.
+        values:
+          - :SUBSCRIPTION_PLAN_UNSPECIFIED
+          - :SUBSCRIPTION_2021
+          - :SUBSCRIPTION_2024
+      - !ruby/object:Api::Type::NestedObject
+        name: 'properties'
+        description: |
+          Message for compatibility with legacy Edge specification for Java Properties object in JSON.
+        properties:
+            - !ruby/object:Api::Type::Array
+              name: 'property'
+              description: |
+                List of all properties in the object
+              item_type: !ruby/object:Api::Type::NestedObject
+                properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'value'
+                    description: |
+                      The property value
+                  - !ruby/object:Api::Type::String
+                    name: 'name'
+                    description: |
+                      The property key
+      - !ruby/object:Api::Type::Enum
+        name: 'state'
+        description: |
+          Output only. State of the organization. Values other than ACTIVE means the resource is not ready to use.
+        values:
+          - :STATE_UNSPECIFIED
+          - :CREATING
+          - :ACTIVE
+          - :DELETING
+          - :UPDATING
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. Name of the Apigee organization.
+      - !ruby/object:Api::Type::Boolean
+        name: 'disableVpcPeering'
+        description: |
+          Optional. Flag that specifies whether the VPC Peering through Private Google Access should be disabled between the consumer network and Apigee. Valid only when RuntimeType is set to CLOUD. Required if an authorizedNetwork on the consumer project is not provided, in which case the flag should be set to true. The value must be set before the creation of any Apigee runtime instance and can be updated only when there are no runtime instances. **Note:** Apigee will be deprecating the vpc peering model that requires you to provide 'authorizedNetwork', by making the non-peering model as the default way of provisioning Apigee organization in future. So, this will be a temporary flag to enable the transition. Not supported for Apigee hybrid.
+      - !ruby/object:Api::Type::String
+        name: 'controlPlaneEncryptionKeyName'
+        description: |
+          Cloud KMS key name used for encrypting control plane data that is stored in a multi region. Required when [BillingType](#BillingType) is `SUBSCRIPTION`. When [BillingType](#BillingType) is `EVALUATION`, a Google-Managed encryption key will be used. Format: `projects/*/locations/*/keyRings/*/cryptoKeys/*`
+      - !ruby/object:Api::Type::String
+        name: 'analyticsRegion'
+        description: |
+          Required. DEPRECATED: This field will eventually be deprecated and replaced with a differently-named field. Primary Google Cloud region for analytics data storage. For valid values, see [Create an Apigee organization](https://cloud.google.com/apigee/docs/api-platform/get-started/create-org).
+      - !ruby/object:Api::Type::String
+        name: 'apiConsumerDataLocation'
+        description: |
+          This field is needed only for customers with control plane in US or EU. Apigee stores some control plane data only in single region. This field determines which single region Apigee should use. For example: "us-west1" when control plane is in US or "europe-west2" when control plane is in EU.
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          Display name for the Apigee organization. Unused, but reserved for future use.
+      - !ruby/object:Api::Type::String
+        name: 'apigeeProjectId'
+        description: |
+          Output only. Apigee Project ID associated with the organization. Use this project to allowlist Apigee in the Service Attachment when using private service connect with Apigee.
+      - !ruby/object:Api::Type::String
+        name: 'expiresAt'
+        description: |
+          Output only. Time that the Apigee organization is scheduled for deletion.
+      - !ruby/object:Api::Type::Array
+        name: 'attributes'
+        description: |
+          Not used by Apigee.
+        item_type: Api::Type::String
+      - !ruby/object:Api::Type::Enum
+        name: 'billingType'
+        description: |
+          Billing type of the Apigee organization. See [Apigee pricing](https://cloud.google.com/apigee/pricing).
+        values:
+          - :BILLING_TYPE_UNSPECIFIED
+          - :SUBSCRIPTION
+          - :EVALUATION
+          - :PAYG
+
+
+
+
+  - !ruby/object:Api::Resource
+    name: Organization
+    base_url: '{{parent}}'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/apigee/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        No description
+    properties:
+
+      - !ruby/object:Api::Type::String
+        name: 'apiConsumerDataEncryptionKeyName'
+        description: |
+          Cloud KMS key name used for encrypting API consumer data. Required for US/EU regions when [BillingType](#BillingType) is `SUBSCRIPTION`. When [BillingType](#BillingType) is `EVALUATION` or the region is not US/EU, a Google-Managed encryption key will be used. Format: `projects/*/locations/*/keyRings/*/cryptoKeys/*`
+      - !ruby/object:Api::Type::String
+        name: 'runtimeDatabaseEncryptionKeyName'
+        description: |
+          Cloud KMS key name used for encrypting the data that is stored and replicated across runtime instances. Update is not allowed after the organization is created. Required when [RuntimeType](#RuntimeType) is `CLOUD`. If not specified when [RuntimeType](#RuntimeType) is `TRIAL`, a Google-Managed encryption key will be used. For example: "projects/foo/locations/us/keyRings/bar/cryptoKeys/baz". **Note:** Not supported for Apigee hybrid.
+      - !ruby/object:Api::Type::Array
+        name: 'environments'
+        description: |
+          Output only. List of environments in the Apigee organization.
+        item_type: Api::Type::String
+      - !ruby/object:Api::Type::Enum
+        name: 'runtimeType'
+        description: |
+          Required. Runtime type of the Apigee organization based on the Apigee subscription purchased.
+        values:
+          - :RUNTIME_TYPE_UNSPECIFIED
+          - :CLOUD
+          - :HYBRID
+      - !ruby/object:Api::Type::Enum
+        name: 'type'
+        description: |
+          Not used by Apigee.
+        values:
+          - :TYPE_UNSPECIFIED
+          - :TYPE_TRIAL
+          - :TYPE_PAID
+          - :TYPE_INTERNAL
+      - !ruby/object:Api::Type::Boolean
+        name: 'portalDisabled'
+        description: |
+          Configuration for the Portals settings.
+      - !ruby/object:Api::Type::String
+        name: 'authorizedNetwork'
+        description: |
+          Compute Engine network used for Service Networking to be peered with Apigee runtime instances. See [Getting started with the Service Networking API](https://cloud.google.com/service-infrastructure/docs/service-networking/getting-started). Valid only when [RuntimeType](#RuntimeType) is set to `CLOUD`. The value must be set before the creation of a runtime instance and can be updated only when there are no runtime instances. For example: `default`. Apigee also supports shared VPC (that is, the host network project is not the same as the one that is peering with Apigee). See [Shared VPC overview](https://cloud.google.com/vpc/docs/shared-vpc). To use a shared VPC network, use the following format: `projects/{host-project-id}/{region}/networks/{network-name}`. For example: `projects/my-sharedvpc-host/global/networks/mynetwork` **Note:** Not supported for Apigee hybrid.
+      - !ruby/object:Api::Type::String
+        name: 'projectId'
+        description: |
+          Output only. Project ID associated with the Apigee organization.
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          Description of the Apigee organization.
+      - !ruby/object:Api::Type::String
+        name: 'caCertificate'
+        description: |
+          Output only. Base64-encoded public certificate for the root CA of the Apigee organization. Valid only when [RuntimeType](#RuntimeType) is `CLOUD`.
+      - !ruby/object:Api::Type::Enum
+        name: 'subscriptionType'
+        description: |
+          Output only. DEPRECATED: This will eventually be replaced by BillingType. Subscription type of the Apigee organization. Valid values include trial (free, limited, and for evaluation purposes only) or paid (full subscription has been purchased). See [Apigee pricing](https://cloud.google.com/apigee/pricing/).
+        values:
+          - :SUBSCRIPTION_TYPE_UNSPECIFIED
+          - :PAID
+          - :TRIAL
+      - !ruby/object:Api::Type::NestedObject
+        name: 'addonsConfig'
+        description: |
+          Add-on configurations for the Apigee organization.
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'integrationConfig'
+              description: |
+                Configuration for the Integration add-on.
+              properties:
+                  - !ruby/object:Api::Type::Boolean
+                    name: 'enabled'
+                    description: |
+                      Flag that specifies whether the Integration add-on is enabled.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'apiSecurityConfig'
+              description: |
+                Configurations of the API Security add-on.
+              properties:
+                  - !ruby/object:Api::Type::Boolean
+                    name: 'enabled'
+                    description: |
+                      Flag that specifies whether the API security add-on is enabled.
+                  - !ruby/object:Api::Type::String
+                    name: 'expiresAt'
+                    description: |
+                      Output only. Time at which the API Security add-on expires in in milliseconds since epoch. If unspecified, the add-on will never expire.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'monetizationConfig'
+              description: |
+                Configuration for the Monetization add-on.
+              properties:
+                  - !ruby/object:Api::Type::Boolean
+                    name: 'enabled'
+                    description: |
+                      Flag that specifies whether the Monetization add-on is enabled.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'connectorsPlatformConfig'
+              description: |
+                Configuration for the Connectors Platform add-on.
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'expiresAt'
+                    description: |
+                      Output only. Time at which the Connectors Platform add-on expires in milliseconds since epoch. If unspecified, the add-on will never expire.
+                  - !ruby/object:Api::Type::Boolean
+                    name: 'enabled'
+                    description: |
+                      Flag that specifies whether the Connectors Platform add-on is enabled.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'analyticsConfig'
+              description: |
+                Configuration for the Analytics add-on.
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'expireTimeMillis'
+                    description: |
+                      Output only. Time at which the Analytics add-on expires in milliseconds since epoch. If unspecified, the add-on will never expire.
+                  - !ruby/object:Api::Type::Enum
+                    name: 'state'
+                    description: |
+                      Output only. The state of the Analytics add-on.
+                    values:
+                      - :ADDON_STATE_UNSPECIFIED
+                      - :ENABLING
+                      - :ENABLED
+                      - :DISABLING
+                      - :DISABLED
+                  - !ruby/object:Api::Type::Boolean
+                    name: 'enabled'
+                    description: |
+                      Whether the Analytics add-on is enabled.
+                  - !ruby/object:Api::Type::String
+                    name: 'updateTime'
+                    description: |
+                      Output only. The latest update time.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'advancedApiOpsConfig'
+              description: |
+                Configuration for the Advanced API Ops add-on.
+              properties:
+                  - !ruby/object:Api::Type::Boolean
+                    name: 'enabled'
+                    description: |
+                      Flag that specifies whether the Advanced API Ops add-on is enabled.
+      - !ruby/object:Api::Type::String
+        name: 'customerName'
+        description: |
+          Not used by Apigee.
+      - !ruby/object:Api::Type::String
+        name: 'createdAt'
+        description: |
+          Output only. Time that the Apigee organization was created in milliseconds since epoch.
+      - !ruby/object:Api::Type::String
+        name: 'lastModifiedAt'
+        description: |
+          Output only. Time that the Apigee organization was last modified in milliseconds since epoch.
+      - !ruby/object:Api::Type::Enum
+        name: 'subscriptionPlan'
+        description: |
+          Output only. Subscription plan that the customer has purchased. Output only.
+        values:
+          - :SUBSCRIPTION_PLAN_UNSPECIFIED
+          - :SUBSCRIPTION_2021
+          - :SUBSCRIPTION_2024
+      - !ruby/object:Api::Type::NestedObject
+        name: 'properties'
+        description: |
+          Message for compatibility with legacy Edge specification for Java Properties object in JSON.
+        properties:
+            - !ruby/object:Api::Type::Array
+              name: 'property'
+              description: |
+                List of all properties in the object
+              item_type: !ruby/object:Api::Type::NestedObject
+                properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'value'
+                    description: |
+                      The property value
+                  - !ruby/object:Api::Type::String
+                    name: 'name'
+                    description: |
+                      The property key
+      - !ruby/object:Api::Type::Enum
+        name: 'state'
+        description: |
+          Output only. State of the organization. Values other than ACTIVE means the resource is not ready to use.
+        values:
+          - :STATE_UNSPECIFIED
+          - :CREATING
+          - :ACTIVE
+          - :DELETING
+          - :UPDATING
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. Name of the Apigee organization.
+      - !ruby/object:Api::Type::Boolean
+        name: 'disableVpcPeering'
+        description: |
+          Optional. Flag that specifies whether the VPC Peering through Private Google Access should be disabled between the consumer network and Apigee. Valid only when RuntimeType is set to CLOUD. Required if an authorizedNetwork on the consumer project is not provided, in which case the flag should be set to true. The value must be set before the creation of any Apigee runtime instance and can be updated only when there are no runtime instances. **Note:** Apigee will be deprecating the vpc peering model that requires you to provide 'authorizedNetwork', by making the non-peering model as the default way of provisioning Apigee organization in future. So, this will be a temporary flag to enable the transition. Not supported for Apigee hybrid.
+      - !ruby/object:Api::Type::String
+        name: 'controlPlaneEncryptionKeyName'
+        description: |
+          Cloud KMS key name used for encrypting control plane data that is stored in a multi region. Required when [BillingType](#BillingType) is `SUBSCRIPTION`. When [BillingType](#BillingType) is `EVALUATION`, a Google-Managed encryption key will be used. Format: `projects/*/locations/*/keyRings/*/cryptoKeys/*`
+      - !ruby/object:Api::Type::String
+        name: 'analyticsRegion'
+        description: |
+          Required. DEPRECATED: This field will eventually be deprecated and replaced with a differently-named field. Primary Google Cloud region for analytics data storage. For valid values, see [Create an Apigee organization](https://cloud.google.com/apigee/docs/api-platform/get-started/create-org).
+      - !ruby/object:Api::Type::String
+        name: 'apiConsumerDataLocation'
+        description: |
+          This field is needed only for customers with control plane in US or EU. Apigee stores some control plane data only in single region. This field determines which single region Apigee should use. For example: "us-west1" when control plane is in US or "europe-west2" when control plane is in EU.
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          Display name for the Apigee organization. Unused, but reserved for future use.
+      - !ruby/object:Api::Type::String
+        name: 'apigeeProjectId'
+        description: |
+          Output only. Apigee Project ID associated with the organization. Use this project to allowlist Apigee in the Service Attachment when using private service connect with Apigee.
+      - !ruby/object:Api::Type::String
+        name: 'expiresAt'
+        description: |
+          Output only. Time that the Apigee organization is scheduled for deletion.
+      - !ruby/object:Api::Type::Array
+        name: 'attributes'
+        description: |
+          Not used by Apigee.
+        item_type: Api::Type::String
+      - !ruby/object:Api::Type::Enum
+        name: 'billingType'
+        description: |
+          Billing type of the Apigee organization. See [Apigee pricing](https://cloud.google.com/apigee/pricing).
+        values:
+          - :BILLING_TYPE_UNSPECIFIED
+          - :SUBSCRIPTION
+          - :EVALUATION
+          - :PAYG
+
+
+
+
+  - !ruby/object:Api::Resource
+    name: OrganizationEnvgroup
+    base_url: '{{parent}}/envgroups'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/apigee/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        EnvironmentGroup configuration. An environment group is used to group one or more Apigee environments under a single host name.
+    properties:
+
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          ID of the environment group.
+      - !ruby/object:Api::Type::String
+        name: 'lastModifiedAt'
+        description: |
+          Output only. The time at which the environment group was last updated as milliseconds since epoch.
+      - !ruby/object:Api::Type::Array
+        name: 'hostnames'
+        description: |
+          Required. Host names for this environment group.
+        item_type: Api::Type::String
+      - !ruby/object:Api::Type::Enum
+        name: 'state'
+        description: |
+          Output only. State of the environment group. Values other than ACTIVE means the resource is not ready to use.
+        values:
+          - :STATE_UNSPECIFIED
+          - :CREATING
+          - :ACTIVE
+          - :DELETING
+          - :UPDATING
+      - !ruby/object:Api::Type::String
+        name: 'createdAt'
+        description: |
+          Output only. The time at which the environment group was created as milliseconds since epoch.
+  
+
+
+
+  - !ruby/object:Api::Resource
+    name: OrganizationEnvgroup
+    base_url: '{{parent}}/envgroups'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/apigee/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        EnvironmentGroup configuration. An environment group is used to group one or more Apigee environments under a single host name.
+    properties:
+
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          ID of the environment group.
+      - !ruby/object:Api::Type::String
+        name: 'lastModifiedAt'
+        description: |
+          Output only. The time at which the environment group was last updated as milliseconds since epoch.
+      - !ruby/object:Api::Type::Array
+        name: 'hostnames'
+        description: |
+          Required. Host names for this environment group.
+        item_type: Api::Type::String
+      - !ruby/object:Api::Type::Enum
+        name: 'state'
+        description: |
+          Output only. State of the environment group. Values other than ACTIVE means the resource is not ready to use.
+        values:
+          - :STATE_UNSPECIFIED
+          - :CREATING
+          - :ACTIVE
+          - :DELETING
+          - :UPDATING
+      - !ruby/object:Api::Type::String
+        name: 'createdAt'
+        description: |
+          Output only. The time at which the environment group was created as milliseconds since epoch.
+  
+
+
+
+  - !ruby/object:Api::Resource
+    name: OrganizationApiRevision
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/apigee/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Message that represents an arbitrary HTTP body. It should only be used for payload formats that can't be represented as JSON, such as raw binary or an HTML page. This message can be used both in streaming and non-streaming API methods in the request as well as the response. It can be used as a top-level request field, which is convenient if one wants to extract parameters from either the URL or HTTP template into the request fields and also want access to the raw HTTP body. Example: message GetResourceRequest { // A unique request id. string request_id = 1; // The raw HTTP body is bound to this field. google.api.HttpBody http_body = 2; } service ResourceService { rpc GetResource(GetResourceRequest) returns (google.api.HttpBody); rpc UpdateResource(google.api.HttpBody) returns (google.protobuf.Empty); } Example with streaming methods: service CaldavService { rpc GetCalendar(stream google.api.HttpBody) returns (stream google.api.HttpBody); rpc UpdateCalendar(stream google.api.HttpBody) returns (stream google.api.HttpBody); } Use of this type only changes how the request and response bodies are handled, all other features will continue to work unchanged.
+    properties:
+
+      - !ruby/object:Api::Type::Array
+        name: 'extensions'
+        description: |
+          Application specific response metadata. Must be set in the first response for streaming APIs.
+        item_type: Api::Type::String
+      - !ruby/object:Api::Type::String
+        name: 'contentType'
+        description: |
+          The HTTP Content-Type header value specifying the content type of the body.
+      - !ruby/object:Api::Type::String
+        name: 'data'
+        description: |
+          The HTTP request/response body as raw binary.
+  
+
+
+
+  - !ruby/object:Api::Resource
+    name: OrganizationApi
+    base_url: '{{parent}}/apis'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/apigee/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Metadata describing the API proxy
+    properties:
+
+      - !ruby/object:Api::Type::Array
+        name: 'revision'
+        description: |
+          Output only. List of revisions defined for the API proxy.
+        item_type: Api::Type::String
+      - !ruby/object:Api::Type::String
+        name: 'latestRevisionId'
+        description: |
+          Output only. The id of the most recently created revision for this api proxy.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'metaData'
+        description: |
+          Metadata common to many entities in this API.
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'lastModifiedAt'
+              description: |
+                Time at which the API proxy was most recently modified, in milliseconds since epoch.
+            - !ruby/object:Api::Type::String
+              name: 'createdAt'
+              description: |
+                Time at which the API proxy was created, in milliseconds since epoch.
+            - !ruby/object:Api::Type::String
+              name: 'subType'
+              description: |
+                The type of entity described
+      - !ruby/object:Api::Type::Enum
+        name: 'apiProxyType'
+        description: |
+          Output only. The type of the API proxy.
+        values:
+          - :API_PROXY_TYPE_UNSPECIFIED
+          - :PROGRAMMABLE
+          - :CONFIGURABLE
+      - !ruby/object:Api::Type::Boolean
+        name: 'readOnly'
+        description: |
+          Output only. Whether this proxy is read-only. A read-only proxy cannot have new revisions created through calls to CreateApiProxyRevision. A proxy is read-only if it was generated by an archive.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          User labels applied to this API Proxy.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. Name of the API proxy.
+  
+
+
+
+  - !ruby/object:Api::Resource
+    name: OrganizationApi
+    base_url: '{{parent}}/apis'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/apigee/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Metadata describing the API proxy
+    properties:
+
+      - !ruby/object:Api::Type::Array
+        name: 'revision'
+        description: |
+          Output only. List of revisions defined for the API proxy.
+        item_type: Api::Type::String
+      - !ruby/object:Api::Type::String
+        name: 'latestRevisionId'
+        description: |
+          Output only. The id of the most recently created revision for this api proxy.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'metaData'
+        description: |
+          Metadata common to many entities in this API.
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'lastModifiedAt'
+              description: |
+                Time at which the API proxy was most recently modified, in milliseconds since epoch.
+            - !ruby/object:Api::Type::String
+              name: 'createdAt'
+              description: |
+                Time at which the API proxy was created, in milliseconds since epoch.
+            - !ruby/object:Api::Type::String
+              name: 'subType'
+              description: |
+                The type of entity described
+      - !ruby/object:Api::Type::Enum
+        name: 'apiProxyType'
+        description: |
+          Output only. The type of the API proxy.
+        values:
+          - :API_PROXY_TYPE_UNSPECIFIED
+          - :PROGRAMMABLE
+          - :CONFIGURABLE
+      - !ruby/object:Api::Type::Boolean
+        name: 'readOnly'
+        description: |
+          Output only. Whether this proxy is read-only. A read-only proxy cannot have new revisions created through calls to CreateApiProxyRevision. A proxy is read-only if it was generated by an archive.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          User labels applied to this API Proxy.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Output only. Name of the API proxy.
+  
+
+
+
+  - !ruby/object:Api::Resource
+    name: OrganizationEnvgroupAttachment
+    base_url: '{{parent}}/attachments'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/apigee/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        EnvironmentGroupAttachment is a resource which defines an attachment of an environment to an environment group.
+    properties:
+
+      - !ruby/object:Api::Type::String
+        name: 'createdAt'
+        description: |
+          Output only. The time at which the environment group attachment was created as milliseconds since epoch.
+      - !ruby/object:Api::Type::String
+        name: 'environment'
+        description: |
+          Required. ID of the attached environment.
+      - !ruby/object:Api::Type::String
+        name: 'environmentGroupId'
+        description: |
+          Output only. ID of the environment group.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          ID of the environment group attachment.
+  
+
+
+
+  - !ruby/object:Api::Resource
+    name: OrganizationEnvgroupAttachment
+    base_url: '{{parent}}/attachments'
+    self_link: '{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/apigee/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        EnvironmentGroupAttachment is a resource which defines an attachment of an environment to an environment group.
+    properties:
+
+      - !ruby/object:Api::Type::String
+        name: 'createdAt'
+        description: |
+          Output only. The time at which the environment group attachment was created as milliseconds since epoch.
+      - !ruby/object:Api::Type::String
+        name: 'environment'
+        description: |
+          Required. ID of the attached environment.
+      - !ruby/object:Api::Type::String
+        name: 'environmentGroupId'
+        description: |
+          Output only. ID of the environment group.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          ID of the environment group attachment.
+  

@@ -1,0 +1,18 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% index = grab_attributes(pwd)['index'] -%>
+describe google_vertex_ai_index(name: "projects/#{gcp_project_id}/locations/#{index['region']}/indexes/#{index['name']}", region: <%= doc_generation ? "' #{index['region']}'":"index['region']" -%>) do
+	it { should exist }
+	its('description') { should cmp <%= doc_generation ? "'#{index['description']}'" : "index['description']" -%> }
+	its('name') { should cmp <%= doc_generation ? "'#{index['name']}'" : "index['name']" -%> }
+	its('display_name') { should cmp <%= doc_generation ? "'#{index['display_name']}'" : "index['display_name']" -%> }
+	its('metadata_schema_uri') { should cmp <%= doc_generation ? "'#{index['metadata_schema_uri']}'" : "index['metadata_schema_uri']" -%> }
+	its('index_update_method') { should cmp <%= doc_generation ? "'#{index['index_update_method']}'" : "index['index_update_method']" -%> }
+	its('update_time') { should cmp <%= doc_generation ? "'#{index['update_time']}'" : "index['update_time']" -%> }
+	its('create_time') { should cmp <%= doc_generation ? "'#{index['create_time']}'" : "index['create_time']" -%> }
+	its('etag') { should cmp <%= doc_generation ? "'#{index['etag']}'" : "index['etag']" -%> }
+
+end
+
+describe google_vertex_ai_index(name: "does_not_exit", region: <%= doc_generation ? "' #{index['region']}'":"index['region']" -%>) do
+	it { should_not exist }
+end

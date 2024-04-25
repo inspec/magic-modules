@@ -1,0 +1,10 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% service_connection = grab_attributes(pwd)['service_connection'] -%>
+describe google_service_networking_service_connection() do
+	it { should exist }
+
+end
+
+describe google_service_networking_service_connection() do
+	it { should_not exist }
+end
