@@ -24830,3 +24830,699 @@ objects:
           - :FALSE
           - :TRUE
 
+
+
+    
+  - !ruby/object:Api::Resource
+    name: ResourcePolicy
+    base_url: 'projects/{{project}}/regions/{{region}}/resourcePolicies'
+    self_link: 'projects/{{project}}/regions/{{region}}/resourcePolicies/{{resourcePolicy}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/compute/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Represents a Resource Policy resource. You can use resource policies to schedule actions for some Compute Engine resources. For example, you can use them to schedule persistent disk snapshots.
+    properties:
+  
+      - !ruby/object:Api::Type::String
+        name: 'kind'
+        description: |
+          [Output Only] Type of the resource. Always compute#resource_policies for resource policies.
+      - !ruby/object:Api::Type::String
+        name: 'id'
+        description: |
+          [Output Only] The unique identifier for the resource. This identifier is defined by the server.
+      - !ruby/object:Api::Type::String
+        name: 'creationTimestamp'
+        description: |
+          [Output Only] Creation timestamp in RFC3339 text format.
+      - !ruby/object:Api::Type::String
+        name: 'selfLink'
+        description: |
+          [Output Only] Server-defined fully-qualified URL for this resource.
+      - !ruby/object:Api::Type::String
+        name: 'selfLinkWithId'
+        description: |
+          [Output Only] Server-defined URL for this resource with the resource id.
+      - !ruby/object:Api::Type::String
+        name: 'region'
+        description: |
+          
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'vmMaintenancePolicy'
+        description: |
+          
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'maintenanceWindow'
+              description: |
+                A maintenance window for VMs. When set, we restrict our maintenance operations to this window.
+              properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'dailyMaintenanceWindow'
+                    description: |
+                      Time window specified for daily operations.
+                    properties:
+                        - !ruby/object:Api::Type::Integer
+                          name: 'daysInCycle'
+                          description: |
+                            Defines a schedule with units measured in days. The value determines how many days pass between the start of each cycle.
+                        - !ruby/object:Api::Type::String
+                          name: 'startTime'
+                          description: |
+                            Start time of the window. This must be in UTC format that resolves to one of 00:00, 04:00, 08:00, 12:00, 16:00, or 20:00. For example, both 13:00-5 and 08:00 are valid.
+                        - !ruby/object:Api::Type::String
+                          name: 'duration'
+                          description: |
+                            [Output only] A predetermined duration for the window, automatically chosen to be the smallest possible in the given scenario.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'concurrencyControlGroup'
+              description: |
+                A concurrency control configuration. Defines a group config that, when attached to an instance, recognizes that instance as part of a group of instances where only up the concurrency_limit of instances in that group can undergo simultaneous maintenance. For more information: go/concurrency-control-design-doc
+              properties:
+                  - !ruby/object:Api::Type::Integer
+                    name: 'concurrencyLimit'
+                    description: |
+                      
+      - !ruby/object:Api::Type::NestedObject
+        name: 'snapshotSchedulePolicy'
+        description: |
+          A snapshot schedule policy specifies when and how frequently snapshots are to be created for the target disk. Also specifies how many and how long these scheduled snapshots should be retained.
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'schedule'
+              description: |
+                A schedule for disks where the schedueled operations are performed.
+              properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'hourlySchedule'
+                    description: |
+                      Time window specified for hourly operations.
+                    properties:
+                        - !ruby/object:Api::Type::Integer
+                          name: 'hoursInCycle'
+                          description: |
+                            Defines a schedule with units measured in hours. The value determines how many hours pass between the start of each cycle.
+                        - !ruby/object:Api::Type::String
+                          name: 'startTime'
+                          description: |
+                            Time within the window to start the operations. It must be in format "HH:MM", where HH : [00-23] and MM : [00-00] GMT.
+                        - !ruby/object:Api::Type::String
+                          name: 'duration'
+                          description: |
+                            [Output only] Duration of the time window, automatically chosen to be smallest possible in the given scenario.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'dailySchedule'
+                    description: |
+                      Time window specified for daily operations.
+                    properties:
+                        - !ruby/object:Api::Type::Integer
+                          name: 'daysInCycle'
+                          description: |
+                            Defines a schedule with units measured in days. The value determines how many days pass between the start of each cycle.
+                        - !ruby/object:Api::Type::String
+                          name: 'startTime'
+                          description: |
+                            Start time of the window. This must be in UTC format that resolves to one of 00:00, 04:00, 08:00, 12:00, 16:00, or 20:00. For example, both 13:00-5 and 08:00 are valid.
+                        - !ruby/object:Api::Type::String
+                          name: 'duration'
+                          description: |
+                            [Output only] A predetermined duration for the window, automatically chosen to be the smallest possible in the given scenario.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'weeklySchedule'
+                    description: |
+                      Time window specified for weekly operations.
+                    properties:
+                        - !ruby/object:Api::Type::Array
+                          name: 'dayOfWeeks'
+                          description: |
+                            Up to 7 intervals/windows, one for each day of the week.
+                          item_type: !ruby/object:Api::Type::NestedObject
+                            properties:
+                              - !ruby/object:Api::Type::Enum
+                                name: 'day'
+                                description: |
+                                  Defines a schedule that runs on specific days of the week. Specify one or more days. The following options are available: MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY.
+                                values:
+                                  - :FRIDAY
+                                  - :INVALID
+                                  - :MONDAY
+                                  - :SATURDAY
+                                  - :SUNDAY
+                                  - :THURSDAY
+                                  - :TUESDAY
+                                  - :WEDNESDAY
+                              - !ruby/object:Api::Type::String
+                                name: 'startTime'
+                                description: |
+                                  Time within the window to start the operations. It must be in format "HH:MM", where HH : [00-23] and MM : [00-00] GMT.
+                              - !ruby/object:Api::Type::String
+                                name: 'duration'
+                                description: |
+                                  [Output only] Duration of the time window, automatically chosen to be smallest possible in the given scenario.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'retentionPolicy'
+              description: |
+                Policy for retention of scheduled snapshots.
+              properties:
+                  - !ruby/object:Api::Type::Integer
+                    name: 'maxRetentionDays'
+                    description: |
+                      Maximum age of the snapshot that is allowed to be kept.
+                  - !ruby/object:Api::Type::Enum
+                    name: 'onPolicySwitch'
+                    description: |
+                      
+                    values:
+                      - :DO_NOT_RETROACTIVELY_APPLY
+                      - :RETROACTIVELY_APPLY
+                      - :UNSPECIFIED_ON_POLICY_SWITCH
+                  - !ruby/object:Api::Type::Enum
+                    name: 'onSourceDiskDelete'
+                    description: |
+                      Specifies the behavior to apply to scheduled snapshots when the source disk is deleted.
+                    values:
+                      - :APPLY_RETENTION_POLICY
+                      - :KEEP_AUTO_SNAPSHOTS
+                      - :UNSPECIFIED_ON_SOURCE_DISK_DELETE
+            - !ruby/object:Api::Type::NestedObject
+              name: 'snapshotProperties'
+              description: |
+                Specified snapshot properties for scheduled snapshots created by this policy.
+              properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'labels'
+                    description: |
+                      Labels to apply to scheduled snapshots. These can be later modified by the setLabels method. Label values may be empty.
+                    properties:
+                      - !ruby/object:Api::Type::String
+                        name: 'additionalProperties'
+                        description: |
+                          
+                  - !ruby/object:Api::Type::Array
+                    name: 'storageLocations'
+                    description: |
+                      Cloud Storage bucket storage location of the auto snapshot (regional or multi-regional).
+                    item_type: Api::Type::String
+                  - !ruby/object:Api::Type::Boolean
+                    name: 'guestFlush'
+                    description: |
+                      Indication to perform a 'guest aware' snapshot.
+                  - !ruby/object:Api::Type::String
+                    name: 'chainName'
+                    description: |
+                      Chain name that the snapshot is created in.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'groupPlacementPolicy'
+        description: |
+          A GroupPlacementPolicy specifies resource placement configuration. It specifies the failure bucket separation as well as network locality
+        properties:
+            - !ruby/object:Api::Type::Enum
+              name: 'style'
+              description: |
+                Specifies instances to hosts placement relationship
+              values:
+                - :COMPACT
+                - :FULLY_SPREAD
+                - :UNSPECIFIED_PLACEMENT_TYPE
+            - !ruby/object:Api::Type::Enum
+              name: 'locality'
+              description: |
+                Specifies network locality
+              values:
+                - :BEST_EFFORT
+                - :STRICT
+                - :UNSPECIFIED_LOCALITY
+            - !ruby/object:Api::Type::Integer
+              name: 'vmCount'
+              description: |
+                Number of VMs in this placement group. Google does not recommend that you use this field unless you use a compact policy and you want your policy to work only if it contains this exact number of VMs.
+            - !ruby/object:Api::Type::Integer
+              name: 'availabilityDomainCount'
+              description: |
+                The number of availability domains to spread instances across. If two instances are in different availability domain, they are not in the same low latency network.
+            - !ruby/object:Api::Type::Enum
+              name: 'collocation'
+              description: |
+                Specifies network collocation
+              values:
+                - :CLUSTERED
+                - :COLLOCATED
+                - :UNSPECIFIED_COLLOCATION
+            - !ruby/object:Api::Type::Enum
+              name: 'scope'
+              description: |
+                Scope specifies the availability domain to which the VMs should be spread.
+              values:
+                - :HOST
+                - :UNSPECIFIED_SCOPE
+            - !ruby/object:Api::Type::String
+              name: 'tpuTopology'
+              description: |
+                Specifies the shape of the TPU slice
+            - !ruby/object:Api::Type::Integer
+              name: 'maxDistance'
+              description: |
+                Specifies the number of max logical switches.
+            - !ruby/object:Api::Type::Integer
+              name: 'sliceCount'
+              description: |
+                Specifies the number of slices in a multislice workload.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'instanceSchedulePolicy'
+        description: |
+          An InstanceSchedulePolicy specifies when and how frequent certain operations are performed on the instance.
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'vmStartSchedule'
+              description: |
+                Schedule for an instance operation.
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'schedule'
+                    description: |
+                      Specifies the frequency for the operation, using the unix-cron format.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'vmStopSchedule'
+              description: |
+                Schedule for an instance operation.
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'schedule'
+                    description: |
+                      Specifies the frequency for the operation, using the unix-cron format.
+            - !ruby/object:Api::Type::String
+              name: 'timeZone'
+              description: |
+                Specifies the time zone to be used in interpreting Schedule.schedule. The value of this field must be a time zone name from the tz database: https://wikipedia.org/wiki/Tz_database.
+            - !ruby/object:Api::Type::String
+              name: 'startTime'
+              description: |
+                The start time of the schedule. The timestamp is an RFC3339 string.
+            - !ruby/object:Api::Type::String
+              name: 'expirationTime'
+              description: |
+                The expiration time of the schedule. The timestamp is an RFC3339 string.
+      - !ruby/object:Api::Type::Enum
+        name: 'status'
+        description: |
+          [Output Only] The status of resource policy creation.
+        values:
+          - :CREATING
+          - :DELETING
+          - :EXPIRED
+          - :INVALID
+          - :READY
+      - !ruby/object:Api::Type::NestedObject
+        name: 'resourceStatus'
+        description: |
+          Contains output only fields. Use this sub-message for all output fields set on ResourcePolicy. The internal structure of this "status" field should mimic the structure of ResourcePolicy proto specification.
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'instanceSchedulePolicy'
+              description: |
+                
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'nextRunStartTime'
+                    description: |
+                      [Output Only] The next time the schedule is planned to run. The actual time might be slightly different. The timestamp is an RFC3339 string.
+                  - !ruby/object:Api::Type::String
+                    name: 'lastRunStartTime'
+                    description: |
+                      [Output Only] The last time the schedule successfully ran. The timestamp is an RFC3339 string.
+  
+
+
+    
+  - !ruby/object:Api::Resource
+    name: ResourcePolicy
+    base_url: 'projects/{{project}}/regions/{{region}}/resourcePolicies'
+    self_link: 'projects/{{project}}/regions/{{region}}/resourcePolicies/{{resourcePolicy}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/compute/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Represents a Resource Policy resource. You can use resource policies to schedule actions for some Compute Engine resources. For example, you can use them to schedule persistent disk snapshots.
+    properties:
+  
+      - !ruby/object:Api::Type::String
+        name: 'kind'
+        description: |
+          [Output Only] Type of the resource. Always compute#resource_policies for resource policies.
+      - !ruby/object:Api::Type::String
+        name: 'id'
+        description: |
+          [Output Only] The unique identifier for the resource. This identifier is defined by the server.
+      - !ruby/object:Api::Type::String
+        name: 'creationTimestamp'
+        description: |
+          [Output Only] Creation timestamp in RFC3339 text format.
+      - !ruby/object:Api::Type::String
+        name: 'selfLink'
+        description: |
+          [Output Only] Server-defined fully-qualified URL for this resource.
+      - !ruby/object:Api::Type::String
+        name: 'selfLinkWithId'
+        description: |
+          [Output Only] Server-defined URL for this resource with the resource id.
+      - !ruby/object:Api::Type::String
+        name: 'region'
+        description: |
+          
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'vmMaintenancePolicy'
+        description: |
+          
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'maintenanceWindow'
+              description: |
+                A maintenance window for VMs. When set, we restrict our maintenance operations to this window.
+              properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'dailyMaintenanceWindow'
+                    description: |
+                      Time window specified for daily operations.
+                    properties:
+                        - !ruby/object:Api::Type::Integer
+                          name: 'daysInCycle'
+                          description: |
+                            Defines a schedule with units measured in days. The value determines how many days pass between the start of each cycle.
+                        - !ruby/object:Api::Type::String
+                          name: 'startTime'
+                          description: |
+                            Start time of the window. This must be in UTC format that resolves to one of 00:00, 04:00, 08:00, 12:00, 16:00, or 20:00. For example, both 13:00-5 and 08:00 are valid.
+                        - !ruby/object:Api::Type::String
+                          name: 'duration'
+                          description: |
+                            [Output only] A predetermined duration for the window, automatically chosen to be the smallest possible in the given scenario.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'concurrencyControlGroup'
+              description: |
+                A concurrency control configuration. Defines a group config that, when attached to an instance, recognizes that instance as part of a group of instances where only up the concurrency_limit of instances in that group can undergo simultaneous maintenance. For more information: go/concurrency-control-design-doc
+              properties:
+                  - !ruby/object:Api::Type::Integer
+                    name: 'concurrencyLimit'
+                    description: |
+                      
+      - !ruby/object:Api::Type::NestedObject
+        name: 'snapshotSchedulePolicy'
+        description: |
+          A snapshot schedule policy specifies when and how frequently snapshots are to be created for the target disk. Also specifies how many and how long these scheduled snapshots should be retained.
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'schedule'
+              description: |
+                A schedule for disks where the schedueled operations are performed.
+              properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'hourlySchedule'
+                    description: |
+                      Time window specified for hourly operations.
+                    properties:
+                        - !ruby/object:Api::Type::Integer
+                          name: 'hoursInCycle'
+                          description: |
+                            Defines a schedule with units measured in hours. The value determines how many hours pass between the start of each cycle.
+                        - !ruby/object:Api::Type::String
+                          name: 'startTime'
+                          description: |
+                            Time within the window to start the operations. It must be in format "HH:MM", where HH : [00-23] and MM : [00-00] GMT.
+                        - !ruby/object:Api::Type::String
+                          name: 'duration'
+                          description: |
+                            [Output only] Duration of the time window, automatically chosen to be smallest possible in the given scenario.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'dailySchedule'
+                    description: |
+                      Time window specified for daily operations.
+                    properties:
+                        - !ruby/object:Api::Type::Integer
+                          name: 'daysInCycle'
+                          description: |
+                            Defines a schedule with units measured in days. The value determines how many days pass between the start of each cycle.
+                        - !ruby/object:Api::Type::String
+                          name: 'startTime'
+                          description: |
+                            Start time of the window. This must be in UTC format that resolves to one of 00:00, 04:00, 08:00, 12:00, 16:00, or 20:00. For example, both 13:00-5 and 08:00 are valid.
+                        - !ruby/object:Api::Type::String
+                          name: 'duration'
+                          description: |
+                            [Output only] A predetermined duration for the window, automatically chosen to be the smallest possible in the given scenario.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'weeklySchedule'
+                    description: |
+                      Time window specified for weekly operations.
+                    properties:
+                        - !ruby/object:Api::Type::Array
+                          name: 'dayOfWeeks'
+                          description: |
+                            Up to 7 intervals/windows, one for each day of the week.
+                          item_type: !ruby/object:Api::Type::NestedObject
+                            properties:
+                              - !ruby/object:Api::Type::Enum
+                                name: 'day'
+                                description: |
+                                  Defines a schedule that runs on specific days of the week. Specify one or more days. The following options are available: MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY.
+                                values:
+                                  - :FRIDAY
+                                  - :INVALID
+                                  - :MONDAY
+                                  - :SATURDAY
+                                  - :SUNDAY
+                                  - :THURSDAY
+                                  - :TUESDAY
+                                  - :WEDNESDAY
+                              - !ruby/object:Api::Type::String
+                                name: 'startTime'
+                                description: |
+                                  Time within the window to start the operations. It must be in format "HH:MM", where HH : [00-23] and MM : [00-00] GMT.
+                              - !ruby/object:Api::Type::String
+                                name: 'duration'
+                                description: |
+                                  [Output only] Duration of the time window, automatically chosen to be smallest possible in the given scenario.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'retentionPolicy'
+              description: |
+                Policy for retention of scheduled snapshots.
+              properties:
+                  - !ruby/object:Api::Type::Integer
+                    name: 'maxRetentionDays'
+                    description: |
+                      Maximum age of the snapshot that is allowed to be kept.
+                  - !ruby/object:Api::Type::Enum
+                    name: 'onPolicySwitch'
+                    description: |
+                      
+                    values:
+                      - :DO_NOT_RETROACTIVELY_APPLY
+                      - :RETROACTIVELY_APPLY
+                      - :UNSPECIFIED_ON_POLICY_SWITCH
+                  - !ruby/object:Api::Type::Enum
+                    name: 'onSourceDiskDelete'
+                    description: |
+                      Specifies the behavior to apply to scheduled snapshots when the source disk is deleted.
+                    values:
+                      - :APPLY_RETENTION_POLICY
+                      - :KEEP_AUTO_SNAPSHOTS
+                      - :UNSPECIFIED_ON_SOURCE_DISK_DELETE
+            - !ruby/object:Api::Type::NestedObject
+              name: 'snapshotProperties'
+              description: |
+                Specified snapshot properties for scheduled snapshots created by this policy.
+              properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'labels'
+                    description: |
+                      Labels to apply to scheduled snapshots. These can be later modified by the setLabels method. Label values may be empty.
+                    properties:
+                      - !ruby/object:Api::Type::String
+                        name: 'additionalProperties'
+                        description: |
+                          
+                  - !ruby/object:Api::Type::Array
+                    name: 'storageLocations'
+                    description: |
+                      Cloud Storage bucket storage location of the auto snapshot (regional or multi-regional).
+                    item_type: Api::Type::String
+                  - !ruby/object:Api::Type::Boolean
+                    name: 'guestFlush'
+                    description: |
+                      Indication to perform a 'guest aware' snapshot.
+                  - !ruby/object:Api::Type::String
+                    name: 'chainName'
+                    description: |
+                      Chain name that the snapshot is created in.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'groupPlacementPolicy'
+        description: |
+          A GroupPlacementPolicy specifies resource placement configuration. It specifies the failure bucket separation as well as network locality
+        properties:
+            - !ruby/object:Api::Type::Enum
+              name: 'style'
+              description: |
+                Specifies instances to hosts placement relationship
+              values:
+                - :COMPACT
+                - :FULLY_SPREAD
+                - :UNSPECIFIED_PLACEMENT_TYPE
+            - !ruby/object:Api::Type::Enum
+              name: 'locality'
+              description: |
+                Specifies network locality
+              values:
+                - :BEST_EFFORT
+                - :STRICT
+                - :UNSPECIFIED_LOCALITY
+            - !ruby/object:Api::Type::Integer
+              name: 'vmCount'
+              description: |
+                Number of VMs in this placement group. Google does not recommend that you use this field unless you use a compact policy and you want your policy to work only if it contains this exact number of VMs.
+            - !ruby/object:Api::Type::Integer
+              name: 'availabilityDomainCount'
+              description: |
+                The number of availability domains to spread instances across. If two instances are in different availability domain, they are not in the same low latency network.
+            - !ruby/object:Api::Type::Enum
+              name: 'collocation'
+              description: |
+                Specifies network collocation
+              values:
+                - :CLUSTERED
+                - :COLLOCATED
+                - :UNSPECIFIED_COLLOCATION
+            - !ruby/object:Api::Type::Enum
+              name: 'scope'
+              description: |
+                Scope specifies the availability domain to which the VMs should be spread.
+              values:
+                - :HOST
+                - :UNSPECIFIED_SCOPE
+            - !ruby/object:Api::Type::String
+              name: 'tpuTopology'
+              description: |
+                Specifies the shape of the TPU slice
+            - !ruby/object:Api::Type::Integer
+              name: 'maxDistance'
+              description: |
+                Specifies the number of max logical switches.
+            - !ruby/object:Api::Type::Integer
+              name: 'sliceCount'
+              description: |
+                Specifies the number of slices in a multislice workload.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'instanceSchedulePolicy'
+        description: |
+          An InstanceSchedulePolicy specifies when and how frequent certain operations are performed on the instance.
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'vmStartSchedule'
+              description: |
+                Schedule for an instance operation.
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'schedule'
+                    description: |
+                      Specifies the frequency for the operation, using the unix-cron format.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'vmStopSchedule'
+              description: |
+                Schedule for an instance operation.
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'schedule'
+                    description: |
+                      Specifies the frequency for the operation, using the unix-cron format.
+            - !ruby/object:Api::Type::String
+              name: 'timeZone'
+              description: |
+                Specifies the time zone to be used in interpreting Schedule.schedule. The value of this field must be a time zone name from the tz database: https://wikipedia.org/wiki/Tz_database.
+            - !ruby/object:Api::Type::String
+              name: 'startTime'
+              description: |
+                The start time of the schedule. The timestamp is an RFC3339 string.
+            - !ruby/object:Api::Type::String
+              name: 'expirationTime'
+              description: |
+                The expiration time of the schedule. The timestamp is an RFC3339 string.
+      - !ruby/object:Api::Type::Enum
+        name: 'status'
+        description: |
+          [Output Only] The status of resource policy creation.
+        values:
+          - :CREATING
+          - :DELETING
+          - :EXPIRED
+          - :INVALID
+          - :READY
+      - !ruby/object:Api::Type::NestedObject
+        name: 'resourceStatus'
+        description: |
+          Contains output only fields. Use this sub-message for all output fields set on ResourcePolicy. The internal structure of this "status" field should mimic the structure of ResourcePolicy proto specification.
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'instanceSchedulePolicy'
+              description: |
+                
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'nextRunStartTime'
+                    description: |
+                      [Output Only] The next time the schedule is planned to run. The actual time might be slightly different. The timestamp is an RFC3339 string.
+                  - !ruby/object:Api::Type::String
+                    name: 'lastRunStartTime'
+                    description: |
+                      [Output Only] The last time the schedule successfully ran. The timestamp is an RFC3339 string.
+  
