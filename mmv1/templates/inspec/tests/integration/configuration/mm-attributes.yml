@@ -971,3 +971,5 @@ region_security_policy:
   securitypolicy : "value_securitypolicy"
 interconnect_attachment:
   interconnectattachment : "value_interconnectattachment"
+organization_constraint:
+  parent : "value_parent"
