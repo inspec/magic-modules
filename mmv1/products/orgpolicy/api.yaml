@@ -5,7 +5,7 @@ display_name: orgpolicy
 versions:
   - !ruby/object:Api::Product::Version
     name: ga
-    base_url: https://orgpolicy.googleapis.com//v1/
+    base_url: https://orgpolicy.googleapis.com/v2/
 scopes:
   - https://orgpolicy.googleapis.com//auth/cloud-platform
 apis_required:
