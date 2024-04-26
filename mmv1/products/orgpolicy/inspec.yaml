@@ -13,5 +13,5 @@
 
 --- !ruby/object:Provider::Inspec::Config
 overrides: !ruby/object:Overrides::ResourceOverrides
-  ImageFamilyView: !ruby/object:Overrides::Inspec::ResourceOverride
+  OrganizationConstraint: !ruby/object:Overrides::Inspec::ResourceOverride
     singular_only: true
