@@ -1346,6 +1346,82 @@ resource "google_data_loss_prevention_stored_info_type" "basic" {
   }
 }
 
+resource "google_compute_region_security_policy" "default" {
+  provider    = google-beta
+
+  region      = "us-west2"
+  name        = "policyruletest-${local.name_suffix}"
+  description = "basic region security policy"
+  type        = "CLOUD_ARMOR"
+}
+
+resource "google_compute_region_security_policy_rule" "policy_rule" {
+  provider = google-beta
+
+  region          = "us-west2"
+  security_policy = google_compute_region_security_policy.default.name
+  description     = "new rule"
+  priority        = 100
+  match {
+    versioned_expr = "SRC_IPS_V1"
+    config {
+      src_ip_ranges = ["10.10.0.0/16"]
+    }
+  }
+  action          = "allow"
+  preview         = true
+}
+
+
+resource "google_compute_region_security_policy" "default" {
+  provider    = google-beta
+
+  region      = "us-west2"
+  name        = "policyruletest-${local.name_suffix}"
+  description = "basic region security policy"
+  type        = "CLOUD_ARMOR"
+}
+
+resource "google_compute_region_security_policy_rule" "policy_rule" {
+  provider = google-beta
+
+  region          = "us-west2"
+  security_policy = google_compute_region_security_policy.default.name
+  description     = "new rule"
+  priority        = 100
+  match {
+    versioned_expr = "SRC_IPS_V1"
+    config {
+      src_ip_ranges = ["10.10.0.0/16"]
+    }
+  }
+  action          = "allow"
+  preview         = true
+}
+
+
+resource "google_compute_interconnect_attachment" "on_prem" {
+  name                     = "on-prem-attachment-${local.name_suffix}"
+  edge_availability_domain = "AVAILABILITY_DOMAIN_1"
+  type                     = "PARTNER"
+  router                   = google_compute_router.foobar.id
+  mtu                      = 1500
+}
+
+resource "google_compute_router" "foobar" {
+  name    = "router-1-${local.name_suffix}"
+  network = google_compute_network.foobar.name
+  bgp {
+    asn = 16550
+  }
+}
+
+resource "google_compute_network" "foobar" {
+  name                    = "network-1-${local.name_suffix}"
+  auto_create_subnetworks = false
+}
+
+
 
 
 
@@ -1549,5 +1625,59 @@ resource "google_datastore_index" "default" {
     name = "property_b-${local.name_suffix}"
     direction = "ASCENDING"
   }
+}
+
+
+resource "google_compute_region_security_policy" "default" {
+  provider    = google-beta
+
+  region      = "us-west2"
+  name        = "policyruletest-${local.name_suffix}"
+  description = "basic region security policy"
+  type        = "CLOUD_ARMOR"
+}
+
+resource "google_compute_region_security_policy_rule" "policy_rule" {
+  provider = google-beta
+
+  region          = "us-west2"
+  security_policy = google_compute_region_security_policy.default.name
+  description     = "new rule"
+  priority        = 100
+  match {
+    versioned_expr = "SRC_IPS_V1"
+    config {
+      src_ip_ranges = ["10.10.0.0/16"]
+    }
+  }
+  action          = "allow"
+  preview         = true
+}
+
+
+resource "google_compute_region_security_policy" "default" {
+  provider    = google-beta
+
+  region      = "us-west2"
+  name        = "policyruletest-${local.name_suffix}"
+  description = "basic region security policy"
+  type        = "CLOUD_ARMOR"
+}
+
+resource "google_compute_region_security_policy_rule" "policy_rule" {
+  provider = google-beta
+
+  region          = "us-west2"
+  security_policy = google_compute_region_security_policy.default.name
+  description     = "new rule"
+  priority        = 100
+  match {
+    versioned_expr = "SRC_IPS_V1"
+    config {
+      src_ip_ranges = ["10.10.0.0/16"]
+    }
+  }
+  action          = "allow"
+  preview         = true
 }
 
