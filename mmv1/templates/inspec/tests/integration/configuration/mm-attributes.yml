@@ -1073,6 +1073,7 @@ interconnect_attachment:
 
 organization_constraint:
   parent : "value_parent"
+
 target_ssl_proxy:
   project : "value_project"
   region : "value_region"
@@ -1087,3 +1088,7 @@ target_ssl_proxy:
   certificate_map : "value_certificatemap"
   proxy_header : "value_proxyheader"
   ssl_policy : "value_sslpolicy"
+
+project_constraint:
+  parent : "value_parent"
+
