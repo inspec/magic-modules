@@ -1,0 +1,5 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+  <% project_constraint = grab_attributes(pwd)['project_constraint'] -%>
+  describe google_orgpolicy_project_constraints(parent: <%= doc_generation ? "' #{project_constraint['parent']}'":"project_constraint['parent']" -%>) do
+    it { should exist }
+  end

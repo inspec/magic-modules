@@ -1073,3 +1073,5 @@ interconnect_attachment:
 
 organization_constraint:
   parent : "value_parent"
+project_constraint:
+  parent : "value_parent"
