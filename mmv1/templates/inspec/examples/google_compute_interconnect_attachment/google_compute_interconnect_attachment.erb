@@ -1,5 +1,38 @@
 <% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
-   <% interconnect_attachment = grab_attributes(pwd)['interconnect_attachment'] -%>
-   describe google_compute_interconnect_attachment(project: <%= gcp_project_id -%>, region: <%= doc_generation ? "' #{interconnect_attachment['region']}'":"interconnect_attachment['region']" -%>, interconnectAttachment: <%= doc_generation ? "' #{interconnect_attachment['interconnectAttachment']}'":"interconnect_attachment['interconnectAttachment']" -%>) do
-     it { should exist }
-   end
+<% interconnect_attachment = grab_attributes(pwd)['interconnect_attachment'] -%>
+describe google_compute_interconnect_attachment(interconnectAttachment: <%= doc_generation ? "' #{interconnect_attachment['interconnectAttachment']}'":"interconnect_attachment['interconnectAttachment']" -%>, project: <%= gcp_project_id -%>, region: <%= doc_generation ? "' #{interconnect_attachment['region']}'":"interconnect_attachment['region']" -%>) do
+	it { should exist }
+	its('kind') { should cmp <%= doc_generation ? "'#{interconnect_attachment['kind']}'" : "interconnect_attachment['kind']" -%> }
+	its('description') { should cmp <%= doc_generation ? "'#{interconnect_attachment['description']}'" : "interconnect_attachment['description']" -%> }
+	its('self_link') { should cmp <%= doc_generation ? "'#{interconnect_attachment['self_link']}'" : "interconnect_attachment['self_link']" -%> }
+	its('self_link_with_id') { should cmp <%= doc_generation ? "'#{interconnect_attachment['self_link_with_id']}'" : "interconnect_attachment['self_link_with_id']" -%> }
+	its('id') { should cmp <%= doc_generation ? "'#{interconnect_attachment['id']}'" : "interconnect_attachment['id']" -%> }
+	its('creation_timestamp') { should cmp <%= doc_generation ? "'#{interconnect_attachment['creation_timestamp']}'" : "interconnect_attachment['creation_timestamp']" -%> }
+	its('name') { should cmp <%= doc_generation ? "'#{interconnect_attachment['name']}'" : "interconnect_attachment['name']" -%> }
+	its('interconnect') { should cmp <%= doc_generation ? "'#{interconnect_attachment['interconnect']}'" : "interconnect_attachment['interconnect']" -%> }
+	its('router') { should cmp <%= doc_generation ? "'#{interconnect_attachment['router']}'" : "interconnect_attachment['router']" -%> }
+	its('region') { should cmp <%= doc_generation ? "'#{interconnect_attachment['region']}'" : "interconnect_attachment['region']" -%> }
+	its('google_reference_id') { should cmp <%= doc_generation ? "'#{interconnect_attachment['google_reference_id']}'" : "interconnect_attachment['google_reference_id']" -%> }
+	its('operational_status') { should cmp <%= doc_generation ? "'#{interconnect_attachment['operational_status']}'" : "interconnect_attachment['operational_status']" -%> }
+	its('cloud_router_ip_address') { should cmp <%= doc_generation ? "'#{interconnect_attachment['cloud_router_ip_address']}'" : "interconnect_attachment['cloud_router_ip_address']" -%> }
+	its('customer_router_ip_address') { should cmp <%= doc_generation ? "'#{interconnect_attachment['customer_router_ip_address']}'" : "interconnect_attachment['customer_router_ip_address']" -%> }
+	its('type') { should cmp <%= doc_generation ? "'#{interconnect_attachment['type']}'" : "interconnect_attachment['type']" -%> }
+	its('pairing_key') { should cmp <%= doc_generation ? "'#{interconnect_attachment['pairing_key']}'" : "interconnect_attachment['pairing_key']" -%> }
+	its('edge_availability_domain') { should cmp <%= doc_generation ? "'#{interconnect_attachment['edge_availability_domain']}'" : "interconnect_attachment['edge_availability_domain']" -%> }
+	its('bandwidth') { should cmp <%= doc_generation ? "'#{interconnect_attachment['bandwidth']}'" : "interconnect_attachment['bandwidth']" -%> }
+	its('label_fingerprint') { should cmp <%= doc_generation ? "'#{interconnect_attachment['label_fingerprint']}'" : "interconnect_attachment['label_fingerprint']" -%> }
+	its('state') { should cmp <%= doc_generation ? "'#{interconnect_attachment['state']}'" : "interconnect_attachment['state']" -%> }
+	its('partner_asn') { should cmp <%= doc_generation ? "'#{interconnect_attachment['partner_asn']}'" : "interconnect_attachment['partner_asn']" -%> }
+	its('encryption') { should cmp <%= doc_generation ? "'#{interconnect_attachment['encryption']}'" : "interconnect_attachment['encryption']" -%> }
+	its('stack_type') { should cmp <%= doc_generation ? "'#{interconnect_attachment['stack_type']}'" : "interconnect_attachment['stack_type']" -%> }
+	its('cloud_router_ipv6address') { should cmp <%= doc_generation ? "'#{interconnect_attachment['cloud_router_ipv6address']}'" : "interconnect_attachment['cloud_router_ipv6address']" -%> }
+	its('customer_router_ipv6address') { should cmp <%= doc_generation ? "'#{interconnect_attachment['customer_router_ipv6address']}'" : "interconnect_attachment['customer_router_ipv6address']" -%> }
+	its('cloud_router_ipv6interface_id') { should cmp <%= doc_generation ? "'#{interconnect_attachment['cloud_router_ipv6interface_id']}'" : "interconnect_attachment['cloud_router_ipv6interface_id']" -%> }
+	its('customer_router_ipv6interface_id') { should cmp <%= doc_generation ? "'#{interconnect_attachment['customer_router_ipv6interface_id']}'" : "interconnect_attachment['customer_router_ipv6interface_id']" -%> }
+	its('remote_service') { should cmp <%= doc_generation ? "'#{interconnect_attachment['remote_service']}'" : "interconnect_attachment['remote_service']" -%> }
+
+end
+
+describe google_compute_interconnect_attachment(interconnectAttachment: <%= doc_generation ? "' #{interconnect_attachment['interconnectAttachment']}'":"interconnect_attachment['interconnectAttachment']" -%>, project: <%= gcp_project_id -%>, region: <%= doc_generation ? "' #{interconnect_attachment['region']}'":"interconnect_attachment['region']" -%>) do
+	it { should_not exist }
+end
