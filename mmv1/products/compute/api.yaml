@@ -14356,146 +14356,6 @@ objects:
                       description: |
                        The size of the disk in base-2 GB.
   - !ruby/object:Api::Resource
-    name: 'ServiceAttachment'
-    kind: 'compute#ServiceAttachment'
-    base_url: projects/{{project}}/regions/{{region}}/serviceAttachments
-    has_self_link: true
-    update_verb: :PATCH
-    description: |
-      Represents a ServiceAttachment resource.
-    references: !ruby/object:Api::Resource::ReferenceLinks
-      guides:
-        'Configuring Private Service Connect to access services': 'https://cloud.google.com/vpc/docs/configure-private-service-connect-services'
-      api: 'https://cloud.google.com/compute/docs/reference/beta/serviceAttachments'
-    async: !ruby/object:Api::OpAsync
-      operation: !ruby/object:Api::OpAsync::Operation
-        kind: 'compute#operation'
-        path: 'name'
-        base_url: 'projects/{{project}}/regions/{{region}}/operations/{{op_id}}'
-        wait_ms: 1000
-      result: !ruby/object:Api::OpAsync::Result
-        path: 'targetLink'
-      status: !ruby/object:Api::OpAsync::Status
-        path: 'status'
-        complete: 'DONE'
-        allowed:
-          - 'PENDING'
-          - 'RUNNING'
-          - 'DONE'
-      error: !ruby/object:Api::OpAsync::Error
-        path: 'error/errors'
-        message: 'message'
-    parameters:
-      - !ruby/object:Api::Type::ResourceRef
-        name: 'region'
-        resource: 'Region'
-        imports: 'name'
-        description: |
-          URL of the region where the resource resides.
-        required: true
-        input: true
-    properties:
-      - !ruby/object:Api::Type::String
-        name: 'name'
-        required: true
-        description: |
-          Name of the resource. The name must be 1-63 characters long, and
-          comply with RFC1035. Specifically, the name must be 1-63 characters
-          long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?`
-          which means the first character must be a lowercase letter, and all
-          following characters must be a dash, lowercase letter, or digit,
-          except the last character, which cannot be a dash.
-        input: true
-      - !ruby/object:Api::Type::String
-        name: 'description'
-        description: |
-          An optional description of this resource.
-      - !ruby/object:Api::Type::Fingerprint
-        name: 'fingerprint'
-        description: |
-          Fingerprint of this resource. This field is used internally during
-          updates of this resource.
-      - !ruby/object:Api::Type::String
-        name: 'connectionPreference'
-        required: true
-        description: |
-          The connection preference to use for this service attachment. Valid
-          values include "ACCEPT_AUTOMATIC", "ACCEPT_MANUAL".
-      - !ruby/object:Api::Type::Array
-        name: 'connectedEndpoints'
-        output: true
-        description: |
-          An array of the consumer forwarding rules connected to this service
-          attachment.
-        item_type: !ruby/object:Api::Type::NestedObject
-          properties:
-          - !ruby/object:Api::Type::String
-            name: 'endpoint'
-            output: true
-            description: |
-              The URL of the consumer forwarding rule.
-          - !ruby/object:Api::Type::String
-            name: 'status'
-            output: true
-            description: |
-              The status of the connection from the consumer forwarding rule to
-              this service attachment.
-      - !ruby/object:Api::Type::ResourceRef
-        name: targetService
-        required: true
-        input: true
-        resource: 'ForwardingRule'
-        imports: 'selfLink'
-        description: |
-          The URL of a forwarding rule that represents the service identified by
-          this service attachment.
-      - !ruby/object:Api::Type::Array
-        name: 'natSubnets'
-        required: true
-        send_empty_value: true
-        description: |
-          An array of subnets that is provided for NAT in this service attachment.
-        item_type: !ruby/object:Api::Type::ResourceRef
-          name: 'subnet'
-          resource: 'Subnetwork'
-          imports: 'selfLink'
-          description: |
-            A subnet that is provided for NAT in this service attachment.
-      - !ruby/object:Api::Type::Boolean
-        name: 'enableProxyProtocol'
-        required: true
-        input: true
-        description: |
-          If true, enable the proxy protocol which is for supplying client TCP/IP
-          address data in TCP connections that traverse proxies on their way to
-          destination servers.
-      - !ruby/object:Api::Type::Array
-        name: 'consumerRejectLists'
-        item_type: Api::Type::String
-        send_empty_value: true
-        description: |
-          An array of projects that are not allowed to connect to this service
-          attachment.
-      - !ruby/object:Api::Type::Array
-        name: 'consumerAcceptLists'
-        description: |
-          An array of projects that are allowed to connect to this service
-          attachment.
-        send_empty_value: true
-        item_type: !ruby/object:Api::Type::NestedObject
-          properties:
-          - !ruby/object:Api::Type::String
-            name: 'projectIdOrNum'
-            required: true
-            description: |
-              A project that is allowed to connect to this service attachment.
-          - !ruby/object:Api::Type::Integer
-            name: 'connectionLimit'
-            required: true
-            description: |
-              The number of consumer forwarding rules the consumer project can
-              create.
-  - !ruby/object:Api::Resource
     name: 'SslPolicy'
     kind: 'compute#sslPolicy'
     base_url: projects/{{project}}/global/sslPolicies
@@ -15083,205 +14943,6 @@ objects:
         description: |
           This field only applies when the forwarding rule that references
           this target proxy has a loadBalancingScheme set to INTERNAL_SELF_MANAGED.
-  - !ruby/object:Api::Resource
-    name: 'RegionTargetHttpProxy'
-    kind: 'compute#targetHttpProxy'
-    base_url: projects/{{project}}/regions/{{region}}/targetHttpProxies
-    collection_url_key: 'items'
-    has_self_link: true
-    input: true
-    description: |
-      Represents a RegionTargetHttpProxy resource, which is used by one or more
-      forwarding rules to route incoming HTTP requests to a URL map.
-    references: !ruby/object:Api::Resource::ReferenceLinks
-      guides:
-        'Official Documentation':
-          'https://cloud.google.com/compute/docs/load-balancing/http/target-proxies'
-      api: 'https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetHttpProxies'
-    async: !ruby/object:Api::OpAsync
-      operation: !ruby/object:Api::OpAsync::Operation
-        kind: 'compute#operation'
-        path: 'name'
-        base_url: 'projects/{{project}}/regions/{{region}}/operations/{{op_id}}'
-        wait_ms: 1000
-      result: !ruby/object:Api::OpAsync::Result
-        path: 'targetLink'
-      status: !ruby/object:Api::OpAsync::Status
-        path: 'status'
-        complete: 'DONE'
-        allowed:
-          - 'PENDING'
-          - 'RUNNING'
-          - 'DONE'
-      error: !ruby/object:Api::OpAsync::Error
-        path: 'error/errors'
-        message: 'message'
-    parameters:
-      - !ruby/object:Api::Type::ResourceRef
-        name: 'region'
-        resource: 'Region'
-        imports: 'name'
-        required: true
-        input: true
-        description: |
-          The region where the regional proxy resides.
-    properties:
-      - !ruby/object:Api::Type::Time
-        name: 'creationTimestamp'
-        description: 'Creation timestamp in RFC3339 text format.'
-        output: true
-      - !ruby/object:Api::Type::String
-        name: 'description'
-        description: 'An optional description of this resource.'
-      - !ruby/object:Api::Type::Integer
-        name: 'id'
-        description: 'The unique identifier for the resource.'
-        output: true
-      - !ruby/object:Api::Type::String
-        name: 'name'
-        description: |
-          Name of the resource. Provided by the client when the resource is
-          created. The name must be 1-63 characters long, and comply with
-          RFC1035. Specifically, the name must be 1-63 characters long and match
-          the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the
-          first character must be a lowercase letter, and all following
-          characters must be a dash, lowercase letter, or digit, except the last
-          character, which cannot be a dash.
-        required: true
-      - !ruby/object:Api::Type::ResourceRef
-        name: 'urlMap'
-        resource: 'RegionUrlMap'
-        imports: 'selfLink'
-        description: |
-          A reference to the RegionUrlMap resource that defines the mapping from URL
-          to the BackendService.
-        required: true
-        update_verb: :POST
-        update_url: 'projects/{{project}}/regions/{{region}}/targetHttpProxies/{{name}}/setUrlMap'
-  - !ruby/object:Api::Resource
-    name: 'RegionTargetHttpsProxy'
-    kind: 'compute#targetHttpsProxy'
-    base_url: projects/{{project}}/regions/{{region}}/targetHttpsProxies
-    collection_url_key: 'items'
-    has_self_link: true
-    input: true
-    description: |
-      Represents a RegionTargetHttpsProxy resource, which is used by one or more
-      forwarding rules to route incoming HTTPS requests to a URL map.
-    references: !ruby/object:Api::Resource::ReferenceLinks
-      guides:
-        'Official Documentation': 'https://cloud.google.com/compute/docs/load-balancing/http/target-proxies'
-      api: 'https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetHttpsProxies'
-    async: !ruby/object:Api::OpAsync
-      operation: !ruby/object:Api::OpAsync::Operation
-        kind: 'compute#operation'
-        path: 'name'
-        base_url: 'projects/{{project}}/regions/{{region}}/operations/{{op_id}}'
-        wait_ms: 1000
-      result: !ruby/object:Api::OpAsync::Result
-        path: 'targetLink'
-      status: !ruby/object:Api::OpAsync::Status
-        path: 'status'
-        complete: 'DONE'
-        allowed:
-          - 'PENDING'
-          - 'RUNNING'
-          - 'DONE'
-      error: !ruby/object:Api::OpAsync::Error
-        path: 'error/errors'
-        message: 'message'
-    parameters:
-      - !ruby/object:Api::Type::ResourceRef
-        name: 'region'
-        resource: 'Region'
-        imports: 'name'
-        input: true
-        required: true
-        description: |
-          The region where the regional proxy resides.
-    properties:
-      - !ruby/object:Api::Type::Time
-        name: 'creationTimestamp'
-        description: 'Creation timestamp in RFC3339 text format.'
-        output: true
-      - !ruby/object:Api::Type::String
-        name: 'description'
-        description: 'An optional description of this resource.'
-        input: true
-      - !ruby/object:Api::Type::Integer
-        name: 'id'
-        description: 'The unique identifier for the resource.'
-        output: true
-      - !ruby/object:Api::Type::String
-        name: 'name'
-        description: |
-          Name of the resource. Provided by the client when the resource is
-          created. The name must be 1-63 characters long, and comply with
-          RFC1035. Specifically, the name must be 1-63 characters long and match
-          the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the
-          first character must be a lowercase letter, and all following
-          characters must be a dash, lowercase letter, or digit, except the last
-          character, which cannot be a dash.
-        input: true
-        required: true
-     # This field is present in the schema but as of 2019 Sep 23 attempting to set it fails with
-     # a 400 "QUIC override is supported only with global TargetHttpsProxy". jamessynge@ said in an
-     # email sent on 2019 Sep 20 that support for this "is probably far in the future."
-     #- !ruby/object:Api::Type::Enum
-     #  name: 'quicOverride'
-     #  description: |
-     #    Specifies the QUIC override policy for this resource. This determines
-     #    whether the load balancer will attempt to negotiate QUIC with clients
-     #    or not. Can specify one of NONE, ENABLE, or DISABLE. If NONE is
-     #    specified, uses the QUIC policy with no user overrides, which is
-     #    equivalent to DISABLE. Not specifying this field is equivalent to
-     #    specifying NONE.
-     #  values:
-     #    - :NONE
-     #    - :ENABLE
-     #    - :DISABLE
-     #  update_verb: :POST
-     #  update_url:
-     #    'projects/{{project}}/regions/{{region}}/targetHttpsProxies/{{name}}/setQuicOverride'
-      - !ruby/object:Api::Type::Array
-        name: 'sslCertificates'
-        description: |
-          A list of RegionSslCertificate resources that are used to authenticate
-          connections between users and the load balancer. Currently, exactly
-          one SSL certificate must be specified.
-        required: true
-        update_verb: :POST
-        update_url:
-          'projects/{{project}}/regions/{{region}}/targetHttpsProxies/{{name}}/setSslCertificates'
-        item_type: !ruby/object:Api::Type::ResourceRef
-          name: 'sslCertificate'
-          resource: 'RegionSslCertificate'
-          imports: 'selfLink'
-          description: 'The SSL certificates used by this TargetHttpsProxy'
-     # This field is present in the schema but as of 2019 Sep 23 attempting to set it fails with
-     # a 400 "SSL policy is supported only with global TargetHttpsProxy". jamessynge@ said in an
-     # email sent on 2019 Sep 20 that will support this "in the next 6 months I hope."
-     #- !ruby/object:Api::Type::ResourceRef
-     #  name: 'sslPolicy'
-     #  resource: 'SslPolicy'
-     #  imports: 'selfLink'
-     #  description: |
-     #    A reference to the SslPolicy resource that will be associated with
-     #    the TargetHttpsProxy resource. If not set, the TargetHttpsProxy
-     #    resource will not have any SSL policy configured.
-     #  update_verb: :POST
-     #  update_url:
-     #    'projects/{{project}}/regions/{{region}}/targetHttpsProxies/{{name}}/setSslPolicy'
-      - !ruby/object:Api::Type::ResourceRef
-        name: 'urlMap'
-        resource: 'RegionUrlMap'
-        imports: 'selfLink'
-        description: |
-          A reference to the RegionUrlMap resource that defines the mapping from URL
-          to the RegionBackendService.
-        required: true
-        update_verb: :POST
-        update_url: 'projects/{{project}}/regions/{{region}}/targetHttpsProxies/{{name}}/setUrlMap'
   - !ruby/object:Api::Resource
     name: 'TargetInstance'
     kind: 'compute#targetInstance'
@@ -24639,7 +24300,7 @@ objects:
   
 
 
-    
+
   - !ruby/object:Api::Resource
     name: RegionDiskType
     base_url: 'projects/{{project}}/regions/{{region}}/diskTypes'
@@ -24668,110 +24329,7 @@ objects:
     description: |-
         Represents a Disk Type resource. Google Compute Engine has two Disk Type resources: * [Regional](/compute/docs/reference/rest/v1/regionDiskTypes) * [Zonal](/compute/docs/reference/rest/v1/diskTypes) You can choose from a variety of disk types based on your needs. For more information, read Storage options. The diskTypes resource represents disk types for a zonal persistent disk. For more information, read Zonal persistent disks. The regionDiskTypes resource represents disk types for a regional persistent disk. For more information, read Regional persistent disks.
     properties:
-  
-      - !ruby/object:Api::Type::String
-        name: 'kind'
-        description: |
-          [Output Only] Type of the resource. Always compute#diskType for disk types.
-      - !ruby/object:Api::Type::String
-        name: 'id'
-        description: |
-          [Output Only] The unique identifier for the resource. This identifier is defined by the server.
-      - !ruby/object:Api::Type::String
-        name: 'creationTimestamp'
-        description: |
-          [Output Only] Creation timestamp in RFC3339 text format.
-      - !ruby/object:Api::Type::String
-        name: 'name'
-        description: |
-          [Output Only] Name of the resource.
-      - !ruby/object:Api::Type::String
-        name: 'description'
-        description: |
-          [Output Only] An optional description of this resource.
-      - !ruby/object:Api::Type::String
-        name: 'validDiskSize'
-        description: |
-          [Output Only] An optional textual description of the valid disk size, such as "10GB-10TB".
-      - !ruby/object:Api::Type::NestedObject
-        name: 'deprecated'
-        description: |
-          Deprecation status for a public resource.
-        properties:
-            - !ruby/object:Api::Type::Enum
-              name: 'state'
-              description: |
-                The deprecation state of this resource. This can be ACTIVE, DEPRECATED, OBSOLETE, or DELETED. Operations which communicate the end of life date for an image, can use ACTIVE. Operations which create a new resource using a DEPRECATED resource will return successfully, but with a warning indicating the deprecated resource and recommending its replacement. Operations which use OBSOLETE or DELETED resources will be rejected and result in an error.
-              values:
-                - :ACTIVE
-                - :DELETED
-                - :DEPRECATED
-                - :OBSOLETE
-            - !ruby/object:Api::Type::String
-              name: 'replacement'
-              description: |
-                The URL of the suggested replacement for a deprecated resource. The suggested replacement resource must be the same kind of resource as the deprecated resource.
-            - !ruby/object:Api::Type::String
-              name: 'deprecated'
-              description: |
-                An optional RFC3339 timestamp on or after which the state of this resource is intended to change to DEPRECATED. This is only informational and the status will not change unless the client explicitly changes it.
-            - !ruby/object:Api::Type::String
-              name: 'obsolete'
-              description: |
-                An optional RFC3339 timestamp on or after which the state of this resource is intended to change to OBSOLETE. This is only informational and the status will not change unless the client explicitly changes it.
-            - !ruby/object:Api::Type::String
-              name: 'deleted'
-              description: |
-                An optional RFC3339 timestamp on or after which the state of this resource is intended to change to DELETED. This is only informational and the status will not change unless the client explicitly changes it.
-      - !ruby/object:Api::Type::String
-        name: 'zone'
-        description: |
-          [Output Only] URL of the zone where the disk type resides. You must specify this field as part of the HTTP request URL. It is not settable as a field in the request body.
-      - !ruby/object:Api::Type::String
-        name: 'selfLink'
-        description: |
-          [Output Only] Server-defined URL for the resource.
-      - !ruby/object:Api::Type::String
-        name: 'defaultDiskSizeGb'
-        description: |
-          [Output Only] Server-defined default disk size in GB.
-      - !ruby/object:Api::Type::String
-        name: 'region'
-        description: |
-          [Output Only] URL of the region where the disk type resides. Only applicable for regional resources. You must specify this field as part of the HTTP request URL. It is not settable as a field in the request body.
-  
 
-
-    
-  - !ruby/object:Api::Resource
-    name: RegionDiskType
-    base_url: 'projects/{{project}}/regions/{{region}}/diskTypes'
-    self_link: 'projects/{{project}}/regions/{{region}}/diskTypes/{{diskType}}'
-    references: !ruby/object:Api::Resource::ReferenceLinks
-      guides:
-        'Official Documentation':
-      api: 'https://cloud.google.com/compute/docs'
-    async: !ruby/object:Api::OpAsync
-      operation: !ruby/object:Api::OpAsync::Operation
-         path: 'name'
-         base_url: '{op_id}'
-         wait_ms: 1000
-      result: !ruby/object:Api::OpAsync::Result
-         path: 'response'
-         resource_inside_response: true
-      status: !ruby/object:Api::OpAsync::Status
-        path: 'done'
-        complete: True
-        allowed:
-          - True
-          - False
-      error: !ruby/object:Api::OpAsync::Error
-        path: 'error'
-        message: 'message'
-    description: |-
-        Represents a Disk Type resource. Google Compute Engine has two Disk Type resources: * [Regional](/compute/docs/reference/rest/v1/regionDiskTypes) * [Zonal](/compute/docs/reference/rest/v1/diskTypes) You can choose from a variety of disk types based on your needs. For more information, read Storage options. The diskTypes resource represents disk types for a zonal persistent disk. For more information, read Zonal persistent disks. The regionDiskTypes resource represents disk types for a regional persistent disk. For more information, read Regional persistent disks.
-    properties:
-  
       - !ruby/object:Api::Type::String
         name: 'kind'
         description: |
@@ -24847,9 +24405,9 @@ objects:
 
 
   - !ruby/object:Api::Resource
-    name: InterconnectAttachment
-    base_url: 'projects/{{project}}/regions/{{region}}/interconnectAttachments'
-    self_link: 'projects/{{project}}/regions/{{region}}/interconnectAttachments/{{interconnectAttachment}}'
+    name: RegionDiskType
+    base_url: 'projects/{{project}}/regions/{{region}}/diskTypes'
+    self_link: 'projects/{{project}}/regions/{{region}}/diskTypes/{{diskType}}'
     references: !ruby/object:Api::Resource::ReferenceLinks
       guides:
         'Official Documentation':
@@ -24872,17 +24430,124 @@ objects:
         path: 'error'
         message: 'message'
     description: |-
-        Represents an Interconnect Attachment (VLAN) resource. You can use Interconnect attachments (VLANS) to connect your Virtual Private Cloud networks to your on-premises networks through an Interconnect. For more information, read Creating VLAN Attachments.
+        Represents a Disk Type resource. Google Compute Engine has two Disk Type resources: * [Regional](/compute/docs/reference/rest/v1/regionDiskTypes) * [Zonal](/compute/docs/reference/rest/v1/diskTypes) You can choose from a variety of disk types based on your needs. For more information, read Storage options. The diskTypes resource represents disk types for a zonal persistent disk. For more information, read Zonal persistent disks. The regionDiskTypes resource represents disk types for a regional persistent disk. For more information, read Regional persistent disks.
     properties:
 
       - !ruby/object:Api::Type::String
         name: 'kind'
         description: |
-          [Output Only] Type of the resource. Always compute#interconnectAttachment for interconnect attachments.
+          [Output Only] Type of the resource. Always compute#diskType for disk types.
+      - !ruby/object:Api::Type::String
+        name: 'id'
+        description: |
+          [Output Only] The unique identifier for the resource. This identifier is defined by the server.
+      - !ruby/object:Api::Type::String
+        name: 'creationTimestamp'
+        description: |
+          [Output Only] Creation timestamp in RFC3339 text format.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          [Output Only] Name of the resource.
       - !ruby/object:Api::Type::String
         name: 'description'
         description: |
-          An optional description of this resource.
+          [Output Only] An optional description of this resource.
+      - !ruby/object:Api::Type::String
+        name: 'validDiskSize'
+        description: |
+          [Output Only] An optional textual description of the valid disk size, such as "10GB-10TB".
+      - !ruby/object:Api::Type::NestedObject
+        name: 'deprecated'
+        description: |
+          Deprecation status for a public resource.
+        properties:
+            - !ruby/object:Api::Type::Enum
+              name: 'state'
+              description: |
+                The deprecation state of this resource. This can be ACTIVE, DEPRECATED, OBSOLETE, or DELETED. Operations which communicate the end of life date for an image, can use ACTIVE. Operations which create a new resource using a DEPRECATED resource will return successfully, but with a warning indicating the deprecated resource and recommending its replacement. Operations which use OBSOLETE or DELETED resources will be rejected and result in an error.
+              values:
+                - :ACTIVE
+                - :DELETED
+                - :DEPRECATED
+                - :OBSOLETE
+            - !ruby/object:Api::Type::String
+              name: 'replacement'
+              description: |
+                The URL of the suggested replacement for a deprecated resource. The suggested replacement resource must be the same kind of resource as the deprecated resource.
+            - !ruby/object:Api::Type::String
+              name: 'deprecated'
+              description: |
+                An optional RFC3339 timestamp on or after which the state of this resource is intended to change to DEPRECATED. This is only informational and the status will not change unless the client explicitly changes it.
+            - !ruby/object:Api::Type::String
+              name: 'obsolete'
+              description: |
+                An optional RFC3339 timestamp on or after which the state of this resource is intended to change to OBSOLETE. This is only informational and the status will not change unless the client explicitly changes it.
+            - !ruby/object:Api::Type::String
+              name: 'deleted'
+              description: |
+                An optional RFC3339 timestamp on or after which the state of this resource is intended to change to DELETED. This is only informational and the status will not change unless the client explicitly changes it.
+      - !ruby/object:Api::Type::String
+        name: 'zone'
+        description: |
+          [Output Only] URL of the zone where the disk type resides. You must specify this field as part of the HTTP request URL. It is not settable as a field in the request body.
+      - !ruby/object:Api::Type::String
+        name: 'selfLink'
+        description: |
+          [Output Only] Server-defined URL for the resource.
+      - !ruby/object:Api::Type::String
+        name: 'defaultDiskSizeGb'
+        description: |
+          [Output Only] Server-defined default disk size in GB.
+      - !ruby/object:Api::Type::String
+        name: 'region'
+        description: |
+          [Output Only] URL of the region where the disk type resides. Only applicable for regional resources. You must specify this field as part of the HTTP request URL. It is not settable as a field in the request body.
+  
+
+
+
+  - !ruby/object:Api::Resource
+    name: PacketMirroring
+    base_url: 'projects/{{project}}/regions/{{region}}/packetMirrorings'
+    self_link: 'projects/{{project}}/regions/{{region}}/packetMirrorings/{{packetMirroring}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/compute/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Represents a Packet Mirroring resource. Packet Mirroring clones the traffic of specified instances in your Virtual Private Cloud (VPC) network and forwards it to a collector destination, such as an instance group of an internal TCP/UDP load balancer, for analysis or examination. For more information about setting up Packet Mirroring, see Using Packet Mirroring.
+    properties:
+
+      - !ruby/object:Api::Type::String
+        name: 'kind'
+        description: |
+          [Output Only] Type of the resource. Always compute#packetMirroring for packet mirrorings.
+      - !ruby/object:Api::Type::String
+        name: 'id'
+        description: |
+          [Output Only] The unique identifier for the resource. This identifier is defined by the server.
+      - !ruby/object:Api::Type::String
+        name: 'creationTimestamp'
+        description: |
+          [Output Only] Creation timestamp in RFC3339 text format.
       - !ruby/object:Api::Type::String
         name: 'selfLink'
         description: |
@@ -24891,6 +24556,1012 @@ objects:
         name: 'selfLinkWithId'
         description: |
           [Output Only] Server-defined URL for this resource with the resource id.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          An optional description of this resource. Provide this property when you create the resource.
+      - !ruby/object:Api::Type::String
+        name: 'region'
+        description: |
+          [Output Only] URI of the region where the packetMirroring resides.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'network'
+        description: |
+
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'url'
+              description: |
+                URL of the network resource.
+            - !ruby/object:Api::Type::String
+              name: 'canonicalUrl'
+              description: |
+                [Output Only] Unique identifier for the network; defined by the server.
+      - !ruby/object:Api::Type::Integer
+        name: 'priority'
+        description: |
+          The priority of applying this configuration. Priority is used to break ties in cases where there is more than one matching rule. In the case of two rules that apply for a given Instance, the one with the lowest-numbered priority value wins. Default value is 1000. Valid range is 0 through 65535.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'collectorIlb'
+        description: |
+
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'url'
+              description: |
+                Resource URL to the forwarding rule representing the ILB configured as destination of the mirrored traffic.
+            - !ruby/object:Api::Type::String
+              name: 'canonicalUrl'
+              description: |
+                [Output Only] Unique identifier for the forwarding rule; defined by the server.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'mirroredResources'
+        description: |
+
+        properties:
+            - !ruby/object:Api::Type::Array
+              name: 'subnetworks'
+              description: |
+                A set of subnetworks for which traffic from/to all VM instances will be mirrored. They must live in the same region as this packetMirroring. You may specify a maximum of 5 subnetworks.
+              item_type: !ruby/object:Api::Type::NestedObject
+                properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'url'
+                    description: |
+                      Resource URL to the subnetwork for which traffic from/to all VM instances will be mirrored.
+                  - !ruby/object:Api::Type::String
+                    name: 'canonicalUrl'
+                    description: |
+                      [Output Only] Unique identifier for the subnetwork; defined by the server.
+            - !ruby/object:Api::Type::Array
+              name: 'instances'
+              description: |
+                A set of virtual machine instances that are being mirrored. They must live in zones contained in the same region as this packetMirroring. Note that this config will apply only to those network interfaces of the Instances that belong to the network specified in this packetMirroring. You may specify a maximum of 50 Instances.
+              item_type: !ruby/object:Api::Type::NestedObject
+                properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'url'
+                    description: |
+                      Resource URL to the virtual machine instance which is being mirrored.
+                  - !ruby/object:Api::Type::String
+                    name: 'canonicalUrl'
+                    description: |
+                      [Output Only] Unique identifier for the instance; defined by the server.
+            - !ruby/object:Api::Type::Array
+              name: 'tags'
+              description: |
+                A set of mirrored tags. Traffic from/to all VM instances that have one or more of these tags will be mirrored.
+              item_type: Api::Type::String
+      - !ruby/object:Api::Type::NestedObject
+        name: 'filter'
+        description: |
+
+        properties:
+            - !ruby/object:Api::Type::Array
+              name: 'cidrRanges'
+              description: |
+                One or more IPv4 or IPv6 CIDR ranges that apply as filter on the source (ingress) or destination (egress) IP in the IP header. If no ranges are specified, all IPv4 traffic that matches the specified IPProtocols is mirrored. If neither cidrRanges nor IPProtocols is specified, all IPv4 traffic is mirrored. To mirror all IPv4 and IPv6 traffic, use "0.0.0.0/0,::/0". Note: Support for IPv6 traffic is in preview.
+              item_type: Api::Type::String
+            - !ruby/object:Api::Type::Array
+              name: 'IPProtocols'
+              description: |
+                Protocols that apply as filter on mirrored traffic. If no protocols are specified, all traffic that matches the specified CIDR ranges is mirrored. If neither cidrRanges nor IPProtocols is specified, all IPv4 traffic is mirrored.
+              item_type: Api::Type::String
+            - !ruby/object:Api::Type::Enum
+              name: 'direction'
+              description: |
+                Direction of traffic to mirror, either INGRESS, EGRESS, or BOTH. The default is BOTH.
+              values:
+                - :BOTH
+                - :EGRESS
+                - :INGRESS
+      - !ruby/object:Api::Type::Enum
+        name: 'enable'
+        description: |
+          Indicates whether or not this packet mirroring takes effect. If set to FALSE, this packet mirroring policy will not be enforced on the network. The default is TRUE.
+        values:
+          - :FALSE
+          - :TRUE
+
+
+
+
+  - !ruby/object:Api::Resource
+    name: PacketMirroring
+    base_url: 'projects/{{project}}/regions/{{region}}/packetMirrorings'
+    self_link: 'projects/{{project}}/regions/{{region}}/packetMirrorings/{{packetMirroring}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/compute/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Represents a Packet Mirroring resource. Packet Mirroring clones the traffic of specified instances in your Virtual Private Cloud (VPC) network and forwards it to a collector destination, such as an instance group of an internal TCP/UDP load balancer, for analysis or examination. For more information about setting up Packet Mirroring, see Using Packet Mirroring.
+    properties:
+
+      - !ruby/object:Api::Type::String
+        name: 'kind'
+        description: |
+          [Output Only] Type of the resource. Always compute#packetMirroring for packet mirrorings.
+      - !ruby/object:Api::Type::String
+        name: 'id'
+        description: |
+          [Output Only] The unique identifier for the resource. This identifier is defined by the server.
+      - !ruby/object:Api::Type::String
+        name: 'creationTimestamp'
+        description: |
+          [Output Only] Creation timestamp in RFC3339 text format.
+      - !ruby/object:Api::Type::String
+        name: 'selfLink'
+        description: |
+          [Output Only] Server-defined URL for the resource.
+      - !ruby/object:Api::Type::String
+        name: 'selfLinkWithId'
+        description: |
+          [Output Only] Server-defined URL for this resource with the resource id.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          An optional description of this resource. Provide this property when you create the resource.
+      - !ruby/object:Api::Type::String
+        name: 'region'
+        description: |
+          [Output Only] URI of the region where the packetMirroring resides.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'network'
+        description: |
+
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'url'
+              description: |
+                URL of the network resource.
+            - !ruby/object:Api::Type::String
+              name: 'canonicalUrl'
+              description: |
+                [Output Only] Unique identifier for the network; defined by the server.
+      - !ruby/object:Api::Type::Integer
+        name: 'priority'
+        description: |
+          The priority of applying this configuration. Priority is used to break ties in cases where there is more than one matching rule. In the case of two rules that apply for a given Instance, the one with the lowest-numbered priority value wins. Default value is 1000. Valid range is 0 through 65535.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'collectorIlb'
+        description: |
+
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'url'
+              description: |
+                Resource URL to the forwarding rule representing the ILB configured as destination of the mirrored traffic.
+            - !ruby/object:Api::Type::String
+              name: 'canonicalUrl'
+              description: |
+                [Output Only] Unique identifier for the forwarding rule; defined by the server.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'mirroredResources'
+        description: |
+
+        properties:
+            - !ruby/object:Api::Type::Array
+              name: 'subnetworks'
+              description: |
+                A set of subnetworks for which traffic from/to all VM instances will be mirrored. They must live in the same region as this packetMirroring. You may specify a maximum of 5 subnetworks.
+              item_type: !ruby/object:Api::Type::NestedObject
+                properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'url'
+                    description: |
+                      Resource URL to the subnetwork for which traffic from/to all VM instances will be mirrored.
+                  - !ruby/object:Api::Type::String
+                    name: 'canonicalUrl'
+                    description: |
+                      [Output Only] Unique identifier for the subnetwork; defined by the server.
+            - !ruby/object:Api::Type::Array
+              name: 'instances'
+              description: |
+                A set of virtual machine instances that are being mirrored. They must live in zones contained in the same region as this packetMirroring. Note that this config will apply only to those network interfaces of the Instances that belong to the network specified in this packetMirroring. You may specify a maximum of 50 Instances.
+              item_type: !ruby/object:Api::Type::NestedObject
+                properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'url'
+                    description: |
+                      Resource URL to the virtual machine instance which is being mirrored.
+                  - !ruby/object:Api::Type::String
+                    name: 'canonicalUrl'
+                    description: |
+                      [Output Only] Unique identifier for the instance; defined by the server.
+            - !ruby/object:Api::Type::Array
+              name: 'tags'
+              description: |
+                A set of mirrored tags. Traffic from/to all VM instances that have one or more of these tags will be mirrored.
+              item_type: Api::Type::String
+      - !ruby/object:Api::Type::NestedObject
+        name: 'filter'
+        description: |
+
+        properties:
+            - !ruby/object:Api::Type::Array
+              name: 'cidrRanges'
+              description: |
+                One or more IPv4 or IPv6 CIDR ranges that apply as filter on the source (ingress) or destination (egress) IP in the IP header. If no ranges are specified, all IPv4 traffic that matches the specified IPProtocols is mirrored. If neither cidrRanges nor IPProtocols is specified, all IPv4 traffic is mirrored. To mirror all IPv4 and IPv6 traffic, use "0.0.0.0/0,::/0". Note: Support for IPv6 traffic is in preview.
+              item_type: Api::Type::String
+            - !ruby/object:Api::Type::Array
+              name: 'IPProtocols'
+              description: |
+                Protocols that apply as filter on mirrored traffic. If no protocols are specified, all traffic that matches the specified CIDR ranges is mirrored. If neither cidrRanges nor IPProtocols is specified, all IPv4 traffic is mirrored.
+              item_type: Api::Type::String
+            - !ruby/object:Api::Type::Enum
+              name: 'direction'
+              description: |
+                Direction of traffic to mirror, either INGRESS, EGRESS, or BOTH. The default is BOTH.
+              values:
+                - :BOTH
+                - :EGRESS
+                - :INGRESS
+      - !ruby/object:Api::Type::Enum
+        name: 'enable'
+        description: |
+          Indicates whether or not this packet mirroring takes effect. If set to FALSE, this packet mirroring policy will not be enforced on the network. The default is TRUE.
+        values:
+          - :FALSE
+          - :TRUE
+
+
+
+    
+  - !ruby/object:Api::Resource
+    name: ResourcePolicy
+    base_url: 'projects/{{project}}/regions/{{region}}/resourcePolicies'
+    self_link: 'projects/{{project}}/regions/{{region}}/resourcePolicies/{{resourcePolicy}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/compute/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Represents a Resource Policy resource. You can use resource policies to schedule actions for some Compute Engine resources. For example, you can use them to schedule persistent disk snapshots.
+    properties:
+  
+      - !ruby/object:Api::Type::String
+        name: 'kind'
+        description: |
+          [Output Only] Type of the resource. Always compute#resource_policies for resource policies.
+      - !ruby/object:Api::Type::String
+        name: 'id'
+        description: |
+          [Output Only] The unique identifier for the resource. This identifier is defined by the server.
+      - !ruby/object:Api::Type::String
+        name: 'creationTimestamp'
+        description: |
+          [Output Only] Creation timestamp in RFC3339 text format.
+      - !ruby/object:Api::Type::String
+        name: 'selfLink'
+        description: |
+          [Output Only] Server-defined fully-qualified URL for this resource.
+      - !ruby/object:Api::Type::String
+        name: 'selfLinkWithId'
+        description: |
+          [Output Only] Server-defined URL for this resource with the resource id.
+      - !ruby/object:Api::Type::String
+        name: 'region'
+        description: |
+          
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'vmMaintenancePolicy'
+        description: |
+          
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'maintenanceWindow'
+              description: |
+                A maintenance window for VMs. When set, we restrict our maintenance operations to this window.
+              properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'dailyMaintenanceWindow'
+                    description: |
+                      Time window specified for daily operations.
+                    properties:
+                        - !ruby/object:Api::Type::Integer
+                          name: 'daysInCycle'
+                          description: |
+                            Defines a schedule with units measured in days. The value determines how many days pass between the start of each cycle.
+                        - !ruby/object:Api::Type::String
+                          name: 'startTime'
+                          description: |
+                            Start time of the window. This must be in UTC format that resolves to one of 00:00, 04:00, 08:00, 12:00, 16:00, or 20:00. For example, both 13:00-5 and 08:00 are valid.
+                        - !ruby/object:Api::Type::String
+                          name: 'duration'
+                          description: |
+                            [Output only] A predetermined duration for the window, automatically chosen to be the smallest possible in the given scenario.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'concurrencyControlGroup'
+              description: |
+                A concurrency control configuration. Defines a group config that, when attached to an instance, recognizes that instance as part of a group of instances where only up the concurrency_limit of instances in that group can undergo simultaneous maintenance. For more information: go/concurrency-control-design-doc
+              properties:
+                  - !ruby/object:Api::Type::Integer
+                    name: 'concurrencyLimit'
+                    description: |
+                      
+      - !ruby/object:Api::Type::NestedObject
+        name: 'snapshotSchedulePolicy'
+        description: |
+          A snapshot schedule policy specifies when and how frequently snapshots are to be created for the target disk. Also specifies how many and how long these scheduled snapshots should be retained.
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'schedule'
+              description: |
+                A schedule for disks where the schedueled operations are performed.
+              properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'hourlySchedule'
+                    description: |
+                      Time window specified for hourly operations.
+                    properties:
+                        - !ruby/object:Api::Type::Integer
+                          name: 'hoursInCycle'
+                          description: |
+                            Defines a schedule with units measured in hours. The value determines how many hours pass between the start of each cycle.
+                        - !ruby/object:Api::Type::String
+                          name: 'startTime'
+                          description: |
+                            Time within the window to start the operations. It must be in format "HH:MM", where HH : [00-23] and MM : [00-00] GMT.
+                        - !ruby/object:Api::Type::String
+                          name: 'duration'
+                          description: |
+                            [Output only] Duration of the time window, automatically chosen to be smallest possible in the given scenario.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'dailySchedule'
+                    description: |
+                      Time window specified for daily operations.
+                    properties:
+                        - !ruby/object:Api::Type::Integer
+                          name: 'daysInCycle'
+                          description: |
+                            Defines a schedule with units measured in days. The value determines how many days pass between the start of each cycle.
+                        - !ruby/object:Api::Type::String
+                          name: 'startTime'
+                          description: |
+                            Start time of the window. This must be in UTC format that resolves to one of 00:00, 04:00, 08:00, 12:00, 16:00, or 20:00. For example, both 13:00-5 and 08:00 are valid.
+                        - !ruby/object:Api::Type::String
+                          name: 'duration'
+                          description: |
+                            [Output only] A predetermined duration for the window, automatically chosen to be the smallest possible in the given scenario.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'weeklySchedule'
+                    description: |
+                      Time window specified for weekly operations.
+                    properties:
+                        - !ruby/object:Api::Type::Array
+                          name: 'dayOfWeeks'
+                          description: |
+                            Up to 7 intervals/windows, one for each day of the week.
+                          item_type: !ruby/object:Api::Type::NestedObject
+                            properties:
+                              - !ruby/object:Api::Type::Enum
+                                name: 'day'
+                                description: |
+                                  Defines a schedule that runs on specific days of the week. Specify one or more days. The following options are available: MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY.
+                                values:
+                                  - :FRIDAY
+                                  - :INVALID
+                                  - :MONDAY
+                                  - :SATURDAY
+                                  - :SUNDAY
+                                  - :THURSDAY
+                                  - :TUESDAY
+                                  - :WEDNESDAY
+                              - !ruby/object:Api::Type::String
+                                name: 'startTime'
+                                description: |
+                                  Time within the window to start the operations. It must be in format "HH:MM", where HH : [00-23] and MM : [00-00] GMT.
+                              - !ruby/object:Api::Type::String
+                                name: 'duration'
+                                description: |
+                                  [Output only] Duration of the time window, automatically chosen to be smallest possible in the given scenario.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'retentionPolicy'
+              description: |
+                Policy for retention of scheduled snapshots.
+              properties:
+                  - !ruby/object:Api::Type::Integer
+                    name: 'maxRetentionDays'
+                    description: |
+                      Maximum age of the snapshot that is allowed to be kept.
+                  - !ruby/object:Api::Type::Enum
+                    name: 'onPolicySwitch'
+                    description: |
+                      
+                    values:
+                      - :DO_NOT_RETROACTIVELY_APPLY
+                      - :RETROACTIVELY_APPLY
+                      - :UNSPECIFIED_ON_POLICY_SWITCH
+                  - !ruby/object:Api::Type::Enum
+                    name: 'onSourceDiskDelete'
+                    description: |
+                      Specifies the behavior to apply to scheduled snapshots when the source disk is deleted.
+                    values:
+                      - :APPLY_RETENTION_POLICY
+                      - :KEEP_AUTO_SNAPSHOTS
+                      - :UNSPECIFIED_ON_SOURCE_DISK_DELETE
+            - !ruby/object:Api::Type::NestedObject
+              name: 'snapshotProperties'
+              description: |
+                Specified snapshot properties for scheduled snapshots created by this policy.
+              properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'labels'
+                    description: |
+                      Labels to apply to scheduled snapshots. These can be later modified by the setLabels method. Label values may be empty.
+                    properties:
+                      - !ruby/object:Api::Type::String
+                        name: 'additionalProperties'
+                        description: |
+                          
+                  - !ruby/object:Api::Type::Array
+                    name: 'storageLocations'
+                    description: |
+                      Cloud Storage bucket storage location of the auto snapshot (regional or multi-regional).
+                    item_type: Api::Type::String
+                  - !ruby/object:Api::Type::Boolean
+                    name: 'guestFlush'
+                    description: |
+                      Indication to perform a 'guest aware' snapshot.
+                  - !ruby/object:Api::Type::String
+                    name: 'chainName'
+                    description: |
+                      Chain name that the snapshot is created in.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'groupPlacementPolicy'
+        description: |
+          A GroupPlacementPolicy specifies resource placement configuration. It specifies the failure bucket separation as well as network locality
+        properties:
+            - !ruby/object:Api::Type::Enum
+              name: 'style'
+              description: |
+                Specifies instances to hosts placement relationship
+              values:
+                - :COMPACT
+                - :FULLY_SPREAD
+                - :UNSPECIFIED_PLACEMENT_TYPE
+            - !ruby/object:Api::Type::Enum
+              name: 'locality'
+              description: |
+                Specifies network locality
+              values:
+                - :BEST_EFFORT
+                - :STRICT
+                - :UNSPECIFIED_LOCALITY
+            - !ruby/object:Api::Type::Integer
+              name: 'vmCount'
+              description: |
+                Number of VMs in this placement group. Google does not recommend that you use this field unless you use a compact policy and you want your policy to work only if it contains this exact number of VMs.
+            - !ruby/object:Api::Type::Integer
+              name: 'availabilityDomainCount'
+              description: |
+                The number of availability domains to spread instances across. If two instances are in different availability domain, they are not in the same low latency network.
+            - !ruby/object:Api::Type::Enum
+              name: 'collocation'
+              description: |
+                Specifies network collocation
+              values:
+                - :CLUSTERED
+                - :COLLOCATED
+                - :UNSPECIFIED_COLLOCATION
+            - !ruby/object:Api::Type::Enum
+              name: 'scope'
+              description: |
+                Scope specifies the availability domain to which the VMs should be spread.
+              values:
+                - :HOST
+                - :UNSPECIFIED_SCOPE
+            - !ruby/object:Api::Type::String
+              name: 'tpuTopology'
+              description: |
+                Specifies the shape of the TPU slice
+            - !ruby/object:Api::Type::Integer
+              name: 'maxDistance'
+              description: |
+                Specifies the number of max logical switches.
+            - !ruby/object:Api::Type::Integer
+              name: 'sliceCount'
+              description: |
+                Specifies the number of slices in a multislice workload.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'instanceSchedulePolicy'
+        description: |
+          An InstanceSchedulePolicy specifies when and how frequent certain operations are performed on the instance.
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'vmStartSchedule'
+              description: |
+                Schedule for an instance operation.
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'schedule'
+                    description: |
+                      Specifies the frequency for the operation, using the unix-cron format.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'vmStopSchedule'
+              description: |
+                Schedule for an instance operation.
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'schedule'
+                    description: |
+                      Specifies the frequency for the operation, using the unix-cron format.
+            - !ruby/object:Api::Type::String
+              name: 'timeZone'
+              description: |
+                Specifies the time zone to be used in interpreting Schedule.schedule. The value of this field must be a time zone name from the tz database: https://wikipedia.org/wiki/Tz_database.
+            - !ruby/object:Api::Type::String
+              name: 'startTime'
+              description: |
+                The start time of the schedule. The timestamp is an RFC3339 string.
+            - !ruby/object:Api::Type::String
+              name: 'expirationTime'
+              description: |
+                The expiration time of the schedule. The timestamp is an RFC3339 string.
+      - !ruby/object:Api::Type::Enum
+        name: 'status'
+        description: |
+          [Output Only] The status of resource policy creation.
+        values:
+          - :CREATING
+          - :DELETING
+          - :EXPIRED
+          - :INVALID
+          - :READY
+      - !ruby/object:Api::Type::NestedObject
+        name: 'resourceStatus'
+        description: |
+          Contains output only fields. Use this sub-message for all output fields set on ResourcePolicy. The internal structure of this "status" field should mimic the structure of ResourcePolicy proto specification.
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'instanceSchedulePolicy'
+              description: |
+                
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'nextRunStartTime'
+                    description: |
+                      [Output Only] The next time the schedule is planned to run. The actual time might be slightly different. The timestamp is an RFC3339 string.
+                  - !ruby/object:Api::Type::String
+                    name: 'lastRunStartTime'
+                    description: |
+                      [Output Only] The last time the schedule successfully ran. The timestamp is an RFC3339 string.
+  
+
+
+    
+  - !ruby/object:Api::Resource
+    name: ResourcePolicy
+    base_url: 'projects/{{project}}/regions/{{region}}/resourcePolicies'
+    self_link: 'projects/{{project}}/regions/{{region}}/resourcePolicies/{{resourcePolicy}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/compute/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Represents a Resource Policy resource. You can use resource policies to schedule actions for some Compute Engine resources. For example, you can use them to schedule persistent disk snapshots.
+    properties:
+  
+      - !ruby/object:Api::Type::String
+        name: 'kind'
+        description: |
+          [Output Only] Type of the resource. Always compute#resource_policies for resource policies.
+      - !ruby/object:Api::Type::String
+        name: 'id'
+        description: |
+          [Output Only] The unique identifier for the resource. This identifier is defined by the server.
+      - !ruby/object:Api::Type::String
+        name: 'creationTimestamp'
+        description: |
+          [Output Only] Creation timestamp in RFC3339 text format.
+      - !ruby/object:Api::Type::String
+        name: 'selfLink'
+        description: |
+          [Output Only] Server-defined fully-qualified URL for this resource.
+      - !ruby/object:Api::Type::String
+        name: 'selfLinkWithId'
+        description: |
+          [Output Only] Server-defined URL for this resource with the resource id.
+      - !ruby/object:Api::Type::String
+        name: 'region'
+        description: |
+          
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'vmMaintenancePolicy'
+        description: |
+          
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'maintenanceWindow'
+              description: |
+                A maintenance window for VMs. When set, we restrict our maintenance operations to this window.
+              properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'dailyMaintenanceWindow'
+                    description: |
+                      Time window specified for daily operations.
+                    properties:
+                        - !ruby/object:Api::Type::Integer
+                          name: 'daysInCycle'
+                          description: |
+                            Defines a schedule with units measured in days. The value determines how many days pass between the start of each cycle.
+                        - !ruby/object:Api::Type::String
+                          name: 'startTime'
+                          description: |
+                            Start time of the window. This must be in UTC format that resolves to one of 00:00, 04:00, 08:00, 12:00, 16:00, or 20:00. For example, both 13:00-5 and 08:00 are valid.
+                        - !ruby/object:Api::Type::String
+                          name: 'duration'
+                          description: |
+                            [Output only] A predetermined duration for the window, automatically chosen to be the smallest possible in the given scenario.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'concurrencyControlGroup'
+              description: |
+                A concurrency control configuration. Defines a group config that, when attached to an instance, recognizes that instance as part of a group of instances where only up the concurrency_limit of instances in that group can undergo simultaneous maintenance. For more information: go/concurrency-control-design-doc
+              properties:
+                  - !ruby/object:Api::Type::Integer
+                    name: 'concurrencyLimit'
+                    description: |
+                      
+      - !ruby/object:Api::Type::NestedObject
+        name: 'snapshotSchedulePolicy'
+        description: |
+          A snapshot schedule policy specifies when and how frequently snapshots are to be created for the target disk. Also specifies how many and how long these scheduled snapshots should be retained.
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'schedule'
+              description: |
+                A schedule for disks where the schedueled operations are performed.
+              properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'hourlySchedule'
+                    description: |
+                      Time window specified for hourly operations.
+                    properties:
+                        - !ruby/object:Api::Type::Integer
+                          name: 'hoursInCycle'
+                          description: |
+                            Defines a schedule with units measured in hours. The value determines how many hours pass between the start of each cycle.
+                        - !ruby/object:Api::Type::String
+                          name: 'startTime'
+                          description: |
+                            Time within the window to start the operations. It must be in format "HH:MM", where HH : [00-23] and MM : [00-00] GMT.
+                        - !ruby/object:Api::Type::String
+                          name: 'duration'
+                          description: |
+                            [Output only] Duration of the time window, automatically chosen to be smallest possible in the given scenario.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'dailySchedule'
+                    description: |
+                      Time window specified for daily operations.
+                    properties:
+                        - !ruby/object:Api::Type::Integer
+                          name: 'daysInCycle'
+                          description: |
+                            Defines a schedule with units measured in days. The value determines how many days pass between the start of each cycle.
+                        - !ruby/object:Api::Type::String
+                          name: 'startTime'
+                          description: |
+                            Start time of the window. This must be in UTC format that resolves to one of 00:00, 04:00, 08:00, 12:00, 16:00, or 20:00. For example, both 13:00-5 and 08:00 are valid.
+                        - !ruby/object:Api::Type::String
+                          name: 'duration'
+                          description: |
+                            [Output only] A predetermined duration for the window, automatically chosen to be the smallest possible in the given scenario.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'weeklySchedule'
+                    description: |
+                      Time window specified for weekly operations.
+                    properties:
+                        - !ruby/object:Api::Type::Array
+                          name: 'dayOfWeeks'
+                          description: |
+                            Up to 7 intervals/windows, one for each day of the week.
+                          item_type: !ruby/object:Api::Type::NestedObject
+                            properties:
+                              - !ruby/object:Api::Type::Enum
+                                name: 'day'
+                                description: |
+                                  Defines a schedule that runs on specific days of the week. Specify one or more days. The following options are available: MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY.
+                                values:
+                                  - :FRIDAY
+                                  - :INVALID
+                                  - :MONDAY
+                                  - :SATURDAY
+                                  - :SUNDAY
+                                  - :THURSDAY
+                                  - :TUESDAY
+                                  - :WEDNESDAY
+                              - !ruby/object:Api::Type::String
+                                name: 'startTime'
+                                description: |
+                                  Time within the window to start the operations. It must be in format "HH:MM", where HH : [00-23] and MM : [00-00] GMT.
+                              - !ruby/object:Api::Type::String
+                                name: 'duration'
+                                description: |
+                                  [Output only] Duration of the time window, automatically chosen to be smallest possible in the given scenario.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'retentionPolicy'
+              description: |
+                Policy for retention of scheduled snapshots.
+              properties:
+                  - !ruby/object:Api::Type::Integer
+                    name: 'maxRetentionDays'
+                    description: |
+                      Maximum age of the snapshot that is allowed to be kept.
+                  - !ruby/object:Api::Type::Enum
+                    name: 'onPolicySwitch'
+                    description: |
+                      
+                    values:
+                      - :DO_NOT_RETROACTIVELY_APPLY
+                      - :RETROACTIVELY_APPLY
+                      - :UNSPECIFIED_ON_POLICY_SWITCH
+                  - !ruby/object:Api::Type::Enum
+                    name: 'onSourceDiskDelete'
+                    description: |
+                      Specifies the behavior to apply to scheduled snapshots when the source disk is deleted.
+                    values:
+                      - :APPLY_RETENTION_POLICY
+                      - :KEEP_AUTO_SNAPSHOTS
+                      - :UNSPECIFIED_ON_SOURCE_DISK_DELETE
+            - !ruby/object:Api::Type::NestedObject
+              name: 'snapshotProperties'
+              description: |
+                Specified snapshot properties for scheduled snapshots created by this policy.
+              properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'labels'
+                    description: |
+                      Labels to apply to scheduled snapshots. These can be later modified by the setLabels method. Label values may be empty.
+                    properties:
+                      - !ruby/object:Api::Type::String
+                        name: 'additionalProperties'
+                        description: |
+                          
+                  - !ruby/object:Api::Type::Array
+                    name: 'storageLocations'
+                    description: |
+                      Cloud Storage bucket storage location of the auto snapshot (regional or multi-regional).
+                    item_type: Api::Type::String
+                  - !ruby/object:Api::Type::Boolean
+                    name: 'guestFlush'
+                    description: |
+                      Indication to perform a 'guest aware' snapshot.
+                  - !ruby/object:Api::Type::String
+                    name: 'chainName'
+                    description: |
+                      Chain name that the snapshot is created in.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'groupPlacementPolicy'
+        description: |
+          A GroupPlacementPolicy specifies resource placement configuration. It specifies the failure bucket separation as well as network locality
+        properties:
+            - !ruby/object:Api::Type::Enum
+              name: 'style'
+              description: |
+                Specifies instances to hosts placement relationship
+              values:
+                - :COMPACT
+                - :FULLY_SPREAD
+                - :UNSPECIFIED_PLACEMENT_TYPE
+            - !ruby/object:Api::Type::Enum
+              name: 'locality'
+              description: |
+                Specifies network locality
+              values:
+                - :BEST_EFFORT
+                - :STRICT
+                - :UNSPECIFIED_LOCALITY
+            - !ruby/object:Api::Type::Integer
+              name: 'vmCount'
+              description: |
+                Number of VMs in this placement group. Google does not recommend that you use this field unless you use a compact policy and you want your policy to work only if it contains this exact number of VMs.
+            - !ruby/object:Api::Type::Integer
+              name: 'availabilityDomainCount'
+              description: |
+                The number of availability domains to spread instances across. If two instances are in different availability domain, they are not in the same low latency network.
+            - !ruby/object:Api::Type::Enum
+              name: 'collocation'
+              description: |
+                Specifies network collocation
+              values:
+                - :CLUSTERED
+                - :COLLOCATED
+                - :UNSPECIFIED_COLLOCATION
+            - !ruby/object:Api::Type::Enum
+              name: 'scope'
+              description: |
+                Scope specifies the availability domain to which the VMs should be spread.
+              values:
+                - :HOST
+                - :UNSPECIFIED_SCOPE
+            - !ruby/object:Api::Type::String
+              name: 'tpuTopology'
+              description: |
+                Specifies the shape of the TPU slice
+            - !ruby/object:Api::Type::Integer
+              name: 'maxDistance'
+              description: |
+                Specifies the number of max logical switches.
+            - !ruby/object:Api::Type::Integer
+              name: 'sliceCount'
+              description: |
+                Specifies the number of slices in a multislice workload.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'instanceSchedulePolicy'
+        description: |
+          An InstanceSchedulePolicy specifies when and how frequent certain operations are performed on the instance.
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'vmStartSchedule'
+              description: |
+                Schedule for an instance operation.
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'schedule'
+                    description: |
+                      Specifies the frequency for the operation, using the unix-cron format.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'vmStopSchedule'
+              description: |
+                Schedule for an instance operation.
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'schedule'
+                    description: |
+                      Specifies the frequency for the operation, using the unix-cron format.
+            - !ruby/object:Api::Type::String
+              name: 'timeZone'
+              description: |
+                Specifies the time zone to be used in interpreting Schedule.schedule. The value of this field must be a time zone name from the tz database: https://wikipedia.org/wiki/Tz_database.
+            - !ruby/object:Api::Type::String
+              name: 'startTime'
+              description: |
+                The start time of the schedule. The timestamp is an RFC3339 string.
+            - !ruby/object:Api::Type::String
+              name: 'expirationTime'
+              description: |
+                The expiration time of the schedule. The timestamp is an RFC3339 string.
+      - !ruby/object:Api::Type::Enum
+        name: 'status'
+        description: |
+          [Output Only] The status of resource policy creation.
+        values:
+          - :CREATING
+          - :DELETING
+          - :EXPIRED
+          - :INVALID
+          - :READY
+      - !ruby/object:Api::Type::NestedObject
+        name: 'resourceStatus'
+        description: |
+          Contains output only fields. Use this sub-message for all output fields set on ResourcePolicy. The internal structure of this "status" field should mimic the structure of ResourcePolicy proto specification.
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'instanceSchedulePolicy'
+              description: |
+                
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'nextRunStartTime'
+                    description: |
+                      [Output Only] The next time the schedule is planned to run. The actual time might be slightly different. The timestamp is an RFC3339 string.
+                  - !ruby/object:Api::Type::String
+                    name: 'lastRunStartTime'
+                    description: |
+                      [Output Only] The last time the schedule successfully ran. The timestamp is an RFC3339 string.
+  
+
+
+    
+  - !ruby/object:Api::Resource
+    name: TargetSslProxy
+    base_url: 'projects/{{project}}/global/targetSslProxies'
+    self_link: 'projects/{{project}}/global/targetSslProxies/{{targetSslProxy}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/compute/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Represents a Target SSL Proxy resource. A target SSL proxy is a component of a Proxy Network Load Balancer. The forwarding rule references the target SSL proxy, and the target proxy then references a backend service. For more information, read Proxy Network Load Balancer overview.
+    properties:
+  
+      - !ruby/object:Api::Type::String
+        name: 'kind'
+        description: |
+          [Output Only] Type of the resource. Always compute#targetSslProxy for target SSL proxies.
       - !ruby/object:Api::Type::String
         name: 'id'
         description: |
@@ -24904,240 +25575,45 @@ objects:
         description: |
           Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
       - !ruby/object:Api::Type::String
-        name: 'interconnect'
+        name: 'description'
         description: |
-          URL of the underlying Interconnect object that this attachment's traffic will traverse through.
+          An optional description of this resource. Provide this property when you create the resource.
       - !ruby/object:Api::Type::String
-        name: 'router'
+        name: 'selfLink'
         description: |
-          URL of the Cloud Router to be used for dynamic routing. This router must be in the same region as this InterconnectAttachment. The InterconnectAttachment will automatically connect the Interconnect to the network & region within which the Cloud Router is configured.
+          [Output Only] Server-defined URL for the resource.
       - !ruby/object:Api::Type::String
-        name: 'region'
+        name: 'service'
         description: |
-          [Output Only] URL of the region where the regional interconnect attachment resides. You must specify this field as part of the HTTP request URL. It is not settable as a field in the request body.
-      - !ruby/object:Api::Type::String
-        name: 'googleReferenceId'
-        description: |
-          [Output Only] Google reference ID, to be used when raising support tickets with Google or otherwise to debug backend connectivity issues. [Deprecated] This field is not used.
-      - !ruby/object:Api::Type::Integer
-        name: 'mtu'
-        description: |
-          Maximum Transmission Unit (MTU), in bytes, of packets passing through this interconnect attachment. Only 1440 and 1500 are allowed. If not specified, the value will default to 1440.
-      - !ruby/object:Api::Type::NestedObject
-        name: 'privateInterconnectInfo'
-        description: |
-          Information for an interconnect attachment when this belongs to an interconnect of type DEDICATED.
-        properties:
-            - !ruby/object:Api::Type::Integer
-              name: 'tag8021q'
-              description: |
-                [Output Only] 802.1q encapsulation tag to be used for traffic between Google and the customer, going to and from this network and region.
-      - !ruby/object:Api::Type::Enum
-        name: 'operationalStatus'
-        description: |
-          [Output Only] The current status of whether or not this interconnect attachment is functional, which can take one of the following values: - OS_ACTIVE: The attachment has been turned up and is ready to use. - OS_UNPROVISIONED: The attachment is not ready to use yet, because turnup is not complete.
-        values:
-          - :OS_ACTIVE
-          - :OS_UNPROVISIONED
-      - !ruby/object:Api::Type::String
-        name: 'cloudRouterIpAddress'
-        description: |
-          [Output Only] IPv4 address + prefix length to be configured on Cloud Router Interface for this interconnect attachment.
-      - !ruby/object:Api::Type::String
-        name: 'customerRouterIpAddress'
-        description: |
-          [Output Only] IPv4 address + prefix length to be configured on the customer router subinterface for this interconnect attachment.
-      - !ruby/object:Api::Type::Enum
-        name: 'type'
-        description: |
-          The type of interconnect attachment this is, which can take one of the following values: - DEDICATED: an attachment to a Dedicated Interconnect. - PARTNER: an attachment to a Partner Interconnect, created by the customer. - PARTNER_PROVIDER: an attachment to a Partner Interconnect, created by the partner.
-        values:
-          - :DEDICATED
-          - :PARTNER
-          - :PARTNER_PROVIDER
-      - !ruby/object:Api::Type::String
-        name: 'pairingKey'
-        description: |
-          [Output only for type PARTNER. Input only for PARTNER_PROVIDER. Not present for DEDICATED]. The opaque identifier of a PARTNER attachment used to initiate provisioning with a selected partner. Of the form "XXXXX/region/domain"
-      - !ruby/object:Api::Type::Boolean
-        name: 'adminEnabled'
-        description: |
-          Determines whether this Attachment will carry packets. Not present for PARTNER_PROVIDER.
-      - !ruby/object:Api::Type::Integer
-        name: 'vlanTag8021q'
-        description: |
-          The IEEE 802.1Q VLAN tag for this attachment, in the range 2-4093. Only specified at creation time.
-      - !ruby/object:Api::Type::Enum
-        name: 'edgeAvailabilityDomain'
-        description: |
-          Desired availability domain for the attachment. Only available for type PARTNER, at creation time, and can take one of the following values: - AVAILABILITY_DOMAIN_ANY - AVAILABILITY_DOMAIN_1 - AVAILABILITY_DOMAIN_2 For improved reliability, customers should configure a pair of attachments, one per availability domain. The selected availability domain will be provided to the Partner via the pairing key, so that the provisioned circuit will lie in the specified domain. If not specified, the value will default to AVAILABILITY_DOMAIN_ANY.
-        values:
-          - :AVAILABILITY_DOMAIN_1
-          - :AVAILABILITY_DOMAIN_2
-          - :AVAILABILITY_DOMAIN_ANY
+          URL to the BackendService resource.
       - !ruby/object:Api::Type::Array
-        name: 'candidateSubnets'
+        name: 'sslCertificates'
         description: |
-          Up to 16 candidate prefixes that can be used to restrict the allocation of cloudRouterIpAddress and customerRouterIpAddress for this attachment. All prefixes must be within link-local address space (169.254.0.0/16) and must be /29 or shorter (/28, /27, etc). Google will attempt to select an unused /29 from the supplied candidate prefix(es). The request will fail if all possible /29s are in use on Google's edge. If not supplied, Google will randomly select an unused /29 from all of link-local space.
+          URLs to SslCertificate resources that are used to authenticate connections to Backends. At least one SSL certificate must be specified. Currently, you may specify up to 15 SSL certificates. sslCertificates do not apply when the load balancing scheme is set to INTERNAL_SELF_MANAGED.
         item_type: Api::Type::String
-      - !ruby/object:Api::Type::Enum
-        name: 'bandwidth'
-        description: |
-          Provisioned bandwidth capacity for the interconnect attachment. For attachments of type DEDICATED, the user can set the bandwidth. For attachments of type PARTNER, the Google Partner that is operating the interconnect must set the bandwidth. Output only for PARTNER type, mutable for PARTNER_PROVIDER and DEDICATED, and can take one of the following values: - BPS_50M: 50 Mbit/s - BPS_100M: 100 Mbit/s - BPS_200M: 200 Mbit/s - BPS_300M: 300 Mbit/s - BPS_400M: 400 Mbit/s - BPS_500M: 500 Mbit/s - BPS_1G: 1 Gbit/s - BPS_2G: 2 Gbit/s - BPS_5G: 5 Gbit/s - BPS_10G: 10 Gbit/s - BPS_20G: 20 Gbit/s - BPS_50G: 50 Gbit/s
-        values:
-          - :BPS_100M
-          - :BPS_10G
-          - :BPS_1G
-          - :BPS_200M
-          - :BPS_20G
-          - :BPS_2G
-          - :BPS_300M
-          - :BPS_400M
-          - :BPS_500M
-          - :BPS_50G
-          - :BPS_50M
-          - :BPS_5G
-      - !ruby/object:Api::Type::NestedObject
-        name: 'partnerMetadata'
-        description: |
-          Informational metadata about Partner attachments from Partners to display to customers. These fields are propagated from PARTNER_PROVIDER attachments to their corresponding PARTNER attachments.
-        properties:
-            - !ruby/object:Api::Type::String
-              name: 'partnerName'
-              description: |
-                Plain text name of the Partner providing this attachment. This value may be validated to match approved Partner values.
-            - !ruby/object:Api::Type::String
-              name: 'interconnectName'
-              description: |
-                Plain text name of the Interconnect this attachment is connected to, as displayed in the Partner's portal. For instance "Chicago 1". This value may be validated to match approved Partner values.
-            - !ruby/object:Api::Type::String
-              name: 'portalUrl'
-              description: |
-                URL of the Partner's portal for this Attachment. Partners may customise this to be a deep link to the specific resource on the Partner portal. This value may be validated to match approved Partner values.
-      - !ruby/object:Api::Type::NestedObject
-        name: 'labels'
-        description: |
-          Labels for this resource. These can only be added or modified by the setLabels method. Each label key/value pair must comply with RFC1035. Label values may be empty.
-        properties:
-          - !ruby/object:Api::Type::String
-            name: 'additionalProperties'
-            description: |
-
       - !ruby/object:Api::Type::String
-        name: 'labelFingerprint'
+        name: 'certificateMap'
         description: |
-          A fingerprint for the labels being applied to this InterconnectAttachment, which is essentially a hash of the labels set used for optimistic locking. The fingerprint is initially generated by Compute Engine and changes after every request to modify or update labels. You must always provide an up-to-date fingerprint hash in order to update or change labels, otherwise the request will fail with error 412 conditionNotMet. To see the latest fingerprint, make a get() request to retrieve an InterconnectAttachment.
+          URL of a certificate map that identifies a certificate map associated with the given target proxy. This field can only be set for global target proxies. If set, sslCertificates will be ignored. Accepted format is //certificatemanager.googleapis.com/projects/{project }/locations/{location}/certificateMaps/{resourceName}.
       - !ruby/object:Api::Type::Enum
-        name: 'state'
+        name: 'proxyHeader'
         description: |
-          [Output Only] The current state of this attachment's functionality. Enum values ACTIVE and UNPROVISIONED are shared by DEDICATED/PRIVATE, PARTNER, and PARTNER_PROVIDER interconnect attachments, while enum values PENDING_PARTNER, PARTNER_REQUEST_RECEIVED, and PENDING_CUSTOMER are used for only PARTNER and PARTNER_PROVIDER interconnect attachments. This state can take one of the following values: - ACTIVE: The attachment has been turned up and is ready to use. - UNPROVISIONED: The attachment is not ready to use yet, because turnup is not complete. - PENDING_PARTNER: A newly-created PARTNER attachment that has not yet been configured on the Partner side. - PARTNER_REQUEST_RECEIVED: A PARTNER attachment is in the process of provisioning after a PARTNER_PROVIDER attachment was created that references it. - PENDING_CUSTOMER: A PARTNER or PARTNER_PROVIDER attachment that is waiting for a customer to activate it. - DEFUNCT: The attachment was deleted externally and is no longer functional. This could be because the associated Interconnect was removed, or because the other side of a Partner attachment was deleted.
+          Specifies the type of proxy header to append before sending data to the backend, either NONE or PROXY_V1. The default is NONE.
         values:
-          - :ACTIVE
-          - :DEFUNCT
-          - :PARTNER_REQUEST_RECEIVED
-          - :PENDING_CUSTOMER
-          - :PENDING_PARTNER
-          - :STATE_UNSPECIFIED
-          - :UNPROVISIONED
-      - !ruby/object:Api::Type::String
-        name: 'partnerAsn'
-        description: |
-          Optional BGP ASN for the router supplied by a Layer 3 Partner if they configured BGP on behalf of the customer. Output only for PARTNER type, input only for PARTNER_PROVIDER, not available for DEDICATED.
-      - !ruby/object:Api::Type::Enum
-        name: 'encryption'
-        description: |
-          Indicates the user-supplied encryption option of this VLAN attachment (interconnectAttachment). Can only be specified at attachment creation for PARTNER or DEDICATED attachments. Possible values are: - NONE - This is the default value, which means that the VLAN attachment carries unencrypted traffic. VMs are able to send traffic to, or receive traffic from, such a VLAN attachment. - IPSEC - The VLAN attachment carries only encrypted traffic that is encrypted by an IPsec device, such as an HA VPN gateway or third-party IPsec VPN. VMs cannot directly send traffic to, or receive traffic from, such a VLAN attachment. To use *HA VPN over Cloud Interconnect*, the VLAN attachment must be created with this option.
-        values:
-          - :IPSEC
           - :NONE
-      - !ruby/object:Api::Type::Array
-        name: 'ipsecInternalAddresses'
-        description: |
-          A list of URLs of addresses that have been reserved for the VLAN attachment. Used only for the VLAN attachment that has the encryption option as IPSEC. The addresses must be regional internal IP address ranges. When creating an HA VPN gateway over the VLAN attachment, if the attachment is configured to use a regional internal IP address, then the VPN gateway's IP address is allocated from the IP address range specified here. For example, if the HA VPN gateway's interface 0 is paired to this VLAN attachment, then a regional internal IP address for the VPN gateway interface 0 will be allocated from the IP address specified for this VLAN attachment. If this field is not specified when creating the VLAN attachment, then later on when creating an HA VPN gateway on this VLAN attachment, the HA VPN gateway's IP address is allocated from the regional external IP address pool.
-        item_type: Api::Type::String
-      - !ruby/object:Api::Type::Integer
-        name: 'dataplaneVersion'
-        description: |
-          [Output Only] Dataplane version for this InterconnectAttachment. This field is only present for Dataplane version 2 and higher. Absence of this field in the API output indicates that the Dataplane is version 1.
-      - !ruby/object:Api::Type::Boolean
-        name: 'satisfiesPzs'
-        description: |
-          [Output Only] Reserved for future use.
-      - !ruby/object:Api::Type::Enum
-        name: 'stackType'
-        description: |
-          The stack type for this interconnect attachment to identify whether the IPv6 feature is enabled or not. If not specified, IPV4_ONLY will be used. This field can be both set at interconnect attachments creation and update interconnect attachment operations.
-        values:
-          - :IPV4_IPV6
-          - :IPV4_ONLY
+          - :PROXY_V1
       - !ruby/object:Api::Type::String
-        name: 'cloudRouterIpv6Address'
+        name: 'sslPolicy'
         description: |
-          [Output Only] IPv6 address + prefix length to be configured on Cloud Router Interface for this interconnect attachment.
-      - !ruby/object:Api::Type::String
-        name: 'customerRouterIpv6Address'
-        description: |
-          [Output Only] IPv6 address + prefix length to be configured on the customer router subinterface for this interconnect attachment.
-      - !ruby/object:Api::Type::Array
-        name: 'candidateIpv6Subnets'
-        description: |
-          This field is not available.
-        item_type: Api::Type::String
-      - !ruby/object:Api::Type::String
-        name: 'cloudRouterIpv6InterfaceId'
-        description: |
-          This field is not available.
-      - !ruby/object:Api::Type::String
-        name: 'customerRouterIpv6InterfaceId'
-        description: |
-          This field is not available.
-      - !ruby/object:Api::Type::Integer
-        name: 'subnetLength'
-        description: |
-          Length of the IPv4 subnet mask. Allowed values: - 29 (default) - 30 The default value is 29, except for Cross-Cloud Interconnect connections that use an InterconnectRemoteLocation with a constraints.subnetLengthRange.min equal to 30. For example, connections that use an Azure remote location fall into this category. In these cases, the default value is 30, and requesting 29 returns an error. Where both 29 and 30 are allowed, 29 is preferred, because it gives Google Cloud Support more debugging visibility.
-      - !ruby/object:Api::Type::String
-        name: 'remoteService'
-        description: |
-          [Output Only] If the attachment is on a Cross-Cloud Interconnect connection, this field contains the interconnect's remote location service provider. Example values: "Amazon Web Services" "Microsoft Azure". The field is set only for attachments on Cross-Cloud Interconnect connections. Its value is copied from the InterconnectRemoteLocation remoteService field.
-      - !ruby/object:Api::Type::NestedObject
-        name: 'configurationConstraints'
-        description: |
-
-        properties:
-            - !ruby/object:Api::Type::Enum
-              name: 'bgpMd5'
-              description: |
-                [Output Only] Whether the attachment's BGP session requires/allows/disallows BGP MD5 authentication. This can take one of the following values: MD5_OPTIONAL, MD5_REQUIRED, MD5_UNSUPPORTED. For example, a Cross-Cloud Interconnect connection to a remote cloud provider that requires BGP MD5 authentication has the interconnectRemoteLocation attachment_configuration_constraints.bgp_md5 field set to MD5_REQUIRED, and that property is propagated to the attachment. Similarly, if BGP MD5 is MD5_UNSUPPORTED, an error is returned if MD5 is requested.
-              values:
-                - :MD5_OPTIONAL
-                - :MD5_REQUIRED
-                - :MD5_UNSUPPORTED
-            - !ruby/object:Api::Type::Array
-              name: 'bgpPeerAsnRanges'
-              description: |
-                [Output Only] List of ASN ranges that the remote location is known to support. Formatted as an array of inclusive ranges {min: min-value, max: max-value}. For example, [{min: 123, max: 123}, {min: 64512, max: 65534}] allows the peer ASN to be 123 or anything in the range 64512-65534. This field is only advisory. Although the API accepts other ranges, these are the ranges that we recommend.
-              item_type: !ruby/object:Api::Type::NestedObject
-                properties:
-                  - !ruby/object:Api::Type::Integer
-                    name: 'min'
-                    description: |
-
-                  - !ruby/object:Api::Type::Integer
-                    name: 'max'
-                    description: |
-
-      - !ruby/object:Api::Type::Boolean
-        name: 'multicastEnabled'
-        description: |
-          Whether or not to permit multicast traffic for this attachment. Multicast packets will be dropped if this is not enabled.
+          URL of SslPolicy resource that will be associated with the TargetSslProxy resource. If not set, the TargetSslProxy resource will not have any SSL policy configured.
   
 
 
-
+    
   - !ruby/object:Api::Resource
-    name: PacketMirroring
-    base_url: 'projects/{{project}}/regions/{{region}}/packetMirrorings'
-    self_link: 'projects/{{project}}/regions/{{region}}/packetMirrorings/{{packetMirroring}}'
+    name: TargetSslProxy
+    base_url: 'projects/{{project}}/global/targetSslProxies'
+    self_link: 'projects/{{project}}/global/targetSslProxies/{{targetSslProxy}}'
     references: !ruby/object:Api::Resource::ReferenceLinks
       guides:
         'Official Documentation':
@@ -25160,13 +25636,13 @@ objects:
         path: 'error'
         message: 'message'
     description: |-
-        Represents a Packet Mirroring resource. Packet Mirroring clones the traffic of specified instances in your Virtual Private Cloud (VPC) network and forwards it to a collector destination, such as an instance group of an internal TCP/UDP load balancer, for analysis or examination. For more information about setting up Packet Mirroring, see Using Packet Mirroring.
+        Represents a Target SSL Proxy resource. A target SSL proxy is a component of a Proxy Network Load Balancer. The forwarding rule references the target SSL proxy, and the target proxy then references a backend service. For more information, read Proxy Network Load Balancer overview.
     properties:
-
+  
       - !ruby/object:Api::Type::String
         name: 'kind'
         description: |
-          [Output Only] Type of the resource. Always compute#packetMirroring for packet mirrorings.
+          [Output Only] Type of the resource. Always compute#targetSslProxy for target SSL proxies.
       - !ruby/object:Api::Type::String
         name: 'id'
         description: |
@@ -25176,982 +25652,41 @@ objects:
         description: |
           [Output Only] Creation timestamp in RFC3339 text format.
       - !ruby/object:Api::Type::String
-        name: 'selfLink'
-        description: |
-          [Output Only] Server-defined URL for the resource.
-      - !ruby/object:Api::Type::String
-        name: 'selfLinkWithId'
-        description: |
-          [Output Only] Server-defined URL for this resource with the resource id.
-      - !ruby/object:Api::Type::String
         name: 'name'
         description: |
-          Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
+          Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
       - !ruby/object:Api::Type::String
         name: 'description'
         description: |
           An optional description of this resource. Provide this property when you create the resource.
       - !ruby/object:Api::Type::String
-        name: 'region'
-        description: |
-          [Output Only] URI of the region where the packetMirroring resides.
-      - !ruby/object:Api::Type::NestedObject
-        name: 'network'
-        description: |
-
-        properties:
-            - !ruby/object:Api::Type::String
-              name: 'url'
-              description: |
-                URL of the network resource.
-            - !ruby/object:Api::Type::String
-              name: 'canonicalUrl'
-              description: |
-                [Output Only] Unique identifier for the network; defined by the server.
-      - !ruby/object:Api::Type::Integer
-        name: 'priority'
-        description: |
-          The priority of applying this configuration. Priority is used to break ties in cases where there is more than one matching rule. In the case of two rules that apply for a given Instance, the one with the lowest-numbered priority value wins. Default value is 1000. Valid range is 0 through 65535.
-      - !ruby/object:Api::Type::NestedObject
-        name: 'collectorIlb'
-        description: |
-
-        properties:
-            - !ruby/object:Api::Type::String
-              name: 'url'
-              description: |
-                Resource URL to the forwarding rule representing the ILB configured as destination of the mirrored traffic.
-            - !ruby/object:Api::Type::String
-              name: 'canonicalUrl'
-              description: |
-                [Output Only] Unique identifier for the forwarding rule; defined by the server.
-      - !ruby/object:Api::Type::NestedObject
-        name: 'mirroredResources'
-        description: |
-
-        properties:
-            - !ruby/object:Api::Type::Array
-              name: 'subnetworks'
-              description: |
-                A set of subnetworks for which traffic from/to all VM instances will be mirrored. They must live in the same region as this packetMirroring. You may specify a maximum of 5 subnetworks.
-              item_type: !ruby/object:Api::Type::NestedObject
-                properties:
-                  - !ruby/object:Api::Type::String
-                    name: 'url'
-                    description: |
-                      Resource URL to the subnetwork for which traffic from/to all VM instances will be mirrored.
-                  - !ruby/object:Api::Type::String
-                    name: 'canonicalUrl'
-                    description: |
-                      [Output Only] Unique identifier for the subnetwork; defined by the server.
-            - !ruby/object:Api::Type::Array
-              name: 'instances'
-              description: |
-                A set of virtual machine instances that are being mirrored. They must live in zones contained in the same region as this packetMirroring. Note that this config will apply only to those network interfaces of the Instances that belong to the network specified in this packetMirroring. You may specify a maximum of 50 Instances.
-              item_type: !ruby/object:Api::Type::NestedObject
-                properties:
-                  - !ruby/object:Api::Type::String
-                    name: 'url'
-                    description: |
-                      Resource URL to the virtual machine instance which is being mirrored.
-                  - !ruby/object:Api::Type::String
-                    name: 'canonicalUrl'
-                    description: |
-                      [Output Only] Unique identifier for the instance; defined by the server.
-            - !ruby/object:Api::Type::Array
-              name: 'tags'
-              description: |
-                A set of mirrored tags. Traffic from/to all VM instances that have one or more of these tags will be mirrored.
-              item_type: Api::Type::String
-      - !ruby/object:Api::Type::NestedObject
-        name: 'filter'
-        description: |
-
-        properties:
-            - !ruby/object:Api::Type::Array
-              name: 'cidrRanges'
-              description: |
-                One or more IPv4 or IPv6 CIDR ranges that apply as filter on the source (ingress) or destination (egress) IP in the IP header. If no ranges are specified, all IPv4 traffic that matches the specified IPProtocols is mirrored. If neither cidrRanges nor IPProtocols is specified, all IPv4 traffic is mirrored. To mirror all IPv4 and IPv6 traffic, use "0.0.0.0/0,::/0". Note: Support for IPv6 traffic is in preview.
-              item_type: Api::Type::String
-            - !ruby/object:Api::Type::Array
-              name: 'IPProtocols'
-              description: |
-                Protocols that apply as filter on mirrored traffic. If no protocols are specified, all traffic that matches the specified CIDR ranges is mirrored. If neither cidrRanges nor IPProtocols is specified, all IPv4 traffic is mirrored.
-              item_type: Api::Type::String
-            - !ruby/object:Api::Type::Enum
-              name: 'direction'
-              description: |
-                Direction of traffic to mirror, either INGRESS, EGRESS, or BOTH. The default is BOTH.
-              values:
-                - :BOTH
-                - :EGRESS
-                - :INGRESS
-      - !ruby/object:Api::Type::Enum
-        name: 'enable'
-        description: |
-          Indicates whether or not this packet mirroring takes effect. If set to FALSE, this packet mirroring policy will not be enforced on the network. The default is TRUE.
-        values:
-          - :FALSE
-          - :TRUE
-
-
-
-
-  - !ruby/object:Api::Resource
-    name: PacketMirroring
-    base_url: 'projects/{{project}}/regions/{{region}}/packetMirrorings'
-    self_link: 'projects/{{project}}/regions/{{region}}/packetMirrorings/{{packetMirroring}}'
-    references: !ruby/object:Api::Resource::ReferenceLinks
-      guides:
-        'Official Documentation':
-      api: 'https://cloud.google.com/compute/docs'
-    async: !ruby/object:Api::OpAsync
-      operation: !ruby/object:Api::OpAsync::Operation
-         path: 'name'
-         base_url: '{op_id}'
-         wait_ms: 1000
-      result: !ruby/object:Api::OpAsync::Result
-         path: 'response'
-         resource_inside_response: true
-      status: !ruby/object:Api::OpAsync::Status
-        path: 'done'
-        complete: True
-        allowed:
-          - True
-          - False
-      error: !ruby/object:Api::OpAsync::Error
-        path: 'error'
-        message: 'message'
-    description: |-
-        Represents a Packet Mirroring resource. Packet Mirroring clones the traffic of specified instances in your Virtual Private Cloud (VPC) network and forwards it to a collector destination, such as an instance group of an internal TCP/UDP load balancer, for analysis or examination. For more information about setting up Packet Mirroring, see Using Packet Mirroring.
-    properties:
-
-      - !ruby/object:Api::Type::String
-        name: 'kind'
-        description: |
-          [Output Only] Type of the resource. Always compute#packetMirroring for packet mirrorings.
-      - !ruby/object:Api::Type::String
-        name: 'id'
-        description: |
-          [Output Only] The unique identifier for the resource. This identifier is defined by the server.
-      - !ruby/object:Api::Type::String
-        name: 'creationTimestamp'
-        description: |
-          [Output Only] Creation timestamp in RFC3339 text format.
-      - !ruby/object:Api::Type::String
         name: 'selfLink'
         description: |
           [Output Only] Server-defined URL for the resource.
       - !ruby/object:Api::Type::String
-        name: 'selfLinkWithId'
+        name: 'service'
         description: |
-          [Output Only] Server-defined URL for this resource with the resource id.
+          URL to the BackendService resource.
+      - !ruby/object:Api::Type::Array
+        name: 'sslCertificates'
+        description: |
+          URLs to SslCertificate resources that are used to authenticate connections to Backends. At least one SSL certificate must be specified. Currently, you may specify up to 15 SSL certificates. sslCertificates do not apply when the load balancing scheme is set to INTERNAL_SELF_MANAGED.
+        item_type: Api::Type::String
       - !ruby/object:Api::Type::String
-        name: 'name'
+        name: 'certificateMap'
         description: |
-          Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
-      - !ruby/object:Api::Type::String
-        name: 'description'
-        description: |
-          An optional description of this resource. Provide this property when you create the resource.
-      - !ruby/object:Api::Type::String
-        name: 'region'
-        description: |
-          [Output Only] URI of the region where the packetMirroring resides.
-      - !ruby/object:Api::Type::NestedObject
-        name: 'network'
-        description: |
-
-        properties:
-            - !ruby/object:Api::Type::String
-              name: 'url'
-              description: |
-                URL of the network resource.
-            - !ruby/object:Api::Type::String
-              name: 'canonicalUrl'
-              description: |
-                [Output Only] Unique identifier for the network; defined by the server.
-      - !ruby/object:Api::Type::Integer
-        name: 'priority'
-        description: |
-          The priority of applying this configuration. Priority is used to break ties in cases where there is more than one matching rule. In the case of two rules that apply for a given Instance, the one with the lowest-numbered priority value wins. Default value is 1000. Valid range is 0 through 65535.
-      - !ruby/object:Api::Type::NestedObject
-        name: 'collectorIlb'
-        description: |
-
-        properties:
-            - !ruby/object:Api::Type::String
-              name: 'url'
-              description: |
-                Resource URL to the forwarding rule representing the ILB configured as destination of the mirrored traffic.
-            - !ruby/object:Api::Type::String
-              name: 'canonicalUrl'
-              description: |
-                [Output Only] Unique identifier for the forwarding rule; defined by the server.
-      - !ruby/object:Api::Type::NestedObject
-        name: 'mirroredResources'
-        description: |
-
-        properties:
-            - !ruby/object:Api::Type::Array
-              name: 'subnetworks'
-              description: |
-                A set of subnetworks for which traffic from/to all VM instances will be mirrored. They must live in the same region as this packetMirroring. You may specify a maximum of 5 subnetworks.
-              item_type: !ruby/object:Api::Type::NestedObject
-                properties:
-                  - !ruby/object:Api::Type::String
-                    name: 'url'
-                    description: |
-                      Resource URL to the subnetwork for which traffic from/to all VM instances will be mirrored.
-                  - !ruby/object:Api::Type::String
-                    name: 'canonicalUrl'
-                    description: |
-                      [Output Only] Unique identifier for the subnetwork; defined by the server.
-            - !ruby/object:Api::Type::Array
-              name: 'instances'
-              description: |
-                A set of virtual machine instances that are being mirrored. They must live in zones contained in the same region as this packetMirroring. Note that this config will apply only to those network interfaces of the Instances that belong to the network specified in this packetMirroring. You may specify a maximum of 50 Instances.
-              item_type: !ruby/object:Api::Type::NestedObject
-                properties:
-                  - !ruby/object:Api::Type::String
-                    name: 'url'
-                    description: |
-                      Resource URL to the virtual machine instance which is being mirrored.
-                  - !ruby/object:Api::Type::String
-                    name: 'canonicalUrl'
-                    description: |
-                      [Output Only] Unique identifier for the instance; defined by the server.
-            - !ruby/object:Api::Type::Array
-              name: 'tags'
-              description: |
-                A set of mirrored tags. Traffic from/to all VM instances that have one or more of these tags will be mirrored.
-              item_type: Api::Type::String
-      - !ruby/object:Api::Type::NestedObject
-        name: 'filter'
-        description: |
-
-        properties:
-            - !ruby/object:Api::Type::Array
-              name: 'cidrRanges'
-              description: |
-                One or more IPv4 or IPv6 CIDR ranges that apply as filter on the source (ingress) or destination (egress) IP in the IP header. If no ranges are specified, all IPv4 traffic that matches the specified IPProtocols is mirrored. If neither cidrRanges nor IPProtocols is specified, all IPv4 traffic is mirrored. To mirror all IPv4 and IPv6 traffic, use "0.0.0.0/0,::/0". Note: Support for IPv6 traffic is in preview.
-              item_type: Api::Type::String
-            - !ruby/object:Api::Type::Array
-              name: 'IPProtocols'
-              description: |
-                Protocols that apply as filter on mirrored traffic. If no protocols are specified, all traffic that matches the specified CIDR ranges is mirrored. If neither cidrRanges nor IPProtocols is specified, all IPv4 traffic is mirrored.
-              item_type: Api::Type::String
-            - !ruby/object:Api::Type::Enum
-              name: 'direction'
-              description: |
-                Direction of traffic to mirror, either INGRESS, EGRESS, or BOTH. The default is BOTH.
-              values:
-                - :BOTH
-                - :EGRESS
-                - :INGRESS
+          URL of a certificate map that identifies a certificate map associated with the given target proxy. This field can only be set for global target proxies. If set, sslCertificates will be ignored. Accepted format is //certificatemanager.googleapis.com/projects/{project }/locations/{location}/certificateMaps/{resourceName}.
       - !ruby/object:Api::Type::Enum
-        name: 'enable'
+        name: 'proxyHeader'
         description: |
-          Indicates whether or not this packet mirroring takes effect. If set to FALSE, this packet mirroring policy will not be enforced on the network. The default is TRUE.
+          Specifies the type of proxy header to append before sending data to the backend, either NONE or PROXY_V1. The default is NONE.
         values:
-          - :FALSE
-          - :TRUE
-
-
-
-
-  - !ruby/object:Api::Resource
-    name: ResourcePolicy
-    base_url: 'projects/{{project}}/regions/{{region}}/resourcePolicies'
-    self_link: 'projects/{{project}}/regions/{{region}}/resourcePolicies/{{resourcePolicy}}'
-    references: !ruby/object:Api::Resource::ReferenceLinks
-      guides:
-        'Official Documentation':
-      api: 'https://cloud.google.com/compute/docs'
-    async: !ruby/object:Api::OpAsync
-      operation: !ruby/object:Api::OpAsync::Operation
-         path: 'name'
-         base_url: '{op_id}'
-         wait_ms: 1000
-      result: !ruby/object:Api::OpAsync::Result
-         path: 'response'
-         resource_inside_response: true
-      status: !ruby/object:Api::OpAsync::Status
-        path: 'done'
-        complete: True
-        allowed:
-          - True
-          - False
-      error: !ruby/object:Api::OpAsync::Error
-        path: 'error'
-        message: 'message'
-    description: |-
-        Represents a Resource Policy resource. You can use resource policies to schedule actions for some Compute Engine resources. For example, you can use them to schedule persistent disk snapshots.
-    properties:
-
+          - :NONE
+          - :PROXY_V1
       - !ruby/object:Api::Type::String
-        name: 'kind'
+        name: 'sslPolicy'
         description: |
-          [Output Only] Type of the resource. Always compute#resource_policies for resource policies.
-      - !ruby/object:Api::Type::String
-        name: 'id'
-        description: |
-          [Output Only] The unique identifier for the resource. This identifier is defined by the server.
-      - !ruby/object:Api::Type::String
-        name: 'creationTimestamp'
-        description: |
-          [Output Only] Creation timestamp in RFC3339 text format.
-      - !ruby/object:Api::Type::String
-        name: 'selfLink'
-        description: |
-          [Output Only] Server-defined fully-qualified URL for this resource.
-      - !ruby/object:Api::Type::String
-        name: 'selfLinkWithId'
-        description: |
-          [Output Only] Server-defined URL for this resource with the resource id.
-      - !ruby/object:Api::Type::String
-        name: 'region'
-        description: |
-
-      - !ruby/object:Api::Type::String
-        name: 'description'
-        description: |
-
-      - !ruby/object:Api::Type::String
-        name: 'name'
-        description: |
-          The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
-      - !ruby/object:Api::Type::NestedObject
-        name: 'vmMaintenancePolicy'
-        description: |
-
-        properties:
-            - !ruby/object:Api::Type::NestedObject
-              name: 'maintenanceWindow'
-              description: |
-                A maintenance window for VMs. When set, we restrict our maintenance operations to this window.
-              properties:
-                  - !ruby/object:Api::Type::NestedObject
-                    name: 'dailyMaintenanceWindow'
-                    description: |
-                      Time window specified for daily operations.
-                    properties:
-                        - !ruby/object:Api::Type::Integer
-                          name: 'daysInCycle'
-                          description: |
-                            Defines a schedule with units measured in days. The value determines how many days pass between the start of each cycle.
-                        - !ruby/object:Api::Type::String
-                          name: 'startTime'
-                          description: |
-                            Start time of the window. This must be in UTC format that resolves to one of 00:00, 04:00, 08:00, 12:00, 16:00, or 20:00. For example, both 13:00-5 and 08:00 are valid.
-                        - !ruby/object:Api::Type::String
-                          name: 'duration'
-                          description: |
-                            [Output only] A predetermined duration for the window, automatically chosen to be the smallest possible in the given scenario.
-            - !ruby/object:Api::Type::NestedObject
-              name: 'concurrencyControlGroup'
-              description: |
-                A concurrency control configuration. Defines a group config that, when attached to an instance, recognizes that instance as part of a group of instances where only up the concurrency_limit of instances in that group can undergo simultaneous maintenance. For more information: go/concurrency-control-design-doc
-              properties:
-                  - !ruby/object:Api::Type::Integer
-                    name: 'concurrencyLimit'
-                    description: |
-
-      - !ruby/object:Api::Type::NestedObject
-        name: 'snapshotSchedulePolicy'
-        description: |
-          A snapshot schedule policy specifies when and how frequently snapshots are to be created for the target disk. Also specifies how many and how long these scheduled snapshots should be retained.
-        properties:
-            - !ruby/object:Api::Type::NestedObject
-              name: 'schedule'
-              description: |
-                A schedule for disks where the schedueled operations are performed.
-              properties:
-                  - !ruby/object:Api::Type::NestedObject
-                    name: 'hourlySchedule'
-                    description: |
-                      Time window specified for hourly operations.
-                    properties:
-                        - !ruby/object:Api::Type::Integer
-                          name: 'hoursInCycle'
-                          description: |
-                            Defines a schedule with units measured in hours. The value determines how many hours pass between the start of each cycle.
-                        - !ruby/object:Api::Type::String
-                          name: 'startTime'
-                          description: |
-                            Time within the window to start the operations. It must be in format "HH:MM", where HH : [00-23] and MM : [00-00] GMT.
-                        - !ruby/object:Api::Type::String
-                          name: 'duration'
-                          description: |
-                            [Output only] Duration of the time window, automatically chosen to be smallest possible in the given scenario.
-                  - !ruby/object:Api::Type::NestedObject
-                    name: 'dailySchedule'
-                    description: |
-                      Time window specified for daily operations.
-                    properties:
-                        - !ruby/object:Api::Type::Integer
-                          name: 'daysInCycle'
-                          description: |
-                            Defines a schedule with units measured in days. The value determines how many days pass between the start of each cycle.
-                        - !ruby/object:Api::Type::String
-                          name: 'startTime'
-                          description: |
-                            Start time of the window. This must be in UTC format that resolves to one of 00:00, 04:00, 08:00, 12:00, 16:00, or 20:00. For example, both 13:00-5 and 08:00 are valid.
-                        - !ruby/object:Api::Type::String
-                          name: 'duration'
-                          description: |
-                            [Output only] A predetermined duration for the window, automatically chosen to be the smallest possible in the given scenario.
-                  - !ruby/object:Api::Type::NestedObject
-                    name: 'weeklySchedule'
-                    description: |
-                      Time window specified for weekly operations.
-                    properties:
-                        - !ruby/object:Api::Type::Array
-                          name: 'dayOfWeeks'
-                          description: |
-                            Up to 7 intervals/windows, one for each day of the week.
-                          item_type: !ruby/object:Api::Type::NestedObject
-                            properties:
-                              - !ruby/object:Api::Type::Enum
-                                name: 'day'
-                                description: |
-                                  Defines a schedule that runs on specific days of the week. Specify one or more days. The following options are available: MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY.
-                                values:
-                                  - :FRIDAY
-                                  - :INVALID
-                                  - :MONDAY
-                                  - :SATURDAY
-                                  - :SUNDAY
-                                  - :THURSDAY
-                                  - :TUESDAY
-                                  - :WEDNESDAY
-                              - !ruby/object:Api::Type::String
-                                name: 'startTime'
-                                description: |
-                                  Time within the window to start the operations. It must be in format "HH:MM", where HH : [00-23] and MM : [00-00] GMT.
-                              - !ruby/object:Api::Type::String
-                                name: 'duration'
-                                description: |
-                                  [Output only] Duration of the time window, automatically chosen to be smallest possible in the given scenario.
-            - !ruby/object:Api::Type::NestedObject
-              name: 'retentionPolicy'
-              description: |
-                Policy for retention of scheduled snapshots.
-              properties:
-                  - !ruby/object:Api::Type::Integer
-                    name: 'maxRetentionDays'
-                    description: |
-                      Maximum age of the snapshot that is allowed to be kept.
-                  - !ruby/object:Api::Type::Enum
-                    name: 'onPolicySwitch'
-                    description: |
-
-                    values:
-                      - :DO_NOT_RETROACTIVELY_APPLY
-                      - :RETROACTIVELY_APPLY
-                      - :UNSPECIFIED_ON_POLICY_SWITCH
-                  - !ruby/object:Api::Type::Enum
-                    name: 'onSourceDiskDelete'
-                    description: |
-                      Specifies the behavior to apply to scheduled snapshots when the source disk is deleted.
-                    values:
-                      - :APPLY_RETENTION_POLICY
-                      - :KEEP_AUTO_SNAPSHOTS
-                      - :UNSPECIFIED_ON_SOURCE_DISK_DELETE
-            - !ruby/object:Api::Type::NestedObject
-              name: 'snapshotProperties'
-              description: |
-                Specified snapshot properties for scheduled snapshots created by this policy.
-              properties:
-                  - !ruby/object:Api::Type::NestedObject
-                    name: 'labels'
-                    description: |
-                      Labels to apply to scheduled snapshots. These can be later modified by the setLabels method. Label values may be empty.
-                    properties:
-                      - !ruby/object:Api::Type::String
-                        name: 'additionalProperties'
-                        description: |
-
-                  - !ruby/object:Api::Type::Array
-                    name: 'storageLocations'
-                    description: |
-                      Cloud Storage bucket storage location of the auto snapshot (regional or multi-regional).
-                    item_type: Api::Type::String
-                  - !ruby/object:Api::Type::Boolean
-                    name: 'guestFlush'
-                    description: |
-                      Indication to perform a 'guest aware' snapshot.
-                  - !ruby/object:Api::Type::String
-                    name: 'chainName'
-                    description: |
-                      Chain name that the snapshot is created in.
-      - !ruby/object:Api::Type::NestedObject
-        name: 'groupPlacementPolicy'
-        description: |
-          A GroupPlacementPolicy specifies resource placement configuration. It specifies the failure bucket separation as well as network locality
-        properties:
-            - !ruby/object:Api::Type::Enum
-              name: 'style'
-              description: |
-                Specifies instances to hosts placement relationship
-              values:
-                - :COMPACT
-                - :FULLY_SPREAD
-                - :UNSPECIFIED_PLACEMENT_TYPE
-            - !ruby/object:Api::Type::Enum
-              name: 'locality'
-              description: |
-                Specifies network locality
-              values:
-                - :BEST_EFFORT
-                - :STRICT
-                - :UNSPECIFIED_LOCALITY
-            - !ruby/object:Api::Type::Integer
-              name: 'vmCount'
-              description: |
-                Number of VMs in this placement group. Google does not recommend that you use this field unless you use a compact policy and you want your policy to work only if it contains this exact number of VMs.
-            - !ruby/object:Api::Type::Integer
-              name: 'availabilityDomainCount'
-              description: |
-                The number of availability domains to spread instances across. If two instances are in different availability domain, they are not in the same low latency network.
-            - !ruby/object:Api::Type::Enum
-              name: 'collocation'
-              description: |
-                Specifies network collocation
-              values:
-                - :CLUSTERED
-                - :COLLOCATED
-                - :UNSPECIFIED_COLLOCATION
-            - !ruby/object:Api::Type::Enum
-              name: 'scope'
-              description: |
-                Scope specifies the availability domain to which the VMs should be spread.
-              values:
-                - :HOST
-                - :UNSPECIFIED_SCOPE
-            - !ruby/object:Api::Type::String
-              name: 'tpuTopology'
-              description: |
-                Specifies the shape of the TPU slice
-            - !ruby/object:Api::Type::Integer
-              name: 'maxDistance'
-              description: |
-                Specifies the number of max logical switches.
-            - !ruby/object:Api::Type::Integer
-              name: 'sliceCount'
-              description: |
-                Specifies the number of slices in a multislice workload.
-      - !ruby/object:Api::Type::NestedObject
-        name: 'instanceSchedulePolicy'
-        description: |
-          An InstanceSchedulePolicy specifies when and how frequent certain operations are performed on the instance.
-        properties:
-            - !ruby/object:Api::Type::NestedObject
-              name: 'vmStartSchedule'
-              description: |
-                Schedule for an instance operation.
-              properties:
-                  - !ruby/object:Api::Type::String
-                    name: 'schedule'
-                    description: |
-                      Specifies the frequency for the operation, using the unix-cron format.
-            - !ruby/object:Api::Type::NestedObject
-              name: 'vmStopSchedule'
-              description: |
-                Schedule for an instance operation.
-              properties:
-                  - !ruby/object:Api::Type::String
-                    name: 'schedule'
-                    description: |
-                      Specifies the frequency for the operation, using the unix-cron format.
-            - !ruby/object:Api::Type::String
-              name: 'timeZone'
-              description: |
-                Specifies the time zone to be used in interpreting Schedule.schedule. The value of this field must be a time zone name from the tz database: https://wikipedia.org/wiki/Tz_database.
-            - !ruby/object:Api::Type::String
-              name: 'startTime'
-              description: |
-                The start time of the schedule. The timestamp is an RFC3339 string.
-            - !ruby/object:Api::Type::String
-              name: 'expirationTime'
-              description: |
-                The expiration time of the schedule. The timestamp is an RFC3339 string.
-      - !ruby/object:Api::Type::Enum
-        name: 'status'
-        description: |
-          [Output Only] The status of resource policy creation.
-        values:
-          - :CREATING
-          - :DELETING
-          - :EXPIRED
-          - :INVALID
-          - :READY
-      - !ruby/object:Api::Type::NestedObject
-        name: 'resourceStatus'
-        description: |
-          Contains output only fields. Use this sub-message for all output fields set on ResourcePolicy. The internal structure of this "status" field should mimic the structure of ResourcePolicy proto specification.
-        properties:
-            - !ruby/object:Api::Type::NestedObject
-              name: 'instanceSchedulePolicy'
-              description: |
-
-              properties:
-                  - !ruby/object:Api::Type::String
-                    name: 'nextRunStartTime'
-                    description: |
-                      [Output Only] The next time the schedule is planned to run. The actual time might be slightly different. The timestamp is an RFC3339 string.
-                  - !ruby/object:Api::Type::String
-                    name: 'lastRunStartTime'
-                    description: |
-                      [Output Only] The last time the schedule successfully ran. The timestamp is an RFC3339 string.
-  
-
-
-
-  - !ruby/object:Api::Resource
-    name: ResourcePolicy
-    base_url: 'projects/{{project}}/regions/{{region}}/resourcePolicies'
-    self_link: 'projects/{{project}}/regions/{{region}}/resourcePolicies/{{resourcePolicy}}'
-    references: !ruby/object:Api::Resource::ReferenceLinks
-      guides:
-        'Official Documentation':
-      api: 'https://cloud.google.com/compute/docs'
-    async: !ruby/object:Api::OpAsync
-      operation: !ruby/object:Api::OpAsync::Operation
-         path: 'name'
-         base_url: '{op_id}'
-         wait_ms: 1000
-      result: !ruby/object:Api::OpAsync::Result
-         path: 'response'
-         resource_inside_response: true
-      status: !ruby/object:Api::OpAsync::Status
-        path: 'done'
-        complete: True
-        allowed:
-          - True
-          - False
-      error: !ruby/object:Api::OpAsync::Error
-        path: 'error'
-        message: 'message'
-    description: |-
-        Represents a Resource Policy resource. You can use resource policies to schedule actions for some Compute Engine resources. For example, you can use them to schedule persistent disk snapshots.
-    properties:
-
-      - !ruby/object:Api::Type::String
-        name: 'kind'
-        description: |
-          [Output Only] Type of the resource. Always compute#resource_policies for resource policies.
-      - !ruby/object:Api::Type::String
-        name: 'id'
-        description: |
-          [Output Only] The unique identifier for the resource. This identifier is defined by the server.
-      - !ruby/object:Api::Type::String
-        name: 'creationTimestamp'
-        description: |
-          [Output Only] Creation timestamp in RFC3339 text format.
-      - !ruby/object:Api::Type::String
-        name: 'selfLink'
-        description: |
-          [Output Only] Server-defined fully-qualified URL for this resource.
-      - !ruby/object:Api::Type::String
-        name: 'selfLinkWithId'
-        description: |
-          [Output Only] Server-defined URL for this resource with the resource id.
-      - !ruby/object:Api::Type::String
-        name: 'region'
-        description: |
-
-      - !ruby/object:Api::Type::String
-        name: 'description'
-        description: |
-
-      - !ruby/object:Api::Type::String
-        name: 'name'
-        description: |
-          The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
-      - !ruby/object:Api::Type::NestedObject
-        name: 'vmMaintenancePolicy'
-        description: |
-
-        properties:
-            - !ruby/object:Api::Type::NestedObject
-              name: 'maintenanceWindow'
-              description: |
-                A maintenance window for VMs. When set, we restrict our maintenance operations to this window.
-              properties:
-                  - !ruby/object:Api::Type::NestedObject
-                    name: 'dailyMaintenanceWindow'
-                    description: |
-                      Time window specified for daily operations.
-                    properties:
-                        - !ruby/object:Api::Type::Integer
-                          name: 'daysInCycle'
-                          description: |
-                            Defines a schedule with units measured in days. The value determines how many days pass between the start of each cycle.
-                        - !ruby/object:Api::Type::String
-                          name: 'startTime'
-                          description: |
-                            Start time of the window. This must be in UTC format that resolves to one of 00:00, 04:00, 08:00, 12:00, 16:00, or 20:00. For example, both 13:00-5 and 08:00 are valid.
-                        - !ruby/object:Api::Type::String
-                          name: 'duration'
-                          description: |
-                            [Output only] A predetermined duration for the window, automatically chosen to be the smallest possible in the given scenario.
-            - !ruby/object:Api::Type::NestedObject
-              name: 'concurrencyControlGroup'
-              description: |
-                A concurrency control configuration. Defines a group config that, when attached to an instance, recognizes that instance as part of a group of instances where only up the concurrency_limit of instances in that group can undergo simultaneous maintenance. For more information: go/concurrency-control-design-doc
-              properties:
-                  - !ruby/object:Api::Type::Integer
-                    name: 'concurrencyLimit'
-                    description: |
-
-      - !ruby/object:Api::Type::NestedObject
-        name: 'snapshotSchedulePolicy'
-        description: |
-          A snapshot schedule policy specifies when and how frequently snapshots are to be created for the target disk. Also specifies how many and how long these scheduled snapshots should be retained.
-        properties:
-            - !ruby/object:Api::Type::NestedObject
-              name: 'schedule'
-              description: |
-                A schedule for disks where the schedueled operations are performed.
-              properties:
-                  - !ruby/object:Api::Type::NestedObject
-                    name: 'hourlySchedule'
-                    description: |
-                      Time window specified for hourly operations.
-                    properties:
-                        - !ruby/object:Api::Type::Integer
-                          name: 'hoursInCycle'
-                          description: |
-                            Defines a schedule with units measured in hours. The value determines how many hours pass between the start of each cycle.
-                        - !ruby/object:Api::Type::String
-                          name: 'startTime'
-                          description: |
-                            Time within the window to start the operations. It must be in format "HH:MM", where HH : [00-23] and MM : [00-00] GMT.
-                        - !ruby/object:Api::Type::String
-                          name: 'duration'
-                          description: |
-                            [Output only] Duration of the time window, automatically chosen to be smallest possible in the given scenario.
-                  - !ruby/object:Api::Type::NestedObject
-                    name: 'dailySchedule'
-                    description: |
-                      Time window specified for daily operations.
-                    properties:
-                        - !ruby/object:Api::Type::Integer
-                          name: 'daysInCycle'
-                          description: |
-                            Defines a schedule with units measured in days. The value determines how many days pass between the start of each cycle.
-                        - !ruby/object:Api::Type::String
-                          name: 'startTime'
-                          description: |
-                            Start time of the window. This must be in UTC format that resolves to one of 00:00, 04:00, 08:00, 12:00, 16:00, or 20:00. For example, both 13:00-5 and 08:00 are valid.
-                        - !ruby/object:Api::Type::String
-                          name: 'duration'
-                          description: |
-                            [Output only] A predetermined duration for the window, automatically chosen to be the smallest possible in the given scenario.
-                  - !ruby/object:Api::Type::NestedObject
-                    name: 'weeklySchedule'
-                    description: |
-                      Time window specified for weekly operations.
-                    properties:
-                        - !ruby/object:Api::Type::Array
-                          name: 'dayOfWeeks'
-                          description: |
-                            Up to 7 intervals/windows, one for each day of the week.
-                          item_type: !ruby/object:Api::Type::NestedObject
-                            properties:
-                              - !ruby/object:Api::Type::Enum
-                                name: 'day'
-                                description: |
-                                  Defines a schedule that runs on specific days of the week. Specify one or more days. The following options are available: MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY.
-                                values:
-                                  - :FRIDAY
-                                  - :INVALID
-                                  - :MONDAY
-                                  - :SATURDAY
-                                  - :SUNDAY
-                                  - :THURSDAY
-                                  - :TUESDAY
-                                  - :WEDNESDAY
-                              - !ruby/object:Api::Type::String
-                                name: 'startTime'
-                                description: |
-                                  Time within the window to start the operations. It must be in format "HH:MM", where HH : [00-23] and MM : [00-00] GMT.
-                              - !ruby/object:Api::Type::String
-                                name: 'duration'
-                                description: |
-                                  [Output only] Duration of the time window, automatically chosen to be smallest possible in the given scenario.
-            - !ruby/object:Api::Type::NestedObject
-              name: 'retentionPolicy'
-              description: |
-                Policy for retention of scheduled snapshots.
-              properties:
-                  - !ruby/object:Api::Type::Integer
-                    name: 'maxRetentionDays'
-                    description: |
-                      Maximum age of the snapshot that is allowed to be kept.
-                  - !ruby/object:Api::Type::Enum
-                    name: 'onPolicySwitch'
-                    description: |
-
-                    values:
-                      - :DO_NOT_RETROACTIVELY_APPLY
-                      - :RETROACTIVELY_APPLY
-                      - :UNSPECIFIED_ON_POLICY_SWITCH
-                  - !ruby/object:Api::Type::Enum
-                    name: 'onSourceDiskDelete'
-                    description: |
-                      Specifies the behavior to apply to scheduled snapshots when the source disk is deleted.
-                    values:
-                      - :APPLY_RETENTION_POLICY
-                      - :KEEP_AUTO_SNAPSHOTS
-                      - :UNSPECIFIED_ON_SOURCE_DISK_DELETE
-            - !ruby/object:Api::Type::NestedObject
-              name: 'snapshotProperties'
-              description: |
-                Specified snapshot properties for scheduled snapshots created by this policy.
-              properties:
-                  - !ruby/object:Api::Type::NestedObject
-                    name: 'labels'
-                    description: |
-                      Labels to apply to scheduled snapshots. These can be later modified by the setLabels method. Label values may be empty.
-                    properties:
-                      - !ruby/object:Api::Type::String
-                        name: 'additionalProperties'
-                        description: |
-
-                  - !ruby/object:Api::Type::Array
-                    name: 'storageLocations'
-                    description: |
-                      Cloud Storage bucket storage location of the auto snapshot (regional or multi-regional).
-                    item_type: Api::Type::String
-                  - !ruby/object:Api::Type::Boolean
-                    name: 'guestFlush'
-                    description: |
-                      Indication to perform a 'guest aware' snapshot.
-                  - !ruby/object:Api::Type::String
-                    name: 'chainName'
-                    description: |
-                      Chain name that the snapshot is created in.
-      - !ruby/object:Api::Type::NestedObject
-        name: 'groupPlacementPolicy'
-        description: |
-          A GroupPlacementPolicy specifies resource placement configuration. It specifies the failure bucket separation as well as network locality
-        properties:
-            - !ruby/object:Api::Type::Enum
-              name: 'style'
-              description: |
-                Specifies instances to hosts placement relationship
-              values:
-                - :COMPACT
-                - :FULLY_SPREAD
-                - :UNSPECIFIED_PLACEMENT_TYPE
-            - !ruby/object:Api::Type::Enum
-              name: 'locality'
-              description: |
-                Specifies network locality
-              values:
-                - :BEST_EFFORT
-                - :STRICT
-                - :UNSPECIFIED_LOCALITY
-            - !ruby/object:Api::Type::Integer
-              name: 'vmCount'
-              description: |
-                Number of VMs in this placement group. Google does not recommend that you use this field unless you use a compact policy and you want your policy to work only if it contains this exact number of VMs.
-            - !ruby/object:Api::Type::Integer
-              name: 'availabilityDomainCount'
-              description: |
-                The number of availability domains to spread instances across. If two instances are in different availability domain, they are not in the same low latency network.
-            - !ruby/object:Api::Type::Enum
-              name: 'collocation'
-              description: |
-                Specifies network collocation
-              values:
-                - :CLUSTERED
-                - :COLLOCATED
-                - :UNSPECIFIED_COLLOCATION
-            - !ruby/object:Api::Type::Enum
-              name: 'scope'
-              description: |
-                Scope specifies the availability domain to which the VMs should be spread.
-              values:
-                - :HOST
-                - :UNSPECIFIED_SCOPE
-            - !ruby/object:Api::Type::String
-              name: 'tpuTopology'
-              description: |
-                Specifies the shape of the TPU slice
-            - !ruby/object:Api::Type::Integer
-              name: 'maxDistance'
-              description: |
-                Specifies the number of max logical switches.
-            - !ruby/object:Api::Type::Integer
-              name: 'sliceCount'
-              description: |
-                Specifies the number of slices in a multislice workload.
-      - !ruby/object:Api::Type::NestedObject
-        name: 'instanceSchedulePolicy'
-        description: |
-          An InstanceSchedulePolicy specifies when and how frequent certain operations are performed on the instance.
-        properties:
-            - !ruby/object:Api::Type::NestedObject
-              name: 'vmStartSchedule'
-              description: |
-                Schedule for an instance operation.
-              properties:
-                  - !ruby/object:Api::Type::String
-                    name: 'schedule'
-                    description: |
-                      Specifies the frequency for the operation, using the unix-cron format.
-            - !ruby/object:Api::Type::NestedObject
-              name: 'vmStopSchedule'
-              description: |
-                Schedule for an instance operation.
-              properties:
-                  - !ruby/object:Api::Type::String
-                    name: 'schedule'
-                    description: |
-                      Specifies the frequency for the operation, using the unix-cron format.
-            - !ruby/object:Api::Type::String
-              name: 'timeZone'
-              description: |
-                Specifies the time zone to be used in interpreting Schedule.schedule. The value of this field must be a time zone name from the tz database: https://wikipedia.org/wiki/Tz_database.
-            - !ruby/object:Api::Type::String
-              name: 'startTime'
-              description: |
-                The start time of the schedule. The timestamp is an RFC3339 string.
-            - !ruby/object:Api::Type::String
-              name: 'expirationTime'
-              description: |
-                The expiration time of the schedule. The timestamp is an RFC3339 string.
-      - !ruby/object:Api::Type::Enum
-        name: 'status'
-        description: |
-          [Output Only] The status of resource policy creation.
-        values:
-          - :CREATING
-          - :DELETING
-          - :EXPIRED
-          - :INVALID
-          - :READY
-      - !ruby/object:Api::Type::NestedObject
-        name: 'resourceStatus'
-        description: |
-          Contains output only fields. Use this sub-message for all output fields set on ResourcePolicy. The internal structure of this "status" field should mimic the structure of ResourcePolicy proto specification.
-        properties:
-            - !ruby/object:Api::Type::NestedObject
-              name: 'instanceSchedulePolicy'
-              description: |
-
-              properties:
-                  - !ruby/object:Api::Type::String
-                    name: 'nextRunStartTime'
-                    description: |
-                      [Output Only] The next time the schedule is planned to run. The actual time might be slightly different. The timestamp is an RFC3339 string.
-                  - !ruby/object:Api::Type::String
-                    name: 'lastRunStartTime'
-                    description: |
-                      [Output Only] The last time the schedule successfully ran. The timestamp is an RFC3339 string.
+          URL of SslPolicy resource that will be associated with the TargetSslProxy resource. If not set, the TargetSslProxy resource will not have any SSL policy configured.
   
 
 

@@ -604,7 +604,7 @@ index:
   update_time : "value_updatetime"
   create_time : "value_createtime"
   etag : "value_etag"
-
+  
 tensorboard:
   name : "value_name"
   region : "value_region"
@@ -1073,5 +1073,22 @@ interconnect_attachment:
 
 organization_constraint:
   parent : "value_parent"
+
+target_ssl_proxy:
+  project : "value_project"
+  region : "value_region"
+  resource_policy : "value_resourcepolicy"
+  kind : "value_kind"
+  id : "value_id"
+  creation_timestamp : "value_creationtimestamp"
+  name : "value_name"
+  description : "value_description"
+  self_link : "value_selflink"
+  service : "value_service"
+  certificate_map : "value_certificatemap"
+  proxy_header : "value_proxyheader"
+  ssl_policy : "value_sslpolicy"
+
 project_constraint:
   parent : "value_parent"
+
