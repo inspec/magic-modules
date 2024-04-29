@@ -546,6 +546,75 @@ dlp:
     location: "europe-west2"
     type: "Infotype"
 
+featurestore:
+  name : "value_name"
+  region : "value_region"
+  parent : "value_parent"
+  state : "value_state"
+  create_time : "value_createtime"
+  etag : "value_etag"
+  update_time : "value_updatetime"
+
+training_pipeline:
+  name : "value_name"
+  job_id: "job_id"
+  region : "value_region"
+  parent : "value_parent"
+
+
+nas_job:
+  name : "value_name"
+  region : "value_region"
+  parent : "value_parent"
+  end_time : "value_endtime"
+  state : "value_state"
+  create_time : "value_createtime"
+  display_name : "value_displayname"
+  start_time : "value_starttime"
+  update_time : "value_updatetime"
+
+batch_prediction_job:
+  name : "value_name"
+  region : "value_region"
+  parent : "value_parent"
+  create_time : "value_createtime"
+  model_version_id : "value_modelversionid"
+  end_time : "value_endtime"
+  start_time : "value_starttime"
+  update_time : "value_updatetime"
+  state : "value_state"
+  model : "value_model"
+  display_name : "value_displayname"
+  service_account : "value_serviceaccount"
+
+custom_job:
+  name : "value_name"
+  job_id: "job_id"
+  region : "value_region"
+  parent : "value_parent"
+
+index:
+  name : "value_name"
+  region : "value_region"
+  parent : "value_parent"
+  description : "value_description"
+  display_name : "value_displayname"
+  metadata_schema_uri : "value_metadataschemauri"
+  index_update_method : "value_indexupdatemethod"
+  update_time : "value_updatetime"
+  create_time : "value_createtime"
+  etag : "value_etag"
+
+tensorboard:
+  name : "value_name"
+  region : "value_region"
+  parent : "value_parent"
+  update_time : "value_updatetime"
+  blob_storage_path_prefix : "value_blobstoragepathprefix"
+  etag : "value_etag"
+  create_time : "value_createtime"
+  display_name : "value_displayname"
+  description : "value_description"
 
 
 featurestore_entity_type_feature:
@@ -969,7 +1038,38 @@ resource_policy:
   status : "value_status"
 region_security_policy:
   securitypolicy : "value_securitypolicy"
+
 interconnect_attachment:
-  interconnectattachment : "value_interconnectattachment"
+  interconnect_attachment : "value_interconnectattachment"
+  project : "value_project"
+  region : "value_region"
+  kind : "value_kind"
+  description : "value_description"
+  self_link : "value_selflink"
+  self_link_with_id : "value_selflinkwithid"
+  id : "value_id"
+  creation_timestamp : "value_creationtimestamp"
+  name : "value_name"
+  interconnect : "value_interconnect"
+  router : "value_router"
+  google_reference_id : "value_googlereferenceid"
+  operational_status : "value_operationalstatus"
+  cloud_router_ip_address : "value_cloudrouteripaddress"
+  customer_router_ip_address : "value_customerrouteripaddress"
+  type : "value_type"
+  pairing_key : "value_pairingkey"
+  edge_availability_domain : "value_edgeavailabilitydomain"
+  bandwidth : "value_bandwidth"
+  label_fingerprint : "value_labelfingerprint"
+  state : "value_state"
+  partner_asn : "value_partnerasn"
+  encryption : "value_encryption"
+  stack_type : "value_stacktype"
+  cloud_router_ipv6address : "value_cloudrouteripv6address"
+  customer_router_ipv6address : "value_customerrouteripv6address"
+  cloud_router_ipv6interface_id : "value_cloudrouteripv6interfaceid"
+  customer_router_ipv6interface_id : "value_customerrouteripv6interfaceid"
+  remote_service : "value_remoteservice"
+
 organization_constraint:
   parent : "value_parent"
