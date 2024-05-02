@@ -13,5 +13,3 @@
 
 --- !ruby/object:Provider::Inspec::Config
 overrides: !ruby/object:Overrides::ResourceOverrides
-  OrganizationConstraint: !ruby/object:Overrides::Inspec::ResourceOverride
-
