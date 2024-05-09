@@ -1,0 +1,17 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% region_notification_endpoint = grab_attributes(pwd)['region_notification_endpoint'] -%>
+describe google_compute_region_notification_endpoint(notificationEndpoint: <%= doc_generation ? "' #{region_notification_endpoint['notificationEndpoint']}'":"region_notification_endpoint['notificationEndpoint']" -%>, project: <%= gcp_project_id -%>, region: <%= doc_generation ? "' #{region_notification_endpoint['region']}'":"region_notification_endpoint['region']" -%>) do
+	it { should exist }
+	its('kind') { should cmp <%= doc_generation ? "'#{region_notification_endpoint['kind']}'" : "region_notification_endpoint['kind']" -%> }
+	its('id') { should cmp <%= doc_generation ? "'#{region_notification_endpoint['id']}'" : "region_notification_endpoint['id']" -%> }
+	its('creation_timestamp') { should cmp <%= doc_generation ? "'#{region_notification_endpoint['creation_timestamp']}'" : "region_notification_endpoint['creation_timestamp']" -%> }
+	its('name') { should cmp <%= doc_generation ? "'#{region_notification_endpoint['name']}'" : "region_notification_endpoint['name']" -%> }
+	its('description') { should cmp <%= doc_generation ? "'#{region_notification_endpoint['description']}'" : "region_notification_endpoint['description']" -%> }
+	its('self_link') { should cmp <%= doc_generation ? "'#{region_notification_endpoint['self_link']}'" : "region_notification_endpoint['self_link']" -%> }
+	its('region') { should cmp <%= doc_generation ? "'#{region_notification_endpoint['region']}'" : "region_notification_endpoint['region']" -%> }
+
+end
+
+describe google_compute_region_notification_endpoint(notificationEndpoint: <%= doc_generation ? "' #{region_notification_endpoint['notificationEndpoint']}'":"region_notification_endpoint['notificationEndpoint']" -%>, project: <%= gcp_project_id -%>, region: <%= doc_generation ? "' #{region_notification_endpoint['region']}'":"region_notification_endpoint['region']" -%>) do
+	it { should_not exist }
+end
