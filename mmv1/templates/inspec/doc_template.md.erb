@@ -31,12 +31,16 @@ parent = "inspec/resources/gcp"
 
 Use the `<%= resource_underscored_name -%>` InSpec audit resource to test the properties of a test a Google <%= object.name -%>.
 
-For additional information, including details on parameters and properties, see the [AWS documentation on EBS](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AmazonEBS.html).
+## Installation
+{{% inspec_gcp_install %}}
 
 ## Syntax
 A `<%= resource_underscored_name -%>` is used to test a Google <%= object.name -%> resource
 
 <% if beta?(object) -%>
+
+## Parameters
+
 
 ## Beta Resource
 This resource has beta fields available. To retrieve these fields, include `beta: true` in the constructor for the resource
