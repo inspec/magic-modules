@@ -14,10 +14,24 @@
 -%>
 <% autogen_exception -%>
 <% resource_underscored_name = plural ? resource_name(object, product).pluralize : resource_name(object, product) -%>
----
-title: About the <%= resource_underscored_name -%> resource
-platform: gcp
----
++++
+
+title = "<%= resource_underscored_name -%> Resource"
+platform = "gcp"
+draft = false
+gh_repo = "inspec-gcp"
+
+
+[menu.inspec]
+
+title = "<%= resource_underscored_name -%>"
+identifier = "inspec/resources/gcp/<%= resource_underscored_name -%> Resource"
+parent = "inspec/resources/gcp"
++++
+
+Use the `<%= resource_underscored_name -%>` InSpec audit resource to test the properties of a test a Google <%= object.name -%>.
+
+For additional information, including details on parameters and properties, see the [AWS documentation on EBS](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AmazonEBS.html).
 
 ## Syntax
 A `<%= resource_underscored_name -%>` is used to test a Google <%= object.name -%> resource
@@ -50,7 +64,7 @@ Properties that can be accessed from the `<%= resource_underscored_name -%>` res
 <% if plural -%>
 See <%= "[#{resource_name(object, product)}.md](#{resource_name(object, product)}.md)" -%> for more detailed information
 <% object.all_user_properties.reject(&:exclude_plural).each do |prop| -%>
-  * `<%= "#{(prop.override_name || prop.out_name).pluralize}" -%>`: <% if prop.min_version.name == 'beta' -%><%= '(Beta only) ' -%><% end -%>an array of `<%= resource_name(object, product) -%>` <%= "#{prop.out_name}" -%>
+* `<%= "#{(prop.override_name || prop.out_name).pluralize}" -%>`: <% if prop.min_version.name == 'beta' -%><%= '(Beta only) ' -%><% end -%>an array of `<%= resource_name(object, product) -%>` <%= "#{prop.out_name}" -%>
 
 <% end -%>
 
