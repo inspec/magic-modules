@@ -39,8 +39,6 @@ A `<%= resource_underscored_name -%>` is used to test a Google <%= object.name -
 
 <% if beta?(object) -%>
 
-## Parameters
-
 
 ## Beta Resource
 This resource has beta fields available. To retrieve these fields, include `beta: true` in the constructor for the resource
@@ -62,6 +60,16 @@ This resource has beta fields available. To retrieve these fields, include `beta
 
 <% end -%>
 
+## Parameters
+Properties that can be accessed from the `<%= resource_underscored_name -%>` resource:
+
+<% if plural -%>
+See <%= "[#{resource_name(object, product)}.md](#{resource_name(object, product)}.md)" -%> for more detailed information
+<% object.all_user_properties.reject(&:exclude_plural).each do |prop| -%>
+* `<%= "#{(prop.override_name || prop.out_name).pluralize}" -%>`: <% if prop.min_version.name == 'beta' -%><%= '(Beta only) ' -%><% end -%>an array of `<%= resource_name(object, product) -%>` <%= "#{prop.out_name}" -%>
+
+<% end -%>
+<% end -%>
 ## Properties
 Properties that can be accessed from the `<%= resource_underscored_name -%>` resource:
 
