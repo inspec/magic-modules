@@ -1198,3 +1198,12 @@ target_grpc_proxy:
   self_link_with_id : "value_selflinkwithid"
   url_map : "value_urlmap"
   fingerprint : "value_fingerprint"
+project_location_workflow_template:
+  project : "value_project"
+  reservation : "value_reservation"
+  zone : "value_zone"
+  id : "value_id"
+  name : "value_name"
+  create_time : "value_createtime"
+  update_time : "value_updatetime"
+  dag_timeout : "value_dagtimeout"
