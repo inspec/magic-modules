@@ -152,7 +152,7 @@ overrides: !ruby/object:Overrides::ResourceOverrides
   RegionSslCertificate: !ruby/object:Overrides::Inspec::ResourceOverride
     exclude: true
   Reservation: !ruby/object:Overrides::Inspec::ResourceOverride
-    exclude: true
+    exclude: false
   RouterBgpPeer: !ruby/object:Overrides::Inspec::ResourceOverride
     exclude: true
   Subnetwork: !ruby/object:Overrides::Inspec::ResourceOverride
