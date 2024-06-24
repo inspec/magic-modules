@@ -1198,3 +1198,10 @@ target_grpc_proxy:
   self_link_with_id : "value_selflinkwithid"
   url_map : "value_urlmap"
   fingerprint : "value_fingerprint"
+project_region_job:
+  job_id : "value_jobid"
+  project_id : "value_projectid"
+  region : "value_region"
+  driver_output_resource_uri : "value_driveroutputresourceuri"
+  driver_control_files_uri : "value_drivercontrolfilesuri"
+  job_uuid : "value_jobuuid"
