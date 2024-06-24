@@ -28266,3 +28266,615 @@ objects:
        description: |
         URL of the region where the regional security policy resides. This field is not applicable to global security policies. 
      
+
+
+    
+  - !ruby/object:Api::Resource
+    name: Reservation
+    base_url: 'projects/{{project}}/zones/{{zone}}/reservations'
+    self_link: 'projects/{{project}}/zones/{{zone}}/reservations/{{reservation}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/compute/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Represents a reservation resource. A reservation ensures that capacity is held in a specific zone even if the reserved VMs are not running. For more information, read Reserving zonal resources.
+    properties:
+  
+      - !ruby/object:Api::Type::String
+        name: 'kind'
+        description: |
+          [Output Only] Type of the resource. Always compute#reservations for reservations.
+      - !ruby/object:Api::Type::String
+        name: 'id'
+        description: |
+          [Output Only] The unique identifier for the resource. This identifier is defined by the server.
+      - !ruby/object:Api::Type::String
+        name: 'creationTimestamp'
+        description: |
+          [Output Only] Creation timestamp in RFC3339 text format.
+      - !ruby/object:Api::Type::String
+        name: 'selfLink'
+        description: |
+          [Output Only] Server-defined fully-qualified URL for this resource.
+      - !ruby/object:Api::Type::String
+        name: 'selfLinkWithId'
+        description: |
+          [Output Only] Server-defined URL for this resource with the resource id.
+      - !ruby/object:Api::Type::String
+        name: 'zone'
+        description: |
+          Zone in which the reservation resides. A zone must be provided if the reservation is created within a commitment.
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          An optional description of this resource. Provide this property when you create the resource.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'specificReservation'
+        description: |
+          This reservation type allows to pre allocate specific instance configuration. Next ID: 6
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'instanceProperties'
+              description: |
+                Properties of the SKU instances being reserved. Next ID: 9
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'machineType'
+                    description: |
+                      Specifies type of machine (name only) which has fixed number of vCPUs and fixed amount of memory. This also includes specifying custom machine type following custom-NUMBER_OF_CPUS-AMOUNT_OF_MEMORY pattern.
+                  - !ruby/object:Api::Type::Array
+                    name: 'guestAccelerators'
+                    description: |
+                      Specifies accelerator type and count.
+                    item_type: !ruby/object:Api::Type::NestedObject
+                      properties:
+                        - !ruby/object:Api::Type::String
+                          name: 'acceleratorType'
+                          description: |
+                            Full or partial URL of the accelerator type resource to attach to this instance. For example: projects/my-project/zones/us-central1-c/acceleratorTypes/nvidia-tesla-p100 If you are creating an instance template, specify only the accelerator name. See GPUs on Compute Engine for a full list of accelerator types.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'acceleratorCount'
+                          description: |
+                            The number of the guest accelerator cards exposed to this instance.
+                  - !ruby/object:Api::Type::String
+                    name: 'minCpuPlatform'
+                    description: |
+                      Minimum cpu platform the reservation.
+                  - !ruby/object:Api::Type::Array
+                    name: 'localSsds'
+                    description: |
+                      Specifies amount of local ssd to reserve with each instance. The type of disk is local-ssd.
+                    item_type: !ruby/object:Api::Type::NestedObject
+                      properties:
+                        - !ruby/object:Api::Type::String
+                          name: 'diskSizeGb'
+                          description: |
+                            Specifies the size of the disk in base-2 GB.
+                        - !ruby/object:Api::Type::Enum
+                          name: 'interface'
+                          description: |
+                            Specifies the disk interface to use for attaching this disk, which is either SCSI or NVME. The default is SCSI. For performance characteristics of SCSI over NVMe, see Local SSD performance.
+                          values:
+                            - :NVDIMM
+                            - :NVME
+                            - :SCSI
+                  - !ruby/object:Api::Type::Integer
+                    name: 'maintenanceFreezeDurationHours'
+                    description: |
+                      Specifies the number of hours after reservation creation where instances using the reservation won't be scheduled for maintenance.
+                  - !ruby/object:Api::Type::String
+                    name: 'locationHint'
+                    description: |
+                      An opaque location hint used to place the allocation close to other resources. This field is for use by internal tools that use the public API.
+                  - !ruby/object:Api::Type::Enum
+                    name: 'maintenanceInterval'
+                    description: |
+                      Specifies the frequency of planned maintenance events. The accepted values are: `PERIODIC`.
+                    values:
+                      - :AS_NEEDED
+                      - :PERIODIC
+                      - :RECURRENT
+            - !ruby/object:Api::Type::String
+              name: 'count'
+              description: |
+                Specifies the number of resources that are allocated.
+            - !ruby/object:Api::Type::String
+              name: 'inUseCount'
+              description: |
+                [Output Only] Indicates how many instances are in use.
+            - !ruby/object:Api::Type::String
+              name: 'assuredCount'
+              description: |
+                [Output Only] Indicates how many instances are actually usable currently.
+            - !ruby/object:Api::Type::String
+              name: 'sourceInstanceTemplate'
+              description: |
+                Specifies the instance template to create the reservation. If you use this field, you must exclude the instanceProperties field. This field is optional, and it can be a full or partial URL. For example, the following are all valid URLs to an instance template: - https://www.googleapis.com/compute/v1/projects/project /global/instanceTemplates/instanceTemplate - projects/project/global/instanceTemplates/instanceTemplate - global/instanceTemplates/instanceTemplate 
+      - !ruby/object:Api::Type::NestedObject
+        name: 'aggregateReservation'
+        description: |
+          This reservation type is specified by total resource amounts (e.g. total count of CPUs) and can account for multiple instance SKUs. In other words, one can create instances of varying shapes against this reservation.
+        properties:
+            - !ruby/object:Api::Type::Enum
+              name: 'vmFamily'
+              description: |
+                The VM family that all instances scheduled against this reservation must belong to.
+              values:
+                - :VM_FAMILY_CLOUD_TPU_LITE_DEVICE_CT5L
+                - :VM_FAMILY_CLOUD_TPU_LITE_POD_SLICE_CT5LP
+                - :VM_FAMILY_CLOUD_TPU_POD_SLICE_CT4P
+            - !ruby/object:Api::Type::Array
+              name: 'reservedResources'
+              description: |
+                List of reserved resources (CPUs, memory, accelerators).
+              item_type: !ruby/object:Api::Type::NestedObject
+                properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'accelerator'
+                    description: |
+                      
+                    properties:
+                        - !ruby/object:Api::Type::Integer
+                          name: 'acceleratorCount'
+                          description: |
+                            Number of accelerators of specified type.
+                        - !ruby/object:Api::Type::String
+                          name: 'acceleratorType'
+                          description: |
+                            Full or partial URL to accelerator type. e.g. "projects/{PROJECT}/zones/{ZONE}/acceleratorTypes/ct4l"
+            - !ruby/object:Api::Type::Array
+              name: 'inUseResources'
+              description: |
+                [Output only] List of resources currently in use.
+              item_type: !ruby/object:Api::Type::NestedObject
+                properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'accelerator'
+                    description: |
+                      
+                    properties:
+                        - !ruby/object:Api::Type::Integer
+                          name: 'acceleratorCount'
+                          description: |
+                            Number of accelerators of specified type.
+                        - !ruby/object:Api::Type::String
+                          name: 'acceleratorType'
+                          description: |
+                            Full or partial URL to accelerator type. e.g. "projects/{PROJECT}/zones/{ZONE}/acceleratorTypes/ct4l"
+            - !ruby/object:Api::Type::Enum
+              name: 'workloadType'
+              description: |
+                The workload type of the instances that will target this reservation.
+              values:
+                - :BATCH
+                - :SERVING
+                - :UNSPECIFIED
+      - !ruby/object:Api::Type::String
+        name: 'commitment'
+        description: |
+          [Output Only] Full or partial URL to a parent commitment. This field displays for reservations that are tied to a commitment.
+      - !ruby/object:Api::Type::Boolean
+        name: 'specificReservationRequired'
+        description: |
+          Indicates whether the reservation can be consumed by VMs with affinity for "any" reservation. If the field is set, then only VMs that target the reservation by name can consume from this reservation.
+      - !ruby/object:Api::Type::Enum
+        name: 'status'
+        description: |
+          [Output Only] The status of the reservation.
+        values:
+          - :CREATING
+          - :DELETING
+          - :INVALID
+          - :READY
+          - :UPDATING
+      - !ruby/object:Api::Type::NestedObject
+        name: 'shareSettings'
+        description: |
+          The share setting for reservations and sole tenancy node groups.
+        properties:
+            - !ruby/object:Api::Type::Enum
+              name: 'shareType'
+              description: |
+                Type of sharing for this shared-reservation
+              values:
+                - :DIRECT_PROJECTS_UNDER_SPECIFIC_FOLDERS
+                - :LOCAL
+                - :ORGANIZATION
+                - :SHARE_TYPE_UNSPECIFIED
+                - :SPECIFIC_PROJECTS
+            - !ruby/object:Api::Type::Array
+              name: 'projects'
+              description: |
+                A List of Project names to specify consumer projects for this shared-reservation. This is only valid when share_type's value is SPECIFIC_PROJECTS.
+              item_type: Api::Type::String
+            - !ruby/object:Api::Type::NestedObject
+              name: 'projectMap'
+              description: |
+                A map of project id and project config. This is only valid when share_type's value is SPECIFIC_PROJECTS.
+              properties:
+                - !ruby/object:Api::Type::String
+                  name: 'additionalProperties'
+                  description: |
+                    Config for each project in the share settings.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'folderMap'
+              description: |
+                A map of folder id and folder config to specify consumer projects for this shared-reservation. This is only valid when share_type's value is DIRECT_PROJECTS_UNDER_SPECIFIC_FOLDERS. Folder id should be a string of number, and without "folders/" prefix.
+              properties:
+                - !ruby/object:Api::Type::String
+                  name: 'additionalProperties'
+                  description: |
+                    Config for each folder in the share settings.
+      - !ruby/object:Api::Type::Boolean
+        name: 'satisfiesPzs'
+        description: |
+          [Output Only] Reserved for future use.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'resourcePolicies'
+        description: |
+          Resource policies to be added to this reservation. The key is defined by user, and the value is resource policy url. This is to define placement policy with reservation.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+              
+      - !ruby/object:Api::Type::NestedObject
+        name: 'resourceStatus'
+        description: |
+          [Output Only] Contains output only fields.
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'specificSkuAllocation'
+              description: |
+                Contains Properties set for the reservation.
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'sourceInstanceTemplateId'
+                    description: |
+                      ID of the instance template used to populate reservation properties.
+      - !ruby/object:Api::Type::String
+        name: 'deleteAtTime'
+        description: |
+          Absolute time in future when the reservation will be auto-deleted by Compute Engine. Timestamp is represented in RFC3339 text format.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'deleteAfterDuration'
+        description: |
+          A Duration represents a fixed-length span of time represented as a count of seconds and fractions of seconds at nanosecond resolution. It is independent of any calendar and concepts like "day" or "month". Range is approximately 10,000 years.
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'seconds'
+              description: |
+                Span of time at a resolution of a second. Must be from 0 to 315,576,000,000 inclusive. Note: these bounds are computed from: 60 sec/min * 60 min/hr * 24 hr/day * 365.25 days/year * 10000 years
+            - !ruby/object:Api::Type::Integer
+              name: 'nanos'
+              description: |
+                Span of time that's a fraction of a second at nanosecond resolution. Durations less than one second are represented with a 0 `seconds` field and a positive `nanos` field. Must be from 0 to 999,999,999 inclusive.
+  
+
+
+    
+  - !ruby/object:Api::Resource
+    name: Reservation
+    base_url: 'projects/{{project}}/zones/{{zone}}/reservations'
+    self_link: 'projects/{{project}}/zones/{{zone}}/reservations/{{reservation}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/compute/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Represents a reservation resource. A reservation ensures that capacity is held in a specific zone even if the reserved VMs are not running. For more information, read Reserving zonal resources.
+    properties:
+  
+      - !ruby/object:Api::Type::String
+        name: 'kind'
+        description: |
+          [Output Only] Type of the resource. Always compute#reservations for reservations.
+      - !ruby/object:Api::Type::String
+        name: 'id'
+        description: |
+          [Output Only] The unique identifier for the resource. This identifier is defined by the server.
+      - !ruby/object:Api::Type::String
+        name: 'creationTimestamp'
+        description: |
+          [Output Only] Creation timestamp in RFC3339 text format.
+      - !ruby/object:Api::Type::String
+        name: 'selfLink'
+        description: |
+          [Output Only] Server-defined fully-qualified URL for this resource.
+      - !ruby/object:Api::Type::String
+        name: 'selfLinkWithId'
+        description: |
+          [Output Only] Server-defined URL for this resource with the resource id.
+      - !ruby/object:Api::Type::String
+        name: 'zone'
+        description: |
+          Zone in which the reservation resides. A zone must be provided if the reservation is created within a commitment.
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          An optional description of this resource. Provide this property when you create the resource.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'specificReservation'
+        description: |
+          This reservation type allows to pre allocate specific instance configuration. Next ID: 6
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'instanceProperties'
+              description: |
+                Properties of the SKU instances being reserved. Next ID: 9
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'machineType'
+                    description: |
+                      Specifies type of machine (name only) which has fixed number of vCPUs and fixed amount of memory. This also includes specifying custom machine type following custom-NUMBER_OF_CPUS-AMOUNT_OF_MEMORY pattern.
+                  - !ruby/object:Api::Type::Array
+                    name: 'guestAccelerators'
+                    description: |
+                      Specifies accelerator type and count.
+                    item_type: !ruby/object:Api::Type::NestedObject
+                      properties:
+                        - !ruby/object:Api::Type::String
+                          name: 'acceleratorType'
+                          description: |
+                            Full or partial URL of the accelerator type resource to attach to this instance. For example: projects/my-project/zones/us-central1-c/acceleratorTypes/nvidia-tesla-p100 If you are creating an instance template, specify only the accelerator name. See GPUs on Compute Engine for a full list of accelerator types.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'acceleratorCount'
+                          description: |
+                            The number of the guest accelerator cards exposed to this instance.
+                  - !ruby/object:Api::Type::String
+                    name: 'minCpuPlatform'
+                    description: |
+                      Minimum cpu platform the reservation.
+                  - !ruby/object:Api::Type::Array
+                    name: 'localSsds'
+                    description: |
+                      Specifies amount of local ssd to reserve with each instance. The type of disk is local-ssd.
+                    item_type: !ruby/object:Api::Type::NestedObject
+                      properties:
+                        - !ruby/object:Api::Type::String
+                          name: 'diskSizeGb'
+                          description: |
+                            Specifies the size of the disk in base-2 GB.
+                        - !ruby/object:Api::Type::Enum
+                          name: 'interface'
+                          description: |
+                            Specifies the disk interface to use for attaching this disk, which is either SCSI or NVME. The default is SCSI. For performance characteristics of SCSI over NVMe, see Local SSD performance.
+                          values:
+                            - :NVDIMM
+                            - :NVME
+                            - :SCSI
+                  - !ruby/object:Api::Type::Integer
+                    name: 'maintenanceFreezeDurationHours'
+                    description: |
+                      Specifies the number of hours after reservation creation where instances using the reservation won't be scheduled for maintenance.
+                  - !ruby/object:Api::Type::String
+                    name: 'locationHint'
+                    description: |
+                      An opaque location hint used to place the allocation close to other resources. This field is for use by internal tools that use the public API.
+                  - !ruby/object:Api::Type::Enum
+                    name: 'maintenanceInterval'
+                    description: |
+                      Specifies the frequency of planned maintenance events. The accepted values are: `PERIODIC`.
+                    values:
+                      - :AS_NEEDED
+                      - :PERIODIC
+                      - :RECURRENT
+            - !ruby/object:Api::Type::String
+              name: 'count'
+              description: |
+                Specifies the number of resources that are allocated.
+            - !ruby/object:Api::Type::String
+              name: 'inUseCount'
+              description: |
+                [Output Only] Indicates how many instances are in use.
+            - !ruby/object:Api::Type::String
+              name: 'assuredCount'
+              description: |
+                [Output Only] Indicates how many instances are actually usable currently.
+            - !ruby/object:Api::Type::String
+              name: 'sourceInstanceTemplate'
+              description: |
+                Specifies the instance template to create the reservation. If you use this field, you must exclude the instanceProperties field. This field is optional, and it can be a full or partial URL. For example, the following are all valid URLs to an instance template: - https://www.googleapis.com/compute/v1/projects/project /global/instanceTemplates/instanceTemplate - projects/project/global/instanceTemplates/instanceTemplate - global/instanceTemplates/instanceTemplate 
+      - !ruby/object:Api::Type::NestedObject
+        name: 'aggregateReservation'
+        description: |
+          This reservation type is specified by total resource amounts (e.g. total count of CPUs) and can account for multiple instance SKUs. In other words, one can create instances of varying shapes against this reservation.
+        properties:
+            - !ruby/object:Api::Type::Enum
+              name: 'vmFamily'
+              description: |
+                The VM family that all instances scheduled against this reservation must belong to.
+              values:
+                - :VM_FAMILY_CLOUD_TPU_LITE_DEVICE_CT5L
+                - :VM_FAMILY_CLOUD_TPU_LITE_POD_SLICE_CT5LP
+                - :VM_FAMILY_CLOUD_TPU_POD_SLICE_CT4P
+            - !ruby/object:Api::Type::Array
+              name: 'reservedResources'
+              description: |
+                List of reserved resources (CPUs, memory, accelerators).
+              item_type: !ruby/object:Api::Type::NestedObject
+                properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'accelerator'
+                    description: |
+                      
+                    properties:
+                        - !ruby/object:Api::Type::Integer
+                          name: 'acceleratorCount'
+                          description: |
+                            Number of accelerators of specified type.
+                        - !ruby/object:Api::Type::String
+                          name: 'acceleratorType'
+                          description: |
+                            Full or partial URL to accelerator type. e.g. "projects/{PROJECT}/zones/{ZONE}/acceleratorTypes/ct4l"
+            - !ruby/object:Api::Type::Array
+              name: 'inUseResources'
+              description: |
+                [Output only] List of resources currently in use.
+              item_type: !ruby/object:Api::Type::NestedObject
+                properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'accelerator'
+                    description: |
+                      
+                    properties:
+                        - !ruby/object:Api::Type::Integer
+                          name: 'acceleratorCount'
+                          description: |
+                            Number of accelerators of specified type.
+                        - !ruby/object:Api::Type::String
+                          name: 'acceleratorType'
+                          description: |
+                            Full or partial URL to accelerator type. e.g. "projects/{PROJECT}/zones/{ZONE}/acceleratorTypes/ct4l"
+            - !ruby/object:Api::Type::Enum
+              name: 'workloadType'
+              description: |
+                The workload type of the instances that will target this reservation.
+              values:
+                - :BATCH
+                - :SERVING
+                - :UNSPECIFIED
+      - !ruby/object:Api::Type::String
+        name: 'commitment'
+        description: |
+          [Output Only] Full or partial URL to a parent commitment. This field displays for reservations that are tied to a commitment.
+      - !ruby/object:Api::Type::Boolean
+        name: 'specificReservationRequired'
+        description: |
+          Indicates whether the reservation can be consumed by VMs with affinity for "any" reservation. If the field is set, then only VMs that target the reservation by name can consume from this reservation.
+      - !ruby/object:Api::Type::Enum
+        name: 'status'
+        description: |
+          [Output Only] The status of the reservation.
+        values:
+          - :CREATING
+          - :DELETING
+          - :INVALID
+          - :READY
+          - :UPDATING
+      - !ruby/object:Api::Type::NestedObject
+        name: 'shareSettings'
+        description: |
+          The share setting for reservations and sole tenancy node groups.
+        properties:
+            - !ruby/object:Api::Type::Enum
+              name: 'shareType'
+              description: |
+                Type of sharing for this shared-reservation
+              values:
+                - :DIRECT_PROJECTS_UNDER_SPECIFIC_FOLDERS
+                - :LOCAL
+                - :ORGANIZATION
+                - :SHARE_TYPE_UNSPECIFIED
+                - :SPECIFIC_PROJECTS
+            - !ruby/object:Api::Type::Array
+              name: 'projects'
+              description: |
+                A List of Project names to specify consumer projects for this shared-reservation. This is only valid when share_type's value is SPECIFIC_PROJECTS.
+              item_type: Api::Type::String
+            - !ruby/object:Api::Type::NestedObject
+              name: 'projectMap'
+              description: |
+                A map of project id and project config. This is only valid when share_type's value is SPECIFIC_PROJECTS.
+              properties:
+                - !ruby/object:Api::Type::String
+                  name: 'additionalProperties'
+                  description: |
+                    Config for each project in the share settings.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'folderMap'
+              description: |
+                A map of folder id and folder config to specify consumer projects for this shared-reservation. This is only valid when share_type's value is DIRECT_PROJECTS_UNDER_SPECIFIC_FOLDERS. Folder id should be a string of number, and without "folders/" prefix.
+              properties:
+                - !ruby/object:Api::Type::String
+                  name: 'additionalProperties'
+                  description: |
+                    Config for each folder in the share settings.
+      - !ruby/object:Api::Type::Boolean
+        name: 'satisfiesPzs'
+        description: |
+          [Output Only] Reserved for future use.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'resourcePolicies'
+        description: |
+          Resource policies to be added to this reservation. The key is defined by user, and the value is resource policy url. This is to define placement policy with reservation.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+              
+      - !ruby/object:Api::Type::NestedObject
+        name: 'resourceStatus'
+        description: |
+          [Output Only] Contains output only fields.
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'specificSkuAllocation'
+              description: |
+                Contains Properties set for the reservation.
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'sourceInstanceTemplateId'
+                    description: |
+                      ID of the instance template used to populate reservation properties.
+      - !ruby/object:Api::Type::String
+        name: 'deleteAtTime'
+        description: |
+          Absolute time in future when the reservation will be auto-deleted by Compute Engine. Timestamp is represented in RFC3339 text format.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'deleteAfterDuration'
+        description: |
+          A Duration represents a fixed-length span of time represented as a count of seconds and fractions of seconds at nanosecond resolution. It is independent of any calendar and concepts like "day" or "month". Range is approximately 10,000 years.
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'seconds'
+              description: |
+                Span of time at a resolution of a second. Must be from 0 to 315,576,000,000 inclusive. Note: these bounds are computed from: 60 sec/min * 60 min/hr * 24 hr/day * 365.25 days/year * 10000 years
+            - !ruby/object:Api::Type::Integer
+              name: 'nanos'
+              description: |
+                Span of time that's a fraction of a second at nanosecond resolution. Durations less than one second are represented with a 0 `seconds` field and a positive `nanos` field. Must be from 0 to 999,999,999 inclusive.
+  
