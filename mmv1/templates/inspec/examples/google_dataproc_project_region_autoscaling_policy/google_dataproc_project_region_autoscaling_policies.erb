@@ -1,0 +1,5 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+  <% project_region_autoscaling_policy = grab_attributes(pwd)['project_region_autoscaling_policy'] -%>
+  describe google_dataproc_project_region_autoscaling_policies(parent: <%= doc_generation ? "' #{project_region_autoscaling_policy['parent']}'":"project_region_autoscaling_policy['parent']" -%>) do
+    it { should exist }
+  end

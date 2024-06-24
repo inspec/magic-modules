@@ -1198,5 +1198,28 @@ target_grpc_proxy:
   self_link_with_id : "value_selflinkwithid"
   url_map : "value_urlmap"
   fingerprint : "value_fingerprint"
+
 folder_constraint:
   parent : "value_parent"
+
+
+reservation:
+  project : "value_project"
+  reservation : "value_reservation"
+  zone : "value_zone"
+  kind : "value_kind"
+  id : "value_id"
+  creation_timestamp : "value_creationtimestamp"
+  self_link : "value_selflink"
+  self_link_with_id : "value_selflinkwithid"
+  description : "value_description"
+  name : "value_name"
+  commitment : "value_commitment"
+  status : "value_status"
+  delete_at_time : "value_deleteattime"
+
+project_region_autoscaling_policy:
+  name : "value_name"
+  parent : "value_parent"
+  id : "value_id"
+
