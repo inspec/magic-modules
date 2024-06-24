@@ -1199,6 +1199,10 @@ target_grpc_proxy:
   url_map : "value_urlmap"
   fingerprint : "value_fingerprint"
 
+folder_constraint:
+  parent : "value_parent"
+
+
 reservation:
   project : "value_project"
   reservation : "value_reservation"
@@ -1218,3 +1222,4 @@ project_region_autoscaling_policy:
   name : "value_name"
   parent : "value_parent"
   id : "value_id"
+
