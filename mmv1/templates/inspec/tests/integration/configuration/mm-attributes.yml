@@ -1198,6 +1198,7 @@ target_grpc_proxy:
   self_link_with_id : "value_selflinkwithid"
   url_map : "value_urlmap"
   fingerprint : "value_fingerprint"
+
 reservation:
   project : "value_project"
   reservation : "value_reservation"
@@ -1212,3 +1213,8 @@ reservation:
   commitment : "value_commitment"
   status : "value_status"
   delete_at_time : "value_deleteattime"
+
+project_region_autoscaling_policy:
+  name : "value_name"
+  parent : "value_parent"
+  id : "value_id"
