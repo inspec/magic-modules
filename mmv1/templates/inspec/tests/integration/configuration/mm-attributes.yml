@@ -1223,3 +1223,10 @@ project_region_autoscaling_policy:
   parent : "value_parent"
   id : "value_id"
 
+
+project_instance_cluster:
+  name : "value_name"
+  parent : "value_parent"
+  location : "value_location"
+  state : "value_state"
+  default_storage_type : "value_defaultstoragetype"
