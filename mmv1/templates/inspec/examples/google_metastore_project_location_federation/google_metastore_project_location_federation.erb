@@ -1,0 +1,18 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% project_location_federation = grab_attributes(pwd)['project_location_federation'] -%>
+describe google_metastore_project_location_federation(name: <%= doc_generation ? "' #{project_location_federation['name']}'":"project_location_federation['name']" -%>) do
+	it { should exist }
+	its('name') { should cmp <%= doc_generation ? "'#{project_location_federation['name']}'" : "project_location_federation['name']" -%> }
+	its('create_time') { should cmp <%= doc_generation ? "'#{project_location_federation['create_time']}'" : "project_location_federation['create_time']" -%> }
+	its('update_time') { should cmp <%= doc_generation ? "'#{project_location_federation['update_time']}'" : "project_location_federation['update_time']" -%> }
+	its('version') { should cmp <%= doc_generation ? "'#{project_location_federation['version']}'" : "project_location_federation['version']" -%> }
+	its('endpoint_uri') { should cmp <%= doc_generation ? "'#{project_location_federation['endpoint_uri']}'" : "project_location_federation['endpoint_uri']" -%> }
+	its('state') { should cmp <%= doc_generation ? "'#{project_location_federation['state']}'" : "project_location_federation['state']" -%> }
+	its('state_message') { should cmp <%= doc_generation ? "'#{project_location_federation['state_message']}'" : "project_location_federation['state_message']" -%> }
+	its('uid') { should cmp <%= doc_generation ? "'#{project_location_federation['uid']}'" : "project_location_federation['uid']" -%> }
+
+end
+
+describe google_metastore_project_location_federation(name: "does_not_exit") do
+	it { should_not exist }
+end

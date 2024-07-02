@@ -15,7 +15,7 @@
 name: DataprocMetastore
 versions:
   - !ruby/object:Api::Product::Version
-    name: beta
+    name: ga
     base_url: https://metastore.googleapis.com/v1beta/
 scopes:
   - https://www.googleapis.com/auth/cloud-identity
@@ -188,3 +188,95 @@ objects:
                 required: true
                 description: |
                   A Cloud Storage URI that specifies the path to a krb5.conf file. It is of the form gs://{bucket_name}/path/to/krb5.conf, although the file does not need to be named krb5.conf explicitly.
+
+
+    
+  - !ruby/object:Api::Resource
+    name: 'ProjectLocationFederation'
+    base_url: '{{+parent}}/federations'
+    self_link: '{{+name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/metastore/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Represents a federation of multiple backend metastores.
+    properties:
+  
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Immutable. The relative resource name of the federation, of the form: projects/{project_number}/locations/{location_id}/federations/{federation_id}`.
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. The time when the metastore federation was created.
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. The time when the metastore federation was last updated.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          User-defined labels for the metastore federation.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+              
+      - !ruby/object:Api::Type::String
+        name: 'version'
+        description: |
+          Immutable. The Apache Hive metastore version of the federation. All backend metastore versions must be compatible with the federation version.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'backendMetastores'
+        description: |
+          A map from BackendMetastore rank to BackendMetastores from which the federation service serves metadata at query time. The map key represents the order in which BackendMetastores should be evaluated to resolve database names at query time and should be greater than or equal to zero. A BackendMetastore with a lower number will be evaluated before a BackendMetastore with a higher number.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+              Represents a backend metastore for the federation.
+      - !ruby/object:Api::Type::String
+        name: 'endpointUri'
+        description: |
+          Output only. The federation endpoint.
+      - !ruby/object:Api::Type::Enum
+        name: 'state'
+        description: |
+          Output only. The current state of the federation.
+        values:
+          - :STATE_UNSPECIFIED
+          - :CREATING
+          - :ACTIVE
+          - :UPDATING
+          - :DELETING
+          - :ERROR
+      - !ruby/object:Api::Type::String
+        name: 'stateMessage'
+        description: |
+          Output only. Additional information about the current state of the metastore federation, if available.
+      - !ruby/object:Api::Type::String
+        name: 'uid'
+        description: |
+          Output only. The globally unique resource identifier of the metastore federation.
+  
+
+
