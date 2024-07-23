@@ -1224,6 +1224,14 @@ project_region_autoscaling_policy:
   id : "value_id"
 
 
+
+project_instance_cluster:
+  name : "value_name"
+  parent : "value_parent"
+  location : "value_location"
+  state : "value_state"
+  default_storage_type : "value_defaultstoragetype"
+
 project_location_federation:
   name : "value_name"
   parent : "value_parent"
@@ -1234,6 +1242,7 @@ project_location_federation:
   state : "value_state"
   state_message : "value_statemessage"
   uid : "value_uid"
+  
 project_location_service:
   name : "value_name"
   parent : "value_parent"
