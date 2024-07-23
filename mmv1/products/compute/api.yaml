@@ -28266,3 +28266,1413 @@ objects:
        description: |
         URL of the region where the regional security policy resides. This field is not applicable to global security policies. 
      
+
+
+
+  - !ruby/object:Api::Resource
+    name: Reservation
+    base_url: 'projects/{{project}}/zones/{{zone}}/reservations'
+    self_link: 'projects/{{project}}/zones/{{zone}}/reservations/{{reservation}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/compute/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Represents a reservation resource. A reservation ensures that capacity is held in a specific zone even if the reserved VMs are not running. For more information, read Reserving zonal resources.
+    properties:
+
+      - !ruby/object:Api::Type::String
+        name: 'kind'
+        description: |
+          [Output Only] Type of the resource. Always compute#reservations for reservations.
+      - !ruby/object:Api::Type::String
+        name: 'id'
+        description: |
+          [Output Only] The unique identifier for the resource. This identifier is defined by the server.
+      - !ruby/object:Api::Type::String
+        name: 'creationTimestamp'
+        description: |
+          [Output Only] Creation timestamp in RFC3339 text format.
+      - !ruby/object:Api::Type::String
+        name: 'selfLink'
+        description: |
+          [Output Only] Server-defined fully-qualified URL for this resource.
+      - !ruby/object:Api::Type::String
+        name: 'selfLinkWithId'
+        description: |
+          [Output Only] Server-defined URL for this resource with the resource id.
+      - !ruby/object:Api::Type::String
+        name: 'zone'
+        description: |
+          Zone in which the reservation resides. A zone must be provided if the reservation is created within a commitment.
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          An optional description of this resource. Provide this property when you create the resource.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'specificReservation'
+        description: |
+          This reservation type allows to pre allocate specific instance configuration. Next ID: 6
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'instanceProperties'
+              description: |
+                Properties of the SKU instances being reserved. Next ID: 9
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'machineType'
+                    description: |
+                      Specifies type of machine (name only) which has fixed number of vCPUs and fixed amount of memory. This also includes specifying custom machine type following custom-NUMBER_OF_CPUS-AMOUNT_OF_MEMORY pattern.
+                  - !ruby/object:Api::Type::Array
+                    name: 'guestAccelerators'
+                    description: |
+                      Specifies accelerator type and count.
+                    item_type: !ruby/object:Api::Type::NestedObject
+                      properties:
+                        - !ruby/object:Api::Type::String
+                          name: 'acceleratorType'
+                          description: |
+                            Full or partial URL of the accelerator type resource to attach to this instance. For example: projects/my-project/zones/us-central1-c/acceleratorTypes/nvidia-tesla-p100 If you are creating an instance template, specify only the accelerator name. See GPUs on Compute Engine for a full list of accelerator types.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'acceleratorCount'
+                          description: |
+                            The number of the guest accelerator cards exposed to this instance.
+                  - !ruby/object:Api::Type::String
+                    name: 'minCpuPlatform'
+                    description: |
+                      Minimum cpu platform the reservation.
+                  - !ruby/object:Api::Type::Array
+                    name: 'localSsds'
+                    description: |
+                      Specifies amount of local ssd to reserve with each instance. The type of disk is local-ssd.
+                    item_type: !ruby/object:Api::Type::NestedObject
+                      properties:
+                        - !ruby/object:Api::Type::String
+                          name: 'diskSizeGb'
+                          description: |
+                            Specifies the size of the disk in base-2 GB.
+                        - !ruby/object:Api::Type::Enum
+                          name: 'interface'
+                          description: |
+                            Specifies the disk interface to use for attaching this disk, which is either SCSI or NVME. The default is SCSI. For performance characteristics of SCSI over NVMe, see Local SSD performance.
+                          values:
+                            - :NVDIMM
+                            - :NVME
+                            - :SCSI
+                  - !ruby/object:Api::Type::Integer
+                    name: 'maintenanceFreezeDurationHours'
+                    description: |
+                      Specifies the number of hours after reservation creation where instances using the reservation won't be scheduled for maintenance.
+                  - !ruby/object:Api::Type::String
+                    name: 'locationHint'
+                    description: |
+                      An opaque location hint used to place the allocation close to other resources. This field is for use by internal tools that use the public API.
+                  - !ruby/object:Api::Type::Enum
+                    name: 'maintenanceInterval'
+                    description: |
+                      Specifies the frequency of planned maintenance events. The accepted values are: `PERIODIC`.
+                    values:
+                      - :AS_NEEDED
+                      - :PERIODIC
+                      - :RECURRENT
+            - !ruby/object:Api::Type::String
+              name: 'count'
+              description: |
+                Specifies the number of resources that are allocated.
+            - !ruby/object:Api::Type::String
+              name: 'inUseCount'
+              description: |
+                [Output Only] Indicates how many instances are in use.
+            - !ruby/object:Api::Type::String
+              name: 'assuredCount'
+              description: |
+                [Output Only] Indicates how many instances are actually usable currently.
+            - !ruby/object:Api::Type::String
+              name: 'sourceInstanceTemplate'
+              description: |
+                Specifies the instance template to create the reservation. If you use this field, you must exclude the instanceProperties field. This field is optional, and it can be a full or partial URL. For example, the following are all valid URLs to an instance template: - https://www.googleapis.com/compute/v1/projects/project /global/instanceTemplates/instanceTemplate - projects/project/global/instanceTemplates/instanceTemplate - global/instanceTemplates/instanceTemplate
+      - !ruby/object:Api::Type::NestedObject
+        name: 'aggregateReservation'
+        description: |
+          This reservation type is specified by total resource amounts (e.g. total count of CPUs) and can account for multiple instance SKUs. In other words, one can create instances of varying shapes against this reservation.
+        properties:
+            - !ruby/object:Api::Type::Enum
+              name: 'vmFamily'
+              description: |
+                The VM family that all instances scheduled against this reservation must belong to.
+              values:
+                - :VM_FAMILY_CLOUD_TPU_LITE_DEVICE_CT5L
+                - :VM_FAMILY_CLOUD_TPU_LITE_POD_SLICE_CT5LP
+                - :VM_FAMILY_CLOUD_TPU_POD_SLICE_CT4P
+            - !ruby/object:Api::Type::Array
+              name: 'reservedResources'
+              description: |
+                List of reserved resources (CPUs, memory, accelerators).
+              item_type: !ruby/object:Api::Type::NestedObject
+                properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'accelerator'
+                    description: |
+
+                    properties:
+                        - !ruby/object:Api::Type::Integer
+                          name: 'acceleratorCount'
+                          description: |
+                            Number of accelerators of specified type.
+                        - !ruby/object:Api::Type::String
+                          name: 'acceleratorType'
+                          description: |
+                            Full or partial URL to accelerator type. e.g. "projects/{PROJECT}/zones/{ZONE}/acceleratorTypes/ct4l"
+            - !ruby/object:Api::Type::Array
+              name: 'inUseResources'
+              description: |
+                [Output only] List of resources currently in use.
+              item_type: !ruby/object:Api::Type::NestedObject
+                properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'accelerator'
+                    description: |
+
+                    properties:
+                        - !ruby/object:Api::Type::Integer
+                          name: 'acceleratorCount'
+                          description: |
+                            Number of accelerators of specified type.
+                        - !ruby/object:Api::Type::String
+                          name: 'acceleratorType'
+                          description: |
+                            Full or partial URL to accelerator type. e.g. "projects/{PROJECT}/zones/{ZONE}/acceleratorTypes/ct4l"
+            - !ruby/object:Api::Type::Enum
+              name: 'workloadType'
+              description: |
+                The workload type of the instances that will target this reservation.
+              values:
+                - :BATCH
+                - :SERVING
+                - :UNSPECIFIED
+      - !ruby/object:Api::Type::String
+        name: 'commitment'
+        description: |
+          [Output Only] Full or partial URL to a parent commitment. This field displays for reservations that are tied to a commitment.
+      - !ruby/object:Api::Type::Boolean
+        name: 'specificReservationRequired'
+        description: |
+          Indicates whether the reservation can be consumed by VMs with affinity for "any" reservation. If the field is set, then only VMs that target the reservation by name can consume from this reservation.
+      - !ruby/object:Api::Type::Enum
+        name: 'status'
+        description: |
+          [Output Only] The status of the reservation.
+        values:
+          - :CREATING
+          - :DELETING
+          - :INVALID
+          - :READY
+          - :UPDATING
+      - !ruby/object:Api::Type::NestedObject
+        name: 'shareSettings'
+        description: |
+          The share setting for reservations and sole tenancy node groups.
+        properties:
+            - !ruby/object:Api::Type::Enum
+              name: 'shareType'
+              description: |
+                Type of sharing for this shared-reservation
+              values:
+                - :DIRECT_PROJECTS_UNDER_SPECIFIC_FOLDERS
+                - :LOCAL
+                - :ORGANIZATION
+                - :SHARE_TYPE_UNSPECIFIED
+                - :SPECIFIC_PROJECTS
+            - !ruby/object:Api::Type::Array
+              name: 'projects'
+              description: |
+                A List of Project names to specify consumer projects for this shared-reservation. This is only valid when share_type's value is SPECIFIC_PROJECTS.
+              item_type: Api::Type::String
+            - !ruby/object:Api::Type::NestedObject
+              name: 'projectMap'
+              description: |
+                A map of project id and project config. This is only valid when share_type's value is SPECIFIC_PROJECTS.
+              properties:
+                - !ruby/object:Api::Type::String
+                  name: 'additionalProperties'
+                  description: |
+                    Config for each project in the share settings.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'folderMap'
+              description: |
+                A map of folder id and folder config to specify consumer projects for this shared-reservation. This is only valid when share_type's value is DIRECT_PROJECTS_UNDER_SPECIFIC_FOLDERS. Folder id should be a string of number, and without "folders/" prefix.
+              properties:
+                - !ruby/object:Api::Type::String
+                  name: 'additionalProperties'
+                  description: |
+                    Config for each folder in the share settings.
+      - !ruby/object:Api::Type::Boolean
+        name: 'satisfiesPzs'
+        description: |
+          [Output Only] Reserved for future use.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'resourcePolicies'
+        description: |
+          Resource policies to be added to this reservation. The key is defined by user, and the value is resource policy url. This is to define placement policy with reservation.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+
+      - !ruby/object:Api::Type::NestedObject
+        name: 'resourceStatus'
+        description: |
+          [Output Only] Contains output only fields.
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'specificSkuAllocation'
+              description: |
+                Contains Properties set for the reservation.
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'sourceInstanceTemplateId'
+                    description: |
+                      ID of the instance template used to populate reservation properties.
+      - !ruby/object:Api::Type::String
+        name: 'deleteAtTime'
+        description: |
+          Absolute time in future when the reservation will be auto-deleted by Compute Engine. Timestamp is represented in RFC3339 text format.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'deleteAfterDuration'
+        description: |
+          A Duration represents a fixed-length span of time represented as a count of seconds and fractions of seconds at nanosecond resolution. It is independent of any calendar and concepts like "day" or "month". Range is approximately 10,000 years.
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'seconds'
+              description: |
+                Span of time at a resolution of a second. Must be from 0 to 315,576,000,000 inclusive. Note: these bounds are computed from: 60 sec/min * 60 min/hr * 24 hr/day * 365.25 days/year * 10000 years
+            - !ruby/object:Api::Type::Integer
+              name: 'nanos'
+              description: |
+                Span of time that's a fraction of a second at nanosecond resolution. Durations less than one second are represented with a 0 `seconds` field and a positive `nanos` field. Must be from 0 to 999,999,999 inclusive.
+  
+
+
+
+  - !ruby/object:Api::Resource
+    name: Reservation
+    base_url: 'projects/{{project}}/zones/{{zone}}/reservations'
+    self_link: 'projects/{{project}}/zones/{{zone}}/reservations/{{reservation}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/compute/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Represents a reservation resource. A reservation ensures that capacity is held in a specific zone even if the reserved VMs are not running. For more information, read Reserving zonal resources.
+    properties:
+
+      - !ruby/object:Api::Type::String
+        name: 'kind'
+        description: |
+          [Output Only] Type of the resource. Always compute#reservations for reservations.
+      - !ruby/object:Api::Type::String
+        name: 'id'
+        description: |
+          [Output Only] The unique identifier for the resource. This identifier is defined by the server.
+      - !ruby/object:Api::Type::String
+        name: 'creationTimestamp'
+        description: |
+          [Output Only] Creation timestamp in RFC3339 text format.
+      - !ruby/object:Api::Type::String
+        name: 'selfLink'
+        description: |
+          [Output Only] Server-defined fully-qualified URL for this resource.
+      - !ruby/object:Api::Type::String
+        name: 'selfLinkWithId'
+        description: |
+          [Output Only] Server-defined URL for this resource with the resource id.
+      - !ruby/object:Api::Type::String
+        name: 'zone'
+        description: |
+          Zone in which the reservation resides. A zone must be provided if the reservation is created within a commitment.
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          An optional description of this resource. Provide this property when you create the resource.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'specificReservation'
+        description: |
+          This reservation type allows to pre allocate specific instance configuration. Next ID: 6
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'instanceProperties'
+              description: |
+                Properties of the SKU instances being reserved. Next ID: 9
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'machineType'
+                    description: |
+                      Specifies type of machine (name only) which has fixed number of vCPUs and fixed amount of memory. This also includes specifying custom machine type following custom-NUMBER_OF_CPUS-AMOUNT_OF_MEMORY pattern.
+                  - !ruby/object:Api::Type::Array
+                    name: 'guestAccelerators'
+                    description: |
+                      Specifies accelerator type and count.
+                    item_type: !ruby/object:Api::Type::NestedObject
+                      properties:
+                        - !ruby/object:Api::Type::String
+                          name: 'acceleratorType'
+                          description: |
+                            Full or partial URL of the accelerator type resource to attach to this instance. For example: projects/my-project/zones/us-central1-c/acceleratorTypes/nvidia-tesla-p100 If you are creating an instance template, specify only the accelerator name. See GPUs on Compute Engine for a full list of accelerator types.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'acceleratorCount'
+                          description: |
+                            The number of the guest accelerator cards exposed to this instance.
+                  - !ruby/object:Api::Type::String
+                    name: 'minCpuPlatform'
+                    description: |
+                      Minimum cpu platform the reservation.
+                  - !ruby/object:Api::Type::Array
+                    name: 'localSsds'
+                    description: |
+                      Specifies amount of local ssd to reserve with each instance. The type of disk is local-ssd.
+                    item_type: !ruby/object:Api::Type::NestedObject
+                      properties:
+                        - !ruby/object:Api::Type::String
+                          name: 'diskSizeGb'
+                          description: |
+                            Specifies the size of the disk in base-2 GB.
+                        - !ruby/object:Api::Type::Enum
+                          name: 'interface'
+                          description: |
+                            Specifies the disk interface to use for attaching this disk, which is either SCSI or NVME. The default is SCSI. For performance characteristics of SCSI over NVMe, see Local SSD performance.
+                          values:
+                            - :NVDIMM
+                            - :NVME
+                            - :SCSI
+                  - !ruby/object:Api::Type::Integer
+                    name: 'maintenanceFreezeDurationHours'
+                    description: |
+                      Specifies the number of hours after reservation creation where instances using the reservation won't be scheduled for maintenance.
+                  - !ruby/object:Api::Type::String
+                    name: 'locationHint'
+                    description: |
+                      An opaque location hint used to place the allocation close to other resources. This field is for use by internal tools that use the public API.
+                  - !ruby/object:Api::Type::Enum
+                    name: 'maintenanceInterval'
+                    description: |
+                      Specifies the frequency of planned maintenance events. The accepted values are: `PERIODIC`.
+                    values:
+                      - :AS_NEEDED
+                      - :PERIODIC
+                      - :RECURRENT
+            - !ruby/object:Api::Type::String
+              name: 'count'
+              description: |
+                Specifies the number of resources that are allocated.
+            - !ruby/object:Api::Type::String
+              name: 'inUseCount'
+              description: |
+                [Output Only] Indicates how many instances are in use.
+            - !ruby/object:Api::Type::String
+              name: 'assuredCount'
+              description: |
+                [Output Only] Indicates how many instances are actually usable currently.
+            - !ruby/object:Api::Type::String
+              name: 'sourceInstanceTemplate'
+              description: |
+                Specifies the instance template to create the reservation. If you use this field, you must exclude the instanceProperties field. This field is optional, and it can be a full or partial URL. For example, the following are all valid URLs to an instance template: - https://www.googleapis.com/compute/v1/projects/project /global/instanceTemplates/instanceTemplate - projects/project/global/instanceTemplates/instanceTemplate - global/instanceTemplates/instanceTemplate
+      - !ruby/object:Api::Type::NestedObject
+        name: 'aggregateReservation'
+        description: |
+          This reservation type is specified by total resource amounts (e.g. total count of CPUs) and can account for multiple instance SKUs. In other words, one can create instances of varying shapes against this reservation.
+        properties:
+            - !ruby/object:Api::Type::Enum
+              name: 'vmFamily'
+              description: |
+                The VM family that all instances scheduled against this reservation must belong to.
+              values:
+                - :VM_FAMILY_CLOUD_TPU_LITE_DEVICE_CT5L
+                - :VM_FAMILY_CLOUD_TPU_LITE_POD_SLICE_CT5LP
+                - :VM_FAMILY_CLOUD_TPU_POD_SLICE_CT4P
+            - !ruby/object:Api::Type::Array
+              name: 'reservedResources'
+              description: |
+                List of reserved resources (CPUs, memory, accelerators).
+              item_type: !ruby/object:Api::Type::NestedObject
+                properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'accelerator'
+                    description: |
+
+                    properties:
+                        - !ruby/object:Api::Type::Integer
+                          name: 'acceleratorCount'
+                          description: |
+                            Number of accelerators of specified type.
+                        - !ruby/object:Api::Type::String
+                          name: 'acceleratorType'
+                          description: |
+                            Full or partial URL to accelerator type. e.g. "projects/{PROJECT}/zones/{ZONE}/acceleratorTypes/ct4l"
+            - !ruby/object:Api::Type::Array
+              name: 'inUseResources'
+              description: |
+                [Output only] List of resources currently in use.
+              item_type: !ruby/object:Api::Type::NestedObject
+                properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'accelerator'
+                    description: |
+
+                    properties:
+                        - !ruby/object:Api::Type::Integer
+                          name: 'acceleratorCount'
+                          description: |
+                            Number of accelerators of specified type.
+                        - !ruby/object:Api::Type::String
+                          name: 'acceleratorType'
+                          description: |
+                            Full or partial URL to accelerator type. e.g. "projects/{PROJECT}/zones/{ZONE}/acceleratorTypes/ct4l"
+            - !ruby/object:Api::Type::Enum
+              name: 'workloadType'
+              description: |
+                The workload type of the instances that will target this reservation.
+              values:
+                - :BATCH
+                - :SERVING
+                - :UNSPECIFIED
+      - !ruby/object:Api::Type::String
+        name: 'commitment'
+        description: |
+          [Output Only] Full or partial URL to a parent commitment. This field displays for reservations that are tied to a commitment.
+      - !ruby/object:Api::Type::Boolean
+        name: 'specificReservationRequired'
+        description: |
+          Indicates whether the reservation can be consumed by VMs with affinity for "any" reservation. If the field is set, then only VMs that target the reservation by name can consume from this reservation.
+      - !ruby/object:Api::Type::Enum
+        name: 'status'
+        description: |
+          [Output Only] The status of the reservation.
+        values:
+          - :CREATING
+          - :DELETING
+          - :INVALID
+          - :READY
+          - :UPDATING
+      - !ruby/object:Api::Type::NestedObject
+        name: 'shareSettings'
+        description: |
+          The share setting for reservations and sole tenancy node groups.
+        properties:
+            - !ruby/object:Api::Type::Enum
+              name: 'shareType'
+              description: |
+                Type of sharing for this shared-reservation
+              values:
+                - :DIRECT_PROJECTS_UNDER_SPECIFIC_FOLDERS
+                - :LOCAL
+                - :ORGANIZATION
+                - :SHARE_TYPE_UNSPECIFIED
+                - :SPECIFIC_PROJECTS
+            - !ruby/object:Api::Type::Array
+              name: 'projects'
+              description: |
+                A List of Project names to specify consumer projects for this shared-reservation. This is only valid when share_type's value is SPECIFIC_PROJECTS.
+              item_type: Api::Type::String
+            - !ruby/object:Api::Type::NestedObject
+              name: 'projectMap'
+              description: |
+                A map of project id and project config. This is only valid when share_type's value is SPECIFIC_PROJECTS.
+              properties:
+                - !ruby/object:Api::Type::String
+                  name: 'additionalProperties'
+                  description: |
+                    Config for each project in the share settings.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'folderMap'
+              description: |
+                A map of folder id and folder config to specify consumer projects for this shared-reservation. This is only valid when share_type's value is DIRECT_PROJECTS_UNDER_SPECIFIC_FOLDERS. Folder id should be a string of number, and without "folders/" prefix.
+              properties:
+                - !ruby/object:Api::Type::String
+                  name: 'additionalProperties'
+                  description: |
+                    Config for each folder in the share settings.
+      - !ruby/object:Api::Type::Boolean
+        name: 'satisfiesPzs'
+        description: |
+          [Output Only] Reserved for future use.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'resourcePolicies'
+        description: |
+          Resource policies to be added to this reservation. The key is defined by user, and the value is resource policy url. This is to define placement policy with reservation.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+
+      - !ruby/object:Api::Type::NestedObject
+        name: 'resourceStatus'
+        description: |
+          [Output Only] Contains output only fields.
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'specificSkuAllocation'
+              description: |
+                Contains Properties set for the reservation.
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'sourceInstanceTemplateId'
+                    description: |
+                      ID of the instance template used to populate reservation properties.
+      - !ruby/object:Api::Type::String
+        name: 'deleteAtTime'
+        description: |
+          Absolute time in future when the reservation will be auto-deleted by Compute Engine. Timestamp is represented in RFC3339 text format.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'deleteAfterDuration'
+        description: |
+          A Duration represents a fixed-length span of time represented as a count of seconds and fractions of seconds at nanosecond resolution. It is independent of any calendar and concepts like "day" or "month". Range is approximately 10,000 years.
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'seconds'
+              description: |
+                Span of time at a resolution of a second. Must be from 0 to 315,576,000,000 inclusive. Note: these bounds are computed from: 60 sec/min * 60 min/hr * 24 hr/day * 365.25 days/year * 10000 years
+            - !ruby/object:Api::Type::Integer
+              name: 'nanos'
+              description: |
+                Span of time that's a fraction of a second at nanosecond resolution. Durations less than one second are represented with a 0 `seconds` field and a positive `nanos` field. Must be from 0 to 999,999,999 inclusive.
+  
+
+
+
+  - !ruby/object:Api::Resource
+    name: RegionSecurityPolicy
+    base_url: 'projects/{{project}}/regions/{{region}}/securityPolicies'
+    self_link: 'projects/{{project}}/regions/{{region}}/securityPolicies/{{securityPolicy}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/compute/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Represents a Google Cloud Armor security policy resource. Only external backend services that use load balancers can reference a security policy. For more information, see Google Cloud Armor security policy overview.
+    properties:
+
+      - !ruby/object:Api::Type::Array
+        name: 'userDefinedFields'
+        description: |
+          Definitions of user-defined fields for CLOUD_ARMOR_NETWORK policies. A user-defined field consists of up to 4 bytes extracted from a fixed offset in the packet, relative to the IPv4, IPv6, TCP, or UDP header, with an optional mask to select certain bits. Rules may then specify matching values for these fields. Example: userDefinedFields: - name: "ipv4_fragment_offset" base: IPV4 offset: 6 size: 2 mask: "0x1fff"
+        item_type: !ruby/object:Api::Type::NestedObject
+          properties:
+            - !ruby/object:Api::Type::String
+              name: 'name'
+              description: |
+                The name of this field. Must be unique within the policy.
+            - !ruby/object:Api::Type::Enum
+              name: 'base'
+              description: |
+                The base relative to which 'offset' is measured. Possible values are: - IPV4: Points to the beginning of the IPv4 header. - IPV6: Points to the beginning of the IPv6 header. - TCP: Points to the beginning of the TCP header, skipping over any IPv4 options or IPv6 extension headers. Not present for non-first fragments. - UDP: Points to the beginning of the UDP header, skipping over any IPv4 options or IPv6 extension headers. Not present for non-first fragments. required
+              values:
+                - :IPV4
+                - :IPV6
+                - :TCP
+                - :UDP
+            - !ruby/object:Api::Type::Integer
+              name: 'offset'
+              description: |
+                Offset of the first byte of the field (in network byte order) relative to 'base'.
+            - !ruby/object:Api::Type::Integer
+              name: 'size'
+              description: |
+                Size of the field in bytes. Valid values: 1-4.
+            - !ruby/object:Api::Type::String
+              name: 'mask'
+              description: |
+                If specified, apply this mask (bitwise AND) to the field to ignore bits before matching. Encoded as a hexadecimal number (starting with "0x"). The last byte of the field (in network byte order) corresponds to the least significant byte of the mask.
+      - !ruby/object:Api::Type::String
+        name: 'kind'
+        description: |
+          [Output only] Type of the resource. Always compute#securityPolicyfor security policies
+      - !ruby/object:Api::Type::String
+        name: 'id'
+        description: |
+          [Output Only] The unique identifier for the resource. This identifier is defined by the server.
+      - !ruby/object:Api::Type::String
+        name: 'creationTimestamp'
+        description: |
+          [Output Only] Creation timestamp in RFC3339 text format.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          An optional description of this resource. Provide this property when you create the resource.
+      - !ruby/object:Api::Type::Array
+        name: 'rules'
+        description: |
+          A list of rules that belong to this policy. There must always be a default rule which is a rule with priority 2147483647 and match all condition (for the match condition this means match "*" for srcIpRanges and for the networkMatch condition every field must be either match "*" or not set). If no rules are provided when creating a security policy, a default rule with action "allow" will be added.
+        item_type: !ruby/object:Api::Type::NestedObject
+          properties:
+            - !ruby/object:Api::Type::String
+              name: 'kind'
+              description: |
+                [Output only] Type of the resource. Always compute#securityPolicyRule for security policy rules
+            - !ruby/object:Api::Type::String
+              name: 'description'
+              description: |
+                An optional description of this resource. Provide this property when you create the resource.
+            - !ruby/object:Api::Type::Integer
+              name: 'priority'
+              description: |
+                An integer indicating the priority of a rule in the list. The priority must be a positive value between 0 and 2147483647. Rules are evaluated from highest to lowest priority where 0 is the highest priority and 2147483647 is the lowest priority.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'match'
+              description: |
+                Represents a match condition that incoming traffic is evaluated against. Exactly one field must be specified.
+              properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'expr'
+                    description: |
+                      Represents a textual expression in the Common Expression Language (CEL) syntax. CEL is a C-like expression language. The syntax and semantics of CEL are documented at https://github.com/google/cel-spec. Example (Comparison): title: "Summary size limit" description: "Determines if a summary is less than 100 chars" expression: "document.summary.size() < 100" Example (Equality): title: "Requestor is owner" description: "Determines if requestor is the document owner" expression: "document.owner == request.auth.claims.email" Example (Logic): title: "Public documents" description: "Determine whether the document should be publicly visible" expression: "document.type != 'private' && document.type != 'internal'" Example (Data Manipulation): title: "Notification string" description: "Create a notification string with a timestamp." expression: "'New message received at ' + string(document.create_time)" The exact variables and functions that may be referenced within an expression are determined by the service that evaluates it. See the service documentation for additional information.
+                    properties:
+                        - !ruby/object:Api::Type::String
+                          name: 'expression'
+                          description: |
+                            Textual representation of an expression in Common Expression Language syntax.
+                        - !ruby/object:Api::Type::String
+                          name: 'title'
+                          description: |
+                            Optional. Title for the expression, i.e. a short string describing its purpose. This can be used e.g. in UIs which allow to enter the expression.
+                        - !ruby/object:Api::Type::String
+                          name: 'description'
+                          description: |
+                            Optional. Description of the expression. This is a longer text which describes the expression, e.g. when hovered over it in a UI.
+                        - !ruby/object:Api::Type::String
+                          name: 'location'
+                          description: |
+                            Optional. String indicating the location of the expression for error reporting, e.g. a file name and a position in the file.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'exprOptions'
+                    description: |
+
+                    properties:
+                        - !ruby/object:Api::Type::NestedObject
+                          name: 'recaptchaOptions'
+                          description: |
+
+                          properties:
+                              - !ruby/object:Api::Type::Array
+                                name: 'actionTokenSiteKeys'
+                                description: |
+                                  A list of site keys to be used during the validation of reCAPTCHA action-tokens. The provided site keys need to be created from reCAPTCHA API under the same project where the security policy is created.
+                                item_type: Api::Type::String
+                              - !ruby/object:Api::Type::Array
+                                name: 'sessionTokenSiteKeys'
+                                description: |
+                                  A list of site keys to be used during the validation of reCAPTCHA session-tokens. The provided site keys need to be created from reCAPTCHA API under the same project where the security policy is created.
+                                item_type: Api::Type::String
+                  - !ruby/object:Api::Type::Enum
+                    name: 'versionedExpr'
+                    description: |
+                      Preconfigured versioned expression. If this field is specified, config must also be specified. Available preconfigured expressions along with their requirements are: SRC_IPS_V1 - must specify the corresponding src_ip_range field in config.
+                    values:
+                      - :FIREWALL
+                      - :SRC_IPS_V1
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'config'
+                    description: |
+
+                    properties:
+                        - !ruby/object:Api::Type::Array
+                          name: 'srcIpRanges'
+                          description: |
+                            CIDR IP address range. Maximum number of src_ip_ranges allowed is 10.
+                          item_type: Api::Type::String
+                        - !ruby/object:Api::Type::Array
+                          name: 'destIpRanges'
+                          description: |
+                            CIDR IP address range. This field may only be specified when versioned_expr is set to FIREWALL.
+                          item_type: Api::Type::String
+                        - !ruby/object:Api::Type::Array
+                          name: 'destPorts'
+                          description: |
+                            Pairs of IP protocols and ports that the rule should match. This field may only be specified when versioned_expr is set to FIREWALL.
+                          item_type: !ruby/object:Api::Type::NestedObject
+                            properties:
+                              - !ruby/object:Api::Type::String
+                                name: 'ipProtocol'
+                                description: |
+                                  The IP protocol to which this rule applies. The protocol type is required when creating a firewall rule. This value can either be one of the following well known protocol strings (tcp, udp, icmp, esp, ah, ipip, sctp), or the IP protocol number.
+                              - !ruby/object:Api::Type::Array
+                                name: 'ports'
+                                description: |
+                                  An optional list of ports to which this rule applies. This field is only applicable for UDP or TCP protocol. Each entry must be either an integer or a range. If not specified, this rule applies to connections through any port. Example inputs include: ["22"], ["80","443"], and ["12345-12349"]. This field may only be specified when versioned_expr is set to FIREWALL.
+                                item_type: Api::Type::String
+                        - !ruby/object:Api::Type::Array
+                          name: 'layer4Configs'
+                          description: |
+                            Pairs of IP protocols and ports that the rule should match. This field may only be specified when versioned_expr is set to FIREWALL.
+                          item_type: !ruby/object:Api::Type::NestedObject
+                            properties:
+                              - !ruby/object:Api::Type::String
+                                name: 'ipProtocol'
+                                description: |
+                                  The IP protocol to which this rule applies. The protocol type is required when creating a firewall rule. This value can either be one of the following well known protocol strings (tcp, udp, icmp, esp, ah, ipip, sctp), or the IP protocol number.
+                              - !ruby/object:Api::Type::Array
+                                name: 'ports'
+                                description: |
+                                  An optional list of ports to which this rule applies. This field is only applicable for UDP or TCP protocol. Each entry must be either an integer or a range. If not specified, this rule applies to connections through any port. Example inputs include: ["22"], ["80","443"], and ["12345-12349"]. This field may only be specified when versioned_expr is set to FIREWALL.
+                                item_type: Api::Type::String
+            - !ruby/object:Api::Type::NestedObject
+              name: 'networkMatch'
+              description: |
+                Represents a match condition that incoming network traffic is evaluated against.
+              properties:
+                  - !ruby/object:Api::Type::Array
+                    name: 'userDefinedFields'
+                    description: |
+                      User-defined fields. Each element names a defined field and lists the matching values for that field.
+                    item_type: !ruby/object:Api::Type::NestedObject
+                      properties:
+                        - !ruby/object:Api::Type::String
+                          name: 'name'
+                          description: |
+                            Name of the user-defined field, as given in the definition.
+                        - !ruby/object:Api::Type::Array
+                          name: 'values'
+                          description: |
+                            Matching values of the field. Each element can be a 32-bit unsigned decimal or hexadecimal (starting with "0x") number (e.g. "64") or range (e.g. "0x400-0x7ff").
+                          item_type: Api::Type::String
+                  - !ruby/object:Api::Type::Array
+                    name: 'srcIpRanges'
+                    description: |
+                      Source IPv4/IPv6 addresses or CIDR prefixes, in standard text format.
+                    item_type: Api::Type::String
+                  - !ruby/object:Api::Type::Array
+                    name: 'destIpRanges'
+                    description: |
+                      Destination IPv4/IPv6 addresses or CIDR prefixes, in standard text format.
+                    item_type: Api::Type::String
+                  - !ruby/object:Api::Type::Array
+                    name: 'ipProtocols'
+                    description: |
+                      IPv4 protocol / IPv6 next header (after extension headers). Each element can be an 8-bit unsigned decimal number (e.g. "6"), range (e.g. "253-254"), or one of the following protocol names: "tcp", "udp", "icmp", "esp", "ah", "ipip", or "sctp".
+                    item_type: Api::Type::String
+                  - !ruby/object:Api::Type::Array
+                    name: 'srcPorts'
+                    description: |
+                      Source port numbers for TCP/UDP/SCTP. Each element can be a 16-bit unsigned decimal number (e.g. "80") or range (e.g. "0-1023").
+                    item_type: Api::Type::String
+                  - !ruby/object:Api::Type::Array
+                    name: 'destPorts'
+                    description: |
+                      Destination port numbers for TCP/UDP/SCTP. Each element can be a 16-bit unsigned decimal number (e.g. "80") or range (e.g. "0-1023").
+                    item_type: Api::Type::String
+                  - !ruby/object:Api::Type::Array
+                    name: 'srcRegionCodes'
+                    description: |
+                      Two-letter ISO 3166-1 alpha-2 country code associated with the source IP address.
+                    item_type: Api::Type::String
+                  - !ruby/object:Api::Type::Array
+                    name: 'srcAsns'
+                    description: |
+                      BGP Autonomous System Number associated with the source IP address.
+                    item_type: Api::Type::String
+            - !ruby/object:Api::Type::String
+              name: 'action'
+              description: |
+                The Action to perform when the rule is matched. The following are the valid actions: - allow: allow access to target. - deny(STATUS): deny access to target, returns the HTTP response code specified. Valid values for `STATUS` are 403, 404, and 502. - rate_based_ban: limit client traffic to the configured threshold and ban the client if the traffic exceeds the threshold. Configure parameters for this action in RateLimitOptions. Requires rate_limit_options to be set. - redirect: redirect to a different target. This can either be an internal reCAPTCHA redirect, or an external URL-based redirect via a 302 response. Parameters for this action can be configured via redirectOptions. This action is only supported in Global Security Policies of type CLOUD_ARMOR. - throttle: limit client traffic to the configured threshold. Configure parameters for this action in rateLimitOptions. Requires rate_limit_options to be set for this.
+            - !ruby/object:Api::Type::Boolean
+              name: 'preview'
+              description: |
+                If set to true, the specified action is not enforced.
+            - !ruby/object:Api::Type::Enum
+              name: 'direction'
+              description: |
+                The direction in which this rule applies. This field may only be specified when versioned_expr is set to FIREWALL.
+              values:
+                - :EGRESS
+                - :INGRESS
+            - !ruby/object:Api::Type::Array
+              name: 'targetResources'
+              description: |
+                A list of network resource URLs to which this rule applies. This field allows you to control which network's VMs get this rule. If this field is left blank, all VMs within the organization will receive the rule. This field may only be specified when versioned_expr is set to FIREWALL.
+              item_type: Api::Type::String
+            - !ruby/object:Api::Type::Boolean
+              name: 'enableLogging'
+              description: |
+                Denotes whether to enable logging for a particular rule. If logging is enabled, logs will be exported to the configured export destination in Stackdriver. Logs may be exported to BigQuery or Pub/Sub. Note: you cannot enable logging on "goto_next" rules. This field may only be specified when the versioned_expr is set to FIREWALL.
+            - !ruby/object:Api::Type::Integer
+              name: 'ruleTupleCount'
+              description: |
+                [Output Only] Calculation of the complexity of a single firewall security policy rule.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'rateLimitOptions'
+              description: |
+
+              properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'rateLimitThreshold'
+                    description: |
+
+                    properties:
+                        - !ruby/object:Api::Type::Integer
+                          name: 'count'
+                          description: |
+                            Number of HTTP(S) requests for calculating the threshold.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'intervalSec'
+                          description: |
+                            Interval over which the threshold is computed.
+                  - !ruby/object:Api::Type::String
+                    name: 'conformAction'
+                    description: |
+                      Action to take for requests that are under the configured rate limit threshold. Valid option is "allow" only.
+                  - !ruby/object:Api::Type::String
+                    name: 'exceedAction'
+                    description: |
+                      Action to take for requests that are above the configured rate limit threshold, to either deny with a specified HTTP response code, or redirect to a different endpoint. Valid options are `deny(STATUS)`, where valid values for `STATUS` are 403, 404, 429, and 502, and `redirect`, where the redirect parameters come from `exceedRedirectOptions` below. The `redirect` action is only supported in Global Security Policies of type CLOUD_ARMOR.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'exceedRedirectOptions'
+                    description: |
+
+                    properties:
+                        - !ruby/object:Api::Type::Enum
+                          name: 'type'
+                          description: |
+                            Type of the redirect action.
+                          values:
+                            - :EXTERNAL_302
+                            - :GOOGLE_RECAPTCHA
+                        - !ruby/object:Api::Type::String
+                          name: 'target'
+                          description: |
+                            Target for the redirect action. This is required if the type is EXTERNAL_302 and cannot be specified for GOOGLE_RECAPTCHA.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'exceedActionRpcStatus'
+                    description: |
+                      Simplified google.rpc.Status type (omitting details).
+                    properties:
+                        - !ruby/object:Api::Type::Integer
+                          name: 'code'
+                          description: |
+                            The status code, which should be an enum value of google.rpc.Code.
+                        - !ruby/object:Api::Type::String
+                          name: 'message'
+                          description: |
+                            A developer-facing error message, which should be in English.
+                  - !ruby/object:Api::Type::Enum
+                    name: 'enforceOnKey'
+                    description: |
+                      Determines the key to enforce the rate_limit_threshold on. Possible values are: - ALL: A single rate limit threshold is applied to all the requests matching this rule. This is the default value if "enforceOnKey" is not configured. - IP: The source IP address of the request is the key. Each IP has this limit enforced separately. - HTTP_HEADER: The value of the HTTP header whose name is configured under "enforceOnKeyName". The key value is truncated to the first 128 bytes of the header value. If no such header is present in the request, the key type defaults to ALL. - XFF_IP: The first IP address (i.e. the originating client IP address) specified in the list of IPs under X-Forwarded-For HTTP header. If no such header is present or the value is not a valid IP, the key defaults to the source IP address of the request i.e. key type IP. - HTTP_COOKIE: The value of the HTTP cookie whose name is configured under "enforceOnKeyName". The key value is truncated to the first 128 bytes of the cookie value. If no such cookie is present in the request, the key type defaults to ALL. - HTTP_PATH: The URL path of the HTTP request. The key value is truncated to the first 128 bytes. - SNI: Server name indication in the TLS session of the HTTPS request. The key value is truncated to the first 128 bytes. The key type defaults to ALL on a HTTP session. - REGION_CODE: The country/region from which the request originates. - TLS_JA3_FINGERPRINT: JA3 TLS/SSL fingerprint if the client connects using HTTPS, HTTP/2 or HTTP/3. If not available, the key type defaults to ALL. - USER_IP: The IP address of the originating client, which is resolved based on "userIpRequestHeaders" configured with the security policy. If there is no "userIpRequestHeaders" configuration or an IP address cannot be resolved from it, the key type defaults to IP.
+                    values:
+                      - :ALL
+                      - :ALL_IPS
+                      - :HTTP_COOKIE
+                      - :HTTP_HEADER
+                      - :HTTP_PATH
+                      - :IP
+                      - :REGION_CODE
+                      - :SNI
+                      - :TLS_JA3_FINGERPRINT
+                      - :USER_IP
+                      - :XFF_IP
+                  - !ruby/object:Api::Type::String
+                    name: 'enforceOnKeyName'
+                    description: |
+                      Rate limit key name applicable only for the following key types: HTTP_HEADER -- Name of the HTTP header whose value is taken as the key value. HTTP_COOKIE -- Name of the HTTP cookie whose value is taken as the key value.
+                  - !ruby/object:Api::Type::Array
+                    name: 'enforceOnKeyConfigs'
+                    description: |
+                      If specified, any combination of values of enforce_on_key_type/enforce_on_key_name is treated as the key on which ratelimit threshold/action is enforced. You can specify up to 3 enforce_on_key_configs. If enforce_on_key_configs is specified, enforce_on_key must not be specified.
+                    item_type: !ruby/object:Api::Type::NestedObject
+                      properties:
+                        - !ruby/object:Api::Type::Enum
+                          name: 'enforceOnKeyType'
+                          description: |
+                            Determines the key to enforce the rate_limit_threshold on. Possible values are: - ALL: A single rate limit threshold is applied to all the requests matching this rule. This is the default value if "enforceOnKeyConfigs" is not configured. - IP: The source IP address of the request is the key. Each IP has this limit enforced separately. - HTTP_HEADER: The value of the HTTP header whose name is configured under "enforceOnKeyName". The key value is truncated to the first 128 bytes of the header value. If no such header is present in the request, the key type defaults to ALL. - XFF_IP: The first IP address (i.e. the originating client IP address) specified in the list of IPs under X-Forwarded-For HTTP header. If no such header is present or the value is not a valid IP, the key defaults to the source IP address of the request i.e. key type IP. - HTTP_COOKIE: The value of the HTTP cookie whose name is configured under "enforceOnKeyName". The key value is truncated to the first 128 bytes of the cookie value. If no such cookie is present in the request, the key type defaults to ALL. - HTTP_PATH: The URL path of the HTTP request. The key value is truncated to the first 128 bytes. - SNI: Server name indication in the TLS session of the HTTPS request. The key value is truncated to the first 128 bytes. The key type defaults to ALL on a HTTP session. - REGION_CODE: The country/region from which the request originates. - TLS_JA3_FINGERPRINT: JA3 TLS/SSL fingerprint if the client connects using HTTPS, HTTP/2 or HTTP/3. If not available, the key type defaults to ALL. - USER_IP: The IP address of the originating client, which is resolved based on "userIpRequestHeaders" configured with the security policy. If there is no "userIpRequestHeaders" configuration or an IP address cannot be resolved from it, the key type defaults to IP.
+                          values:
+                            - :ALL
+                            - :ALL_IPS
+                            - :HTTP_COOKIE
+                            - :HTTP_HEADER
+                            - :HTTP_PATH
+                            - :IP
+                            - :REGION_CODE
+                            - :SNI
+                            - :TLS_JA3_FINGERPRINT
+                            - :USER_IP
+                            - :XFF_IP
+                        - !ruby/object:Api::Type::String
+                          name: 'enforceOnKeyName'
+                          description: |
+                            Rate limit key name applicable only for the following key types: HTTP_HEADER -- Name of the HTTP header whose value is taken as the key value. HTTP_COOKIE -- Name of the HTTP cookie whose value is taken as the key value.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'banThreshold'
+                    description: |
+
+                    properties:
+                        - !ruby/object:Api::Type::Integer
+                          name: 'count'
+                          description: |
+                            Number of HTTP(S) requests for calculating the threshold.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'intervalSec'
+                          description: |
+                            Interval over which the threshold is computed.
+                  - !ruby/object:Api::Type::Integer
+                    name: 'banDurationSec'
+                    description: |
+                      Can only be specified if the action for the rule is "rate_based_ban". If specified, determines the time (in seconds) the traffic will continue to be banned by the rate limit after the rate falls below the threshold.
+            - !ruby/object:Api::Type::Array
+              name: 'targetServiceAccounts'
+              description: |
+                A list of service accounts indicating the sets of instances that are applied with this rule.
+              item_type: Api::Type::String
+            - !ruby/object:Api::Type::String
+              name: 'ruleNumber'
+              description: |
+                Identifier for the rule. This is only unique within the given security policy. This can only be set during rule creation, if rule number is not specified it will be generated by the server.
+            - !ruby/object:Api::Type::String
+              name: 'redirectTarget'
+              description: |
+                This must be specified for redirect actions. Cannot be specified for any other actions.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'headerAction'
+              description: |
+
+              properties:
+                  - !ruby/object:Api::Type::Array
+                    name: 'requestHeadersToAdds'
+                    description: |
+                      The list of request headers to add or overwrite if they're already present.
+                    item_type: !ruby/object:Api::Type::NestedObject
+                      properties:
+                        - !ruby/object:Api::Type::String
+                          name: 'headerName'
+                          description: |
+                            The name of the header to set.
+                        - !ruby/object:Api::Type::String
+                          name: 'headerValue'
+                          description: |
+                            The value to set the named header to.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'redirectOptions'
+              description: |
+
+              properties:
+                  - !ruby/object:Api::Type::Enum
+                    name: 'type'
+                    description: |
+                      Type of the redirect action.
+                    values:
+                      - :EXTERNAL_302
+                      - :GOOGLE_RECAPTCHA
+                  - !ruby/object:Api::Type::String
+                    name: 'target'
+                    description: |
+                      Target for the redirect action. This is required if the type is EXTERNAL_302 and cannot be specified for GOOGLE_RECAPTCHA.
+            - !ruby/object:Api::Type::Enum
+              name: 'ruleManagedProtectionTier'
+              description: |
+                [Output Only] The minimum managed protection tier required for this rule. [Deprecated] Use requiredManagedProtectionTiers instead.
+              values:
+                - :CAMP_PLUS_ANNUAL
+                - :CAMP_PLUS_PAYGO
+                - :CA_STANDARD
+            - !ruby/object:Api::Type::NestedObject
+              name: 'preconfiguredWafConfig'
+              description: |
+
+              properties:
+                  - !ruby/object:Api::Type::Array
+                    name: 'exclusions'
+                    description: |
+                      A list of exclusions to apply during preconfigured WAF evaluation.
+                    item_type: !ruby/object:Api::Type::NestedObject
+                      properties:
+                        - !ruby/object:Api::Type::String
+                          name: 'targetRuleSet'
+                          description: |
+                            Target WAF rule set to apply the preconfigured WAF exclusion.
+                        - !ruby/object:Api::Type::Array
+                          name: 'targetRuleIds'
+                          description: |
+                            A list of target rule IDs under the WAF rule set to apply the preconfigured WAF exclusion. If omitted, it refers to all the rule IDs under the WAF rule set.
+                          item_type: Api::Type::String
+                        - !ruby/object:Api::Type::Array
+                          name: 'requestHeadersToExclude'
+                          description: |
+                            A list of request header names whose value will be excluded from inspection during preconfigured WAF evaluation.
+                          item_type: !ruby/object:Api::Type::NestedObject
+                            properties:
+                              - !ruby/object:Api::Type::String
+                                name: 'val'
+                                description: |
+                                  The value of the field.
+                              - !ruby/object:Api::Type::Enum
+                                name: 'op'
+                                description: |
+                                  The match operator for the field.
+                                values:
+                                  - :CONTAINS
+                                  - :ENDS_WITH
+                                  - :EQUALS
+                                  - :EQUALS_ANY
+                                  - :STARTS_WITH
+                        - !ruby/object:Api::Type::Array
+                          name: 'requestCookiesToExclude'
+                          description: |
+                            A list of request cookie names whose value will be excluded from inspection during preconfigured WAF evaluation.
+                          item_type: !ruby/object:Api::Type::NestedObject
+                            properties:
+                              - !ruby/object:Api::Type::String
+                                name: 'val'
+                                description: |
+                                  The value of the field.
+                              - !ruby/object:Api::Type::Enum
+                                name: 'op'
+                                description: |
+                                  The match operator for the field.
+                                values:
+                                  - :CONTAINS
+                                  - :ENDS_WITH
+                                  - :EQUALS
+                                  - :EQUALS_ANY
+                                  - :STARTS_WITH
+                        - !ruby/object:Api::Type::Array
+                          name: 'requestQueryParamsToExclude'
+                          description: |
+                            A list of request query parameter names whose value will be excluded from inspection during preconfigured WAF evaluation. Note that the parameter can be in the query string or in the POST body.
+                          item_type: !ruby/object:Api::Type::NestedObject
+                            properties:
+                              - !ruby/object:Api::Type::String
+                                name: 'val'
+                                description: |
+                                  The value of the field.
+                              - !ruby/object:Api::Type::Enum
+                                name: 'op'
+                                description: |
+                                  The match operator for the field.
+                                values:
+                                  - :CONTAINS
+                                  - :ENDS_WITH
+                                  - :EQUALS
+                                  - :EQUALS_ANY
+                                  - :STARTS_WITH
+                        - !ruby/object:Api::Type::Array
+                          name: 'requestUrisToExclude'
+                          description: |
+                            A list of request URIs from the request line to be excluded from inspection during preconfigured WAF evaluation. When specifying this field, the query or fragment part should be excluded.
+                          item_type: !ruby/object:Api::Type::NestedObject
+                            properties:
+                              - !ruby/object:Api::Type::String
+                                name: 'val'
+                                description: |
+                                  The value of the field.
+                              - !ruby/object:Api::Type::Enum
+                                name: 'op'
+                                description: |
+                                  The match operator for the field.
+                                values:
+                                  - :CONTAINS
+                                  - :ENDS_WITH
+                                  - :EQUALS
+                                  - :EQUALS_ANY
+                                  - :STARTS_WITH
+      - !ruby/object:Api::Type::NestedObject
+        name: 'cloudArmorConfig'
+        description: |
+          Configuration options for Cloud Armor.
+        properties:
+            - !ruby/object:Api::Type::Boolean
+              name: 'enableMl'
+              description: |
+                If set to true, enables Cloud Armor Machine Learning.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'adaptiveProtectionConfig'
+        description: |
+          Configuration options for Cloud Armor Adaptive Protection (CAAP).
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'layer7DdosDefenseConfig'
+              description: |
+                Configuration options for L7 DDoS detection. This field is only supported in Global Security Policies of type CLOUD_ARMOR.
+              properties:
+                  - !ruby/object:Api::Type::Boolean
+                    name: 'enable'
+                    description: |
+                      If set to true, enables CAAP for L7 DDoS detection. This field is only supported in Global Security Policies of type CLOUD_ARMOR.
+                  - !ruby/object:Api::Type::Enum
+                    name: 'ruleVisibility'
+                    description: |
+                      Rule visibility can be one of the following: STANDARD - opaque rules. (default) PREMIUM - transparent rules. This field is only supported in Global Security Policies of type CLOUD_ARMOR.
+                    values:
+                      - :PREMIUM
+                      - :STANDARD
+                  - !ruby/object:Api::Type::Array
+                    name: 'thresholdConfigs'
+                    description: |
+                      Configuration options for layer7 adaptive protection for various customizable thresholds.
+                    item_type: !ruby/object:Api::Type::NestedObject
+                      properties:
+                        - !ruby/object:Api::Type::String
+                          name: 'name'
+                          description: |
+                            The name must be 1-63 characters long, and comply with RFC1035. The name must be unique within the security policy.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'autoDeployLoadThreshold'
+                          description: |
+
+                        - !ruby/object:Api::Type::Integer
+                          name: 'autoDeployConfidenceThreshold'
+                          description: |
+
+                        - !ruby/object:Api::Type::Integer
+                          name: 'autoDeployImpactedBaselineThreshold'
+                          description: |
+
+                        - !ruby/object:Api::Type::Integer
+                          name: 'autoDeployExpirationSec'
+                          description: |
+
+                        - !ruby/object:Api::Type::Integer
+                          name: 'detectionLoadThreshold'
+                          description: |
+
+                        - !ruby/object:Api::Type::Integer
+                          name: 'detectionAbsoluteQps'
+                          description: |
+
+                        - !ruby/object:Api::Type::Integer
+                          name: 'detectionRelativeToBaselineQps'
+                          description: |
+
+                        - !ruby/object:Api::Type::Array
+                          name: 'trafficGranularityConfigs'
+                          description: |
+                            Configuration options for enabling Adaptive Protection to operate on specified granular traffic units.
+                          item_type: !ruby/object:Api::Type::NestedObject
+                            properties:
+                              - !ruby/object:Api::Type::Enum
+                                name: 'type'
+                                description: |
+                                  Type of this configuration.
+                                values:
+                                  - :HTTP_HEADER_HOST
+                                  - :HTTP_PATH
+                                  - :UNSPECIFIED_TYPE
+                              - !ruby/object:Api::Type::String
+                                name: 'value'
+                                description: |
+                                  Requests that match this value constitute a granular traffic unit.
+                              - !ruby/object:Api::Type::Boolean
+                                name: 'enableEachUniqueValue'
+                                description: |
+                                  If enabled, traffic matching each unique value for the specified type constitutes a separate traffic unit. It can only be set to true if `value` is empty.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'autoDeployConfig'
+              description: |
+                Configuration options for Adaptive Protection auto-deploy feature.
+              properties:
+                  - !ruby/object:Api::Type::Integer
+                    name: 'loadThreshold'
+                    description: |
+
+                  - !ruby/object:Api::Type::Integer
+                    name: 'confidenceThreshold'
+                    description: |
+
+                  - !ruby/object:Api::Type::Integer
+                    name: 'impactedBaselineThreshold'
+                    description: |
+
+                  - !ruby/object:Api::Type::Integer
+                    name: 'expirationSec'
+                    description: |
+
+      - !ruby/object:Api::Type::NestedObject
+        name: 'ddosProtectionConfig'
+        description: |
+
+        properties:
+            - !ruby/object:Api::Type::Enum
+              name: 'ddosProtection'
+              description: |
+
+              values:
+                - :ADVANCED
+                - :ADVANCED_PREVIEW
+                - :STANDARD
+      - !ruby/object:Api::Type::NestedObject
+        name: 'advancedOptionsConfig'
+        description: |
+
+        properties:
+            - !ruby/object:Api::Type::Enum
+              name: 'jsonParsing'
+              description: |
+
+              values:
+                - :DISABLED
+                - :STANDARD
+                - :STANDARD_WITH_GRAPHQL
+            - !ruby/object:Api::Type::NestedObject
+              name: 'jsonCustomConfig'
+              description: |
+
+              properties:
+                  - !ruby/object:Api::Type::Array
+                    name: 'contentTypes'
+                    description: |
+                      A list of custom Content-Type header values to apply the JSON parsing. As per RFC 1341, a Content-Type header value has the following format: Content-Type := type "/" subtype *[";" parameter] When configuring a custom Content-Type header value, only the type/subtype needs to be specified, and the parameters should be excluded.
+                    item_type: Api::Type::String
+            - !ruby/object:Api::Type::Enum
+              name: 'logLevel'
+              description: |
+
+              values:
+                - :NORMAL
+                - :VERBOSE
+            - !ruby/object:Api::Type::Array
+              name: 'userIpRequestHeaders'
+              description: |
+                An optional list of case-insensitive request header names to use for resolving the callers client IP address.
+              item_type: Api::Type::String
+      - !ruby/object:Api::Type::NestedObject
+        name: 'recaptchaOptionsConfig'
+        description: |
+
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'redirectSiteKey'
+              description: |
+                An optional field to supply a reCAPTCHA site key to be used for all the rules using the redirect action with the type of GOOGLE_RECAPTCHA under the security policy. The specified site key needs to be created from the reCAPTCHA API. The user is responsible for the validity of the specified site key. If not specified, a Google-managed site key is used. This field is only supported in Global Security Policies of type CLOUD_ARMOR.
+      - !ruby/object:Api::Type::String
+        name: 'fingerprint'
+        description: |
+          Specifies a fingerprint for this resource, which is essentially a hash of the metadata's contents and used for optimistic locking. The fingerprint is initially generated by Compute Engine and changes after every request to modify or update metadata. You must always provide an up-to-date fingerprint hash in order to update or change metadata, otherwise the request will fail with error 412 conditionNotMet. To see the latest fingerprint, make get() request to the security policy.
+      - !ruby/object:Api::Type::String
+        name: 'selfLink'
+        description: |
+          [Output Only] Server-defined URL for the resource.
+      - !ruby/object:Api::Type::String
+        name: 'selfLinkWithId'
+        description: |
+          [Output Only] Server-defined URL for this resource with the resource id.
+      - !ruby/object:Api::Type::Enum
+        name: 'type'
+        description: |
+          The type indicates the intended use of the security policy. - CLOUD_ARMOR: Cloud Armor backend security policies can be configured to filter incoming HTTP requests targeting backend services. They filter requests before they hit the origin servers. - CLOUD_ARMOR_EDGE: Cloud Armor edge security policies can be configured to filter incoming HTTP requests targeting backend services (including Cloud CDN-enabled) as well as backend buckets (Cloud Storage). They filter requests before the request is served from Google's cache. - CLOUD_ARMOR_INTERNAL_SERVICE: Cloud Armor internal service policies can be configured to filter HTTP requests targeting services managed by Traffic Director in a service mesh. They filter requests before the request is served from the application. - CLOUD_ARMOR_NETWORK: Cloud Armor network policies can be configured to filter packets targeting network load balancing resources such as backend services, target pools, target instances, and instances with external IPs. They filter requests before the request is served from the application. This field can be set only at resource creation time.
+        values:
+          - :CLOUD_ARMOR
+          - :CLOUD_ARMOR_EDGE
+          - :CLOUD_ARMOR_INTERNAL_SERVICE
+          - :CLOUD_ARMOR_NETWORK
+          - :FIREWALL
+      - !ruby/object:Api::Type::Array
+        name: 'associations'
+        description: |
+          A list of associations that belong to this policy.
+        item_type: !ruby/object:Api::Type::NestedObject
+          properties:
+            - !ruby/object:Api::Type::String
+              name: 'name'
+              description: |
+                The name for an association.
+            - !ruby/object:Api::Type::String
+              name: 'attachmentId'
+              description: |
+                The resource that the security policy is attached to.
+            - !ruby/object:Api::Type::String
+              name: 'securityPolicyId'
+              description: |
+                [Output Only] The security policy ID of the association.
+            - !ruby/object:Api::Type::String
+              name: 'displayName'
+              description: |
+                [Output Only] The display name of the security policy of the association.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          Labels for this resource. These can only be added or modified by the setLabels method. Each label key/value pair must comply with RFC1035. Label values may be empty.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+
+      - !ruby/object:Api::Type::String
+        name: 'labelFingerprint'
+        description: |
+          A fingerprint for the labels being applied to this security policy, which is essentially a hash of the labels set used for optimistic locking. The fingerprint is initially generated by Compute Engine and changes after every request to modify or update labels. You must always provide an up-to-date fingerprint hash in order to update or change labels. To see the latest fingerprint, make get() request to the security policy.
+      - !ruby/object:Api::Type::Integer
+        name: 'ruleTupleCount'
+        description: |
+          [Output Only] Total count of all security policy rule tuples. A security policy can not exceed a set number of tuples.
+      - !ruby/object:Api::Type::String
+        name: 'displayName'
+        description: |
+          User-provided name of the organization security policy. The name should be unique in the organization in which the security policy is created. This should only be used when SecurityPolicyType is FIREWALL. The name must be 1-63 characters long, and comply with https://www.ietf.org/rfc/rfc1035.txt. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
+      - !ruby/object:Api::Type::String
+        name: 'parent'
+        description: |
+          [Output Only] The parent of the security policy.
+      - !ruby/object:Api::Type::String
+        name: 'region'
+        description: |
+          [Output Only] URL of the region where the regional security policy resides. This field is not applicable to global security policies.
+  
