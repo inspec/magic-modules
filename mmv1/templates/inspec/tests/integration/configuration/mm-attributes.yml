@@ -1242,7 +1242,7 @@ project_location_federation:
   state : "value_state"
   state_message : "value_statemessage"
   uid : "value_uid"
-  
+
 project_location_service:
   name : "value_name"
   parent : "value_parent"
@@ -1257,3 +1257,11 @@ project_location_service:
   uid : "value_uid"
   release_channel : "value_releasechannel"
   database_type : "value_databasetype"
+
+project_region_job:
+  job_id : "value_jobid"
+  project_id : "value_projectid"
+  region : "value_region"
+  driver_output_resource_uri : "value_driveroutputresourceuri"
+  driver_control_files_uri : "value_drivercontrolfilesuri"
+  job_uuid : "value_jobuuid"
