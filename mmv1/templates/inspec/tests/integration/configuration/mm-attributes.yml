@@ -1265,6 +1265,19 @@ project_region_job:
   driver_output_resource_uri : "value_driveroutputresourceuri"
   driver_control_files_uri : "value_drivercontrolfilesuri"
   job_uuid : "value_jobuuid"
+
+project_location_session:
+  name : "value_name"
+  parent : "value_parent"
+  uuid : "value_uuid"
+  create_time : "value_createtime"
+  state : "value_state"
+  state_message : "value_statemessage"
+  state_time : "value_statetime"
+  creator : "value_creator"
+  user : "value_user"
+  session_template : "value_sessiontemplate"
+
 project_location_workflow_template:
   project : "value_project"
   reservation : "value_reservation"
@@ -1274,3 +1287,4 @@ project_location_workflow_template:
   create_time : "value_createtime"
   update_time : "value_updatetime"
   dag_timeout : "value_dagtimeout"
+
