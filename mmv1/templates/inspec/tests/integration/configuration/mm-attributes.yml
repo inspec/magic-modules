@@ -1288,3 +1288,10 @@ project_location_workflow_template:
   update_time : "value_updatetime"
   dag_timeout : "value_dagtimeout"
 
+
+project_instance_app_profile:
+  name : "value_name"
+  parent : "value_parent"
+  etag : "value_etag"
+  description : "value_description"
+  priority : "value_priority"
