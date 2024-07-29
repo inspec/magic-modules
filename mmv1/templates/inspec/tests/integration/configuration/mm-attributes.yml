@@ -1288,3 +1288,11 @@ project_location_workflow_template:
   update_time : "value_updatetime"
   dag_timeout : "value_dagtimeout"
 
+
+project_location_service_backup:
+  name : "value_name"
+  parent : "value_parent"
+  create_time : "value_createtime"
+  end_time : "value_endtime"
+  state : "value_state"
+  description : "value_description"
