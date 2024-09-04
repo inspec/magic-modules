@@ -1296,3 +1296,13 @@ project_location_service_backup:
   end_time : "value_endtime"
   state : "value_state"
   description : "value_description"
+project_instance_cluster_backup:
+  name : "value_name"
+  parent : "value_parent"
+  source_table : "value_sourcetable"
+  source_backup : "value_sourcebackup"
+  expire_time : "value_expiretime"
+  start_time : "value_starttime"
+  end_time : "value_endtime"
+  size_bytes : "value_sizebytes"
+  state : "value_state"
