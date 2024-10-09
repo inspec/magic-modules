@@ -1,0 +1,5 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+  <% instance = grab_attributes(pwd)['instance'] -%>
+  describe google_datafusion_instances(parent: <%= doc_generation ? "' #{instance['parent']}'":"instance['parent']" -%>) do
+    it { should exist }
+  end
