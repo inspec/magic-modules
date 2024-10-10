@@ -736,7 +736,8 @@ GEM
       trailblazer-option (>= 0.1.1, < 0.2.0)
       uber (< 0.2.0)
     retriable (3.1.2)
-    rexml (3.2.6)
+    rexml (3.3.6)
+      strscan
     rly (0.2.3)
     rspec (3.12.0)
       rspec-core (~> 3.12.0)
@@ -788,6 +789,7 @@ GEM
       unicode-display_width (>= 1.5, < 3.0)
       unicode_utils (~> 1.4)
     strings-ansi (0.2.0)
+    strscan (3.1.0)
     sync (0.5.0)
     term-ansicolor (1.7.1)
       tins (~> 1.0)
