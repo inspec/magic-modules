@@ -118,11 +118,9 @@ objects:
               description: |
                 Describes the Cloud KMS encryption key that will be used to protect the destination Bigtable cluster. The requirements for this key are: 1) The Cloud Bigtable service account associated with the project that contains this cluster must be granted the `cloudkms.cryptoKeyEncrypterDecrypter` role on the CMEK key. 2) Only regional keys can be used and the region of the CMEK key must match the region of the cluster. Values are of the form `projects/{project}/locations/{location}/keyRings/{keyring}/cryptoKeys/{key}`
 
-
-    
   - !ruby/object:Api::Resource
-    name: ProjectInstanceClusterBackup
-    base_url: '{{+parent}}/backups'
+    name: ProjectInstanceAppProfile
+    base_url: '{{+parent}}/appProfiles'
     self_link: '{{+name}}'
     references: !ruby/object:Api::Resource::ReferenceLinks
       guides:
@@ -146,12 +144,79 @@ objects:
         path: 'error'
         message: 'message'
     description: |-
-        A backup of a Cloud Bigtable table.
+        A configuration object describing how Cloud Bigtable should treat traffic from a particular end user application.
     properties:
   
       - !ruby/object:Api::Type::String
         name: 'name'
         description: |
+          The unique name of the app profile. Values are of the form `projects/{project}/instances/{instance}/appProfiles/_a-zA-Z0-9*`.
+      - !ruby/object:Api::Type::String
+        name: 'etag'
+        description: |
+          Strongly validated etag for optimistic concurrency control. Preserve the value returned from `GetAppProfile` when calling `UpdateAppProfile` to fail the request if there has been a modification in the mean time. The `update_mask` of the request need not include `etag` for this protection to apply. See [Wikipedia](https://en.wikipedia.org/wiki/HTTP_ETag) and [RFC 7232](https://tools.ietf.org/html/rfc7232#section-2.3) for more details.
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          Long form description of the use case for this AppProfile.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'multiClusterRoutingUseAny'
+        description: |
+          Read/write requests are routed to the nearest cluster in the instance, and will fail over to the nearest cluster that is available in the event of transient errors or delays. Clusters in a region are considered equidistant. Choosing this option sacrifices read-your-writes consistency to improve availability.
+        properties:
+            - !ruby/object:Api::Type::Array
+              name: 'clusterIds'
+              description: |
+                The set of clusters to route to. The order is ignored; clusters will be tried in order of distance. If left empty, all clusters are eligible.
+              item_type: Api::Type::String
+      - !ruby/object:Api::Type::NestedObject
+        name: 'singleClusterRouting'
+        description: |
+          Unconditionally routes all read/write requests to a specific cluster. This option preserves read-your-writes consistency but does not improve availability.
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'clusterId'
+              description: |
+                The cluster to which read/write requests should be routed.
+            - !ruby/object:Api::Type::Boolean
+              name: 'allowTransactionalWrites'
+              description: |
+                Whether or not `CheckAndMutateRow` and `ReadModifyWriteRow` requests are allowed by this app profile. It is unsafe to send these requests to the same table/row/column in multiple clusters.
+      - !ruby/object:Api::Type::Enum
+        name: 'priority'
+        description: |
+          This field has been deprecated in favor of `standard_isolation.priority`. If you set this field, `standard_isolation.priority` will be set instead. The priority of requests sent using this app profile.
+        values:
+          - :PRIORITY_UNSPECIFIED
+          - :PRIORITY_LOW
+          - :PRIORITY_MEDIUM
+          - :PRIORITY_HIGH
+      - !ruby/object:Api::Type::NestedObject
+        name: 'standardIsolation'
+        description: |
+          Standard options for isolating this app profile's traffic from other use cases.
+        properties:
+            - !ruby/object:Api::Type::Enum
+              name: 'priority'
+              description: |
+                The priority of requests sent using this app profile.
+              values:
+                - :PRIORITY_UNSPECIFIED
+                - :PRIORITY_LOW
+                - :PRIORITY_MEDIUM
+                - :PRIORITY_HIGH
+      - !ruby/object:Api::Type::NestedObject
+        name: 'dataBoostIsolationReadOnly'
+        description: |
+          Data Boost is a serverless compute capability that lets you run high-throughput read jobs and queries on your Bigtable data, without impacting the performance of the clusters that handle your application traffic. Data Boost supports read-only use cases with single-cluster routing.
+        properties:
+            - !ruby/object:Api::Type::Enum
+              name: 'computeBillingOwner'
+              description: |
+                The Compute Billing Owner for this Data Boost App Profile.
+              values:
+                - :COMPUTE_BILLING_OWNER_UNSPECIFIED
+                - :HOST_PAYS
           A globally unique identifier for the backup which cannot be changed. Values are of the form `projects/{project}/instances/{instance}/clusters/{cluster}/ backups/_a-zA-Z0-9*` The final segment of the name must be between 1 and 50 characters in length. The backup is stored in the cluster identified by the prefix of the backup name of the form `projects/{project}/instances/{instance}/clusters/{cluster}`.
       - !ruby/object:Api::Type::String
         name: 'sourceTable'
@@ -220,4 +285,3 @@ objects:
               name: 'kmsKeyVersion'
               description: |
                 Output only. The version of the Cloud KMS key specified in the parent cluster that is in use for the data underlying this table.
-  
