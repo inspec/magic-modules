@@ -594,7 +594,8 @@ GEM
       googleauth (~> 0.9)
       grpc (~> 1.24)
       rly (~> 0.2.3)
-    google-protobuf (3.25.1-x86_64-darwin)
+    google-protobuf (3.25.5-x86_64-darwin)
+    google-protobuf (3.25.5-x86_64-linux)
     googleapis-common-protos (1.4.0)
       google-protobuf (~> 3.14)
       googleapis-common-protos-types (~> 1.2)
@@ -608,6 +609,9 @@ GEM
       multi_json (~> 1.11)
       os (>= 0.9, < 2.0)
       signet (~> 0.14)
+    grpc (1.60.0)
+      google-protobuf (~> 3.25)
+      googleapis-common-protos-types (~> 1.0)
     grpc (1.60.0-x86_64-darwin)
       google-protobuf (~> 3.25)
       googleapis-common-protos-types (~> 1.0)
@@ -949,6 +953,7 @@ GEM
 
 PLATFORMS
   x86_64-darwin
+  x86_64-linux
 
 DEPENDENCIES
   bundle
