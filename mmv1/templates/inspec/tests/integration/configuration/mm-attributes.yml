@@ -1288,7 +1288,6 @@ project_location_workflow_template:
   update_time : "value_updatetime"
   dag_timeout : "value_dagtimeout"
 
-
 project_location_service_backup:
   name : "value_name"
   parent : "value_parent"
@@ -1306,3 +1305,8 @@ project_instance_cluster_backup:
   end_time : "value_endtime"
   size_bytes : "value_sizebytes"
   state : "value_state"
+organization_instance_attachment:
+  name : "value_name"
+  parent : "value_parent"
+  environment : "value_environment"
+  created_at : "value_createdat"
