@@ -1296,3 +1296,13 @@ project_location_service_backup:
   end_time : "value_endtime"
   state : "value_state"
   description : "value_description"
+organization_instance_attachment:
+  name : "value_name"
+  parent : "value_parent"
+  environment : "value_environment"
+  created_at : "value_createdat"
+organization_instance_attachment:
+  name : "value_name"
+  parent : "value_parent"
+  environment : "value_environment"
+  created_at : "value_createdat"
