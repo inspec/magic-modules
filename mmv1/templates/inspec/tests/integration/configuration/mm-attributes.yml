@@ -1328,3 +1328,8 @@ batch:
   state_time : "value_statetime"
   creator : "value_creator"
   operation : "value_operation"
+project_group:
+  name : "value_name"
+  display_name : "value_displayname"
+  parent_name : "value_parentname"
+  filter : "value_filter"
