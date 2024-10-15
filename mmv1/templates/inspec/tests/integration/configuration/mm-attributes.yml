@@ -1317,3 +1317,14 @@ organization_instance_attachment:
   parent : "value_parent"
   environment : "value_environment"
   created_at : "value_createdat"
+
+batch:
+  name : "value_name"
+  parent : "value_parent"
+  uuid : "value_uuid"
+  create_time : "value_createtime"
+  state : "value_state"
+  state_message : "value_statemessage"
+  state_time : "value_statetime"
+  creator : "value_creator"
+  operation : "value_operation"
