@@ -1198,6 +1198,23 @@ target_grpc_proxy:
   self_link_with_id : "value_selflinkwithid"
   url_map : "value_urlmap"
   fingerprint : "value_fingerprint"
+public_advertised_prefix:
+  project : "value_project"
+  public_advertised_prefix : "value_publicadvertisedprefix"
+  kind : "value_kind"
+  id : "value_id"
+  creation_timestamp : "value_creationtimestamp"
+  name : "value_name"
+  description : "value_description"
+  self_link : "value_selflink"
+  self_link_with_id : "value_selflinkwithid"
+  ip_cidr_range : "value_ipcidrrange"
+  dns_verification_ip : "value_dnsverificationip"
+  shared_secret : "value_sharedsecret"
+  status : "value_status"
+  pdp_scope : "value_pdpscope"
+  fingerprint : "value_fingerprint"
+  byoip_api_version : "value_byoipapiversion"
 
 folder_constraint:
   parent : "value_parent"
@@ -1312,14 +1329,15 @@ project_instance_cluster_backup:
   end_time : "value_endtime"
   size_bytes : "value_sizebytes"
   state : "value_state"
+
 organization_instance_attachment:
-  name : "value_name"
+  name : "test_org"
   parent : "value_parent"
   environment : "value_environment"
   created_at : "value_createdat"
 
 batch:
-  name : "value_name"
+  name : "batch1"
   parent : "value_parent"
   uuid : "value_uuid"
   create_time : "value_createtime"
@@ -1328,6 +1346,7 @@ batch:
   state_time : "value_statetime"
   creator : "value_creator"
   operation : "value_operation"
+
 project_group:
   name : "value_name"
   display_name : "value_displayname"
