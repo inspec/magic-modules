@@ -28268,6 +28268,196 @@ objects:
      
 
 
+    
+  - !ruby/object:Api::Resource
+    name: RegionNotificationEndpoint
+    base_url: 'projects/{{project}}/regions/{{region}}/notificationEndpoints'
+    self_link: 'projects/{{project}}/regions/{{region}}/notificationEndpoints/{{notificationEndpoint}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/compute/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Represents a notification endpoint. A notification endpoint resource defines an endpoint to receive notifications when there are status changes detected by the associated health check service. For more information, see Health checks overview.
+    properties:
+  
+      - !ruby/object:Api::Type::String
+        name: 'kind'
+        description: |
+          [Output Only] Type of the resource. Always compute#notificationEndpoint for notification endpoints.
+      - !ruby/object:Api::Type::String
+        name: 'id'
+        description: |
+          [Output Only] A unique identifier for this resource type. The server generates this identifier.
+      - !ruby/object:Api::Type::String
+        name: 'creationTimestamp'
+        description: |
+          [Output Only] Creation timestamp in RFC3339 text format.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          An optional description of this resource. Provide this property when you create the resource.
+      - !ruby/object:Api::Type::String
+        name: 'selfLink'
+        description: |
+          [Output Only] Server-defined URL for the resource.
+      - !ruby/object:Api::Type::String
+        name: 'region'
+        description: |
+          [Output Only] URL of the region where the notification endpoint resides. This field applies only to the regional resource. You must specify this field as part of the HTTP request URL. It is not settable as a field in the request body.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'grpcSettings'
+        description: |
+          Represents a gRPC setting that describes one gRPC notification endpoint and the retry duration attempting to send notification to this endpoint.
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'endpoint'
+              description: |
+                Endpoint to which gRPC notifications are sent. This must be a valid gRPCLB DNS name.
+            - !ruby/object:Api::Type::Integer
+              name: 'retryDurationSec'
+              description: |
+                How much time (in seconds) is spent attempting notification retries until a successful response is received. Default is 30s. Limit is 20m (1200s). Must be a positive number.
+            - !ruby/object:Api::Type::String
+              name: 'payloadName'
+              description: |
+                Optional. If specified, this field is used to populate the "name" field in gRPC requests.
+            - !ruby/object:Api::Type::String
+              name: 'authority'
+              description: |
+                Optional. If specified, this field is used to set the authority header by the sender of notifications. See https://tools.ietf.org/html/rfc7540#section-8.1.2.3
+            - !ruby/object:Api::Type::NestedObject
+              name: 'resendInterval'
+              description: |
+                A Duration represents a fixed-length span of time represented as a count of seconds and fractions of seconds at nanosecond resolution. It is independent of any calendar and concepts like "day" or "month". Range is approximately 10,000 years.
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'seconds'
+                    description: |
+                      Span of time at a resolution of a second. Must be from 0 to 315,576,000,000 inclusive. Note: these bounds are computed from: 60 sec/min * 60 min/hr * 24 hr/day * 365.25 days/year * 10000 years
+                  - !ruby/object:Api::Type::Integer
+                    name: 'nanos'
+                    description: |
+                      Span of time that's a fraction of a second at nanosecond resolution. Durations less than one second are represented with a 0 `seconds` field and a positive `nanos` field. Must be from 0 to 999,999,999 inclusive.
+  
+
+
+    
+  - !ruby/object:Api::Resource
+    name: RegionNotificationEndpoint
+    base_url: 'projects/{{project}}/regions/{{region}}/notificationEndpoints'
+    self_link: 'projects/{{project}}/regions/{{region}}/notificationEndpoints/{{notificationEndpoint}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/compute/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        Represents a notification endpoint. A notification endpoint resource defines an endpoint to receive notifications when there are status changes detected by the associated health check service. For more information, see Health checks overview.
+    properties:
+  
+      - !ruby/object:Api::Type::String
+        name: 'kind'
+        description: |
+          [Output Only] Type of the resource. Always compute#notificationEndpoint for notification endpoints.
+      - !ruby/object:Api::Type::String
+        name: 'id'
+        description: |
+          [Output Only] A unique identifier for this resource type. The server generates this identifier.
+      - !ruby/object:Api::Type::String
+        name: 'creationTimestamp'
+        description: |
+          [Output Only] Creation timestamp in RFC3339 text format.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          An optional description of this resource. Provide this property when you create the resource.
+      - !ruby/object:Api::Type::String
+        name: 'selfLink'
+        description: |
+          [Output Only] Server-defined URL for the resource.
+      - !ruby/object:Api::Type::String
+        name: 'region'
+        description: |
+          [Output Only] URL of the region where the notification endpoint resides. This field applies only to the regional resource. You must specify this field as part of the HTTP request URL. It is not settable as a field in the request body.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'grpcSettings'
+        description: |
+          Represents a gRPC setting that describes one gRPC notification endpoint and the retry duration attempting to send notification to this endpoint.
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'endpoint'
+              description: |
+                Endpoint to which gRPC notifications are sent. This must be a valid gRPCLB DNS name.
+            - !ruby/object:Api::Type::Integer
+              name: 'retryDurationSec'
+              description: |
+                How much time (in seconds) is spent attempting notification retries until a successful response is received. Default is 30s. Limit is 20m (1200s). Must be a positive number.
+            - !ruby/object:Api::Type::String
+              name: 'payloadName'
+              description: |
+                Optional. If specified, this field is used to populate the "name" field in gRPC requests.
+            - !ruby/object:Api::Type::String
+              name: 'authority'
+              description: |
+                Optional. If specified, this field is used to set the authority header by the sender of notifications. See https://tools.ietf.org/html/rfc7540#section-8.1.2.3
+            - !ruby/object:Api::Type::NestedObject
+              name: 'resendInterval'
+              description: |
+                A Duration represents a fixed-length span of time represented as a count of seconds and fractions of seconds at nanosecond resolution. It is independent of any calendar and concepts like "day" or "month". Range is approximately 10,000 years.
+              properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'seconds'
+                    description: |
+                      Span of time at a resolution of a second. Must be from 0 to 315,576,000,000 inclusive. Note: these bounds are computed from: 60 sec/min * 60 min/hr * 24 hr/day * 365.25 days/year * 10000 years
+                  - !ruby/object:Api::Type::Integer
+                    name: 'nanos'
+                    description: |
+                      Span of time that's a fraction of a second at nanosecond resolution. Durations less than one second are represented with a 0 `seconds` field and a positive `nanos` field. Must be from 0 to 999,999,999 inclusive.
+  
+
+
 
   - !ruby/object:Api::Resource
     name: Reservation

@@ -1198,6 +1198,16 @@ target_grpc_proxy:
   self_link_with_id : "value_selflinkwithid"
   url_map : "value_urlmap"
   fingerprint : "value_fingerprint"
+region_notification_endpoint:
+  project : "value_project"
+  public_advertised_prefix : "value_publicadvertisedprefix"
+  kind : "value_kind"
+  id : "value_id"
+  creation_timestamp : "value_creationtimestamp"
+  name : "value_name"
+  description : "value_description"
+  self_link : "value_selflink"
+  region : "value_region"
 public_advertised_prefix:
   project : "value_project"
   public_advertised_prefix : "value_publicadvertisedprefix"
