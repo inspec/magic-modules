@@ -1208,3 +1208,157 @@ region_notification_endpoint:
   description : "value_description"
   self_link : "value_selflink"
   region : "value_region"
+public_advertised_prefix:
+  project : "value_project"
+  public_advertised_prefix : "value_publicadvertisedprefix"
+  kind : "value_kind"
+  id : "value_id"
+  creation_timestamp : "value_creationtimestamp"
+  name : "value_name"
+  description : "value_description"
+  self_link : "value_selflink"
+  self_link_with_id : "value_selflinkwithid"
+  ip_cidr_range : "value_ipcidrrange"
+  dns_verification_ip : "value_dnsverificationip"
+  shared_secret : "value_sharedsecret"
+  status : "value_status"
+  pdp_scope : "value_pdpscope"
+  fingerprint : "value_fingerprint"
+  byoip_api_version : "value_byoipapiversion"
+
+folder_constraint:
+  parent : "value_parent"
+
+
+reservation:
+  project : "value_project"
+  reservation : "value_reservation"
+  zone : "value_zone"
+  kind : "value_kind"
+  id : "value_id"
+  creation_timestamp : "value_creationtimestamp"
+  self_link : "value_selflink"
+  self_link_with_id : "value_selflinkwithid"
+  description : "value_description"
+  name : "value_name"
+  commitment : "value_commitment"
+  status : "value_status"
+  delete_at_time : "value_deleteattime"
+
+project_region_autoscaling_policy:
+  name : "value_name"
+  parent : "value_parent"
+  id : "value_id"
+
+
+
+project_instance_cluster:
+  name : "value_name"
+  parent : "value_parent"
+  location : "value_location"
+  state : "value_state"
+  default_storage_type : "value_defaultstoragetype"
+
+project_location_federation:
+  name : "value_name"
+  parent : "value_parent"
+  create_time : "value_createtime"
+  update_time : "value_updatetime"
+  version : "value_version"
+  endpoint_uri : "value_endpointuri"
+  state : "value_state"
+  state_message : "value_statemessage"
+  uid : "value_uid"
+
+project_location_service:
+  name : "value_name"
+  parent : "value_parent"
+  create_time : "value_createtime"
+  update_time : "value_updatetime"
+  network : "value_network"
+  endpoint_uri : "value_endpointuri"
+  state : "value_state"
+  state_message : "value_statemessage"
+  artifact_gcs_uri : "value_artifactgcsuri"
+  tier : "value_tier"
+  uid : "value_uid"
+  release_channel : "value_releasechannel"
+  database_type : "value_databasetype"
+
+project_region_job:
+  job_id : "value_jobid"
+  project_id : "value_projectid"
+  region : "value_region"
+  driver_output_resource_uri : "value_driveroutputresourceuri"
+  driver_control_files_uri : "value_drivercontrolfilesuri"
+  job_uuid : "value_jobuuid"
+
+project_location_session:
+  name : "value_name"
+  parent : "value_parent"
+  uuid : "value_uuid"
+  create_time : "value_createtime"
+  state : "value_state"
+  state_message : "value_statemessage"
+  state_time : "value_statetime"
+  creator : "value_creator"
+  user : "value_user"
+  session_template : "value_sessiontemplate"
+
+project_location_workflow_template:
+  project : "value_project"
+  reservation : "value_reservation"
+  zone : "value_zone"
+  id : "value_id"
+  name : "value_name"
+  create_time : "value_createtime"
+  update_time : "value_updatetime"
+  dag_timeout : "value_dagtimeout"
+
+project_instance_app_profile:
+  name : "value_name"
+  parent : "value_parent"
+  etag : "value_etag"
+  description : "value_description"
+  priority : "value_priority"
+
+project_location_service_backup:
+  name : "value_name"
+  parent : "value_parent"
+  create_time : "value_createtime"
+  end_time : "value_endtime"
+  state : "value_state"
+  description : "value_description"
+project_instance_cluster_backup:
+  name : "value_name"
+  parent : "value_parent"
+  source_table : "value_sourcetable"
+  source_backup : "value_sourcebackup"
+  expire_time : "value_expiretime"
+  start_time : "value_starttime"
+  end_time : "value_endtime"
+  size_bytes : "value_sizebytes"
+  state : "value_state"
+
+organization_instance_attachment:
+  name : "test_org"
+  parent : "value_parent"
+  environment : "value_environment"
+  created_at : "value_createdat"
+
+batch:
+  name : "batch1"
+  parent : "value_parent"
+  uuid : "value_uuid"
+  create_time : "value_createtime"
+  state : "value_state"
+  state_message : "value_statemessage"
+  state_time : "value_statetime"
+  creator : "value_creator"
+  operation : "value_operation"
+
+project_group:
+  name : "value_name"
+  display_name : "value_displayname"
+  parent_name : "value_parentname"
+  filter : "value_filter"

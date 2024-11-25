@@ -1,0 +1,14 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% project_instance_app_profile = grab_attributes(pwd)['project_instance_app_profile'] -%>
+describe google_bigtableadmin_project_instance_app_profile(name: <%= doc_generation ? "' #{project_instance_app_profile['name']}'":"project_instance_app_profile['name']" -%>) do
+	it { should exist }
+	its('name') { should cmp <%= doc_generation ? "'#{project_instance_app_profile['name']}'" : "project_instance_app_profile['name']" -%> }
+	its('etag') { should cmp <%= doc_generation ? "'#{project_instance_app_profile['etag']}'" : "project_instance_app_profile['etag']" -%> }
+	its('description') { should cmp <%= doc_generation ? "'#{project_instance_app_profile['description']}'" : "project_instance_app_profile['description']" -%> }
+	its('priority') { should cmp <%= doc_generation ? "'#{project_instance_app_profile['priority']}'" : "project_instance_app_profile['priority']" -%> }
+
+end
+
+describe google_bigtableadmin_project_instance_app_profile(name: "does_not_exit") do
+	it { should_not exist }
+end

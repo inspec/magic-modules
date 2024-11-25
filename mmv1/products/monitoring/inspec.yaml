@@ -12,7 +12,6 @@
 # limitations under the License.
 
 --- !ruby/object:Provider::Inspec::Config
-legacy_name: project
 overrides: !ruby/object:Overrides::ResourceOverrides
   AlertPolicy: !ruby/object:Overrides::Inspec::ResourceOverride
     additional_functions: third_party/inspec/custom_functions/alert_policy.erb
