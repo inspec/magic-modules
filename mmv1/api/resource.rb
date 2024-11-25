@@ -174,7 +174,6 @@ module Api
 
       set_variables(@parameters, :__resource)
       set_variables(@properties, :__resource)
-
       check :properties, type: Array, item_type: Api::Type, required: true unless @exclude
       check :parameters, type: Array, item_type: Api::Type unless @exclude
 

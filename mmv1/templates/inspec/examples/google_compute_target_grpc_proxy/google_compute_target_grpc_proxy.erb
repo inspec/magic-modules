@@ -1,0 +1,19 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% target_grpc_proxy = grab_attributes(pwd)['target_grpc_proxy'] -%>
+describe google_compute_target_grpc_proxy(project: <%= gcp_project_id -%>, targetGrpcProxy: <%= doc_generation ? "' #{target_grpc_proxy['targetGrpcProxy']}'":"target_grpc_proxy['targetGrpcProxy']" -%>) do
+	it { should exist }
+	its('kind') { should cmp <%= doc_generation ? "'#{target_grpc_proxy['kind']}'" : "target_grpc_proxy['kind']" -%> }
+	its('id') { should cmp <%= doc_generation ? "'#{target_grpc_proxy['id']}'" : "target_grpc_proxy['id']" -%> }
+	its('creation_timestamp') { should cmp <%= doc_generation ? "'#{target_grpc_proxy['creation_timestamp']}'" : "target_grpc_proxy['creation_timestamp']" -%> }
+	its('name') { should cmp <%= doc_generation ? "'#{target_grpc_proxy['name']}'" : "target_grpc_proxy['name']" -%> }
+	its('description') { should cmp <%= doc_generation ? "'#{target_grpc_proxy['description']}'" : "target_grpc_proxy['description']" -%> }
+	its('self_link') { should cmp <%= doc_generation ? "'#{target_grpc_proxy['self_link']}'" : "target_grpc_proxy['self_link']" -%> }
+	its('self_link_with_id') { should cmp <%= doc_generation ? "'#{target_grpc_proxy['self_link_with_id']}'" : "target_grpc_proxy['self_link_with_id']" -%> }
+	its('url_map') { should cmp <%= doc_generation ? "'#{target_grpc_proxy['url_map']}'" : "target_grpc_proxy['url_map']" -%> }
+	its('fingerprint') { should cmp <%= doc_generation ? "'#{target_grpc_proxy['fingerprint']}'" : "target_grpc_proxy['fingerprint']" -%> }
+
+end
+
+describe google_compute_target_grpc_proxy(project: <%= gcp_project_id -%>, targetGrpcProxy: <%= doc_generation ? "' #{target_grpc_proxy['targetGrpcProxy']}'":"target_grpc_proxy['targetGrpcProxy']" -%>) do
+	it { should_not exist }
+end
