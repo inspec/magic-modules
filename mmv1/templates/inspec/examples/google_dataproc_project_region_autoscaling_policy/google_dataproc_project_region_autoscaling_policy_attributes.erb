@@ -1,0 +1,3 @@
+gcp_project_id = input(:gcp_project_id, value: '<%= external_attribute(pwd, 'gcp_project_id') -%>', description: 'The GCP project identifier.')
+
+  project_region_autoscaling_policy = input('project_region_autoscaling_policy', value: <%= JSON.pretty_generate(grab_attributes(pwd)['project_region_autoscaling_policy']) -%>, description: 'project_region_autoscaling_policy description')
