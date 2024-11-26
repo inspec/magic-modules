@@ -1,0 +1,5 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+  <% reservation = grab_attributes(pwd)['reservation'] -%>
+  describe google_compute_reservations(project: <%= gcp_project_id -%>, zone: <%= doc_generation ? "' #{reservation['zone']}'":"reservation['zone']" -%>) do
+    it { should exist }
+  end

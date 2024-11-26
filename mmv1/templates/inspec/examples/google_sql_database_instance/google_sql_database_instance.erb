@@ -2,7 +2,7 @@
 <% gcp_location = "#{external_attribute(pwd, 'gcp_location', doc_generation)}" -%>
 <% gcp_db_instance_name = "#{external_attribute(pwd, 'gcp_db_instance_name', doc_generation)}" -%>
 
-describe google_sql_database_instance(project: <%= gcp_project_id -%>, database: <%= gcp_db_instance_name -%>) do
+describe google_sql_database_instance(project: <%= gcp_project_id -%>, instance: <%= gcp_db_instance_name -%>) do
   it { should exist }
   its('state') { should eq 'RUNNABLE' }
   its('backend_type') { should eq 'SECOND_GEN' }

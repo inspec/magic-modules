@@ -1,6 +1,22 @@
 <% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
-<% accelerator_type = grab_attributes(pwd)['accelerator_type'] -%>
-describe google_compute_accelerator_type(project: <%= gcp_project_id -%>, zone: 'us-east1-b', name: <%= doc_generation ? "'#{accelerator_type['name']}'" : "accelerator_type['name']" -%>) do
-  it { should exist }
-  it { should be_up }
+<% global_network_endpoint_group = grab_attributes(pwd)['global_network_endpoint_group'] -%>
+describe google_compute_global_network_endpoint_group(networkEndpointGroup: <%= doc_generation ? "' #{global_network_endpoint_group['networkEndpointGroup']}'":"global_network_endpoint_group['networkEndpointGroup']" -%>, project: <%= gcp_project_id -%>) do
+	it { should exist }
+	its('kind') { should cmp <%= doc_generation ? "'#{global_network_endpoint_group['kind']}'" : "global_network_endpoint_group['kind']" -%> }
+	its('id') { should cmp <%= doc_generation ? "'#{global_network_endpoint_group['id']}'" : "global_network_endpoint_group['id']" -%> }
+	its('creation_timestamp') { should cmp <%= doc_generation ? "'#{global_network_endpoint_group['creation_timestamp']}'" : "global_network_endpoint_group['creation_timestamp']" -%> }
+	its('self_link') { should cmp <%= doc_generation ? "'#{global_network_endpoint_group['self_link']}'" : "global_network_endpoint_group['self_link']" -%> }
+	its('name') { should cmp <%= doc_generation ? "'#{global_network_endpoint_group['name']}'" : "global_network_endpoint_group['name']" -%> }
+	its('description') { should cmp <%= doc_generation ? "'#{global_network_endpoint_group['description']}'" : "global_network_endpoint_group['description']" -%> }
+	its('network_endpoint_type') { should cmp <%= doc_generation ? "'#{global_network_endpoint_group['network_endpoint_type']}'" : "global_network_endpoint_group['network_endpoint_type']" -%> }
+	its('region') { should cmp <%= doc_generation ? "'#{global_network_endpoint_group['region']}'" : "global_network_endpoint_group['region']" -%> }
+	its('zone') { should cmp <%= doc_generation ? "'#{global_network_endpoint_group['zone']}'" : "global_network_endpoint_group['zone']" -%> }
+	its('network') { should cmp <%= doc_generation ? "'#{global_network_endpoint_group['network']}'" : "global_network_endpoint_group['network']" -%> }
+	its('subnetwork') { should cmp <%= doc_generation ? "'#{global_network_endpoint_group['subnetwork']}'" : "global_network_endpoint_group['subnetwork']" -%> }
+	its('psc_target_service') { should cmp <%= doc_generation ? "'#{global_network_endpoint_group['psc_target_service']}'" : "global_network_endpoint_group['psc_target_service']" -%> }
+
+end
+
+describe google_compute_global_network_endpoint_group(networkEndpointGroup: <%= doc_generation ? "' #{global_network_endpoint_group['networkEndpointGroup']}'":"global_network_endpoint_group['networkEndpointGroup']" -%>, project: <%= gcp_project_id -%>) do
+	it { should_not exist }
 end

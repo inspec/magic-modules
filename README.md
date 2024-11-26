@@ -40,7 +40,7 @@ to help you get it set up.
 
 To get started, you'll need:
 
-* Ruby 2.6.0
+* Ruby 3.1.0
   * You can use `rbenv` to manage your Ruby version(s)
 * [`Bundler`](https://github.com/bundler/bundler)
   * This can be installed with `gem install bundler`
@@ -59,7 +59,7 @@ that directory.
 To get started right away, use the bootstrap script with:
 
 ```bash
-./tools/bootstrap
+./scripts/bootstrap
 ```
 
 ---
@@ -90,7 +90,7 @@ bundle install
 Now, you can verify you're ready with:
 
 ```bash
-./tools/doctor
+./scripts/doctor
 ```
 
 ### Generating the Terraform Providers

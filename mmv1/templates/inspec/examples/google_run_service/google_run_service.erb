@@ -1,0 +1,10 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% service = grab_attributes(pwd)['service'] -%>
+describe google_run_service(name: <%= doc_generation ? "' #{service['name']}'":"service['name']" -%>) do
+	it { should exist }
+
+end
+
+describe google_run_service(name: "does_not_exit") do
+	it { should_not exist }
+end
