@@ -1,0 +1,21 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% reservation = grab_attributes(pwd)['reservation'] -%>
+describe google_compute_reservation(project: <%= gcp_project_id -%>, name: <%= doc_generation ? "' #{reservation['name']}'":"reservation['name']" -%>, zone: <%= doc_generation ? "' #{reservation['zone']}'":"reservation['zone']" -%>) do
+	it { should exist }
+	its('kind') { should cmp <%= doc_generation ? "'#{reservation['kind']}'" : "reservation['kind']" -%> }
+	its('id') { should cmp <%= doc_generation ? "'#{reservation['id']}'" : "reservation['id']" -%> }
+	its('creation_timestamp') { should cmp <%= doc_generation ? "'#{reservation['creation_timestamp']}'" : "reservation['creation_timestamp']" -%> }
+	its('self_link') { should cmp <%= doc_generation ? "'#{reservation['self_link']}'" : "reservation['self_link']" -%> }
+	its('self_link_with_id') { should cmp <%= doc_generation ? "'#{reservation['self_link_with_id']}'" : "reservation['self_link_with_id']" -%> }
+	its('zone') { should cmp <%= doc_generation ? "'#{reservation['zone']}'" : "reservation['zone']" -%> }
+	its('description') { should cmp <%= doc_generation ? "'#{reservation['description']}'" : "reservation['description']" -%> }
+	its('name') { should cmp <%= doc_generation ? "'#{reservation['name']}'" : "reservation['name']" -%> }
+	its('commitment') { should cmp <%= doc_generation ? "'#{reservation['commitment']}'" : "reservation['commitment']" -%> }
+	its('status') { should cmp <%= doc_generation ? "'#{reservation['status']}'" : "reservation['status']" -%> }
+	its('delete_at_time') { should cmp <%= doc_generation ? "'#{reservation['delete_at_time']}'" : "reservation['delete_at_time']" -%> }
+
+end
+
+describe google_compute_reservation(project: <%= gcp_project_id -%>, name: "does_not_exit", zone: <%= doc_generation ? "' #{reservation['zone']}'":"reservation['zone']" -%>) do
+	it { should_not exist }
+end

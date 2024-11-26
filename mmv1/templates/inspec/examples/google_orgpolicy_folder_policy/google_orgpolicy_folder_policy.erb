@@ -1,0 +1,11 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% folder_policy = grab_attributes(pwd)['folder_policy'] -%>
+describe google_orgpolicy_folder_policy(name: <%= doc_generation ? "' #{folder_policy['name']}'":"folder_policy['name']" -%>) do
+	it { should exist }
+	its('name') { should cmp <%= doc_generation ? "'#{folder_policy['name']}'" : "folder_policy['name']" -%> }
+
+end
+
+describe google_orgpolicy_folder_policy(name: "does_not_exit") do
+	it { should_not exist }
+end

@@ -12,14 +12,14 @@
 # limitations under the License.
 
 --- !ruby/object:Api::Product
-name: ArtifactRegistry
+name: Artifactregistry
 display_name: Artifact Registry
 scopes:
   - https://www.googleapis.com/auth/cloud-platform
 versions:
   - !ruby/object:Api::Product::Version
-    name: beta
-    base_url: https://artifactregistry.googleapis.com/v1beta2/
+    name: ga
+    base_url: https://artifactregistry.googleapis.com/v1beta1/
 apis_required:
   - !ruby/object:Api::Product::ApiReference
     name: Artifact Registry API
@@ -56,7 +56,7 @@ objects:
       guides:
         'Official Documentation':
           'https://cloud.google.com/artifact-registry/docs/overview'
-      api: 'https://cloud.google.com/artifact-registry/docs/reference/rest/v1beta2/projects.locations.repositories'
+      api: 'https://cloud.google.com/artifact-registry/docs/reference/rest/v1beta1/projects.locations.repositories'
     iam_policy: !ruby/object:Api::Resource::IamPolicy
       exclude: false
       method_name_separator: ':'
@@ -155,3 +155,283 @@ objects:
           - :RELEASE
           - :SNAPSHOT
           default_value: :VERSION_POLICY_UNSPECIFIED
+
+
+    
+  - !ruby/object:Api::Resource
+    name: ProjectLocationRepository
+    base_url: 'v1beta1/{{parent}}/repositories'
+    self_link: 'v1beta1/{{name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/artifactregistry/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        A Repository for storing artifacts with a specific format.
+    properties:
+  
+      - !ruby/object:Api::Type::NestedObject
+        name: 'mavenConfig'
+        description: |
+          MavenRepositoryConfig is maven related repository details. Provides additional configuration details for repositories of the maven format type.
+        properties:
+            - !ruby/object:Api::Type::Boolean
+              name: 'allowSnapshotOverwrites'
+              description: |
+                The repository with this flag will allow publishing the same snapshot versions.
+            - !ruby/object:Api::Type::Enum
+              name: 'versionPolicy'
+              description: |
+                Version policy defines the versions that the registry will accept.
+              values:
+                - :VERSION_POLICY_UNSPECIFIED
+                - :RELEASE
+                - :SNAPSHOT
+      - !ruby/object:Api::Type::NestedObject
+        name: 'dockerConfig'
+        description: |
+          DockerRepositoryConfig is docker related repository details. Provides additional configuration details for repositories of the docker format type.
+        properties:
+            - !ruby/object:Api::Type::Boolean
+              name: 'immutableTags'
+              description: |
+                The repository which enabled this flag prevents all tags from being modified, moved or deleted. This does not prevent tags from being created.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'virtualRepositoryConfig'
+        description: |
+          Virtual repository configuration.
+        properties:
+            - !ruby/object:Api::Type::Array
+              name: 'upstreamPolicies'
+              description: |
+                Policies that configure the upstream artifacts distributed by the Virtual Repository. Upstream policies cannot be set on a standard repository.
+              item_type: !ruby/object:Api::Type::NestedObject
+                properties:
+                  - !ruby/object:Api::Type::String
+                    name: 'id'
+                    description: |
+                      The user-provided ID of the upstream policy.
+                  - !ruby/object:Api::Type::String
+                    name: 'repository'
+                    description: |
+                      A reference to the repository resource, for example: `projects/p1/locations/us-central1/repositories/repo1`.
+                  - !ruby/object:Api::Type::Integer
+                    name: 'priority'
+                    description: |
+                      Entries with a greater priority value take precedence in the pull order.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'remoteRepositoryConfig'
+        description: |
+          Remote repository configuration.
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'dockerRepository'
+              description: |
+                Configuration for a Docker remote repository.
+              properties:
+                  - !ruby/object:Api::Type::Enum
+                    name: 'publicRepository'
+                    description: |
+                      One of the publicly available Docker repositories supported by Artifact Registry.
+                    values:
+                      - :PUBLIC_REPOSITORY_UNSPECIFIED
+                      - :DOCKER_HUB
+            - !ruby/object:Api::Type::NestedObject
+              name: 'mavenRepository'
+              description: |
+                Configuration for a Maven remote repository.
+              properties:
+                  - !ruby/object:Api::Type::Enum
+                    name: 'publicRepository'
+                    description: |
+                      One of the publicly available Maven repositories supported by Artifact Registry.
+                    values:
+                      - :PUBLIC_REPOSITORY_UNSPECIFIED
+                      - :MAVEN_CENTRAL
+            - !ruby/object:Api::Type::NestedObject
+              name: 'npmRepository'
+              description: |
+                Configuration for a Npm remote repository.
+              properties:
+                  - !ruby/object:Api::Type::Enum
+                    name: 'publicRepository'
+                    description: |
+                      One of the publicly available Npm repositories supported by Artifact Registry.
+                    values:
+                      - :PUBLIC_REPOSITORY_UNSPECIFIED
+                      - :NPMJS
+            - !ruby/object:Api::Type::NestedObject
+              name: 'pythonRepository'
+              description: |
+                Configuration for a Python remote repository.
+              properties:
+                  - !ruby/object:Api::Type::Enum
+                    name: 'publicRepository'
+                    description: |
+                      One of the publicly available Python repositories supported by Artifact Registry.
+                    values:
+                      - :PUBLIC_REPOSITORY_UNSPECIFIED
+                      - :PYPI
+            - !ruby/object:Api::Type::NestedObject
+              name: 'aptRepository'
+              description: |
+                Configuration for an Apt remote repository.
+              properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'publicRepository'
+                    description: |
+                      Publicly available Apt repositories constructed from a common repository base and a custom repository path.
+                    properties:
+                        - !ruby/object:Api::Type::Enum
+                          name: 'repositoryBase'
+                          description: |
+                            A common public repository base for Apt.
+                          values:
+                            - :REPOSITORY_BASE_UNSPECIFIED
+                            - :DEBIAN
+                            - :UBUNTU
+                            - :DEBIAN_SNAPSHOT
+                        - !ruby/object:Api::Type::String
+                          name: 'repositoryPath'
+                          description: |
+                            A custom field to define a path to a specific repository from the base.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'yumRepository'
+              description: |
+                Configuration for a Yum remote repository.
+              properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'publicRepository'
+                    description: |
+                      Publicly available Yum repositories constructed from a common repository base and a custom repository path.
+                    properties:
+                        - !ruby/object:Api::Type::Enum
+                          name: 'repositoryBase'
+                          description: |
+                            A common public repository base for Yum.
+                          values:
+                            - :REPOSITORY_BASE_UNSPECIFIED
+                            - :CENTOS
+                            - :CENTOS_DEBUG
+                            - :CENTOS_VAULT
+                            - :CENTOS_STREAM
+                            - :ROCKY
+                            - :EPEL
+                        - !ruby/object:Api::Type::String
+                          name: 'repositoryPath'
+                          description: |
+                            A custom field to define a path to a specific repository from the base.
+            - !ruby/object:Api::Type::String
+              name: 'description'
+              description: |
+                The description of the remote source.
+            - !ruby/object:Api::Type::NestedObject
+              name: 'upstreamCredentials'
+              description: |
+                The credentials to access the remote repository.
+              properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'usernamePasswordCredentials'
+                    description: |
+                      Username and password credentials.
+                    properties:
+                        - !ruby/object:Api::Type::String
+                          name: 'username'
+                          description: |
+                            The username to access the remote repository.
+                        - !ruby/object:Api::Type::String
+                          name: 'passwordSecretVersion'
+                          description: |
+                            The Secret Manager key version that holds the password to access the remote repository. Must be in the format of `projects/{project}/secrets/{secret}/versions/{version}`.
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          The name of the repository, for example: `projects/p1/locations/us-central1/repositories/repo1`.
+      - !ruby/object:Api::Type::Enum
+        name: 'format'
+        description: |
+          Optional. The format of packages that are stored in the repository.
+        values:
+          - :FORMAT_UNSPECIFIED
+          - :DOCKER
+          - :MAVEN
+          - :NPM
+          - :APT
+          - :YUM
+          - :GOOGET
+          - :PYTHON
+          - :KFP
+          - :GO
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          The user-provided description of the repository.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'labels'
+        description: |
+          Labels with user-defined metadata. This field may contain up to 64 entries. Label keys and values may be no longer than 63 characters. Label keys must begin with a lowercase letter and may only contain lowercase letters, numeric characters, underscores, and dashes.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+              
+      - !ruby/object:Api::Type::String
+        name: 'createTime'
+        description: |
+          Output only. The time when the repository was created.
+      - !ruby/object:Api::Type::String
+        name: 'updateTime'
+        description: |
+          Output only. The time when the repository was last updated.
+      - !ruby/object:Api::Type::String
+        name: 'kmsKeyName'
+        description: |
+          The Cloud KMS resource name of the customer managed encryption key that's used to encrypt the contents of the Repository. Has the form: `projects/my-project/locations/my-region/keyRings/my-kr/cryptoKeys/my-key`. This value may not be changed after the Repository has been created.
+      - !ruby/object:Api::Type::Enum
+        name: 'mode'
+        description: |
+          Optional. The mode of the repository.
+        values:
+          - :MODE_UNSPECIFIED
+          - :STANDARD_REPOSITORY
+          - :VIRTUAL_REPOSITORY
+          - :REMOTE_REPOSITORY
+      - !ruby/object:Api::Type::NestedObject
+        name: 'cleanupPolicies'
+        description: |
+          Optional. Cleanup policies for this repository. Cleanup policies indicate when certain package versions can be automatically deleted. Map keys are policy IDs supplied by users during policy creation. They must unique within a repository and be under 128 characters in length.
+        properties:
+          - !ruby/object:Api::Type::String
+            name: 'additionalProperties'
+            description: |
+              Artifact policy configuration for repository cleanup policies.
+      - !ruby/object:Api::Type::String
+        name: 'sizeBytes'
+        description: |
+          Output only. The size, in bytes, of all artifact storage in this repository. Repositories that are generally available or in public preview use this to calculate storage costs.
+      - !ruby/object:Api::Type::Boolean
+        name: 'satisfiesPzs'
+        description: |
+          Output only. If set, the repository satisfies physical zone separation.
+      - !ruby/object:Api::Type::Boolean
+        name: 'cleanupPolicyDryRun'
+        description: |
+          Optional. If true, the cleanup pipeline is prevented from deleting versions in this repository.
+  
