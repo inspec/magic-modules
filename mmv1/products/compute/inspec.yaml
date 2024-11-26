@@ -133,8 +133,6 @@ overrides: !ruby/object:Overrides::ResourceOverrides
         override_name: "region_name"
       status: !ruby/object:Overrides::Inspec::PropertyOverride
         override_name: "region_status"
-  RegionAutoscaler: !ruby/object:Overrides::Inspec::ResourceOverride
-    exclude: true
   RegionDisk: !ruby/object:Overrides::Inspec::ResourceOverride
     exclude: true
   RegionDiskType: !ruby/object:Overrides::Inspec::ResourceOverride
@@ -145,7 +143,6 @@ overrides: !ruby/object:Overrides::ResourceOverrides
     singular_extra_examples: third_party/inspec/documentation/google_compute_region_instance_group_manager.md
     plural_extra_examples: third_party/inspec/documentation/google_compute_region_instance_group_managers.md
     additional_functions: third_party/inspec/custom_functions/google_compute_zone_operation.erb
-    additional_functions: third_party/inspec/custom_functions/google_compute_region_instance_group.erb
     properties:
       id: !ruby/object:Overrides::Inspec::PropertyOverride
         override_name: "instance_group_manager_id"
@@ -154,9 +151,7 @@ overrides: !ruby/object:Overrides::ResourceOverrides
   RegionSslCertificate: !ruby/object:Overrides::Inspec::ResourceOverride
     exclude: true
   Reservation: !ruby/object:Overrides::Inspec::ResourceOverride
-    exclude: true
-  ResourcePolicy: !ruby/object:Overrides::Inspec::ResourceOverride
-    exclude: true
+    exclude: false
   RouterBgpPeer: !ruby/object:Overrides::Inspec::ResourceOverride
     exclude: true
   Subnetwork: !ruby/object:Overrides::Inspec::ResourceOverride
