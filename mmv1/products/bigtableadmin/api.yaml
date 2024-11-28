@@ -1,0 +1,825 @@
+--- !ruby/object:Api::Product
+name: bigtableadmin
+display_name: bigtableadmin
+versions:
+  - !ruby/object:Api::Product::Version
+    name: ga
+    base_url: https://bigtableadmin.googleapis.com//v2/
+scopes:
+  - https://bigtableadmin.googleapis.com//auth/cloud-platform
+apis_required:
+  - !ruby/object:Api::Product::ApiReference
+    name: https://bigtableadmin.googleapis.com/
+    url: https://console.cloud.google.com/apis/library/bigtableadmin.googleapis.com/
+objects:
+
+  - !ruby/object:Api::Resource
+    name: ProjectInstanceCluster
+    base_url: '{{+parent}}/clusters'
+    self_link: '{{+name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/bigtableadmin/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        A resizable group of nodes in a particular cloud location, capable of serving all Tables in the parent Instance.
+    properties:
+
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          The unique name of the cluster. Values are of the form `projects/{project}/instances/{instance}/clusters/a-z*`.
+      - !ruby/object:Api::Type::String
+        name: 'location'
+        description: |
+          Immutable. The location where this cluster's nodes and storage reside. For best performance, clients should be located as close as possible to this cluster. Currently only zones are supported, so values should be of the form `projects/{project}/locations/{zone}`.
+      - !ruby/object:Api::Type::Enum
+        name: 'state'
+        description: |
+          Output only. The current state of the cluster.
+        values:
+          - :STATE_NOT_KNOWN
+          - :READY
+          - :CREATING
+          - :RESIZING
+          - :DISABLED
+      - !ruby/object:Api::Type::Integer
+        name: 'serveNodes'
+        description: |
+          The number of nodes in the cluster. If no value is set, Cloud Bigtable automatically allocates nodes based on your data footprint and optimized for 50% storage utilization.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'clusterConfig'
+        description: |
+          Configuration for a cluster.
+        properties:
+            - !ruby/object:Api::Type::NestedObject
+              name: 'clusterAutoscalingConfig'
+              description: |
+                Autoscaling config for a cluster.
+              properties:
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'autoscalingLimits'
+                    description: |
+                      Limits for the number of nodes a Cluster can autoscale up/down to.
+                    properties:
+                        - !ruby/object:Api::Type::Integer
+                          name: 'minServeNodes'
+                          description: |
+                            Required. Minimum number of nodes to scale down to.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'maxServeNodes'
+                          description: |
+                            Required. Maximum number of nodes to scale up to.
+                  - !ruby/object:Api::Type::NestedObject
+                    name: 'autoscalingTargets'
+                    description: |
+                      The Autoscaling targets for a Cluster. These determine the recommended nodes.
+                    properties:
+                        - !ruby/object:Api::Type::Integer
+                          name: 'cpuUtilizationPercent'
+                          description: |
+                            The cpu utilization that the Autoscaler should be trying to achieve. This number is on a scale from 0 (no utilization) to 100 (total utilization), and is limited between 10 and 80, otherwise it will return INVALID_ARGUMENT error.
+                        - !ruby/object:Api::Type::Integer
+                          name: 'storageUtilizationGibPerNode'
+                          description: |
+                            The storage utilization that the Autoscaler should be trying to achieve. This number is limited between 2560 (2.5TiB) and 5120 (5TiB) for a SSD cluster and between 8192 (8TiB) and 16384 (16TiB) for an HDD cluster, otherwise it will return INVALID_ARGUMENT error. If this value is set to 0, it will be treated as if it were set to the default value: 2560 for SSD, 8192 for HDD.
+      - !ruby/object:Api::Type::Enum
+        name: 'defaultStorageType'
+        description: |
+          Immutable. The type of storage used by this cluster to serve its parent instance's tables, unless explicitly overridden.
+        values:
+          - :STORAGE_TYPE_UNSPECIFIED
+          - :SSD
+          - :HDD
+      - !ruby/object:Api::Type::NestedObject
+        name: 'encryptionConfig'
+        description: |
+          Cloud Key Management Service (Cloud KMS) settings for a CMEK-protected cluster.
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'kmsKeyName'
+              description: |
+                Describes the Cloud KMS encryption key that will be used to protect the destination Bigtable cluster. The requirements for this key are: 1) The Cloud Bigtable service account associated with the project that contains this cluster must be granted the `cloudkms.cryptoKeyEncrypterDecrypter` role on the CMEK key. 2) Only regional keys can be used and the region of the CMEK key must match the region of the cluster. Values are of the form `projects/{project}/locations/{location}/keyRings/{keyring}/cryptoKeys/{key}`
+
+  - !ruby/object:Api::Resource
+    name: ProjectInstanceAppProfile
+    base_url: '{{+parent}}/appProfiles'
+    self_link: '{{+name}}'
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        'Official Documentation':
+      api: 'https://cloud.google.com/bigtableadmin/docs'
+    async: !ruby/object:Api::OpAsync
+      operation: !ruby/object:Api::OpAsync::Operation
+         path: 'name'
+         base_url: '{op_id}'
+         wait_ms: 1000
+      result: !ruby/object:Api::OpAsync::Result
+         path: 'response'
+         resource_inside_response: true
+      status: !ruby/object:Api::OpAsync::Status
+        path: 'done'
+        complete: True
+        allowed:
+          - True
+          - False
+      error: !ruby/object:Api::OpAsync::Error
+        path: 'error'
+        message: 'message'
+    description: |-
+        A configuration object describing how Cloud Bigtable should treat traffic from a particular end user application.
+    properties:
+
+      - !ruby/object:Api::Type::String
+        name: 'name'
+        description: |
+          The unique name of the app profile. Values are of the form `projects/{project}/instances/{instance}/appProfiles/_a-zA-Z0-9*`.
+      - !ruby/object:Api::Type::String
+        name: 'etag'
+        description: |
+          Strongly validated etag for optimistic concurrency control. Preserve the value returned from `GetAppProfile` when calling `UpdateAppProfile` to fail the request if there has been a modification in the mean time. The `update_mask` of the request need not include `etag` for this protection to apply. See [Wikipedia](https://en.wikipedia.org/wiki/HTTP_ETag) and [RFC 7232](https://tools.ietf.org/html/rfc7232#section-2.3) for more details.
+      - !ruby/object:Api::Type::String
+        name: 'description'
+        description: |
+          Long form description of the use case for this AppProfile.
+      - !ruby/object:Api::Type::NestedObject
+        name: 'multiClusterRoutingUseAny'
+        description: |
+          Read/write requests are routed to the nearest cluster in the instance, and will fail over to the nearest cluster that is available in the event of transient errors or delays. Clusters in a region are considered equidistant. Choosing this option sacrifices read-your-writes consistency to improve availability.
+        properties:
+            - !ruby/object:Api::Type::Array
+              name: 'clusterIds'
+              description: |
+                The set of clusters to route to. The order is ignored; clusters will be tried in order of distance. If left empty, all clusters are eligible.
+              item_type: Api::Type::String
+      - !ruby/object:Api::Type::NestedObject
+        name: 'singleClusterRouting'
+        description: |
+          Unconditionally routes all read/write requests to a specific cluster. This option preserves read-your-writes consistency but does not improve availability.
+        properties:
+            - !ruby/object:Api::Type::String
+              name: 'clusterId'
+              description: |
+                The cluster to which read/write requests should be routed.
+            - !ruby/object:Api::Type::Boolean
+              name: 'allowTransactionalWrites'
+              description: |
+                Whether or not `CheckAndMutateRow` and `ReadModifyWriteRow` requests are allowed by this app profile. It is unsafe to send these requests to the same table/row/column in multiple clusters.
+      - !ruby/object:Api::Type::Enum
+        name: 'priority'
+        description: |
+          This field has been deprecated in favor of `standard_isolation.priority`. If you set this field, `standard_isolation.priority` will be set instead. The priority of requests sent using this app profile.
+        values:
+          - :PRIORITY_UNSPECIFIED
+          - :PRIORITY_LOW
+          - :PRIORITY_MEDIUM
+          - :PRIORITY_HIGH
+      - !ruby/object:Api::Type::NestedObject
+        name: 'standardIsolation'
+        description: |
+          Standard options for isolating this app profile's traffic from other use cases.
+        properties:
+            - !ruby/object:Api::Type::Enum
+              name: 'priority'
+              description: |
+                The priority of requests sent using this app profile.
+              values:
+                - :PRIORITY_UNSPECIFIED
+                - :PRIORITY_LOW
+                - :PRIORITY_MEDIUM
+                - :PRIORITY_HIGH
+      - !ruby/object:Api::Type::NestedObject
+        name: 'dataBoostIsolationReadOnly'
+        description: |
+          Data Boost is a serverless compute capability that lets you run high-throughput read jobs and queries on your Bigtable data, without impacting the performance of the clusters that handle your application traffic. Data Boost supports read-only use cases with single-cluster routing.
+        properties:
+            - !ruby/object:Api::Type::Enum
+              name: 'computeBillingOwner'
+              description: |
+                The Compute Billing Owner for this Data Boost App Profile.
+              values:
+                - :COMPUTE_BILLING_OWNER_UNSPECIFIED
+                - :HOST_PAYS
+      - !ruby/object:Api::Type::String
+        name: 'sourceTable'
+        description: |
+          Required. Immutable. Name of the table from which this backup was created. This needs to be in the same instance as the backup. Values are of the form `projects/{project}/instances/{instance}/tables/{source_table}`.
+      - !ruby/object:Api::Type::String
+        name: 'sourceBackup'
+        description: |
+          Output only. Name of the backup from which this backup was copied. If a backup is not created by copying a backup, this field will be empty. Values are of the form: projects//instances//clusters//backups/
+      - !ruby/object:Api::Type::String
+        name: 'expireTime'
+        description: |
+          Required. The expiration time of the backup, with microseconds granularity that must be at least 6 hours and at most 90 days from the time the request is received. Once the `expire_time` has passed, Cloud Bigtable will delete the backup and free the resources used by the backup.
+      - !ruby/object:Api::Type::String
+        name: 'startTime'
+        description: |
+          Output only. `start_time` is the time that the backup was started (i.e. approximately the time the CreateBackup request is received). The row data in this backup will be no older than this timestamp.
+      - !ruby/object:Api::Type::String
+        name: 'endTime'
+        description: |
+          Output only. `end_time` is the time that the backup was finished. The row data in the backup will be no newer than this timestamp.
+      - !ruby/object:Api::Type::String
+        name: 'sizeBytes'
+        description: |
+          Output only. Size of the backup in bytes.
+      - !ruby/object:Api::Type::Enum
+        name: 'state'
+        description: |
+          Output only. The current state of the backup.
+        values:
+          - :STATE_UNSPECIFIED
+          - :CREATING
+          - :READY
+      - !ruby/object:Api::Type::NestedObject
+        name: 'encryptionInfo'
+        description: |
+          Encryption information for a given resource. If this resource is protected with customer managed encryption, the in-use Cloud Key Management Service (Cloud KMS) key version is specified along with its status.
+        properties:
+            - !ruby/object:Api::Type::Enum
+              name: 'encryptionType'
+              description: |
+                Output only. The type of encryption used to protect this resource.
+              values:
+                - :ENCRYPTION_TYPE_UNSPECIFIED
+                - :GOOGLE_DEFAULT_ENCRYPTION
+                - :CUSTOMER_MANAGED_ENCRYPTION
+            - !ruby/object:Api::Type::NestedObject
+              name: 'encryptionStatus'
+              description: |
+                The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).
+              properties:
+                  - !ruby/object:Api::Type::Integer
+                    name: 'code'
+                    description: |
+                      The status code, which should be an enum value of google.rpc.Code.
+                  - !ruby/object:Api::Type::String
+                    name: 'message'
+                    description: |
+                      A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.
+                  - !ruby/object:Api::Type::Array
+                    name: 'details'
+                    description: |
+                      A list of messages that carry the error details. There is a common set of message types for APIs to use.
+                    item_type: Api::Type::String
+            - !ruby/object:Api::Type::String
+              name: 'kmsKeyVersion'
+              description: |
+                Output only. The version of the Cloud KMS key specified in the parent cluster that is in use for the data underlying this table.
+# Copyright 2024 Google Inc.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+---
+name: 'Batch'
+description: |
+  Dataproc Serverless Batches lets you run Spark workloads without requiring you to
+  provision and manage your own Dataproc cluster.
+references:
+  guides:
+    'Dataproc Serverless Batches Intro': 'https://cloud.google.com/dataproc-serverless/docs/overview'
+  api: 'https://cloud.google.com/dataproc-serverless/docs/reference/rest/v1/projects.locations.batches'
+docs:
+id_format: 'projects/{{project}}/locations/{{location}}/batches/{{batch_id}}'
+base_url: 'projects/{{project}}/locations/{{location}}/batches'
+self_link: 'projects/{{project}}/locations/{{location}}/batches/{{batch_id}}'
+create_url: 'projects/{{project}}/locations/{{location}}/batches?batchId={{batch_id}}'
+delete_url: 'projects/{{project}}/locations/{{location}}/batches/{{batch_id}}'
+immutable: true
+import_format:
+  - 'projects/{{project}}/locations/{{location}}/batches/{{batch_id}}'
+timeouts:
+  insert_minutes: 10
+  update_minutes: 20
+  delete_minutes: 5
+autogen_async: true
+async:
+  actions: ['create', 'delete', 'update']
+  type: 'OpAsync'
+  operation:
+    base_url: '{{op_id}}'
+  result:
+    resource_inside_response: false
+collection_url_key: 'batches'
+custom_code:
+  constants: 'templates/terraform/constants/cloud_dataproc_batch.go.tmpl'
+  decoder: 'templates/terraform/decoders/cloud_dataproc_batch.go.tmpl'
+examples:
+  - name: 'dataproc_batch_spark'
+    primary_resource_id: 'example_batch_spark'
+    primary_resource_name: 'fmt.Sprintf("tf-test-spark-batch%s", context["random_suffix"])'
+    vars:
+      subnetwork_name: 'default'
+      prevent_destroy: 'true'
+    test_env_vars:
+      project_name: 'PROJECT_NAME'
+    test_vars_overrides:
+      'subnetwork_name': 'acctest.BootstrapSubnetWithFirewallForDataprocBatches(t, "dataproc-spark-test-network", "dataproc-spark-test-subnetwork")'
+      'prevent_destroy': 'false'
+    ignore_read_extra:
+      - 'runtime_config.0.properties'
+  - name: 'dataproc_batch_spark_full'
+    primary_resource_id: 'example_batch_spark'
+    primary_resource_name: 'fmt.Sprintf("tf-test-spark-batch%s", context["random_suffix"])'
+    vars:
+      dataproc_batch: 'dataproc-batch'
+      prevent_destroy: 'true'
+      key_name: 'example-key'
+      keyring_name: 'example-keyring'
+      bucket_name: 'dataproc-bucket'
+    test_env_vars:
+      project_name: 'PROJECT_NAME'
+    test_vars_overrides:
+      'prevent_destroy': 'false'
+    ignore_read_extra:
+      - 'runtime_config.0.properties'
+  - name: 'dataproc_batch_sparksql'
+    primary_resource_id: 'example_batch_sparsql'
+    primary_resource_name: 'fmt.Sprintf("tf-test-spark-batch%s", context["random_suffix"])'
+    vars:
+      subnetwork_name: 'default'
+      prevent_destroy: 'true'
+    test_env_vars:
+      project_name: 'PROJECT_NAME'
+    test_vars_overrides:
+      'subnetwork_name': 'acctest.BootstrapSubnetWithFirewallForDataprocBatches(t, "dataproc-sparksql-test-network", "dataproc-sparksql-test-subnetwork")'
+      'prevent_destroy': 'false'
+    ignore_read_extra:
+      - 'runtime_config.0.properties'
+  - name: 'dataproc_batch_pyspark'
+    primary_resource_id: 'example_batch_pyspark'
+    primary_resource_name: 'fmt.Sprintf("tf-test-spark-batch%s", context["random_suffix"])'
+    vars:
+      subnetwork_name: 'default'
+      prevent_destroy: 'true'
+    test_env_vars:
+      project_name: 'PROJECT_NAME'
+    test_vars_overrides:
+      'subnetwork_name': 'acctest.BootstrapSubnetWithFirewallForDataprocBatches(t, "dataproc-pyspark-test-network", "dataproc-pyspark-test-subnetwork")'
+      'prevent_destroy': 'false'
+    ignore_read_extra:
+      - 'runtime_config.0.properties'
+  - name: 'dataproc_batch_sparkr'
+    primary_resource_id: 'example_batch_sparkr'
+    primary_resource_name: 'fmt.Sprintf("tf-test-spark-batch%s", context["random_suffix"])'
+    vars:
+      subnetwork_name: 'default'
+      prevent_destroy: 'true'
+    test_env_vars:
+      project_name: 'PROJECT_NAME'
+    test_vars_overrides:
+      'subnetwork_name': 'acctest.BootstrapSubnetWithFirewallForDataprocBatches(t, "dataproc-pyspark-test-network", "dataproc-pyspark-test-subnetwork")'
+      'prevent_destroy': 'false'
+    ignore_read_extra:
+      - 'runtime_config.0.properties'
+parameters:
+  - name: 'location'
+    type: String
+    description: |
+      The location in which the batch will be created in.
+    url_param_only: true
+    immutable: true
+  - name: 'batchId'
+    type: String
+    description: |
+      The ID to use for the batch, which will become the final component of the batch's resource name.
+      This value must be 4-63 characters. Valid characters are /[a-z][0-9]-/.
+    url_param_only: true
+    immutable: true
+properties:
+  - name: 'name'
+    type: String
+    description: |
+      The resource name of the batch.
+    output: true
+  - name: 'uuid'
+    type: String
+    description: |
+      A batch UUID (Unique Universal Identifier). The service generates this value when it creates the batch.
+    output: true
+  - name: 'createTime'
+    type: String
+    description: |
+      The time when the batch was created.
+    output: true
+  - name: 'runtimeInfo'
+    type: NestedObject
+    description: 'Runtime information about batch execution.'
+    output: true
+    properties:
+      - name: 'outputUri'
+        type: String
+        description: |
+          A URI pointing to the location of the stdout and stderr of the workload.
+        output: true
+      - name: 'diagnosticOutputUri'
+        type: String
+        description: |
+          A URI pointing to the location of the diagnostics tarball.
+        output: true
+      - name: 'endpoints'
+        type: KeyValuePairs
+        description: |
+          Map of remote access endpoints (such as web interfaces and APIs) to their URIs.
+        output: true
+      - name: 'approximateUsage'
+        type: NestedObject
+        description: |
+          Approximate workload resource usage, calculated when the workload completes(see [Dataproc Serverless pricing](https://cloud.google.com/dataproc-serverless/pricing))
+        output: true
+        properties:
+          - name: 'milliDcuSeconds'
+            type: String
+            description: |
+              DCU (Dataproc Compute Units) usage in (milliDCU x seconds)
+            output: true
+          - name: 'shuffleStorageGbSeconds'
+            type: String
+            description: |
+              Shuffle storage usage in (GB x seconds)
+            output: true
+          - name: 'milliAcceleratorSeconds'
+            type: String
+            description: |
+              Accelerator usage in (milliAccelerator x seconds)
+            output: true
+          - name: 'acceleratorType'
+            type: String
+            description: |
+              Accelerator type being used, if any
+            output: true
+      - name: 'currentUsage'
+        type: NestedObject
+        description: |
+          Snapshot of current workload resource usage(see [Dataproc Serverless pricing](https://cloud.google.com/dataproc-serverless/pricing))
+        output: true
+        properties:
+          - name: 'milliDcu'
+            type: String
+            description: |
+              Milli (one-thousandth) Dataproc Compute Units (DCUs).
+            output: true
+          - name: 'shuffleStorageGb'
+            type: String
+            description: |
+              Shuffle Storage in gigabytes (GB).
+            output: true
+          - name: 'milliDcuPremium'
+            type: String
+            description: |
+              Milli (one-thousandth) Dataproc Compute Units (DCUs) charged at premium tier.
+            output: true
+          - name: 'shuffleStorageGbPremium'
+            type: String
+            description: |
+              Shuffle Storage in gigabytes (GB) charged at premium tier.
+            output: true
+          - name: 'milliAccelerator'
+            type: String
+            description: |
+              Milli (one-thousandth) accelerator..
+            output: true
+          - name: 'acceleratorType'
+            type: String
+            description: |
+              Accelerator type being used, if any.
+            output: true
+          - name: 'snapshotTime'
+            type: String
+            description: |
+              The timestamp of the usage snapshot.
+            output: true
+  - name: 'state'
+    type: String
+    description: |
+      The state of the batch. For possible values, see the [API documentation](https://cloud.google.com/dataproc-serverless/docs/reference/rest/v1/projects.locations.batches#State).
+    output: true
+  - name: 'stateMessage'
+    type: String
+    description: |
+      Batch state details, such as a failure description if the state is FAILED.
+    output: true
+  - name: 'stateTime'
+    type: String
+    description: |
+      Batch state details, such as a failure description if the state is FAILED.
+    output: true
+  - name: 'creator'
+    type: String
+    description: |
+      The email address of the user who created the batch.
+    output: true
+  - name: 'labels'
+    type: KeyValueLabels
+    description: |
+      The labels to associate with this batch.
+  - name: 'runtimeConfig'
+    type: NestedObject
+    description: |
+      Runtime configuration for the batch execution.
+    properties:
+      - name: 'version'
+        type: String
+        description: |
+          Version of the batch runtime.
+        default_from_api: true
+        diff_suppress_func: 'CloudDataprocBatchRuntimeConfigVersionDiffSuppress'
+      - name: 'containerImage'
+        type: String
+        description: |
+          Optional custom container image for the job runtime environment. If not specified, a default container image will be used.
+      - name: 'properties'
+        type: KeyValuePairs
+        description: |
+          A mapping of property names to values, which are used to configure workload execution.
+      - name: 'effective_properties'
+        type: KeyValuePairs
+        description: |
+          A mapping of property names to values, which are used to configure workload execution.
+        output: true
+  - name: 'environmentConfig'
+    type: NestedObject
+    description: |
+      Environment configuration for the batch execution.
+    properties:
+      - name: 'executionConfig'
+        type: NestedObject
+        description: |
+          Execution configuration for a workload.
+        properties:
+          - name: 'serviceAccount'
+            type: String
+            description: |
+              Service account that used to execute workload.
+            default_from_api: true
+          - name: 'networkTags'
+            type: Array
+            description: |
+              Tags used for network traffic control.
+            item_type:
+              type: String
+          - name: 'kmsKey'
+            type: String
+            description: |
+              The Cloud KMS key to use for encryption.
+          - name: 'ttl'
+            type: String
+            description: |
+              The duration after which the workload will be terminated.
+              When the workload exceeds this duration, it will be unconditionally terminated without waiting for ongoing
+              work to finish. If ttl is not specified for a batch workload, the workload will be allowed to run until it
+              exits naturally (or run forever without exiting). If ttl is not specified for an interactive session,
+              it defaults to 24 hours. If ttl is not specified for a batch that uses 2.1+ runtime version, it defaults to 4 hours.
+              Minimum value is 10 minutes; maximum value is 14 days. If both ttl and idleTtl are specified (for an interactive session),
+              the conditions are treated as OR conditions: the workload will be terminated when it has been idle for idleTtl or
+              when ttl has been exceeded, whichever occurs first.
+            default_from_api: true
+          - name: 'stagingBucket'
+            type: String
+            description: |
+              A Cloud Storage bucket used to stage workload dependencies, config files, and store
+              workload output and other ephemeral data, such as Spark history files. If you do not specify a staging bucket,
+              Cloud Dataproc will determine a Cloud Storage location according to the region where your workload is running,
+              and then create and manage project-level, per-location staging and temporary buckets.
+              This field requires a Cloud Storage bucket name, not a gs://... URI to a Cloud Storage bucket.
+          - name: 'networkUri'
+            type: String
+            description: |
+              Network configuration for workload execution.
+            conflicts:
+              - environment_config.0.execution_config.0.subnetwork_uri
+          - name: 'subnetworkUri'
+            type: String
+            description: |
+              Subnetwork configuration for workload execution.
+            conflicts:
+              - environment_config.0.execution_config.0.network_uri
+      - name: 'peripheralsConfig'
+        type: NestedObject
+        description: |
+          Peripherals configuration that workload has access to.
+        default_from_api: true
+        allow_empty_object: true
+        properties:
+          - name: 'metastoreService'
+            type: String
+            description: |
+              Resource name of an existing Dataproc Metastore service.
+          - name: 'sparkHistoryServerConfig'
+            type: NestedObject
+            description: |
+              The Spark History Server configuration for the workload.
+            properties:
+              - name: 'dataprocCluster'
+                type: String
+                description: |
+                  Resource name of an existing Dataproc Cluster to act as a Spark History Server for the workload.
+  - name: 'operation'
+    type: String
+    description: |
+      The resource name of the operation associated with this batch.
+    output: true
+  - name: 'stateHistory'
+    type: Array
+    description: |
+      Historical state information for the batch.
+    output: true
+    item_type:
+      type: NestedObject
+      properties:
+        - name: 'state'
+          type: String
+          description: |
+            The state of the batch at this point in history. For possible values, see the [API documentation](https://cloud.google.com/dataproc-serverless/docs/reference/rest/v1/projects.locations.batches#State).
+          output: true
+        - name: 'stateMessage'
+          type: String
+          description: |
+            Details about the state at this point in history.
+          output: true
+        - name: 'stateStartTime'
+          type: String
+          description: |
+            The time when the batch entered the historical state.
+          output: true
+  - name: 'pysparkBatch'
+    type: NestedObject
+    description: |
+      PySpark batch config.
+    exactly_one_of:
+      - 'pyspark_batch'
+      - 'spark_batch'
+      - 'spark_sql_batch'
+      - 'spark_r_batch'
+    properties:
+      - name: 'mainPythonFileUri'
+        type: String
+        description: |
+          The HCFS URI of the main Python file to use as the Spark driver. Must be a .py file.
+      - name: 'args'
+        type: Array
+        description: |
+          The arguments to pass to the driver. Do not include arguments that can be set as batch
+          properties, such as --conf, since a collision can occur that causes an incorrect batch submission.
+        item_type:
+          type: String
+      - name: 'pythonFileUris'
+        type: Array
+        description: |
+          HCFS file URIs of Python files to pass to the PySpark framework.
+          Supported file types: .py, .egg, and .zip.
+        item_type:
+          type: String
+      - name: 'jarFileUris'
+        type: Array
+        description: |
+          HCFS URIs of jar files to add to the classpath of the Spark driver and tasks.
+        item_type:
+          type: String
+      - name: 'fileUris'
+        type: Array
+        description: |
+          HCFS URIs of files to be placed in the working directory of each executor.
+        item_type:
+          type: String
+      - name: 'archiveUris'
+        type: Array
+        description: |
+          HCFS URIs of archives to be extracted into the working directory of each executor.
+          Supported file types: .jar, .tar, .tar.gz, .tgz, and .zip.
+        item_type:
+          type: String
+  - name: 'sparkBatch'
+    type: NestedObject
+    description: |
+      Spark batch config.
+    exactly_one_of:
+      - 'pyspark_batch'
+      - 'spark_batch'
+      - 'spark_sql_batch'
+      - 'spark_r_batch'
+    properties:
+      - name: 'args'
+        type: Array
+        description: |
+          The arguments to pass to the driver. Do not include arguments that can be set as batch
+          properties, such as --conf, since a collision can occur that causes an incorrect batch submission.
+        item_type:
+          type: String
+      - name: 'jarFileUris'
+        type: Array
+        description: |
+          HCFS URIs of jar files to add to the classpath of the Spark driver and tasks.
+        item_type:
+          type: String
+      - name: 'fileUris'
+        type: Array
+        description: |
+          HCFS URIs of files to be placed in the working directory of each executor.
+        item_type:
+          type: String
+      - name: 'archiveUris'
+        type: Array
+        description: |
+          HCFS URIs of archives to be extracted into the working directory of each executor.
+          Supported file types: .jar, .tar, .tar.gz, .tgz, and .zip.
+        item_type:
+          type: String
+      - name: 'mainJarFileUri'
+        type: String
+        description: |
+          The HCFS URI of the jar file that contains the main class.
+        exactly_one_of:
+          - 'spark_batch.0.main_class'
+      - name: 'mainClass'
+        type: String
+        description: |
+          The name of the driver main class. The jar file that contains the class must be in the
+          classpath or specified in jarFileUris.
+        exactly_one_of:
+          - 'spark_batch.0.main_jar_file_uri'
+  - name: 'sparkRBatch'
+    type: NestedObject
+    description: |
+      SparkR batch config.
+    exactly_one_of:
+      - 'pyspark_batch'
+      - 'spark_batch'
+      - 'spark_sql_batch'
+      - 'spark_r_batch'
+    properties:
+      - name: 'mainRFileUri'
+        type: String
+        description: |
+          The HCFS URI of the main R file to use as the driver. Must be a .R or .r file.
+      - name: 'args'
+        type: Array
+        description: |
+          The arguments to pass to the driver. Do not include arguments that can be set as batch
+          properties, such as --conf, since a collision can occur that causes an incorrect batch submission.
+        item_type:
+          type: String
+      - name: 'fileUris'
+        type: Array
+        description: |
+          HCFS URIs of files to be placed in the working directory of each executor.
+        item_type:
+          type: String
+      - name: 'archiveUris'
+        type: Array
+        description: |
+          HCFS URIs of archives to be extracted into the working directory of each executor.
+          Supported file types: .jar, .tar, .tar.gz, .tgz, and .zip.
+        item_type:
+          type: String
+  - name: 'sparkSqlBatch'
+    type: NestedObject
+    description: |
+      Spark SQL batch config.
+    exactly_one_of:
+      - 'pyspark_batch'
+      - 'spark_batch'
+      - 'spark_sql_batch'
+      - 'spark_r_batch'
+    properties:
+      - name: 'queryFileUri'
+        type: String
+        description: |
+          The HCFS URI of the script that contains Spark SQL queries to execute.
+      - name: 'jarFileUris'
+        type: Array
+        description: |
+          HCFS URIs of jar files to be added to the Spark CLASSPATH.
+        item_type:
+          type: String
+      - name: 'queryVariables'
+        type: KeyValuePairs
+        description: |
+          Mapping of query variable names to values (equivalent to the Spark SQL command: SET name="value";).

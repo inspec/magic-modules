@@ -1,0 +1,5 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+  <% project_instance_cluster = grab_attributes(pwd)['project_instance_cluster'] -%>
+  describe google_bigtableadmin_project_instance_clusters(parent: <%= doc_generation ? "' #{project_instance_cluster['parent']}'":"project_instance_cluster['parent']" -%>) do
+    it { should exist }
+  end
