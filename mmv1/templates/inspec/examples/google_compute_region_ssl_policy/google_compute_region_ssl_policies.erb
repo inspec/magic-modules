@@ -1,0 +1,5 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+  <% region_ssl_policy = grab_attributes(pwd)['region_ssl_policy'] -%>
+  describe google_compute_region_ssl_policies(project: <%= gcp_project_id -%>, region: <%= doc_generation ? "' #{region_ssl_policy['region']}'":"region_ssl_policy['region']" -%>) do
+    it { should exist }
+  end

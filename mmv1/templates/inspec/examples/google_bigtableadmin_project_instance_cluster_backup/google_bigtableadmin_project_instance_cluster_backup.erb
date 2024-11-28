@@ -1,0 +1,18 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% project_instance_cluster_backup = grab_attributes(pwd)['project_instance_cluster_backup'] -%>
+describe google_bigtableadmin_project_instance_cluster_backup(name: <%= doc_generation ? "' #{project_instance_cluster_backup['name']}'":"project_instance_cluster_backup['name']" -%>) do
+	it { should exist }
+	its('name') { should cmp <%= doc_generation ? "'#{project_instance_cluster_backup['name']}'" : "project_instance_cluster_backup['name']" -%> }
+	its('source_table') { should cmp <%= doc_generation ? "'#{project_instance_cluster_backup['source_table']}'" : "project_instance_cluster_backup['source_table']" -%> }
+	its('source_backup') { should cmp <%= doc_generation ? "'#{project_instance_cluster_backup['source_backup']}'" : "project_instance_cluster_backup['source_backup']" -%> }
+	its('expire_time') { should cmp <%= doc_generation ? "'#{project_instance_cluster_backup['expire_time']}'" : "project_instance_cluster_backup['expire_time']" -%> }
+	its('start_time') { should cmp <%= doc_generation ? "'#{project_instance_cluster_backup['start_time']}'" : "project_instance_cluster_backup['start_time']" -%> }
+	its('end_time') { should cmp <%= doc_generation ? "'#{project_instance_cluster_backup['end_time']}'" : "project_instance_cluster_backup['end_time']" -%> }
+	its('size_bytes') { should cmp <%= doc_generation ? "'#{project_instance_cluster_backup['size_bytes']}'" : "project_instance_cluster_backup['size_bytes']" -%> }
+	its('state') { should cmp <%= doc_generation ? "'#{project_instance_cluster_backup['state']}'" : "project_instance_cluster_backup['state']" -%> }
+
+end
+
+describe google_bigtableadmin_project_instance_cluster_backup(name: "does_not_exit") do
+	it { should_not exist }
+end
