@@ -1,6 +1,6 @@
 <% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
 <% public_advertised_prefix = grab_attributes(pwd)['public_advertised_prefix'] -%>
-describe google_compute_v1_public_advertised_prefix(project: <%= gcp_project_id -%>, publicAdvertisedPrefix: <%= doc_generation ? "' #{public_advertised_prefix['publicAdvertisedPrefix']}'":"public_advertised_prefix['publicAdvertisedPrefix']" -%>) do
+describe google_compute_public_advertised_prefix(project: <%= gcp_project_id -%>, publicAdvertisedPrefix: <%= doc_generation ? "' #{public_advertised_prefix['publicAdvertisedPrefix']}'":"public_advertised_prefix['publicAdvertisedPrefix']" -%>) do
 	it { should exist }
 	its('kind') { should cmp <%= doc_generation ? "'#{public_advertised_prefix['kind']}'" : "public_advertised_prefix['kind']" -%> }
 	its('id') { should cmp <%= doc_generation ? "'#{public_advertised_prefix['id']}'" : "public_advertised_prefix['id']" -%> }
@@ -8,6 +8,7 @@ describe google_compute_v1_public_advertised_prefix(project: <%= gcp_project_id 
 	its('name') { should cmp <%= doc_generation ? "'#{public_advertised_prefix['name']}'" : "public_advertised_prefix['name']" -%> }
 	its('description') { should cmp <%= doc_generation ? "'#{public_advertised_prefix['description']}'" : "public_advertised_prefix['description']" -%> }
 	its('self_link') { should cmp <%= doc_generation ? "'#{public_advertised_prefix['self_link']}'" : "public_advertised_prefix['self_link']" -%> }
+	its('self_link_with_id') { should cmp <%= doc_generation ? "'#{public_advertised_prefix['self_link_with_id']}'" : "public_advertised_prefix['self_link_with_id']" -%> }
 	its('ip_cidr_range') { should cmp <%= doc_generation ? "'#{public_advertised_prefix['ip_cidr_range']}'" : "public_advertised_prefix['ip_cidr_range']" -%> }
 	its('dns_verification_ip') { should cmp <%= doc_generation ? "'#{public_advertised_prefix['dns_verification_ip']}'" : "public_advertised_prefix['dns_verification_ip']" -%> }
 	its('shared_secret') { should cmp <%= doc_generation ? "'#{public_advertised_prefix['shared_secret']}'" : "public_advertised_prefix['shared_secret']" -%> }
@@ -18,6 +19,6 @@ describe google_compute_v1_public_advertised_prefix(project: <%= gcp_project_id 
 
 end
 
-describe google_compute_v1_public_advertised_prefix(project: <%= gcp_project_id -%>, publicAdvertisedPrefix: <%= doc_generation ? "' #{public_advertised_prefix['publicAdvertisedPrefix']}'":"public_advertised_prefix['publicAdvertisedPrefix']" -%>) do
+describe google_compute_public_advertised_prefix(project: <%= gcp_project_id -%>, publicAdvertisedPrefix: <%= doc_generation ? "' #{public_advertised_prefix['publicAdvertisedPrefix']}'":"public_advertised_prefix['publicAdvertisedPrefix']" -%>) do
 	it { should_not exist }
 end

@@ -1,0 +1,15 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% project_location_workflow_template = grab_attributes(pwd)['project_location_workflow_template'] -%>
+describe google_dataproc_project_location_workflow_template(name: <%= doc_generation ? "' #{project_location_workflow_template['name']}'":"project_location_workflow_template['name']" -%>) do
+	it { should exist }
+	its('id') { should cmp <%= doc_generation ? "'#{project_location_workflow_template['id']}'" : "project_location_workflow_template['id']" -%> }
+	its('name') { should cmp <%= doc_generation ? "'#{project_location_workflow_template['name']}'" : "project_location_workflow_template['name']" -%> }
+	its('create_time') { should cmp <%= doc_generation ? "'#{project_location_workflow_template['create_time']}'" : "project_location_workflow_template['create_time']" -%> }
+	its('update_time') { should cmp <%= doc_generation ? "'#{project_location_workflow_template['update_time']}'" : "project_location_workflow_template['update_time']" -%> }
+	its('dag_timeout') { should cmp <%= doc_generation ? "'#{project_location_workflow_template['dag_timeout']}'" : "project_location_workflow_template['dag_timeout']" -%> }
+
+end
+
+describe google_dataproc_project_location_workflow_template(name: "does_not_exit") do
+	it { should_not exist }
+end

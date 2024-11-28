@@ -1,0 +1,29 @@
+<% gcp_project_id = "#{external_attribute(pwd, 'gcp_project_id', doc_generation)}" -%>
+<% instance = grab_attributes(pwd)['instance'] -%>
+describe google_datafusion_instance(name: <%= doc_generation ? "' #{instance['name']}'":"instance['name']" -%>) do
+	it { should exist }
+	its('name') { should cmp <%= doc_generation ? "'#{instance['name']}'" : "instance['name']" -%> }
+	its('description') { should cmp <%= doc_generation ? "'#{instance['description']}'" : "instance['description']" -%> }
+	its('type') { should cmp <%= doc_generation ? "'#{instance['type']}'" : "instance['type']" -%> }
+	its('create_time') { should cmp <%= doc_generation ? "'#{instance['create_time']}'" : "instance['create_time']" -%> }
+	its('update_time') { should cmp <%= doc_generation ? "'#{instance['update_time']}'" : "instance['update_time']" -%> }
+	its('state') { should cmp <%= doc_generation ? "'#{instance['state']}'" : "instance['state']" -%> }
+	its('state_message') { should cmp <%= doc_generation ? "'#{instance['state_message']}'" : "instance['state_message']" -%> }
+	its('service_endpoint') { should cmp <%= doc_generation ? "'#{instance['service_endpoint']}'" : "instance['service_endpoint']" -%> }
+	its('zone') { should cmp <%= doc_generation ? "'#{instance['zone']}'" : "instance['zone']" -%> }
+	its('version') { should cmp <%= doc_generation ? "'#{instance['version']}'" : "instance['version']" -%> }
+	its('service_account') { should cmp <%= doc_generation ? "'#{instance['service_account']}'" : "instance['service_account']" -%> }
+	its('display_name') { should cmp <%= doc_generation ? "'#{instance['display_name']}'" : "instance['display_name']" -%> }
+	its('api_endpoint') { should cmp <%= doc_generation ? "'#{instance['api_endpoint']}'" : "instance['api_endpoint']" -%> }
+	its('gcs_bucket') { should cmp <%= doc_generation ? "'#{instance['gcs_bucket']}'" : "instance['gcs_bucket']" -%> }
+	its('p4service_account') { should cmp <%= doc_generation ? "'#{instance['p4service_account']}'" : "instance['p4service_account']" -%> }
+	its('tenant_project_id') { should cmp <%= doc_generation ? "'#{instance['tenant_project_id']}'" : "instance['tenant_project_id']" -%> }
+	its('dataproc_service_account') { should cmp <%= doc_generation ? "'#{instance['dataproc_service_account']}'" : "instance['dataproc_service_account']" -%> }
+	its('workforce_identity_service_endpoint') { should cmp <%= doc_generation ? "'#{instance['workforce_identity_service_endpoint']}'" : "instance['workforce_identity_service_endpoint']" -%> }
+	its('patch_revision') { should cmp <%= doc_generation ? "'#{instance['patch_revision']}'" : "instance['patch_revision']" -%> }
+
+end
+
+describe google_datafusion_instance(name: "does_not_exit") do
+	it { should_not exist }
+end
