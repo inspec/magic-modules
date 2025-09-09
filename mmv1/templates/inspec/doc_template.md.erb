@@ -15,39 +15,29 @@
 <% autogen_exception -%>
 <% resource_underscored_name = plural ? resource_name(object, product).pluralize : resource_name(object, product) -%>
 +++
-
-title = "<%= resource_underscored_name -%> Resource"
+title = "<%= resource_underscored_name -%> resource"
 platform = "gcp"
 draft = false
 gh_repo = "inspec-gcp"
 
-
-[menu.inspec]
-
+[menu.gcp]
 title = "<%= resource_underscored_name -%>"
-identifier = "inspec/resources/gcp/<%= resource_underscored_name -%> Resource"
+identifier = "inspec/resources/gcp/<%= resource_underscored_name -%> resource"
 parent = "inspec/resources/gcp"
 +++
 
-Use the `<%= resource_underscored_name -%>` InSpec audit resource to test the properties of a test a Google <%= object.name -%>.
-
-## Installation
-{{% inspec_gcp_install %}}
-
-## Syntax
-A `<%= resource_underscored_name -%>` is used to test a Google <%= object.name -%> resource
+Use the `<%= resource_underscored_name -%>` InSpec audit resource to test the properties of a Google Cloud <%= object.name -%> resource.
 
 <% if beta?(object) -%>
-
-
 ## Beta Resource
-This resource has beta fields available. To retrieve these fields, include `beta: true` in the constructor for the resource
+
+This resource has beta fields available. To retrieve these fields, include `beta: true` in the constructor for the resource.
 
 <% end -%>
 ## Examples
-```
-<%= compile(pwd + "/templates/inspec/examples/#{resource_name(object, product)}/#{resource_underscored_name}.erb") -%>
 
+```ruby
+<%= compile(pwd + "/templates/inspec/examples/#{resource_name(object, product)}/#{resource_underscored_name}.erb") -%>
 ```
 <% if object.singular_extra_examples && !plural -%>
 
@@ -60,27 +50,31 @@ This resource has beta fields available. To retrieve these fields, include `beta
 
 <% end -%>
 
+<% if plural -%>
 ## Parameters
-Properties that can be accessed from the `<%= resource_underscored_name -%>` resource:
 
-<% if plural -%>
-See <%= "[#{resource_name(object, product)}.md](#{resource_name(object, product)}.md)" -%> for more detailed information
+Parameters that can be accessed from the `<%= resource_underscored_name -%>` resource:
+
 <% object.all_user_properties.reject(&:exclude_plural).each do |prop| -%>
 * `<%= "#{(prop.override_name || prop.out_name).pluralize}" -%>`: <% if prop.min_version.name == 'beta' -%><%= '(Beta only) ' -%><% end -%>an array of `<%= resource_name(object, product) -%>` <%= "#{prop.out_name}" -%>
+<% end -%>
 
+See the <%= "[#{resource_name(object, product)}](#{resource_name(object, product)})" -%> resource for more detailed information.
 <% end -%>
-<% end -%>
+
 ## Properties
+
 Properties that can be accessed from the `<%= resource_underscored_name -%>` resource:
 
 <% if plural -%>
-See <%= "[#{resource_name(object, product)}.md](#{resource_name(object, product)}.md)" -%> for more detailed information
 <% object.all_user_properties.reject(&:exclude_plural).each do |prop| -%>
 * `<%= "#{(prop.override_name || prop.out_name).pluralize}" -%>`: <% if prop.min_version.name == 'beta' -%><%= '(Beta only) ' -%><% end -%>an array of `<%= resource_name(object, product) -%>` <%= "#{prop.out_name}" -%>
-
 <% end -%>
 
-## Filter Criteria
+See the <%= "[#{resource_name(object, product)}](#{resource_name(object, product)})" -%> resource for more detailed information.
+
+## Filter criteria
+
 This resource supports all of the above properties as filter criteria, which can be used
 with `where` as a block or a method.
 <% else # if plural -%>
@@ -93,7 +87,7 @@ with `where` as a block or a method.
 <% end # if plural -%>
 <% unless @api.apis_required&.empty? -%>
 
-## GCP Permissions
+## GCP permissions
 
 <% @api.apis_required&.each do |api| -%>
 Ensure the [<%= api.name -%>](<%= api.url -%>) is enabled for the current project.
