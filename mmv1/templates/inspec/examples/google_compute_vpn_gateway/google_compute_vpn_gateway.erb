@@ -12,6 +12,7 @@ describe google_compute_vpn_gateway(project: <%= gcp_project_id -%>, region: <%=
 	its('self_link') { should cmp <%= doc_generation ? "'#{vpn_gateway['self_link']}'" : "vpn_gateway['self_link']" -%> }
 	its('label_fingerprint') { should cmp <%= doc_generation ? "'#{vpn_gateway['label_fingerprint']}'" : "vpn_gateway['label_fingerprint']" -%> }
 	its('stack_type') { should cmp <%= doc_generation ? "'#{vpn_gateway['stack_type']}'" : "vpn_gateway['stack_type']" -%> }
+	its('gateway_ip_version') { should cmp <%= doc_generation ? "'#{vpn_gateway['gateway_ip_version']}'" : "vpn_gateway['gateway_ip_version']" -%> }
 
 end
 
